@@ -20,8 +20,6 @@
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                         action:@selector(leftItemAction)];
-    self.swipePresentEdge = HYPresentRigt;
-    self.swipeJumpToVc = [[TestViewController alloc] init];
 }
 
 #pragma mark - Event Response
