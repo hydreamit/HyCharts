@@ -35,4 +35,8 @@
                                 completion:nil];
 }
 
+- (void)dealloc {
+    NSLog(@"%s", __func__);
+}
+
 @end

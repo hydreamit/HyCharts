@@ -537,6 +537,7 @@
 				51E11CAA1EAEDB8200E7E6B5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		51E11CAB1EAEDB8200E7E6B5 /* Build configuration list for PBXNativeTarget "HYSwipeViewController_DemoTests" */ = {
 			isa = XCConfigurationList;
@@ -545,6 +546,7 @@
 				51E11CAD1EAEDB8200E7E6B5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		51E11CAE1EAEDB8200E7E6B5 /* Build configuration list for PBXNativeTarget "HYSwipeViewController_DemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -553,6 +555,7 @@
 				51E11CB01EAEDB8200E7E6B5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

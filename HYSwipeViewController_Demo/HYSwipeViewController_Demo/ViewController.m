@@ -20,7 +20,10 @@
 - (void)initConfig {
     self.title = @"HYSwipeViewController";
     self.swipePresentEdge = HYPresentTop | HYPresentLeft | HYPresentBottom | HYPresentRigt;
-    self.swipeJumpToVc = [[TestViewController alloc] init];
+    self.top_SwipeJumpToVc = [[TestViewController alloc] init];
+    self.left_SwipeJumpToVc = [[TestViewController alloc] init];
+    self.bottom_SwipeJumpToVc = [[TestViewController alloc] init];
+    self.right_SwipeJumpToVc = [[TestViewController alloc] init];
 }
 
 #pragma mark - Event Response

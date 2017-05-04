@@ -33,28 +33,34 @@
 
 #pragma mark - Private Methods
 - (void)initPresentEdgeGesture {
-    if (self.swipeJumpToVc) {
+    if (self.left_SwipeJumpToVc) {
         if (self.swipePresentEdge & HYPresentLeft) {
             if (!self.EdgeLeftGesture.view) {
                 [self.view addGestureRecognizer:self.EdgeLeftGesture];
             }
         }
-        
-        if (self.swipePresentEdge & HYPresentRigt) {
-            if (!self.EdgeRightGesture.view) {
-                [self.view addGestureRecognizer:self.EdgeRightGesture];
-            }
-        }
-        
+    }
+    
+    if (self.top_SwipeJumpToVc) {
         if (self.swipePresentEdge & HYPresentTop) {
             if (!self.EdgeTopGesture.view) {
                 [self.view addGestureRecognizer:self.EdgeTopGesture];
             }
         }
-        
+    }
+    
+    if (self.bottom_SwipeJumpToVc) {
         if (self.swipePresentEdge & HYPresentBottom) {
             if (!self.EdgeBottomGesture.view) {
                 [self.view addGestureRecognizer:self.EdgeBottomGesture];
+            }
+        }
+    }
+    
+    if (self.right_SwipeJumpToVc) {
+        if (self.swipePresentEdge & HYPresentRigt) {
+            if (!self.EdgeRightGesture.view) {
+                [self.view addGestureRecognizer:self.EdgeRightGesture];
             }
         }
     }
@@ -182,8 +188,8 @@
 #pragma mark - Event Response
 - (void)EdgeLeftGestureAction:(UIScreenEdgePanGestureRecognizer *)sender{
     if (sender.state == UIGestureRecognizerStateBegan) {
-        if (self.swipeJumpToVc) {
-            [self hy_presentViewController:self.swipeJumpToVc
+        if (self.left_SwipeJumpToVc) {
+            [self hy_presentViewController:self.left_SwipeJumpToVc
                                presentEdge:HYPresentLeft
                                     sender:sender
                                   animated:YES
@@ -198,8 +204,8 @@
 
 - (void)EdgeRightGestureAction:(UIScreenEdgePanGestureRecognizer *)sender{
     if (sender.state == UIGestureRecognizerStateBegan) {
-        if (self.swipeJumpToVc) {
-            [self hy_presentViewController:self.swipeJumpToVc
+        if (self.right_SwipeJumpToVc) {
+            [self hy_presentViewController:self.right_SwipeJumpToVc
                                presentEdge:HYPresentRigt
                                     sender:sender
                                   animated:YES
@@ -214,8 +220,8 @@
 
 - (void)EdgeTopGestureAction:(UIScreenEdgePanGestureRecognizer *)sender{
     if (sender.state == UIGestureRecognizerStateBegan) {
-        if (self.swipeJumpToVc) {
-            [self hy_presentViewController:self.swipeJumpToVc
+        if (self.top_SwipeJumpToVc) {
+            [self hy_presentViewController:self.top_SwipeJumpToVc
                                presentEdge:HYPresentTop
                                     sender:sender
                                   animated:YES
@@ -230,8 +236,8 @@
 
 - (void)EdgeBottomGestureAction:(UIScreenEdgePanGestureRecognizer *)sender{
     if (sender.state == UIGestureRecognizerStateBegan) {
-        if (self.swipeJumpToVc) {
-            [self hy_presentViewController:self.swipeJumpToVc
+        if (self.bottom_SwipeJumpToVc) {
+            [self hy_presentViewController:self.bottom_SwipeJumpToVc
                                presentEdge:HYPresentBottom
                                     sender:sender
                                   animated:YES
