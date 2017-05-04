@@ -26,7 +26,7 @@ typedef NS_OPTIONS(int, HYPresentEdge) {
                               completion: (void (^)(void))completion;
 
 
-// 通过边缘手势滑动可以present, 初始化这两个个参数
+// 通过边缘手势滑动可以present 设置方向和presentedVC
 @property (nonatomic, readwrite) HYPresentEdge swipePresentEdge;//可多选 （HYPresentTop | HYPresentLeft | HYPresentBottom | HYPresentRigt)
 
 //@property (nonatomic, strong) UIViewController *swipeJumpToVc; // 边缘手势滑动Present到的VC
