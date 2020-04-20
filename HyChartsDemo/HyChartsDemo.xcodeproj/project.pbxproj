@@ -1,0 +1,1219 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		04E6FFEE244C120A003FDEB8 /* HyChartsKlineNewDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E6FFED244C120A003FDEB8 /* HyChartsKlineNewDemoController.m */; };
+		46AE9E42EFF27BF878AC9C50 /* Pods_HyChartsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A347B05A526C00AFA9B671E /* Pods_HyChartsDemo.framework */; };
+		5123D06324455C4B0052CB53 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D06224455C4B0052CB53 /* AppDelegate.m */; };
+		5123D06624455C4B0052CB53 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D06524455C4B0052CB53 /* SceneDelegate.m */; };
+		5123D06924455C4B0052CB53 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D06824455C4B0052CB53 /* ViewController.m */; };
+		5123D06C24455C4B0052CB53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5123D06A24455C4B0052CB53 /* Main.storyboard */; };
+		5123D06E24455C4B0052CB53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5123D06D24455C4B0052CB53 /* Assets.xcassets */; };
+		5123D07124455C4B0052CB53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5123D06F24455C4B0052CB53 /* LaunchScreen.storyboard */; };
+		5123D07424455C4B0052CB53 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D07324455C4B0052CB53 /* main.m */; };
+		5123D07E24455C4C0052CB53 /* HyChartsDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D07D24455C4C0052CB53 /* HyChartsDemoTests.m */; };
+		5123D08924455C4C0052CB53 /* HyChartsDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D08824455C4C0052CB53 /* HyChartsDemoUITests.m */; };
+		5123D1642445605C0052CB53 /* HyChartsLineDemoCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D1562445605C0052CB53 /* HyChartsLineDemoCursor.m */; };
+		5123D1652445605C0052CB53 /* HyChartsBarDemoCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D1572445605C0052CB53 /* HyChartsBarDemoCursor.m */; };
+		5123D1662445605C0052CB53 /* HyChartsDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D1592445605C0052CB53 /* HyChartsDemoController.m */; };
+		5123D1672445605C0052CB53 /* HyChartsKlineDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D15A2445605C0052CB53 /* HyChartsKlineDemoController.m */; };
+		5123D1682445605C0052CB53 /* HyChartsKLineAuxiliaryDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D15B2445605C0052CB53 /* HyChartsKLineAuxiliaryDemoController.m */; };
+		5123D1692445605C0052CB53 /* HyChartsBarDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D15C2445605C0052CB53 /* HyChartsBarDemoController.m */; };
+		5123D16A2445605C0052CB53 /* HyChartsLineDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D15E2445605C0052CB53 /* HyChartsLineDemoController.m */; };
+		5123D16B2445605C0052CB53 /* HyChartsKlineVolumeDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D1602445605C0052CB53 /* HyChartsKlineVolumeDemoController.m */; };
+		5123D186244D81E10052CB53 /* HyChartsKlineMainDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D185244D81E10052CB53 /* HyChartsKlineMainDemoController.m */; };
+		5123D18C244D82E30052CB53 /* HyChartsReactChainsDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D18B244D82E30052CB53 /* HyChartsReactChainsDemoController.m */; };
+		5123D318244D90450052CB53 /* HyChartsMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D288244D90440052CB53 /* HyChartsMethods.m */; };
+		5123D319244D90450052CB53 /* HyChartDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D28E244D90440052CB53 /* HyChartDataSource.m */; };
+		5123D31A244D90450052CB53 /* HyChartAxisDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D290244D90440052CB53 /* HyChartAxisDataSource.m */; };
+		5123D31B244D90450052CB53 /* HyChartBarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D296244D90440052CB53 /* HyChartBarDataSource.m */; };
+		5123D31C244D90450052CB53 /* HyChartLineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D297244D90440052CB53 /* HyChartLineDataSource.m */; };
+		5123D31D244D90450052CB53 /* HyChartKLineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D29B244D90440052CB53 /* HyChartKLineDataSource.m */; };
+		5123D31E244D90450052CB53 /* HyChartBarConfigureDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D29E244D90440052CB53 /* HyChartBarConfigureDataSource.m */; };
+		5123D31F244D90450052CB53 /* HyChartConfigureDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2A0244D90440052CB53 /* HyChartConfigureDataSource.m */; };
+		5123D320244D90450052CB53 /* HyChartKLineConfigureDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2A3244D90440052CB53 /* HyChartKLineConfigureDataSource.m */; };
+		5123D321244D90450052CB53 /* HyChartLineConfigureDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2A8244D90440052CB53 /* HyChartLineConfigureDataSource.m */; };
+		5123D322244D90450052CB53 /* HyChartLineModelDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2B1244D90440052CB53 /* HyChartLineModelDataSource.m */; };
+		5123D323244D90450052CB53 /* HyChartModelDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2B3244D90440052CB53 /* HyChartModelDataSource.m */; };
+		5123D324244D90450052CB53 /* HyChartKLineModelDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2B4244D90440052CB53 /* HyChartKLineModelDataSource.m */; };
+		5123D325244D90450052CB53 /* HyChartBarModelDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2B5244D90440052CB53 /* HyChartBarModelDataSource.m */; };
+		5123D326244D90450052CB53 /* HyChartConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2B9244D90440052CB53 /* HyChartConfigure.m */; };
+		5123D327244D90450052CB53 /* HyChartKLineConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2BE244D90440052CB53 /* HyChartKLineConfigure.m */; };
+		5123D328244D90450052CB53 /* HyChartBarConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2C1244D90440052CB53 /* HyChartBarConfigure.m */; };
+		5123D329244D90450052CB53 /* HyChartLineConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2C3244D90440052CB53 /* HyChartLineConfigure.m */; };
+		5123D32A244D90450052CB53 /* HyChartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2C6244D90440052CB53 /* HyChartModel.m */; };
+		5123D32B244D90450052CB53 /* HyChartKLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2C7244D90440052CB53 /* HyChartKLineModel.m */; };
+		5123D32C244D90450052CB53 /* HyChartBarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2C8244D90440052CB53 /* HyChartBarModel.m */; };
+		5123D32D244D90450052CB53 /* HyChartLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2D0244D90440052CB53 /* HyChartLineModel.m */; };
+		5123D32E244D90450052CB53 /* HyChartAlgorithmContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2D3244D90440052CB53 /* HyChartAlgorithmContext.m */; };
+		5123D32F244D90450052CB53 /* HyChartAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2D4244D90440052CB53 /* HyChartAlgorithm.m */; };
+		5123D330244D90450052CB53 /* HyChartAxisGridLineInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2DF244D90440052CB53 /* HyChartAxisGridLineInfo.m */; };
+		5123D331244D90450052CB53 /* HyChartAxisModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2E0244D90440052CB53 /* HyChartAxisModel.m */; };
+		5123D332244D90450052CB53 /* HyChartYAxisInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2E3244D90440052CB53 /* HyChartYAxisInfo.m */; };
+		5123D333244D90450052CB53 /* HyChartYAxisModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2E6244D90440052CB53 /* HyChartYAxisModel.m */; };
+		5123D334244D90450052CB53 /* HyChartXAxisInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2E9244D90440052CB53 /* HyChartXAxisInfo.m */; };
+		5123D335244D90450052CB53 /* HyChartXAxisModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2EC244D90440052CB53 /* HyChartXAxisModel.m */; };
+		5123D336244D90450052CB53 /* HyChartAxisInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2EF244D90440052CB53 /* HyChartAxisInfo.m */; };
+		5123D337244D90450052CB53 /* HyChartLineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2F2244D90440052CB53 /* HyChartLineLayer.m */; };
+		5123D338244D90450052CB53 /* HyChartKLineVolumeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2F3244D90440052CB53 /* HyChartKLineVolumeLayer.m */; };
+		5123D339244D90450052CB53 /* HyChartAxisLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2F5244D90440052CB53 /* HyChartAxisLayer.m */; };
+		5123D33A244D90450052CB53 /* HyChartBarLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2FA244D90440052CB53 /* HyChartBarLayer.m */; };
+		5123D33B244D90450052CB53 /* HyChartKLineMainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2FC244D90440052CB53 /* HyChartKLineMainLayer.m */; };
+		5123D33C244D90450052CB53 /* HyChartLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D2FD244D90440052CB53 /* HyChartLayer.m */; };
+		5123D33D244D90450052CB53 /* HyChartKLineAuxiliaryLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D300244D90440052CB53 /* HyChartKLineAuxiliaryLayer.m */; };
+		5123D33E244D90450052CB53 /* HyChartCursorConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D303244D90440052CB53 /* HyChartCursorConfigure.m */; };
+		5123D33F244D90450052CB53 /* HyChartCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D306244D90440052CB53 /* HyChartCursor.m */; };
+		5123D340244D90450052CB53 /* HyChartKLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D30C244D90440052CB53 /* HyChartKLineView.m */; };
+		5123D341244D90450052CB53 /* HyChartLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D311244D90440052CB53 /* HyChartLineView.m */; };
+		5123D342244D90450052CB53 /* HyChartKLineAuxiliaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D312244D90440052CB53 /* HyChartKLineAuxiliaryView.m */; };
+		5123D343244D90450052CB53 /* HyChartKLineMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D313244D90440052CB53 /* HyChartKLineMainView.m */; };
+		5123D344244D90450052CB53 /* HyChartKLineVolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D314244D90440052CB53 /* HyChartKLineVolumeView.m */; };
+		5123D345244D90450052CB53 /* HyChartBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D315244D90440052CB53 /* HyChartBarView.m */; };
+		5123D346244D90450052CB53 /* HyChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D317244D90440052CB53 /* HyChartView.m */; };
+		5123D349244D93670052CB53 /* HyChartsKLineDemoCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D348244D93670052CB53 /* HyChartsKLineDemoCursor.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5123D07A24455C4C0052CB53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5123D05624455C4B0052CB53 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5123D05D24455C4B0052CB53;
+			remoteInfo = HyChartsDemo;
+		};
+		5123D08524455C4C0052CB53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5123D05624455C4B0052CB53 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5123D05D24455C4B0052CB53;
+			remoteInfo = HyChartsDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		04E6FFEC244C120A003FDEB8 /* HyChartsKlineNewDemoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HyChartsKlineNewDemoController.h; sourceTree = "<group>"; };
+		04E6FFED244C120A003FDEB8 /* HyChartsKlineNewDemoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HyChartsKlineNewDemoController.m; sourceTree = "<group>"; };
+		15A7049E7B5412613A33EECD /* Pods-HyChartsDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HyChartsDemo.release.xcconfig"; path = "Target Support Files/Pods-HyChartsDemo/Pods-HyChartsDemo.release.xcconfig"; sourceTree = "<group>"; };
+		1A347B05A526C00AFA9B671E /* Pods_HyChartsDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HyChartsDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5123D05E24455C4B0052CB53 /* HyChartsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HyChartsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5123D06124455C4B0052CB53 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5123D06224455C4B0052CB53 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5123D06424455C4B0052CB53 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		5123D06524455C4B0052CB53 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		5123D06724455C4B0052CB53 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		5123D06824455C4B0052CB53 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5123D06B24455C4B0052CB53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5123D06D24455C4B0052CB53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5123D07024455C4B0052CB53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5123D07224455C4B0052CB53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5123D07324455C4B0052CB53 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5123D07924455C4C0052CB53 /* HyChartsDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HyChartsDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5123D07D24455C4C0052CB53 /* HyChartsDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HyChartsDemoTests.m; sourceTree = "<group>"; };
+		5123D07F24455C4C0052CB53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5123D08424455C4C0052CB53 /* HyChartsDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HyChartsDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5123D08824455C4C0052CB53 /* HyChartsDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HyChartsDemoUITests.m; sourceTree = "<group>"; };
+		5123D08A24455C4C0052CB53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5123D1542445605C0052CB53 /* HyChartsBarDemoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartsBarDemoController.h; sourceTree = "<group>"; };
+		5123D1552445605C0052CB53 /* HyChartsKlineVolumeDemoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartsKlineVolumeDemoController.h; sourceTree = "<group>"; };
+		5123D1562445605C0052CB53 /* HyChartsLineDemoCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartsLineDemoCursor.m; sourceTree = "<group>"; };
+		5123D1572445605C0052CB53 /* HyChartsBarDemoCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartsBarDemoCursor.m; sourceTree = "<group>"; };
+		5123D1582445605C0052CB53 /* HyChartsLineDemoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartsLineDemoController.h; sourceTree = "<group>"; };
+		5123D1592445605C0052CB53 /* HyChartsDemoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartsDemoController.m; sourceTree = "<group>"; };
+		5123D15A2445605C0052CB53 /* HyChartsKlineDemoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartsKlineDemoController.m; sourceTree = "<group>"; };
+		5123D15B2445605C0052CB53 /* HyChartsKLineAuxiliaryDemoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartsKLineAuxiliaryDemoController.m; sourceTree = "<group>"; };
+		5123D15C2445605C0052CB53 /* HyChartsBarDemoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartsBarDemoController.m; sourceTree = "<group>"; };
+		5123D15D2445605C0052CB53 /* HyChartsBarDemoCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartsBarDemoCursor.h; sourceTree = "<group>"; };
+		5123D15E2445605C0052CB53 /* HyChartsLineDemoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartsLineDemoController.m; sourceTree = "<group>"; };
+		5123D15F2445605C0052CB53 /* HyChartsLineDemoCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartsLineDemoCursor.h; sourceTree = "<group>"; };
+		5123D1602445605C0052CB53 /* HyChartsKlineVolumeDemoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartsKlineVolumeDemoController.m; sourceTree = "<group>"; };
+		5123D1612445605C0052CB53 /* HyChartsKLineAuxiliaryDemoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartsKLineAuxiliaryDemoController.h; sourceTree = "<group>"; };
+		5123D1622445605C0052CB53 /* HyChartsKlineDemoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartsKlineDemoController.h; sourceTree = "<group>"; };
+		5123D1632445605C0052CB53 /* HyChartsDemoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartsDemoController.h; sourceTree = "<group>"; };
+		5123D184244D81E10052CB53 /* HyChartsKlineMainDemoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HyChartsKlineMainDemoController.h; sourceTree = "<group>"; };
+		5123D185244D81E10052CB53 /* HyChartsKlineMainDemoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HyChartsKlineMainDemoController.m; sourceTree = "<group>"; };
+		5123D18A244D82E30052CB53 /* HyChartsReactChainsDemoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HyChartsReactChainsDemoController.h; sourceTree = "<group>"; };
+		5123D18B244D82E30052CB53 /* HyChartsReactChainsDemoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HyChartsReactChainsDemoController.m; sourceTree = "<group>"; };
+		5123D288244D90440052CB53 /* HyChartsMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartsMethods.m; sourceTree = "<group>"; };
+		5123D289244D90440052CB53 /* HyCharts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyCharts.h; sourceTree = "<group>"; };
+		5123D28A244D90440052CB53 /* HyChartsTypedef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartsTypedef.h; sourceTree = "<group>"; };
+		5123D28B244D90440052CB53 /* HyChartsMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartsMethods.h; sourceTree = "<group>"; };
+		5123D28E244D90440052CB53 /* HyChartDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartDataSource.m; sourceTree = "<group>"; };
+		5123D290244D90440052CB53 /* HyChartAxisDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartAxisDataSource.m; sourceTree = "<group>"; };
+		5123D291244D90440052CB53 /* HyChartAxisDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartAxisDataSource.h; sourceTree = "<group>"; };
+		5123D292244D90440052CB53 /* HyChartAxisDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartAxisDataSourceProtocol.h; sourceTree = "<group>"; };
+		5123D293244D90440052CB53 /* HyChartKLineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineDataSource.h; sourceTree = "<group>"; };
+		5123D294244D90440052CB53 /* HyChartLineDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLineDataSourceProtocol.h; sourceTree = "<group>"; };
+		5123D295244D90440052CB53 /* HyChartBarDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartBarDataSourceProtocol.h; sourceTree = "<group>"; };
+		5123D296244D90440052CB53 /* HyChartBarDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartBarDataSource.m; sourceTree = "<group>"; };
+		5123D297244D90440052CB53 /* HyChartLineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartLineDataSource.m; sourceTree = "<group>"; };
+		5123D298244D90440052CB53 /* HyChartKLineDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineDataSourceProtocol.h; sourceTree = "<group>"; };
+		5123D299244D90440052CB53 /* HyChartDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartDataSourceProtocol.h; sourceTree = "<group>"; };
+		5123D29A244D90440052CB53 /* HyChartDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartDataSource.h; sourceTree = "<group>"; };
+		5123D29B244D90440052CB53 /* HyChartKLineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartKLineDataSource.m; sourceTree = "<group>"; };
+		5123D29D244D90440052CB53 /* HyChartKLineConfigureDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineConfigureDataSource.h; sourceTree = "<group>"; };
+		5123D29E244D90440052CB53 /* HyChartBarConfigureDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartBarConfigureDataSource.m; sourceTree = "<group>"; };
+		5123D29F244D90440052CB53 /* HyChartBarConfigureDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartBarConfigureDataSourceProtocol.h; sourceTree = "<group>"; };
+		5123D2A0244D90440052CB53 /* HyChartConfigureDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartConfigureDataSource.m; sourceTree = "<group>"; };
+		5123D2A1244D90440052CB53 /* HyChartConfigureDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartConfigureDataSourceProtocol.h; sourceTree = "<group>"; };
+		5123D2A2244D90440052CB53 /* HyChartLineConfigureDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLineConfigureDataSource.h; sourceTree = "<group>"; };
+		5123D2A3244D90440052CB53 /* HyChartKLineConfigureDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartKLineConfigureDataSource.m; sourceTree = "<group>"; };
+		5123D2A4244D90440052CB53 /* HyChartKLineConfigureDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineConfigureDataSourceProtocol.h; sourceTree = "<group>"; };
+		5123D2A5244D90440052CB53 /* HyChartLineConfigureDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLineConfigureDataSourceProtocol.h; sourceTree = "<group>"; };
+		5123D2A6244D90440052CB53 /* HyChartBarConfigureDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartBarConfigureDataSource.h; sourceTree = "<group>"; };
+		5123D2A7244D90440052CB53 /* HyChartConfigureDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartConfigureDataSource.h; sourceTree = "<group>"; };
+		5123D2A8244D90440052CB53 /* HyChartLineConfigureDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartLineConfigureDataSource.m; sourceTree = "<group>"; };
+		5123D2AA244D90440052CB53 /* HyChartLineModelDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLineModelDataSource.h; sourceTree = "<group>"; };
+		5123D2AB244D90440052CB53 /* HyChartModelDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartModelDataSource.h; sourceTree = "<group>"; };
+		5123D2AC244D90440052CB53 /* HyChartKLineModelDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineModelDataSourceProtocol.h; sourceTree = "<group>"; };
+		5123D2AD244D90440052CB53 /* HyChartLineModelDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLineModelDataSourceProtocol.h; sourceTree = "<group>"; };
+		5123D2AE244D90440052CB53 /* HyChartBarModelDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartBarModelDataSource.h; sourceTree = "<group>"; };
+		5123D2AF244D90440052CB53 /* HyChartKLineModelDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineModelDataSource.h; sourceTree = "<group>"; };
+		5123D2B0244D90440052CB53 /* HyChartBarModelDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartBarModelDataSourceProtocol.h; sourceTree = "<group>"; };
+		5123D2B1244D90440052CB53 /* HyChartLineModelDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartLineModelDataSource.m; sourceTree = "<group>"; };
+		5123D2B2244D90440052CB53 /* HyChartModelDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartModelDataSourceProtocol.h; sourceTree = "<group>"; };
+		5123D2B3244D90440052CB53 /* HyChartModelDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartModelDataSource.m; sourceTree = "<group>"; };
+		5123D2B4244D90440052CB53 /* HyChartKLineModelDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartKLineModelDataSource.m; sourceTree = "<group>"; };
+		5123D2B5244D90440052CB53 /* HyChartBarModelDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartBarModelDataSource.m; sourceTree = "<group>"; };
+		5123D2B6244D90440052CB53 /* HyChartLineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLineDataSource.h; sourceTree = "<group>"; };
+		5123D2B7244D90440052CB53 /* HyChartBarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartBarDataSource.h; sourceTree = "<group>"; };
+		5123D2B9244D90440052CB53 /* HyChartConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartConfigure.m; sourceTree = "<group>"; };
+		5123D2BA244D90440052CB53 /* HyChartBarConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartBarConfigure.h; sourceTree = "<group>"; };
+		5123D2BB244D90440052CB53 /* HyChartKLineConfigureProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineConfigureProtocol.h; sourceTree = "<group>"; };
+		5123D2BC244D90440052CB53 /* HyChartLineConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLineConfigure.h; sourceTree = "<group>"; };
+		5123D2BD244D90440052CB53 /* HyChartConfigureProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartConfigureProtocol.h; sourceTree = "<group>"; };
+		5123D2BE244D90440052CB53 /* HyChartKLineConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartKLineConfigure.m; sourceTree = "<group>"; };
+		5123D2BF244D90440052CB53 /* HyChartBarConfigureProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartBarConfigureProtocol.h; sourceTree = "<group>"; };
+		5123D2C0244D90440052CB53 /* HyChartLineConfigureProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLineConfigureProtocol.h; sourceTree = "<group>"; };
+		5123D2C1244D90440052CB53 /* HyChartBarConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartBarConfigure.m; sourceTree = "<group>"; };
+		5123D2C2244D90440052CB53 /* HyChartConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartConfigure.h; sourceTree = "<group>"; };
+		5123D2C3244D90440052CB53 /* HyChartLineConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartLineConfigure.m; sourceTree = "<group>"; };
+		5123D2C4244D90440052CB53 /* HyChartKLineConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineConfigure.h; sourceTree = "<group>"; };
+		5123D2C6244D90440052CB53 /* HyChartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartModel.m; sourceTree = "<group>"; };
+		5123D2C7244D90440052CB53 /* HyChartKLineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartKLineModel.m; sourceTree = "<group>"; };
+		5123D2C8244D90440052CB53 /* HyChartBarModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartBarModel.m; sourceTree = "<group>"; };
+		5123D2C9244D90440052CB53 /* HyChartModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartModelProtocol.h; sourceTree = "<group>"; };
+		5123D2CA244D90440052CB53 /* HyChartLineModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLineModelProtocol.h; sourceTree = "<group>"; };
+		5123D2CB244D90440052CB53 /* HyChartLineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLineModel.h; sourceTree = "<group>"; };
+		5123D2CC244D90440052CB53 /* HyChartKLineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineModel.h; sourceTree = "<group>"; };
+		5123D2CD244D90440052CB53 /* HyChartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartModel.h; sourceTree = "<group>"; };
+		5123D2CE244D90440052CB53 /* HyChartKLineModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineModelProtocol.h; sourceTree = "<group>"; };
+		5123D2CF244D90440052CB53 /* HyChartBarModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartBarModel.h; sourceTree = "<group>"; };
+		5123D2D0244D90440052CB53 /* HyChartLineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartLineModel.m; sourceTree = "<group>"; };
+		5123D2D1244D90440052CB53 /* HyChartBarModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartBarModelProtocol.h; sourceTree = "<group>"; };
+		5123D2D3244D90440052CB53 /* HyChartAlgorithmContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartAlgorithmContext.m; sourceTree = "<group>"; };
+		5123D2D4244D90440052CB53 /* HyChartAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartAlgorithm.m; sourceTree = "<group>"; };
+		5123D2D5244D90440052CB53 /* HyChartAlgorithmProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartAlgorithmProtocol.h; sourceTree = "<group>"; };
+		5123D2D6244D90440052CB53 /* HyChartAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartAlgorithm.h; sourceTree = "<group>"; };
+		5123D2D7244D90440052CB53 /* HyChartAlgorithmContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartAlgorithmContext.h; sourceTree = "<group>"; };
+		5123D2D9244D90440052CB53 /* HyChartAxisModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartAxisModel.h; sourceTree = "<group>"; };
+		5123D2DA244D90440052CB53 /* HyChartAxisGridLineInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartAxisGridLineInfo.h; sourceTree = "<group>"; };
+		5123D2DB244D90440052CB53 /* HyChartAxisGridLineInfoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartAxisGridLineInfoProtocol.h; sourceTree = "<group>"; };
+		5123D2DC244D90440052CB53 /* HyChartAxisInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartAxisInfo.h; sourceTree = "<group>"; };
+		5123D2DD244D90440052CB53 /* HyChartAxisModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartAxisModelProtocol.h; sourceTree = "<group>"; };
+		5123D2DE244D90440052CB53 /* HyChartAxisInfoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartAxisInfoProtocol.h; sourceTree = "<group>"; };
+		5123D2DF244D90440052CB53 /* HyChartAxisGridLineInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartAxisGridLineInfo.m; sourceTree = "<group>"; };
+		5123D2E0244D90440052CB53 /* HyChartAxisModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartAxisModel.m; sourceTree = "<group>"; };
+		5123D2E2244D90440052CB53 /* HyChartYAxisInfoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartYAxisInfoProtocol.h; sourceTree = "<group>"; };
+		5123D2E3244D90440052CB53 /* HyChartYAxisInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartYAxisInfo.m; sourceTree = "<group>"; };
+		5123D2E4244D90440052CB53 /* HyChartYAxisModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartYAxisModel.h; sourceTree = "<group>"; };
+		5123D2E5244D90440052CB53 /* HyChartYAxisModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartYAxisModelProtocol.h; sourceTree = "<group>"; };
+		5123D2E6244D90440052CB53 /* HyChartYAxisModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartYAxisModel.m; sourceTree = "<group>"; };
+		5123D2E7244D90440052CB53 /* HyChartYAxisInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartYAxisInfo.h; sourceTree = "<group>"; };
+		5123D2E9244D90440052CB53 /* HyChartXAxisInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartXAxisInfo.m; sourceTree = "<group>"; };
+		5123D2EA244D90440052CB53 /* HyChartXAxisInfoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartXAxisInfoProtocol.h; sourceTree = "<group>"; };
+		5123D2EB244D90440052CB53 /* HyChartXAxisModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartXAxisModelProtocol.h; sourceTree = "<group>"; };
+		5123D2EC244D90440052CB53 /* HyChartXAxisModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartXAxisModel.m; sourceTree = "<group>"; };
+		5123D2ED244D90440052CB53 /* HyChartXAxisInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartXAxisInfo.h; sourceTree = "<group>"; };
+		5123D2EE244D90440052CB53 /* HyChartXAxisModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartXAxisModel.h; sourceTree = "<group>"; };
+		5123D2EF244D90440052CB53 /* HyChartAxisInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartAxisInfo.m; sourceTree = "<group>"; };
+		5123D2F2244D90440052CB53 /* HyChartLineLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartLineLayer.m; sourceTree = "<group>"; };
+		5123D2F3244D90440052CB53 /* HyChartKLineVolumeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartKLineVolumeLayer.m; sourceTree = "<group>"; };
+		5123D2F4244D90440052CB53 /* HyChartBarLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartBarLayer.h; sourceTree = "<group>"; };
+		5123D2F5244D90440052CB53 /* HyChartAxisLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartAxisLayer.m; sourceTree = "<group>"; };
+		5123D2F6244D90440052CB53 /* HyChartLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLayer.h; sourceTree = "<group>"; };
+		5123D2F7244D90440052CB53 /* HyChartKLineMainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineMainLayer.h; sourceTree = "<group>"; };
+		5123D2F8244D90440052CB53 /* HyChartKLineAuxiliaryLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineAuxiliaryLayer.h; sourceTree = "<group>"; };
+		5123D2F9244D90440052CB53 /* HyChartLineLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLineLayer.h; sourceTree = "<group>"; };
+		5123D2FA244D90440052CB53 /* HyChartBarLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartBarLayer.m; sourceTree = "<group>"; };
+		5123D2FB244D90440052CB53 /* HyChartKLineVolumeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineVolumeLayer.h; sourceTree = "<group>"; };
+		5123D2FC244D90440052CB53 /* HyChartKLineMainLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartKLineMainLayer.m; sourceTree = "<group>"; };
+		5123D2FD244D90440052CB53 /* HyChartLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartLayer.m; sourceTree = "<group>"; };
+		5123D2FE244D90440052CB53 /* HyChartLayerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLayerProtocol.h; sourceTree = "<group>"; };
+		5123D2FF244D90440052CB53 /* HyChartAxisLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartAxisLayer.h; sourceTree = "<group>"; };
+		5123D300244D90440052CB53 /* HyChartKLineAuxiliaryLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartKLineAuxiliaryLayer.m; sourceTree = "<group>"; };
+		5123D302244D90440052CB53 /* HyChartCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartCursor.h; sourceTree = "<group>"; };
+		5123D303244D90440052CB53 /* HyChartCursorConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartCursorConfigure.m; sourceTree = "<group>"; };
+		5123D304244D90440052CB53 /* HyChartCursorConfigureProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartCursorConfigureProtocol.h; sourceTree = "<group>"; };
+		5123D305244D90440052CB53 /* HyChartCursorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartCursorProtocol.h; sourceTree = "<group>"; };
+		5123D306244D90440052CB53 /* HyChartCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartCursor.m; sourceTree = "<group>"; };
+		5123D307244D90440052CB53 /* HyChartCursorConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartCursorConfigure.h; sourceTree = "<group>"; };
+		5123D309244D90440052CB53 /* HyChartKLineAuxiliaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineAuxiliaryView.h; sourceTree = "<group>"; };
+		5123D30A244D90440052CB53 /* HyChartLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartLineView.h; sourceTree = "<group>"; };
+		5123D30B244D90440052CB53 /* HyChartViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartViewProtocol.h; sourceTree = "<group>"; };
+		5123D30C244D90440052CB53 /* HyChartKLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartKLineView.m; sourceTree = "<group>"; };
+		5123D30D244D90440052CB53 /* HyChartBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartBarView.h; sourceTree = "<group>"; };
+		5123D30E244D90440052CB53 /* HyChartKLineVolumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineVolumeView.h; sourceTree = "<group>"; };
+		5123D30F244D90440052CB53 /* HyChartKLineMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineMainView.h; sourceTree = "<group>"; };
+		5123D310244D90440052CB53 /* HyChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartView.h; sourceTree = "<group>"; };
+		5123D311244D90440052CB53 /* HyChartLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartLineView.m; sourceTree = "<group>"; };
+		5123D312244D90440052CB53 /* HyChartKLineAuxiliaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartKLineAuxiliaryView.m; sourceTree = "<group>"; };
+		5123D313244D90440052CB53 /* HyChartKLineMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartKLineMainView.m; sourceTree = "<group>"; };
+		5123D314244D90440052CB53 /* HyChartKLineVolumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartKLineVolumeView.m; sourceTree = "<group>"; };
+		5123D315244D90440052CB53 /* HyChartBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartBarView.m; sourceTree = "<group>"; };
+		5123D316244D90440052CB53 /* HyChartKLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineView.h; sourceTree = "<group>"; };
+		5123D317244D90440052CB53 /* HyChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartView.m; sourceTree = "<group>"; };
+		5123D347244D93670052CB53 /* HyChartsKLineDemoCursor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HyChartsKLineDemoCursor.h; sourceTree = "<group>"; };
+		5123D348244D93670052CB53 /* HyChartsKLineDemoCursor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HyChartsKLineDemoCursor.m; sourceTree = "<group>"; };
+		B8CC2BBFE1DE80E67F19542C /* Pods-HyChartsDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HyChartsDemo.debug.xcconfig"; path = "Target Support Files/Pods-HyChartsDemo/Pods-HyChartsDemo.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5123D05B24455C4B0052CB53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46AE9E42EFF27BF878AC9C50 /* Pods_HyChartsDemo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5123D07624455C4C0052CB53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5123D08124455C4C0052CB53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5123D05524455C4B0052CB53 = {
+			isa = PBXGroup;
+			children = (
+				5123D06024455C4B0052CB53 /* HyChartsDemo */,
+				5123D07C24455C4C0052CB53 /* HyChartsDemoTests */,
+				5123D08724455C4C0052CB53 /* HyChartsDemoUITests */,
+				5123D05F24455C4B0052CB53 /* Products */,
+				C7548338951D9D54A1101754 /* Pods */,
+				A821372B101C082BF3ECBBF3 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		5123D05F24455C4B0052CB53 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5123D05E24455C4B0052CB53 /* HyChartsDemo.app */,
+				5123D07924455C4C0052CB53 /* HyChartsDemoTests.xctest */,
+				5123D08424455C4C0052CB53 /* HyChartsDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5123D06024455C4B0052CB53 /* HyChartsDemo */ = {
+			isa = PBXGroup;
+			children = (
+				5123D287244D90440052CB53 /* HyCharts */,
+				5123D1532445605C0052CB53 /* HyChartsDemo */,
+				5123D06124455C4B0052CB53 /* AppDelegate.h */,
+				5123D06224455C4B0052CB53 /* AppDelegate.m */,
+				5123D06424455C4B0052CB53 /* SceneDelegate.h */,
+				5123D06524455C4B0052CB53 /* SceneDelegate.m */,
+				5123D06724455C4B0052CB53 /* ViewController.h */,
+				5123D06824455C4B0052CB53 /* ViewController.m */,
+				5123D06A24455C4B0052CB53 /* Main.storyboard */,
+				5123D06D24455C4B0052CB53 /* Assets.xcassets */,
+				5123D06F24455C4B0052CB53 /* LaunchScreen.storyboard */,
+				5123D07224455C4B0052CB53 /* Info.plist */,
+				5123D07324455C4B0052CB53 /* main.m */,
+			);
+			path = HyChartsDemo;
+			sourceTree = "<group>";
+		};
+		5123D07C24455C4C0052CB53 /* HyChartsDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				5123D07D24455C4C0052CB53 /* HyChartsDemoTests.m */,
+				5123D07F24455C4C0052CB53 /* Info.plist */,
+			);
+			path = HyChartsDemoTests;
+			sourceTree = "<group>";
+		};
+		5123D08724455C4C0052CB53 /* HyChartsDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				5123D08824455C4C0052CB53 /* HyChartsDemoUITests.m */,
+				5123D08A24455C4C0052CB53 /* Info.plist */,
+			);
+			path = HyChartsDemoUITests;
+			sourceTree = "<group>";
+		};
+		5123D1532445605C0052CB53 /* HyChartsDemo */ = {
+			isa = PBXGroup;
+			children = (
+				5123D1632445605C0052CB53 /* HyChartsDemoController.h */,
+				5123D1592445605C0052CB53 /* HyChartsDemoController.m */,
+				5123D1542445605C0052CB53 /* HyChartsBarDemoController.h */,
+				5123D15C2445605C0052CB53 /* HyChartsBarDemoController.m */,
+				5123D1582445605C0052CB53 /* HyChartsLineDemoController.h */,
+				5123D15E2445605C0052CB53 /* HyChartsLineDemoController.m */,
+				5123D1622445605C0052CB53 /* HyChartsKlineDemoController.h */,
+				5123D15A2445605C0052CB53 /* HyChartsKlineDemoController.m */,
+				04E6FFEC244C120A003FDEB8 /* HyChartsKlineNewDemoController.h */,
+				04E6FFED244C120A003FDEB8 /* HyChartsKlineNewDemoController.m */,
+				5123D184244D81E10052CB53 /* HyChartsKlineMainDemoController.h */,
+				5123D185244D81E10052CB53 /* HyChartsKlineMainDemoController.m */,
+				5123D1552445605C0052CB53 /* HyChartsKlineVolumeDemoController.h */,
+				5123D1602445605C0052CB53 /* HyChartsKlineVolumeDemoController.m */,
+				5123D1612445605C0052CB53 /* HyChartsKLineAuxiliaryDemoController.h */,
+				5123D15B2445605C0052CB53 /* HyChartsKLineAuxiliaryDemoController.m */,
+				5123D18A244D82E30052CB53 /* HyChartsReactChainsDemoController.h */,
+				5123D18B244D82E30052CB53 /* HyChartsReactChainsDemoController.m */,
+				5123D15D2445605C0052CB53 /* HyChartsBarDemoCursor.h */,
+				5123D1572445605C0052CB53 /* HyChartsBarDemoCursor.m */,
+				5123D15F2445605C0052CB53 /* HyChartsLineDemoCursor.h */,
+				5123D1562445605C0052CB53 /* HyChartsLineDemoCursor.m */,
+				5123D347244D93670052CB53 /* HyChartsKLineDemoCursor.h */,
+				5123D348244D93670052CB53 /* HyChartsKLineDemoCursor.m */,
+			);
+			path = HyChartsDemo;
+			sourceTree = "<group>";
+		};
+		5123D287244D90440052CB53 /* HyCharts */ = {
+			isa = PBXGroup;
+			children = (
+				5123D289244D90440052CB53 /* HyCharts.h */,
+				5123D28A244D90440052CB53 /* HyChartsTypedef.h */,
+				5123D28B244D90440052CB53 /* HyChartsMethods.h */,
+				5123D288244D90440052CB53 /* HyChartsMethods.m */,
+				5123D28C244D90440052CB53 /* Model */,
+				5123D2F0244D90440052CB53 /* View */,
+			);
+			name = HyCharts;
+			path = ../../HyCharts;
+			sourceTree = "<group>";
+		};
+		5123D28C244D90440052CB53 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5123D2D8244D90440052CB53 /* Axis */,
+				5123D2C5244D90440052CB53 /* Entity */,
+				5123D2B8244D90440052CB53 /* Configure */,
+				5123D2D2244D90440052CB53 /* Algorithm */,
+				5123D28D244D90440052CB53 /* DataSource */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5123D28D244D90440052CB53 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				5123D29A244D90440052CB53 /* HyChartDataSource.h */,
+				5123D28E244D90440052CB53 /* HyChartDataSource.m */,
+				5123D2B6244D90440052CB53 /* HyChartLineDataSource.h */,
+				5123D297244D90440052CB53 /* HyChartLineDataSource.m */,
+				5123D2B7244D90440052CB53 /* HyChartBarDataSource.h */,
+				5123D296244D90440052CB53 /* HyChartBarDataSource.m */,
+				5123D293244D90440052CB53 /* HyChartKLineDataSource.h */,
+				5123D29B244D90440052CB53 /* HyChartKLineDataSource.m */,
+				5123D299244D90440052CB53 /* HyChartDataSourceProtocol.h */,
+				5123D295244D90440052CB53 /* HyChartBarDataSourceProtocol.h */,
+				5123D294244D90440052CB53 /* HyChartLineDataSourceProtocol.h */,
+				5123D298244D90440052CB53 /* HyChartKLineDataSourceProtocol.h */,
+				5123D28F244D90440052CB53 /* AxisDataSource */,
+				5123D2A9244D90440052CB53 /* ModelDataSource */,
+				5123D29C244D90440052CB53 /* ConfigureDataSource */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		5123D28F244D90440052CB53 /* AxisDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				5123D291244D90440052CB53 /* HyChartAxisDataSource.h */,
+				5123D290244D90440052CB53 /* HyChartAxisDataSource.m */,
+				5123D292244D90440052CB53 /* HyChartAxisDataSourceProtocol.h */,
+			);
+			path = AxisDataSource;
+			sourceTree = "<group>";
+		};
+		5123D29C244D90440052CB53 /* ConfigureDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				5123D2A7244D90440052CB53 /* HyChartConfigureDataSource.h */,
+				5123D2A0244D90440052CB53 /* HyChartConfigureDataSource.m */,
+				5123D2A6244D90440052CB53 /* HyChartBarConfigureDataSource.h */,
+				5123D29E244D90440052CB53 /* HyChartBarConfigureDataSource.m */,
+				5123D2A2244D90440052CB53 /* HyChartLineConfigureDataSource.h */,
+				5123D2A8244D90440052CB53 /* HyChartLineConfigureDataSource.m */,
+				5123D29D244D90440052CB53 /* HyChartKLineConfigureDataSource.h */,
+				5123D2A3244D90440052CB53 /* HyChartKLineConfigureDataSource.m */,
+				5123D2A1244D90440052CB53 /* HyChartConfigureDataSourceProtocol.h */,
+				5123D29F244D90440052CB53 /* HyChartBarConfigureDataSourceProtocol.h */,
+				5123D2A5244D90440052CB53 /* HyChartLineConfigureDataSourceProtocol.h */,
+				5123D2A4244D90440052CB53 /* HyChartKLineConfigureDataSourceProtocol.h */,
+			);
+			path = ConfigureDataSource;
+			sourceTree = "<group>";
+		};
+		5123D2A9244D90440052CB53 /* ModelDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				5123D2AB244D90440052CB53 /* HyChartModelDataSource.h */,
+				5123D2B3244D90440052CB53 /* HyChartModelDataSource.m */,
+				5123D2AE244D90440052CB53 /* HyChartBarModelDataSource.h */,
+				5123D2B5244D90440052CB53 /* HyChartBarModelDataSource.m */,
+				5123D2AA244D90440052CB53 /* HyChartLineModelDataSource.h */,
+				5123D2B1244D90440052CB53 /* HyChartLineModelDataSource.m */,
+				5123D2AF244D90440052CB53 /* HyChartKLineModelDataSource.h */,
+				5123D2B4244D90440052CB53 /* HyChartKLineModelDataSource.m */,
+				5123D2B2244D90440052CB53 /* HyChartModelDataSourceProtocol.h */,
+				5123D2B0244D90440052CB53 /* HyChartBarModelDataSourceProtocol.h */,
+				5123D2AD244D90440052CB53 /* HyChartLineModelDataSourceProtocol.h */,
+				5123D2AC244D90440052CB53 /* HyChartKLineModelDataSourceProtocol.h */,
+			);
+			path = ModelDataSource;
+			sourceTree = "<group>";
+		};
+		5123D2B8244D90440052CB53 /* Configure */ = {
+			isa = PBXGroup;
+			children = (
+				5123D2C2244D90440052CB53 /* HyChartConfigure.h */,
+				5123D2B9244D90440052CB53 /* HyChartConfigure.m */,
+				5123D2BA244D90440052CB53 /* HyChartBarConfigure.h */,
+				5123D2C1244D90440052CB53 /* HyChartBarConfigure.m */,
+				5123D2BC244D90440052CB53 /* HyChartLineConfigure.h */,
+				5123D2C3244D90440052CB53 /* HyChartLineConfigure.m */,
+				5123D2C4244D90440052CB53 /* HyChartKLineConfigure.h */,
+				5123D2BE244D90440052CB53 /* HyChartKLineConfigure.m */,
+				5123D2BD244D90440052CB53 /* HyChartConfigureProtocol.h */,
+				5123D2BF244D90440052CB53 /* HyChartBarConfigureProtocol.h */,
+				5123D2C0244D90440052CB53 /* HyChartLineConfigureProtocol.h */,
+				5123D2BB244D90440052CB53 /* HyChartKLineConfigureProtocol.h */,
+			);
+			path = Configure;
+			sourceTree = "<group>";
+		};
+		5123D2C5244D90440052CB53 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				5123D2CD244D90440052CB53 /* HyChartModel.h */,
+				5123D2C6244D90440052CB53 /* HyChartModel.m */,
+				5123D2CF244D90440052CB53 /* HyChartBarModel.h */,
+				5123D2C8244D90440052CB53 /* HyChartBarModel.m */,
+				5123D2CB244D90440052CB53 /* HyChartLineModel.h */,
+				5123D2D0244D90440052CB53 /* HyChartLineModel.m */,
+				5123D2CC244D90440052CB53 /* HyChartKLineModel.h */,
+				5123D2C7244D90440052CB53 /* HyChartKLineModel.m */,
+				5123D2C9244D90440052CB53 /* HyChartModelProtocol.h */,
+				5123D2D1244D90440052CB53 /* HyChartBarModelProtocol.h */,
+				5123D2CA244D90440052CB53 /* HyChartLineModelProtocol.h */,
+				5123D2CE244D90440052CB53 /* HyChartKLineModelProtocol.h */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		5123D2D2244D90440052CB53 /* Algorithm */ = {
+			isa = PBXGroup;
+			children = (
+				5123D2D6244D90440052CB53 /* HyChartAlgorithm.h */,
+				5123D2D4244D90440052CB53 /* HyChartAlgorithm.m */,
+				5123D2D7244D90440052CB53 /* HyChartAlgorithmContext.h */,
+				5123D2D3244D90440052CB53 /* HyChartAlgorithmContext.m */,
+				5123D2D5244D90440052CB53 /* HyChartAlgorithmProtocol.h */,
+			);
+			path = Algorithm;
+			sourceTree = "<group>";
+		};
+		5123D2D8244D90440052CB53 /* Axis */ = {
+			isa = PBXGroup;
+			children = (
+				5123D2D9244D90440052CB53 /* HyChartAxisModel.h */,
+				5123D2E0244D90440052CB53 /* HyChartAxisModel.m */,
+				5123D2DC244D90440052CB53 /* HyChartAxisInfo.h */,
+				5123D2EF244D90440052CB53 /* HyChartAxisInfo.m */,
+				5123D2DA244D90440052CB53 /* HyChartAxisGridLineInfo.h */,
+				5123D2DF244D90440052CB53 /* HyChartAxisGridLineInfo.m */,
+				5123D2DD244D90440052CB53 /* HyChartAxisModelProtocol.h */,
+				5123D2DE244D90440052CB53 /* HyChartAxisInfoProtocol.h */,
+				5123D2DB244D90440052CB53 /* HyChartAxisGridLineInfoProtocol.h */,
+				5123D2E1244D90440052CB53 /* YAxis */,
+				5123D2E8244D90440052CB53 /* XAxis */,
+			);
+			path = Axis;
+			sourceTree = "<group>";
+		};
+		5123D2E1244D90440052CB53 /* YAxis */ = {
+			isa = PBXGroup;
+			children = (
+				5123D2E7244D90440052CB53 /* HyChartYAxisInfo.h */,
+				5123D2E3244D90440052CB53 /* HyChartYAxisInfo.m */,
+				5123D2E4244D90440052CB53 /* HyChartYAxisModel.h */,
+				5123D2E6244D90440052CB53 /* HyChartYAxisModel.m */,
+				5123D2E5244D90440052CB53 /* HyChartYAxisModelProtocol.h */,
+				5123D2E2244D90440052CB53 /* HyChartYAxisInfoProtocol.h */,
+			);
+			path = YAxis;
+			sourceTree = "<group>";
+		};
+		5123D2E8244D90440052CB53 /* XAxis */ = {
+			isa = PBXGroup;
+			children = (
+				5123D2EE244D90440052CB53 /* HyChartXAxisModel.h */,
+				5123D2EC244D90440052CB53 /* HyChartXAxisModel.m */,
+				5123D2ED244D90440052CB53 /* HyChartXAxisInfo.h */,
+				5123D2E9244D90440052CB53 /* HyChartXAxisInfo.m */,
+				5123D2EB244D90440052CB53 /* HyChartXAxisModelProtocol.h */,
+				5123D2EA244D90440052CB53 /* HyChartXAxisInfoProtocol.h */,
+			);
+			path = XAxis;
+			sourceTree = "<group>";
+		};
+		5123D2F0244D90440052CB53 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5123D301244D90440052CB53 /* Cursor */,
+				5123D2F1244D90440052CB53 /* Layers */,
+				5123D308244D90440052CB53 /* Charts */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5123D2F1244D90440052CB53 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				5123D2F6244D90440052CB53 /* HyChartLayer.h */,
+				5123D2FD244D90440052CB53 /* HyChartLayer.m */,
+				5123D2FF244D90440052CB53 /* HyChartAxisLayer.h */,
+				5123D2F5244D90440052CB53 /* HyChartAxisLayer.m */,
+				5123D2F4244D90440052CB53 /* HyChartBarLayer.h */,
+				5123D2FA244D90440052CB53 /* HyChartBarLayer.m */,
+				5123D2F9244D90440052CB53 /* HyChartLineLayer.h */,
+				5123D2F2244D90440052CB53 /* HyChartLineLayer.m */,
+				5123D2F7244D90440052CB53 /* HyChartKLineMainLayer.h */,
+				5123D2FC244D90440052CB53 /* HyChartKLineMainLayer.m */,
+				5123D2FB244D90440052CB53 /* HyChartKLineVolumeLayer.h */,
+				5123D2F3244D90440052CB53 /* HyChartKLineVolumeLayer.m */,
+				5123D2F8244D90440052CB53 /* HyChartKLineAuxiliaryLayer.h */,
+				5123D300244D90440052CB53 /* HyChartKLineAuxiliaryLayer.m */,
+				5123D2FE244D90440052CB53 /* HyChartLayerProtocol.h */,
+			);
+			path = Layers;
+			sourceTree = "<group>";
+		};
+		5123D301244D90440052CB53 /* Cursor */ = {
+			isa = PBXGroup;
+			children = (
+				5123D302244D90440052CB53 /* HyChartCursor.h */,
+				5123D306244D90440052CB53 /* HyChartCursor.m */,
+				5123D307244D90440052CB53 /* HyChartCursorConfigure.h */,
+				5123D303244D90440052CB53 /* HyChartCursorConfigure.m */,
+				5123D305244D90440052CB53 /* HyChartCursorProtocol.h */,
+				5123D304244D90440052CB53 /* HyChartCursorConfigureProtocol.h */,
+			);
+			path = Cursor;
+			sourceTree = "<group>";
+		};
+		5123D308244D90440052CB53 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				5123D310244D90440052CB53 /* HyChartView.h */,
+				5123D317244D90440052CB53 /* HyChartView.m */,
+				5123D30D244D90440052CB53 /* HyChartBarView.h */,
+				5123D315244D90440052CB53 /* HyChartBarView.m */,
+				5123D30A244D90440052CB53 /* HyChartLineView.h */,
+				5123D311244D90440052CB53 /* HyChartLineView.m */,
+				5123D316244D90440052CB53 /* HyChartKLineView.h */,
+				5123D30C244D90440052CB53 /* HyChartKLineView.m */,
+				5123D30F244D90440052CB53 /* HyChartKLineMainView.h */,
+				5123D313244D90440052CB53 /* HyChartKLineMainView.m */,
+				5123D30E244D90440052CB53 /* HyChartKLineVolumeView.h */,
+				5123D314244D90440052CB53 /* HyChartKLineVolumeView.m */,
+				5123D309244D90440052CB53 /* HyChartKLineAuxiliaryView.h */,
+				5123D312244D90440052CB53 /* HyChartKLineAuxiliaryView.m */,
+				5123D30B244D90440052CB53 /* HyChartViewProtocol.h */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
+		A821372B101C082BF3ECBBF3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1A347B05A526C00AFA9B671E /* Pods_HyChartsDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C7548338951D9D54A1101754 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B8CC2BBFE1DE80E67F19542C /* Pods-HyChartsDemo.debug.xcconfig */,
+				15A7049E7B5412613A33EECD /* Pods-HyChartsDemo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5123D05D24455C4B0052CB53 /* HyChartsDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5123D08D24455C4C0052CB53 /* Build configuration list for PBXNativeTarget "HyChartsDemo" */;
+			buildPhases = (
+				022EC3461FBC788F2105ADEA /* [CP] Check Pods Manifest.lock */,
+				5123D05A24455C4B0052CB53 /* Sources */,
+				5123D05B24455C4B0052CB53 /* Frameworks */,
+				5123D05C24455C4B0052CB53 /* Resources */,
+				507BA21059A785A60E154DDA /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HyChartsDemo;
+			productName = HyChartsDemo;
+			productReference = 5123D05E24455C4B0052CB53 /* HyChartsDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5123D07824455C4C0052CB53 /* HyChartsDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5123D09024455C4C0052CB53 /* Build configuration list for PBXNativeTarget "HyChartsDemoTests" */;
+			buildPhases = (
+				5123D07524455C4C0052CB53 /* Sources */,
+				5123D07624455C4C0052CB53 /* Frameworks */,
+				5123D07724455C4C0052CB53 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5123D07B24455C4C0052CB53 /* PBXTargetDependency */,
+			);
+			name = HyChartsDemoTests;
+			productName = HyChartsDemoTests;
+			productReference = 5123D07924455C4C0052CB53 /* HyChartsDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5123D08324455C4C0052CB53 /* HyChartsDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5123D09324455C4C0052CB53 /* Build configuration list for PBXNativeTarget "HyChartsDemoUITests" */;
+			buildPhases = (
+				5123D08024455C4C0052CB53 /* Sources */,
+				5123D08124455C4C0052CB53 /* Frameworks */,
+				5123D08224455C4C0052CB53 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5123D08624455C4C0052CB53 /* PBXTargetDependency */,
+			);
+			name = HyChartsDemoUITests;
+			productName = HyChartsDemoUITests;
+			productReference = 5123D08424455C4C0052CB53 /* HyChartsDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5123D05624455C4B0052CB53 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = Hy;
+				TargetAttributes = {
+					5123D05D24455C4B0052CB53 = {
+						CreatedOnToolsVersion = 11.3;
+					};
+					5123D07824455C4C0052CB53 = {
+						CreatedOnToolsVersion = 11.3;
+						TestTargetID = 5123D05D24455C4B0052CB53;
+					};
+					5123D08324455C4C0052CB53 = {
+						CreatedOnToolsVersion = 11.3;
+						TestTargetID = 5123D05D24455C4B0052CB53;
+					};
+				};
+			};
+			buildConfigurationList = 5123D05924455C4B0052CB53 /* Build configuration list for PBXProject "HyChartsDemo" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5123D05524455C4B0052CB53;
+			productRefGroup = 5123D05F24455C4B0052CB53 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5123D05D24455C4B0052CB53 /* HyChartsDemo */,
+				5123D07824455C4C0052CB53 /* HyChartsDemoTests */,
+				5123D08324455C4C0052CB53 /* HyChartsDemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5123D05C24455C4B0052CB53 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5123D07124455C4B0052CB53 /* LaunchScreen.storyboard in Resources */,
+				5123D06E24455C4B0052CB53 /* Assets.xcassets in Resources */,
+				5123D06C24455C4B0052CB53 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5123D07724455C4C0052CB53 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5123D08224455C4C0052CB53 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		022EC3461FBC788F2105ADEA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HyChartsDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		507BA21059A785A60E154DDA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HyChartsDemo/Pods-HyChartsDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HyChartsDemo/Pods-HyChartsDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HyChartsDemo/Pods-HyChartsDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5123D05A24455C4B0052CB53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5123D345244D90450052CB53 /* HyChartBarView.m in Sources */,
+				5123D1672445605C0052CB53 /* HyChartsKlineDemoController.m in Sources */,
+				5123D1682445605C0052CB53 /* HyChartsKLineAuxiliaryDemoController.m in Sources */,
+				5123D324244D90450052CB53 /* HyChartKLineModelDataSource.m in Sources */,
+				5123D32A244D90450052CB53 /* HyChartModel.m in Sources */,
+				5123D343244D90450052CB53 /* HyChartKLineMainView.m in Sources */,
+				5123D322244D90450052CB53 /* HyChartLineModelDataSource.m in Sources */,
+				5123D349244D93670052CB53 /* HyChartsKLineDemoCursor.m in Sources */,
+				5123D33C244D90450052CB53 /* HyChartLayer.m in Sources */,
+				5123D323244D90450052CB53 /* HyChartModelDataSource.m in Sources */,
+				5123D33F244D90450052CB53 /* HyChartCursor.m in Sources */,
+				5123D1692445605C0052CB53 /* HyChartsBarDemoController.m in Sources */,
+				5123D06924455C4B0052CB53 /* ViewController.m in Sources */,
+				5123D31B244D90450052CB53 /* HyChartBarDataSource.m in Sources */,
+				5123D331244D90450052CB53 /* HyChartAxisModel.m in Sources */,
+				5123D336244D90450052CB53 /* HyChartAxisInfo.m in Sources */,
+				5123D33A244D90450052CB53 /* HyChartBarLayer.m in Sources */,
+				5123D320244D90450052CB53 /* HyChartKLineConfigureDataSource.m in Sources */,
+				5123D344244D90450052CB53 /* HyChartKLineVolumeView.m in Sources */,
+				5123D06324455C4B0052CB53 /* AppDelegate.m in Sources */,
+				5123D326244D90450052CB53 /* HyChartConfigure.m in Sources */,
+				5123D31F244D90450052CB53 /* HyChartConfigureDataSource.m in Sources */,
+				5123D338244D90450052CB53 /* HyChartKLineVolumeLayer.m in Sources */,
+				5123D31A244D90450052CB53 /* HyChartAxisDataSource.m in Sources */,
+				5123D1652445605C0052CB53 /* HyChartsBarDemoCursor.m in Sources */,
+				5123D318244D90450052CB53 /* HyChartsMethods.m in Sources */,
+				5123D340244D90450052CB53 /* HyChartKLineView.m in Sources */,
+				5123D319244D90450052CB53 /* HyChartDataSource.m in Sources */,
+				5123D07424455C4B0052CB53 /* main.m in Sources */,
+				5123D342244D90450052CB53 /* HyChartKLineAuxiliaryView.m in Sources */,
+				5123D18C244D82E30052CB53 /* HyChartsReactChainsDemoController.m in Sources */,
+				5123D346244D90450052CB53 /* HyChartView.m in Sources */,
+				5123D329244D90450052CB53 /* HyChartLineConfigure.m in Sources */,
+				5123D335244D90450052CB53 /* HyChartXAxisModel.m in Sources */,
+				5123D31C244D90450052CB53 /* HyChartLineDataSource.m in Sources */,
+				5123D32C244D90450052CB53 /* HyChartBarModel.m in Sources */,
+				5123D330244D90450052CB53 /* HyChartAxisGridLineInfo.m in Sources */,
+				5123D333244D90450052CB53 /* HyChartYAxisModel.m in Sources */,
+				5123D334244D90450052CB53 /* HyChartXAxisInfo.m in Sources */,
+				5123D325244D90450052CB53 /* HyChartBarModelDataSource.m in Sources */,
+				5123D327244D90450052CB53 /* HyChartKLineConfigure.m in Sources */,
+				5123D321244D90450052CB53 /* HyChartLineConfigureDataSource.m in Sources */,
+				5123D16A2445605C0052CB53 /* HyChartsLineDemoController.m in Sources */,
+				5123D341244D90450052CB53 /* HyChartLineView.m in Sources */,
+				5123D186244D81E10052CB53 /* HyChartsKlineMainDemoController.m in Sources */,
+				5123D32B244D90450052CB53 /* HyChartKLineModel.m in Sources */,
+				5123D32D244D90450052CB53 /* HyChartLineModel.m in Sources */,
+				5123D32E244D90450052CB53 /* HyChartAlgorithmContext.m in Sources */,
+				5123D06624455C4B0052CB53 /* SceneDelegate.m in Sources */,
+				5123D32F244D90450052CB53 /* HyChartAlgorithm.m in Sources */,
+				5123D16B2445605C0052CB53 /* HyChartsKlineVolumeDemoController.m in Sources */,
+				5123D33E244D90450052CB53 /* HyChartCursorConfigure.m in Sources */,
+				5123D33D244D90450052CB53 /* HyChartKLineAuxiliaryLayer.m in Sources */,
+				5123D328244D90450052CB53 /* HyChartBarConfigure.m in Sources */,
+				5123D339244D90450052CB53 /* HyChartAxisLayer.m in Sources */,
+				5123D332244D90450052CB53 /* HyChartYAxisInfo.m in Sources */,
+				5123D33B244D90450052CB53 /* HyChartKLineMainLayer.m in Sources */,
+				5123D31E244D90450052CB53 /* HyChartBarConfigureDataSource.m in Sources */,
+				5123D1662445605C0052CB53 /* HyChartsDemoController.m in Sources */,
+				5123D337244D90450052CB53 /* HyChartLineLayer.m in Sources */,
+				5123D31D244D90450052CB53 /* HyChartKLineDataSource.m in Sources */,
+				5123D1642445605C0052CB53 /* HyChartsLineDemoCursor.m in Sources */,
+				04E6FFEE244C120A003FDEB8 /* HyChartsKlineNewDemoController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5123D07524455C4C0052CB53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5123D07E24455C4C0052CB53 /* HyChartsDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5123D08024455C4C0052CB53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5123D08924455C4C0052CB53 /* HyChartsDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5123D07B24455C4C0052CB53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5123D05D24455C4B0052CB53 /* HyChartsDemo */;
+			targetProxy = 5123D07A24455C4C0052CB53 /* PBXContainerItemProxy */;
+		};
+		5123D08624455C4C0052CB53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5123D05D24455C4B0052CB53 /* HyChartsDemo */;
+			targetProxy = 5123D08524455C4C0052CB53 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5123D06A24455C4B0052CB53 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5123D06B24455C4B0052CB53 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		5123D06F24455C4B0052CB53 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5123D07024455C4B0052CB53 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5123D08B24455C4C0052CB53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		5123D08C24455C4C0052CB53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5123D08E24455C4C0052CB53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8CC2BBFE1DE80E67F19542C /* Pods-HyChartsDemo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L5TRHD689W;
+				INFOPLIST_FILE = HyChartsDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = hydreamit.HyChartsDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5123D08F24455C4C0052CB53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 15A7049E7B5412613A33EECD /* Pods-HyChartsDemo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L5TRHD689W;
+				INFOPLIST_FILE = HyChartsDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = hydreamit.HyChartsDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5123D09124455C4C0052CB53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = HyChartsDemoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = hydreamit.HyChartsDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HyChartsDemo.app/HyChartsDemo";
+			};
+			name = Debug;
+		};
+		5123D09224455C4C0052CB53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = HyChartsDemoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = hydreamit.HyChartsDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HyChartsDemo.app/HyChartsDemo";
+			};
+			name = Release;
+		};
+		5123D09424455C4C0052CB53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = HyChartsDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = hydreamit.HyChartsDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HyChartsDemo;
+			};
+			name = Debug;
+		};
+		5123D09524455C4C0052CB53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = HyChartsDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = hydreamit.HyChartsDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HyChartsDemo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5123D05924455C4B0052CB53 /* Build configuration list for PBXProject "HyChartsDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5123D08B24455C4C0052CB53 /* Debug */,
+				5123D08C24455C4C0052CB53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5123D08D24455C4C0052CB53 /* Build configuration list for PBXNativeTarget "HyChartsDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5123D08E24455C4C0052CB53 /* Debug */,
+				5123D08F24455C4C0052CB53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5123D09024455C4C0052CB53 /* Build configuration list for PBXNativeTarget "HyChartsDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5123D09124455C4C0052CB53 /* Debug */,
+				5123D09224455C4C0052CB53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5123D09324455C4C0052CB53 /* Build configuration list for PBXNativeTarget "HyChartsDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5123D09424455C4C0052CB53 /* Debug */,
+				5123D09524455C4C0052CB53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5123D05624455C4B0052CB53 /* Project object */;
+}

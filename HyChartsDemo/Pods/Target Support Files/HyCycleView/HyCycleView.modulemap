@@ -1,0 +1,6 @@
+framework module HyCycleView {
+  umbrella header "HyCycleView-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,1050 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		035D32AB448679EB9CED401CB00CE618 /* UITextField+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 59F10FEF558A26414A039F900706B047 /* UITextField+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06BBD1BFFC43A46FF12955EB016C73B0 /* HyCycleView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D7F4ABCEE37E135AEEDCC55E315DE7 /* HyCycleView-dummy.m */; };
+		112E0A69018F5F63294819BA292B6448 /* UIColor+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = A7435F0FABF247FDAD47C77ED1E44835 /* UIColor+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1324ED12E6E733199629215A485B8DDB /* UITableView+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D96F10715290E60137AB5C906A4522 /* UITableView+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		13B1B4405733829C964C32480D781142 /* UIWindow+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AB7C0493D0D71256B8FF06A6C180C5 /* UIWindow+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		16E39B4C8EA9C0662DFEEF298AF0C994 /* UIButton+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5CE4F3D3D7797DD538E048682357CC /* UIButton+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		16F5266180B30D996AC43315E4D10BA8 /* HyCyclePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D46F1532025376FB9A6D3515CD7FAE /* HyCyclePageView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		18E0D539BF0B31325405E7A4540BACF0 /* UIBarButtonItem+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F1F93C3DFEE56D8EEC23F216AC2FE /* UIBarButtonItem+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		193F93AD62E174BC6C3CD533EA04FDC9 /* UITableViewHeaderFooterView+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D3C9AB001EF3684DDD3B82A3693137A /* UITableViewHeaderFooterView+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DF4B58504C387E4E0EF9E993D460505 /* UITextView+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DA88A70B5432F2A3FA4A7BF8216B2D /* UITextView+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		1E10C24F330A6BFBA16022493885B3B3 /* UITableViewCell+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5824DFFE1FB385FAF995EBED06AA5DCA /* UITableViewCell+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		22970B1C25322C5D3472AD896921D14B /* HyCategoriess-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 876CC1C0609CAB4B0BEA0E4DAA2DA0FF /* HyCategoriess-dummy.m */; };
+		28073348BAAB9C04DEB8C51AAA9397C9 /* HyRunTimeMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 568B5CD828FECBFD71EE72B64DAC862F /* HyRunTimeMethods.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		2BAE1D7273004747D2D66D0AF16CDF35 /* UIGestureRecognizer+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B23470DA73A8B9EC96FC661BF800ABBD /* UIGestureRecognizer+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		2BC78D2A3B8AF7037E8DCAE5A064CE1A /* UIApplication+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = FC0C7D482DF2CBE582832A98956D66AF /* UIApplication+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E0AB25D39275671836E2CB1E91033D2 /* UIFont+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = EC739B008B521C0BA2A3528CE254C95D /* UIFont+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		34F6D0FB8D3B24E36A8BA9B74FD4D1CE /* UIControl+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = E487BD2EA2E90B93CE37C64587141AFF /* UIControl+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3516BC67236BFA464F8C425EEA7D92D3 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD48ACB2B2B4B681D4E2AC12410E60B /* CoreFoundation.framework */; };
+		36AFB10EE15ACBFF500BE3F6314DBB68 /* UIBezierPath+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 755F8E8A92E35F14CDA135656CF28414 /* UIBezierPath+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		383E8042E1A87E88FA1082B2F3067A6A /* UIColor+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F59DDF20810564252228DC8E12C05BA5 /* UIColor+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		3A5DE2BC41EEDD7DCDE3C3D13411FA83 /* UIViewController+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = D95DA8B1801B4D034B34983B09E036E2 /* UIViewController+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A7261DDB23EB9E40AA25B7D0F7E16A2 /* UICollectionView+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 8CADDEC6FB417EC68CADAF5B45164360 /* UICollectionView+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		40E46981B1215DC46D29CF0807740922 /* NSInvocation+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = BE6AD637B88F6153CDE575176B3347B7 /* NSInvocation+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		489CE84E54C16735794CFB0064230683 /* UIViewController+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 663EEC27E8C0908740C0F7105A5860D7 /* UIViewController+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		4C2086CB200B25D40217608313764627 /* UICollectionReusableView+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE71DAC6D3124B45151FD99D50BB7C7 /* UICollectionReusableView+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C4F6136604A613A71C3717135FA44EA /* UICollectionViewCell+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = EA974B248F23492B638E2A57528A8F23 /* UICollectionViewCell+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		4C85E2DCEA9AB8D3CDE3E27BE4342429 /* HyCycleView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D7374C327991446CC173778FE8FD6B1B /* HyCycleView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4E99D8B07873B24B7AA71E13CCC6CF0F /* UIGestureRecognizer+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C0C86C450BB17E94A6362C4B6FCCFE8 /* UIGestureRecognizer+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4FE20C8E2526C124A34F92D256459608 /* UITextField+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 08427A559BB01AE4A4A83FE58DEDB763 /* UITextField+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		4FE965ADBC9D232C17C585099725EEFE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E24E8BEE68C94DC497000CD627AFF643 /* Foundation.framework */; };
+		50D3A7E6AD90A3FBD88BDDFF888551C5 /* HySegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BC3EC9C7567B0F356997A502F7B57 /* HySegmentView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		5AB08226E8EB0C68DA2BB40AE6F485E6 /* UITableViewCell+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 32C9E47144EC5901EB72EEEC90031A8A /* UITableViewCell+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5C654A3F3D1A16B6BAEB8B4158E274BE /* UIView+HyFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C68F81B25847060D324E2D497FCD426 /* UIView+HyFrame.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		64F60F4EBD007CAF25BD22FA0DDDD278 /* UITableView+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = A41EFAE5B4B31620D9A5465EBD14B9E2 /* UITableView+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		651507D9B28ABC207FCEE4C589B035CA /* UIScrollView+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = D3215E1BB61FD6D65E0E586B1F547AD3 /* UIScrollView+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		66225D49950AB2901D2126972F03B153 /* UITabBarController+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = BA75E01EDF0232235B94072632A48D07 /* UITabBarController+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		684BC0C2A5778F87B7CE62E3B88A3A2B /* HyCycleView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E5E52283E95B69C9FBAE916C2C0527F /* HyCycleView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6B2DABB1CDD9FA12B0F64287762EFBA8 /* UIView+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4762F5E0676B4AA83C88F35CA3C0B6FF /* UIView+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		6F9E5579E486D20CBD0C8D1705D5354D /* UIView+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 64F85C6719581D61FB79E1F6D013F26F /* UIView+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6FB0F588BA4A6BBB84D76D4502E6E21B /* UITableViewHeaderFooterView+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F374A8B00B2126B12C88D9A22FABEE /* UITableViewHeaderFooterView+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		716B2E4A91D74DE3733AA28119ED921B /* UILabel+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F934743F23F19E5DB6EFF364D2BEF7D /* UILabel+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		76F0262C860CC101FEF401244684F400 /* UIScreen+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 50C2C3000BED3CA01C2FCD20ADAE4B3B /* UIScreen+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7718E7B90B2CB72FD25DA2302A6BA5DA /* UICollectionViewCell+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = C1C5CD9D5F4A196A3259BBF1616DB66B /* UICollectionViewCell+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		79F3B68AC9B5797B417184D536EE36CF /* UIWindow+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A96626EBEB324BD2839447C58CD32 /* UIWindow+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		7C33A663C18815F24FDB831B9ABF2F52 /* UIScrollView+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 89DC5E7FF34C2E25A6F24330624CF39D /* UIScrollView+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		837AA83C6D67781768C8384E5CE3FB04 /* HyCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = 53A2FB87A205B346F8457FD8B8D1C236 /* HyCategories.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8F29A2127DAF07FB7272189A059ED13F /* UINavigationController+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A2C1ED74A72BD54777A5483318BF85E /* UINavigationController+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		970F4F426F8465FA2FBDDDB9D0DE2E75 /* UITextView+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = DE7BB7A4176628812B1EB2CBDC169FDE /* UITextView+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		98D3E8279532A993FB246CCEBB668016 /* UIBezierPath+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD8D775AB8F3C5C8BCE987825383025 /* UIBezierPath+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9C27F6CFD584730A21BD331DA3C3634A /* HySegmentView.h in Headers */ = {isa = PBXBuildFile; fileRef = F5556C91F19B149BC9D1DA6C372885F6 /* HySegmentView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9D6D9016BE6C028E6CB488736C06F216 /* UICollectionReusableView+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE1F743A937550F891AC61FCAAF3 /* UICollectionReusableView+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		9DC47C38494E100A3BC4CA22B52CB98A /* NSObject+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9360203F12647F33819A6C5333F7FA /* NSObject+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A1FD9EE80AB1DA2B6F318AA77FD05EDA /* UIDevice+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = DD3EDB17E9BAD8C3ADCD3FFFA6753E36 /* UIDevice+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A88837CB1ECC15F80B90976C4FC0DA67 /* UIDevice+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FAB6162F04E03DB2226C540088C6D6 /* UIDevice+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		A9432EF807652993B0409D38035C4CA4 /* NSInvocation+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9689BAE67570C1446DB0128EA1059 /* NSInvocation+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		ABC215FE517FA75D01BDCDC02A047599 /* UICollectionView+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E356D4195385EFB43A13B6C94FD0EF /* UICollectionView+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		B3B621C7036A3ED1DC3C2DAE16E291D9 /* UIScreen+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E4F6632010E86EA2DB34D1A21F3C15 /* UIScreen+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		B4D010743AF49662418C6DEED602DCCF /* UIBarButtonItem+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 92EC5FE63DD04279F507D4067D909271 /* UIBarButtonItem+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BCE33C4C4699D4D81D2E3964DBA7C9F3 /* UITabBarController+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = D1648E0130A047FB59F3DD28017361DE /* UITabBarController+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BD8C98138A02512BCEF3A79AD67048A3 /* NSMethodSignature+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = C6D6C2E69E9129D68DB3778B9BA437DC /* NSMethodSignature+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BF200FD336932D52285B010A554555DA /* UIControl+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 430E11C34AD5E5F906C60A63826051C8 /* UIControl+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		C1B31B10EDC3D5CC96BF53AF46846FA4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DED9BE1DD825B595037C7DC904736B /* UIKit.framework */; };
+		C3FDEC0B769FB69D103B87EBA72A0D87 /* NSMethodSignature+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BBD8213073ABA820CB18FBBE2D8FC38 /* NSMethodSignature+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		CA5FDBD5234114DE4779A9F579F10D65 /* HyCycleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34228D286803D1330A75D6AB945FC710 /* HyCycleView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		CF8DF74BD22B1FFF2E5DB2CF4AF98602 /* UIView+HyFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 26C6D7F2F21A0A2C21A41E99351AFAF8 /* UIView+HyFrame.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D55B86D371B35AEA4DD98AC30DD0236F /* UILabel+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CED9C8BD8C09BCB621A16216FE7D58 /* UILabel+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		DB68104789466E2EE0403595D47E5FAB /* Pods-HyChartsDemo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DB078279DE833C75BB0ED19EAED186F /* Pods-HyChartsDemo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC729C7BC6D4022610DBADFF35B325FA /* Pods-HyChartsDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 76874294F17E80EAF3A589F9395A517C /* Pods-HyChartsDemo-dummy.m */; };
+		DDB0391A1A9D362DBCF80E8F65C8D2DC /* UIButton+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 38C6E025E30193F6EEDBEAADC2B0CCEC /* UIButton+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DF27C85A25919E741B67F3737D5968A8 /* HyCategoriess-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F4B3351D2524C04A0780FCF0DCBDB148 /* HyCategoriess-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E0D593EEFE0D028C5F83D8DE34C5E2A0 /* HyCyclePageView.h in Headers */ = {isa = PBXBuildFile; fileRef = F1E4F124EEC0EBCC39676107C5810E23 /* HyCyclePageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E439BEB0D8D4B313F084730C0A5B0DFF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E24E8BEE68C94DC497000CD627AFF643 /* Foundation.framework */; };
+		E6CEF5335585B2DCAF31CBAD55B843C7 /* HyRunTimeMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = BB8F6EC00658FC473F9EDDEA7447B79C /* HyRunTimeMethods.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED9AB7BB25710B4140978EEE4BF6F70B /* UIApplication+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E163AA46FDB684AAC91C58EEF4A7EDF5 /* UIApplication+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		EF728EC10E4CE406C97581FF398521D8 /* NSObject+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = BB03D4156CCDC425E3FC412B3794F50A /* NSObject+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		EF8F3FE15702D21D10CE0C5C758D85F6 /* UINavigationController+HyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC23A8485E825F6BE252A164C477369 /* UINavigationController+HyExtension.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		EFEC2D58E9DB2D6316CC500D1B869593 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E24E8BEE68C94DC497000CD627AFF643 /* Foundation.framework */; };
+		EFFF25823DA4210DB1784655916AF582 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DED9BE1DD825B595037C7DC904736B /* UIKit.framework */; };
+		F38AF5168033EAF15B15B63AD83FCB52 /* UIFont+HyExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA43BC6CCC9B82BA572FADF44F8C07E /* UIFont+HyExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		22DC7F24B9649482763DE589C2242674 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D68B1811A65E05B734E2083390042DAC;
+			remoteInfo = HyCategoriess;
+		};
+		38AF0278CE4486CF52C101E34332AF60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7A14D14C04B09D68BA0181C34EA59C95;
+			remoteInfo = HyCycleView;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		040F706E5FD61D8D129062FE65A0808E /* HyCategoriess.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HyCategoriess.xcconfig; sourceTree = "<group>"; };
+		04A89A28B81A6A8247D6DAFC04E3C17C /* HyCategoriess-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HyCategoriess-prefix.pch"; sourceTree = "<group>"; };
+		0711852840DAB9DAB71577BEB5CDD5E7 /* Pods-HyChartsDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HyChartsDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
+		08427A559BB01AE4A4A83FE58DEDB763 /* UITextField+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UITextField+HyExtension.m"; path = "HyCategories/UIKit/UITextField+HyExtension.m"; sourceTree = "<group>"; };
+		0BD8D775AB8F3C5C8BCE987825383025 /* UIBezierPath+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIBezierPath+HyExtension.h"; path = "HyCategories/UIKit/UIBezierPath+HyExtension.h"; sourceTree = "<group>"; };
+		0FBA3BCC4A9758ECC3A5AE58B74D4512 /* Pods-HyChartsDemo-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HyChartsDemo-Info.plist"; sourceTree = "<group>"; };
+		1247E2B9DEB32228F41A50E769573127 /* Pods-HyChartsDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HyChartsDemo-acknowledgements.plist"; sourceTree = "<group>"; };
+		14D96F10715290E60137AB5C906A4522 /* UITableView+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UITableView+HyExtension.m"; path = "HyCategories/UIKit/UITableView+HyExtension.m"; sourceTree = "<group>"; };
+		16B0CE091FF98C8E5ACAF7912287A640 /* Pods-HyChartsDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HyChartsDemo-frameworks.sh"; sourceTree = "<group>"; };
+		21D7F4ABCEE37E135AEEDCC55E315DE7 /* HyCycleView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HyCycleView-dummy.m"; sourceTree = "<group>"; };
+		26171D4551CF32672076C8DFE158CA61 /* HyCategoriess.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = HyCategoriess.modulemap; sourceTree = "<group>"; };
+		26C6D7F2F21A0A2C21A41E99351AFAF8 /* UIView+HyFrame.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+HyFrame.h"; path = "HyCycleView/UIView+HyFrame.h"; sourceTree = "<group>"; };
+		2A5CE4F3D3D7797DD538E048682357CC /* UIButton+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIButton+HyExtension.m"; path = "HyCategories/UIKit/UIButton+HyExtension.m"; sourceTree = "<group>"; };
+		2A5E9410BB088F62A6D8593850921B9B /* Pods-HyChartsDemo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-HyChartsDemo.modulemap"; sourceTree = "<group>"; };
+		2BBD8213073ABA820CB18FBBE2D8FC38 /* NSMethodSignature+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSMethodSignature+HyExtension.m"; path = "HyCategories/Foundation/NSMethodSignature+HyExtension.m"; sourceTree = "<group>"; };
+		2C77C3AA6DBC41BFB0CF8E259B097790 /* HyCycleView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HyCycleView-prefix.pch"; sourceTree = "<group>"; };
+		2CDC10C59520B3FD94B4806D7CB19064 /* Pods-HyChartsDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HyChartsDemo.release.xcconfig"; sourceTree = "<group>"; };
+		327F1F93C3DFEE56D8EEC23F216AC2FE /* UIBarButtonItem+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIBarButtonItem+HyExtension.m"; path = "HyCategories/UIKit/UIBarButtonItem+HyExtension.m"; sourceTree = "<group>"; };
+		32C9E47144EC5901EB72EEEC90031A8A /* UITableViewCell+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UITableViewCell+HyExtension.h"; path = "HyCategories/UIKit/UITableViewCell+HyExtension.h"; sourceTree = "<group>"; };
+		34228D286803D1330A75D6AB945FC710 /* HyCycleView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HyCycleView.m; path = HyCycleView/HyCycleView.m; sourceTree = "<group>"; };
+		3761ED3661834A2BFAB65DFAAD9ADFAA /* HyCycleView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = HyCycleView.modulemap; sourceTree = "<group>"; };
+		37AB7C0493D0D71256B8FF06A6C180C5 /* UIWindow+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIWindow+HyExtension.h"; path = "HyCategories/UIKit/UIWindow+HyExtension.h"; sourceTree = "<group>"; };
+		38C6E025E30193F6EEDBEAADC2B0CCEC /* UIButton+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIButton+HyExtension.h"; path = "HyCategories/UIKit/UIButton+HyExtension.h"; sourceTree = "<group>"; };
+		3AB4CE1F743A937550F891AC61FCAAF3 /* UICollectionReusableView+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UICollectionReusableView+HyExtension.m"; path = "HyCategories/UIKit/UICollectionReusableView+HyExtension.m"; sourceTree = "<group>"; };
+		430E11C34AD5E5F906C60A63826051C8 /* UIControl+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIControl+HyExtension.m"; path = "HyCategories/UIKit/UIControl+HyExtension.m"; sourceTree = "<group>"; };
+		436B14B0FBBE69BBCE0558F3E1D225F1 /* HyCategoriess-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "HyCategoriess-Info.plist"; sourceTree = "<group>"; };
+		4762F5E0676B4AA83C88F35CA3C0B6FF /* UIView+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+HyExtension.m"; path = "HyCategories/UIKit/UIView+HyExtension.m"; sourceTree = "<group>"; };
+		4A2C1ED74A72BD54777A5483318BF85E /* UINavigationController+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+HyExtension.h"; path = "HyCategories/UIKit/UINavigationController+HyExtension.h"; sourceTree = "<group>"; };
+		4CA43BC6CCC9B82BA572FADF44F8C07E /* UIFont+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIFont+HyExtension.h"; path = "HyCategories/UIKit/UIFont+HyExtension.h"; sourceTree = "<group>"; };
+		4CE71DAC6D3124B45151FD99D50BB7C7 /* UICollectionReusableView+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UICollectionReusableView+HyExtension.h"; path = "HyCategories/UIKit/UICollectionReusableView+HyExtension.h"; sourceTree = "<group>"; };
+		50C2C3000BED3CA01C2FCD20ADAE4B3B /* UIScreen+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIScreen+HyExtension.h"; path = "HyCategories/UIKit/UIScreen+HyExtension.h"; sourceTree = "<group>"; };
+		53A2FB87A205B346F8457FD8B8D1C236 /* HyCategories.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HyCategories.h; path = HyCategories/HyCategories.h; sourceTree = "<group>"; };
+		568B5CD828FECBFD71EE72B64DAC862F /* HyRunTimeMethods.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HyRunTimeMethods.m; path = HyCategories/HyRunTimeMethods.m; sourceTree = "<group>"; };
+		5824DFFE1FB385FAF995EBED06AA5DCA /* UITableViewCell+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UITableViewCell+HyExtension.m"; path = "HyCategories/UIKit/UITableViewCell+HyExtension.m"; sourceTree = "<group>"; };
+		59F10FEF558A26414A039F900706B047 /* UITextField+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UITextField+HyExtension.h"; path = "HyCategories/UIKit/UITextField+HyExtension.h"; sourceTree = "<group>"; };
+		62D46F1532025376FB9A6D3515CD7FAE /* HyCyclePageView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HyCyclePageView.m; path = HyCycleView/HyCyclePageView.m; sourceTree = "<group>"; };
+		64F85C6719581D61FB79E1F6D013F26F /* UIView+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+HyExtension.h"; path = "HyCategories/UIKit/UIView+HyExtension.h"; sourceTree = "<group>"; };
+		663EEC27E8C0908740C0F7105A5860D7 /* UIViewController+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+HyExtension.m"; path = "HyCategories/UIKit/UIViewController+HyExtension.m"; sourceTree = "<group>"; };
+		68CED9C8BD8C09BCB621A16216FE7D58 /* UILabel+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UILabel+HyExtension.m"; path = "HyCategories/UIKit/UILabel+HyExtension.m"; sourceTree = "<group>"; };
+		6D0BC3EC9C7567B0F356997A502F7B57 /* HySegmentView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HySegmentView.m; path = HyCycleView/HySegmentView.m; sourceTree = "<group>"; };
+		6F934743F23F19E5DB6EFF364D2BEF7D /* UILabel+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UILabel+HyExtension.h"; path = "HyCategories/UIKit/UILabel+HyExtension.h"; sourceTree = "<group>"; };
+		703B93B84245365A6C794331F3346DEE /* Pods_HyChartsDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HyChartsDemo.framework; path = "Pods-HyChartsDemo.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		710ACE1A009B61DC4FB222E225427BE1 /* HyCategoriess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = HyCategoriess.framework; path = HyCategoriess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		755F8E8A92E35F14CDA135656CF28414 /* UIBezierPath+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIBezierPath+HyExtension.m"; path = "HyCategories/UIKit/UIBezierPath+HyExtension.m"; sourceTree = "<group>"; };
+		76874294F17E80EAF3A589F9395A517C /* Pods-HyChartsDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HyChartsDemo-dummy.m"; sourceTree = "<group>"; };
+		78E356D4195385EFB43A13B6C94FD0EF /* UICollectionView+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UICollectionView+HyExtension.m"; path = "HyCategories/UIKit/UICollectionView+HyExtension.m"; sourceTree = "<group>"; };
+		7C0C86C450BB17E94A6362C4B6FCCFE8 /* UIGestureRecognizer+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIGestureRecognizer+HyExtension.h"; path = "HyCategories/UIKit/UIGestureRecognizer+HyExtension.h"; sourceTree = "<group>"; };
+		876CC1C0609CAB4B0BEA0E4DAA2DA0FF /* HyCategoriess-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HyCategoriess-dummy.m"; sourceTree = "<group>"; };
+		89DC5E7FF34C2E25A6F24330624CF39D /* UIScrollView+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+HyExtension.h"; path = "HyCategories/UIKit/UIScrollView+HyExtension.h"; sourceTree = "<group>"; };
+		8CADDEC6FB417EC68CADAF5B45164360 /* UICollectionView+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UICollectionView+HyExtension.h"; path = "HyCategories/UIKit/UICollectionView+HyExtension.h"; sourceTree = "<group>"; };
+		8DB078279DE833C75BB0ED19EAED186F /* Pods-HyChartsDemo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HyChartsDemo-umbrella.h"; sourceTree = "<group>"; };
+		92EC5FE63DD04279F507D4067D909271 /* UIBarButtonItem+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIBarButtonItem+HyExtension.h"; path = "HyCategories/UIKit/UIBarButtonItem+HyExtension.h"; sourceTree = "<group>"; };
+		94DED9BE1DD825B595037C7DC904736B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		95DA88A70B5432F2A3FA4A7BF8216B2D /* UITextView+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UITextView+HyExtension.m"; path = "HyCategories/UIKit/UITextView+HyExtension.m"; sourceTree = "<group>"; };
+		9B7452BCF419C9CF02EA176624256644 /* HyCycleView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = HyCycleView.framework; path = HyCycleView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C68F81B25847060D324E2D497FCD426 /* UIView+HyFrame.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+HyFrame.m"; path = "HyCycleView/UIView+HyFrame.m"; sourceTree = "<group>"; };
+		9D3C9AB001EF3684DDD3B82A3693137A /* UITableViewHeaderFooterView+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UITableViewHeaderFooterView+HyExtension.h"; path = "HyCategories/UIKit/UITableViewHeaderFooterView+HyExtension.h"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9E5E52283E95B69C9FBAE916C2C0527F /* HyCycleView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HyCycleView.h; path = HyCycleView/HyCycleView.h; sourceTree = "<group>"; };
+		A0EF3B7B3BACCF7CFB7853443BBC82D7 /* HyCycleView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HyCycleView.xcconfig; sourceTree = "<group>"; };
+		A41EFAE5B4B31620D9A5465EBD14B9E2 /* UITableView+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UITableView+HyExtension.h"; path = "HyCategories/UIKit/UITableView+HyExtension.h"; sourceTree = "<group>"; };
+		A7435F0FABF247FDAD47C77ED1E44835 /* UIColor+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIColor+HyExtension.h"; path = "HyCategories/UIKit/UIColor+HyExtension.h"; sourceTree = "<group>"; };
+		B23470DA73A8B9EC96FC661BF800ABBD /* UIGestureRecognizer+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIGestureRecognizer+HyExtension.m"; path = "HyCategories/UIKit/UIGestureRecognizer+HyExtension.m"; sourceTree = "<group>"; };
+		BA75E01EDF0232235B94072632A48D07 /* UITabBarController+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UITabBarController+HyExtension.h"; path = "HyCategories/UIKit/UITabBarController+HyExtension.h"; sourceTree = "<group>"; };
+		BB03D4156CCDC425E3FC412B3794F50A /* NSObject+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+HyExtension.m"; path = "HyCategories/Foundation/NSObject+HyExtension.m"; sourceTree = "<group>"; };
+		BB8F6EC00658FC473F9EDDEA7447B79C /* HyRunTimeMethods.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HyRunTimeMethods.h; path = HyCategories/HyRunTimeMethods.h; sourceTree = "<group>"; };
+		BE6AD637B88F6153CDE575176B3347B7 /* NSInvocation+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSInvocation+HyExtension.h"; path = "HyCategories/Foundation/NSInvocation+HyExtension.h"; sourceTree = "<group>"; };
+		C1C5CD9D5F4A196A3259BBF1616DB66B /* UICollectionViewCell+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UICollectionViewCell+HyExtension.h"; path = "HyCategories/UIKit/UICollectionViewCell+HyExtension.h"; sourceTree = "<group>"; };
+		C6D6C2E69E9129D68DB3778B9BA437DC /* NSMethodSignature+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSMethodSignature+HyExtension.h"; path = "HyCategories/Foundation/NSMethodSignature+HyExtension.h"; sourceTree = "<group>"; };
+		CCD48ACB2B2B4B681D4E2AC12410E60B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		CD9360203F12647F33819A6C5333F7FA /* NSObject+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSObject+HyExtension.h"; path = "HyCategories/Foundation/NSObject+HyExtension.h"; sourceTree = "<group>"; };
+		D1648E0130A047FB59F3DD28017361DE /* UITabBarController+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UITabBarController+HyExtension.m"; path = "HyCategories/UIKit/UITabBarController+HyExtension.m"; sourceTree = "<group>"; };
+		D3215E1BB61FD6D65E0E586B1F547AD3 /* UIScrollView+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+HyExtension.m"; path = "HyCategories/UIKit/UIScrollView+HyExtension.m"; sourceTree = "<group>"; };
+		D48A96626EBEB324BD2839447C58CD32 /* UIWindow+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIWindow+HyExtension.m"; path = "HyCategories/UIKit/UIWindow+HyExtension.m"; sourceTree = "<group>"; };
+		D4E4F6632010E86EA2DB34D1A21F3C15 /* UIScreen+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIScreen+HyExtension.m"; path = "HyCategories/UIKit/UIScreen+HyExtension.m"; sourceTree = "<group>"; };
+		D7374C327991446CC173778FE8FD6B1B /* HyCycleView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HyCycleView-umbrella.h"; sourceTree = "<group>"; };
+		D95DA8B1801B4D034B34983B09E036E2 /* UIViewController+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIViewController+HyExtension.h"; path = "HyCategories/UIKit/UIViewController+HyExtension.h"; sourceTree = "<group>"; };
+		DD3EDB17E9BAD8C3ADCD3FFFA6753E36 /* UIDevice+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIDevice+HyExtension.h"; path = "HyCategories/UIKit/UIDevice+HyExtension.h"; sourceTree = "<group>"; };
+		DDC23A8485E825F6BE252A164C477369 /* UINavigationController+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+HyExtension.m"; path = "HyCategories/UIKit/UINavigationController+HyExtension.m"; sourceTree = "<group>"; };
+		DE7BB7A4176628812B1EB2CBDC169FDE /* UITextView+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UITextView+HyExtension.h"; path = "HyCategories/UIKit/UITextView+HyExtension.h"; sourceTree = "<group>"; };
+		E163AA46FDB684AAC91C58EEF4A7EDF5 /* UIApplication+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+HyExtension.m"; path = "HyCategories/UIKit/UIApplication+HyExtension.m"; sourceTree = "<group>"; };
+		E24E8BEE68C94DC497000CD627AFF643 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		E2F374A8B00B2126B12C88D9A22FABEE /* UITableViewHeaderFooterView+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UITableViewHeaderFooterView+HyExtension.m"; path = "HyCategories/UIKit/UITableViewHeaderFooterView+HyExtension.m"; sourceTree = "<group>"; };
+		E487BD2EA2E90B93CE37C64587141AFF /* UIControl+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIControl+HyExtension.h"; path = "HyCategories/UIKit/UIControl+HyExtension.h"; sourceTree = "<group>"; };
+		E5FAB6162F04E03DB2226C540088C6D6 /* UIDevice+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+HyExtension.m"; path = "HyCategories/UIKit/UIDevice+HyExtension.m"; sourceTree = "<group>"; };
+		EA974B248F23492B638E2A57528A8F23 /* UICollectionViewCell+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UICollectionViewCell+HyExtension.m"; path = "HyCategories/UIKit/UICollectionViewCell+HyExtension.m"; sourceTree = "<group>"; };
+		EC739B008B521C0BA2A3528CE254C95D /* UIFont+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIFont+HyExtension.m"; path = "HyCategories/UIKit/UIFont+HyExtension.m"; sourceTree = "<group>"; };
+		EFF722AF249A71D89E5A39ACA71AB5D0 /* Pods-HyChartsDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HyChartsDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		F1579B630B721E00D2CD4F363CF0A6AF /* HyCycleView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "HyCycleView-Info.plist"; sourceTree = "<group>"; };
+		F1E4F124EEC0EBCC39676107C5810E23 /* HyCyclePageView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HyCyclePageView.h; path = HyCycleView/HyCyclePageView.h; sourceTree = "<group>"; };
+		F4B3351D2524C04A0780FCF0DCBDB148 /* HyCategoriess-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HyCategoriess-umbrella.h"; sourceTree = "<group>"; };
+		F5556C91F19B149BC9D1DA6C372885F6 /* HySegmentView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HySegmentView.h; path = HyCycleView/HySegmentView.h; sourceTree = "<group>"; };
+		F59DDF20810564252228DC8E12C05BA5 /* UIColor+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIColor+HyExtension.m"; path = "HyCategories/UIKit/UIColor+HyExtension.m"; sourceTree = "<group>"; };
+		FC0C7D482DF2CBE582832A98956D66AF /* UIApplication+HyExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIApplication+HyExtension.h"; path = "HyCategories/UIKit/UIApplication+HyExtension.h"; sourceTree = "<group>"; };
+		FDD9689BAE67570C1446DB0128EA1059 /* NSInvocation+HyExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSInvocation+HyExtension.m"; path = "HyCategories/Foundation/NSInvocation+HyExtension.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		03897BE2695E666289795CE302449885 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3516BC67236BFA464F8C425EEA7D92D3 /* CoreFoundation.framework in Frameworks */,
+				EFEC2D58E9DB2D6316CC500D1B869593 /* Foundation.framework in Frameworks */,
+				EFFF25823DA4210DB1784655916AF582 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		179B22F109C9E9D40600106FA17F2474 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E439BEB0D8D4B313F084730C0A5B0DFF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6FB6586FC44C1DE6C430EF5CA2EFDE2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FE965ADBC9D232C17C585099725EEFE /* Foundation.framework in Frameworks */,
+				C1B31B10EDC3D5CC96BF53AF46846FA4 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03C5C200A0787E300053CFA8F53CA094 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				500144CF0C226B8C820A574BF9ABF352 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		06CA92501913AC7FB2A8A72D4B469C87 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				364BB85758B99F6107CE2B68F8BE0F91 /* HyCategoriess */,
+				5C943C88D1C2480D8E3E2B9A1EBDA48B /* HyCycleView */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		364BB85758B99F6107CE2B68F8BE0F91 /* HyCategoriess */ = {
+			isa = PBXGroup;
+			children = (
+				53A2FB87A205B346F8457FD8B8D1C236 /* HyCategories.h */,
+				BB8F6EC00658FC473F9EDDEA7447B79C /* HyRunTimeMethods.h */,
+				568B5CD828FECBFD71EE72B64DAC862F /* HyRunTimeMethods.m */,
+				BE6AD637B88F6153CDE575176B3347B7 /* NSInvocation+HyExtension.h */,
+				FDD9689BAE67570C1446DB0128EA1059 /* NSInvocation+HyExtension.m */,
+				C6D6C2E69E9129D68DB3778B9BA437DC /* NSMethodSignature+HyExtension.h */,
+				2BBD8213073ABA820CB18FBBE2D8FC38 /* NSMethodSignature+HyExtension.m */,
+				CD9360203F12647F33819A6C5333F7FA /* NSObject+HyExtension.h */,
+				BB03D4156CCDC425E3FC412B3794F50A /* NSObject+HyExtension.m */,
+				FC0C7D482DF2CBE582832A98956D66AF /* UIApplication+HyExtension.h */,
+				E163AA46FDB684AAC91C58EEF4A7EDF5 /* UIApplication+HyExtension.m */,
+				92EC5FE63DD04279F507D4067D909271 /* UIBarButtonItem+HyExtension.h */,
+				327F1F93C3DFEE56D8EEC23F216AC2FE /* UIBarButtonItem+HyExtension.m */,
+				0BD8D775AB8F3C5C8BCE987825383025 /* UIBezierPath+HyExtension.h */,
+				755F8E8A92E35F14CDA135656CF28414 /* UIBezierPath+HyExtension.m */,
+				38C6E025E30193F6EEDBEAADC2B0CCEC /* UIButton+HyExtension.h */,
+				2A5CE4F3D3D7797DD538E048682357CC /* UIButton+HyExtension.m */,
+				4CE71DAC6D3124B45151FD99D50BB7C7 /* UICollectionReusableView+HyExtension.h */,
+				3AB4CE1F743A937550F891AC61FCAAF3 /* UICollectionReusableView+HyExtension.m */,
+				8CADDEC6FB417EC68CADAF5B45164360 /* UICollectionView+HyExtension.h */,
+				78E356D4195385EFB43A13B6C94FD0EF /* UICollectionView+HyExtension.m */,
+				C1C5CD9D5F4A196A3259BBF1616DB66B /* UICollectionViewCell+HyExtension.h */,
+				EA974B248F23492B638E2A57528A8F23 /* UICollectionViewCell+HyExtension.m */,
+				A7435F0FABF247FDAD47C77ED1E44835 /* UIColor+HyExtension.h */,
+				F59DDF20810564252228DC8E12C05BA5 /* UIColor+HyExtension.m */,
+				E487BD2EA2E90B93CE37C64587141AFF /* UIControl+HyExtension.h */,
+				430E11C34AD5E5F906C60A63826051C8 /* UIControl+HyExtension.m */,
+				DD3EDB17E9BAD8C3ADCD3FFFA6753E36 /* UIDevice+HyExtension.h */,
+				E5FAB6162F04E03DB2226C540088C6D6 /* UIDevice+HyExtension.m */,
+				4CA43BC6CCC9B82BA572FADF44F8C07E /* UIFont+HyExtension.h */,
+				EC739B008B521C0BA2A3528CE254C95D /* UIFont+HyExtension.m */,
+				7C0C86C450BB17E94A6362C4B6FCCFE8 /* UIGestureRecognizer+HyExtension.h */,
+				B23470DA73A8B9EC96FC661BF800ABBD /* UIGestureRecognizer+HyExtension.m */,
+				6F934743F23F19E5DB6EFF364D2BEF7D /* UILabel+HyExtension.h */,
+				68CED9C8BD8C09BCB621A16216FE7D58 /* UILabel+HyExtension.m */,
+				4A2C1ED74A72BD54777A5483318BF85E /* UINavigationController+HyExtension.h */,
+				DDC23A8485E825F6BE252A164C477369 /* UINavigationController+HyExtension.m */,
+				50C2C3000BED3CA01C2FCD20ADAE4B3B /* UIScreen+HyExtension.h */,
+				D4E4F6632010E86EA2DB34D1A21F3C15 /* UIScreen+HyExtension.m */,
+				89DC5E7FF34C2E25A6F24330624CF39D /* UIScrollView+HyExtension.h */,
+				D3215E1BB61FD6D65E0E586B1F547AD3 /* UIScrollView+HyExtension.m */,
+				BA75E01EDF0232235B94072632A48D07 /* UITabBarController+HyExtension.h */,
+				D1648E0130A047FB59F3DD28017361DE /* UITabBarController+HyExtension.m */,
+				A41EFAE5B4B31620D9A5465EBD14B9E2 /* UITableView+HyExtension.h */,
+				14D96F10715290E60137AB5C906A4522 /* UITableView+HyExtension.m */,
+				32C9E47144EC5901EB72EEEC90031A8A /* UITableViewCell+HyExtension.h */,
+				5824DFFE1FB385FAF995EBED06AA5DCA /* UITableViewCell+HyExtension.m */,
+				9D3C9AB001EF3684DDD3B82A3693137A /* UITableViewHeaderFooterView+HyExtension.h */,
+				E2F374A8B00B2126B12C88D9A22FABEE /* UITableViewHeaderFooterView+HyExtension.m */,
+				59F10FEF558A26414A039F900706B047 /* UITextField+HyExtension.h */,
+				08427A559BB01AE4A4A83FE58DEDB763 /* UITextField+HyExtension.m */,
+				DE7BB7A4176628812B1EB2CBDC169FDE /* UITextView+HyExtension.h */,
+				95DA88A70B5432F2A3FA4A7BF8216B2D /* UITextView+HyExtension.m */,
+				64F85C6719581D61FB79E1F6D013F26F /* UIView+HyExtension.h */,
+				4762F5E0676B4AA83C88F35CA3C0B6FF /* UIView+HyExtension.m */,
+				D95DA8B1801B4D034B34983B09E036E2 /* UIViewController+HyExtension.h */,
+				663EEC27E8C0908740C0F7105A5860D7 /* UIViewController+HyExtension.m */,
+				37AB7C0493D0D71256B8FF06A6C180C5 /* UIWindow+HyExtension.h */,
+				D48A96626EBEB324BD2839447C58CD32 /* UIWindow+HyExtension.m */,
+				8EBBC82EE297DE0C74957A54F996C8DF /* Support Files */,
+			);
+			name = HyCategoriess;
+			path = HyCategoriess;
+			sourceTree = "<group>";
+		};
+		500144CF0C226B8C820A574BF9ABF352 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CCD48ACB2B2B4B681D4E2AC12410E60B /* CoreFoundation.framework */,
+				E24E8BEE68C94DC497000CD627AFF643 /* Foundation.framework */,
+				94DED9BE1DD825B595037C7DC904736B /* UIKit.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		5C943C88D1C2480D8E3E2B9A1EBDA48B /* HyCycleView */ = {
+			isa = PBXGroup;
+			children = (
+				F1E4F124EEC0EBCC39676107C5810E23 /* HyCyclePageView.h */,
+				62D46F1532025376FB9A6D3515CD7FAE /* HyCyclePageView.m */,
+				9E5E52283E95B69C9FBAE916C2C0527F /* HyCycleView.h */,
+				34228D286803D1330A75D6AB945FC710 /* HyCycleView.m */,
+				F5556C91F19B149BC9D1DA6C372885F6 /* HySegmentView.h */,
+				6D0BC3EC9C7567B0F356997A502F7B57 /* HySegmentView.m */,
+				26C6D7F2F21A0A2C21A41E99351AFAF8 /* UIView+HyFrame.h */,
+				9C68F81B25847060D324E2D497FCD426 /* UIView+HyFrame.m */,
+				7F85A0765AB3A8C420548558F9716608 /* Support Files */,
+			);
+			name = HyCycleView;
+			path = HyCycleView;
+			sourceTree = "<group>";
+		};
+		7129DF88BB706F6BBD8B8461107A1D4C /* Pods-HyChartsDemo */ = {
+			isa = PBXGroup;
+			children = (
+				2A5E9410BB088F62A6D8593850921B9B /* Pods-HyChartsDemo.modulemap */,
+				0711852840DAB9DAB71577BEB5CDD5E7 /* Pods-HyChartsDemo-acknowledgements.markdown */,
+				1247E2B9DEB32228F41A50E769573127 /* Pods-HyChartsDemo-acknowledgements.plist */,
+				76874294F17E80EAF3A589F9395A517C /* Pods-HyChartsDemo-dummy.m */,
+				16B0CE091FF98C8E5ACAF7912287A640 /* Pods-HyChartsDemo-frameworks.sh */,
+				0FBA3BCC4A9758ECC3A5AE58B74D4512 /* Pods-HyChartsDemo-Info.plist */,
+				8DB078279DE833C75BB0ED19EAED186F /* Pods-HyChartsDemo-umbrella.h */,
+				EFF722AF249A71D89E5A39ACA71AB5D0 /* Pods-HyChartsDemo.debug.xcconfig */,
+				2CDC10C59520B3FD94B4806D7CB19064 /* Pods-HyChartsDemo.release.xcconfig */,
+			);
+			name = "Pods-HyChartsDemo";
+			path = "Target Support Files/Pods-HyChartsDemo";
+			sourceTree = "<group>";
+		};
+		7ECC460ECCA7E590D065108B320983DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				710ACE1A009B61DC4FB222E225427BE1 /* HyCategoriess.framework */,
+				9B7452BCF419C9CF02EA176624256644 /* HyCycleView.framework */,
+				703B93B84245365A6C794331F3346DEE /* Pods_HyChartsDemo.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7F85A0765AB3A8C420548558F9716608 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3761ED3661834A2BFAB65DFAAD9ADFAA /* HyCycleView.modulemap */,
+				A0EF3B7B3BACCF7CFB7853443BBC82D7 /* HyCycleView.xcconfig */,
+				21D7F4ABCEE37E135AEEDCC55E315DE7 /* HyCycleView-dummy.m */,
+				F1579B630B721E00D2CD4F363CF0A6AF /* HyCycleView-Info.plist */,
+				2C77C3AA6DBC41BFB0CF8E259B097790 /* HyCycleView-prefix.pch */,
+				D7374C327991446CC173778FE8FD6B1B /* HyCycleView-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/HyCycleView";
+			sourceTree = "<group>";
+		};
+		8EBBC82EE297DE0C74957A54F996C8DF /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				26171D4551CF32672076C8DFE158CA61 /* HyCategoriess.modulemap */,
+				040F706E5FD61D8D129062FE65A0808E /* HyCategoriess.xcconfig */,
+				876CC1C0609CAB4B0BEA0E4DAA2DA0FF /* HyCategoriess-dummy.m */,
+				436B14B0FBBE69BBCE0558F3E1D225F1 /* HyCategoriess-Info.plist */,
+				04A89A28B81A6A8247D6DAFC04E3C17C /* HyCategoriess-prefix.pch */,
+				F4B3351D2524C04A0780FCF0DCBDB148 /* HyCategoriess-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/HyCategoriess";
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				03C5C200A0787E300053CFA8F53CA094 /* Frameworks */,
+				06CA92501913AC7FB2A8A72D4B469C87 /* Pods */,
+				7ECC460ECCA7E590D065108B320983DB /* Products */,
+				DFE749926F4A6D88260AFD01E67A9F33 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		DFE749926F4A6D88260AFD01E67A9F33 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7129DF88BB706F6BBD8B8461107A1D4C /* Pods-HyChartsDemo */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4ABDA7B4793C1D695335AEDCDBA445CA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				837AA83C6D67781768C8384E5CE3FB04 /* HyCategories.h in Headers */,
+				DF27C85A25919E741B67F3737D5968A8 /* HyCategoriess-umbrella.h in Headers */,
+				E6CEF5335585B2DCAF31CBAD55B843C7 /* HyRunTimeMethods.h in Headers */,
+				40E46981B1215DC46D29CF0807740922 /* NSInvocation+HyExtension.h in Headers */,
+				BD8C98138A02512BCEF3A79AD67048A3 /* NSMethodSignature+HyExtension.h in Headers */,
+				9DC47C38494E100A3BC4CA22B52CB98A /* NSObject+HyExtension.h in Headers */,
+				2BC78D2A3B8AF7037E8DCAE5A064CE1A /* UIApplication+HyExtension.h in Headers */,
+				B4D010743AF49662418C6DEED602DCCF /* UIBarButtonItem+HyExtension.h in Headers */,
+				98D3E8279532A993FB246CCEBB668016 /* UIBezierPath+HyExtension.h in Headers */,
+				DDB0391A1A9D362DBCF80E8F65C8D2DC /* UIButton+HyExtension.h in Headers */,
+				4C2086CB200B25D40217608313764627 /* UICollectionReusableView+HyExtension.h in Headers */,
+				3A7261DDB23EB9E40AA25B7D0F7E16A2 /* UICollectionView+HyExtension.h in Headers */,
+				7718E7B90B2CB72FD25DA2302A6BA5DA /* UICollectionViewCell+HyExtension.h in Headers */,
+				112E0A69018F5F63294819BA292B6448 /* UIColor+HyExtension.h in Headers */,
+				34F6D0FB8D3B24E36A8BA9B74FD4D1CE /* UIControl+HyExtension.h in Headers */,
+				A1FD9EE80AB1DA2B6F318AA77FD05EDA /* UIDevice+HyExtension.h in Headers */,
+				F38AF5168033EAF15B15B63AD83FCB52 /* UIFont+HyExtension.h in Headers */,
+				4E99D8B07873B24B7AA71E13CCC6CF0F /* UIGestureRecognizer+HyExtension.h in Headers */,
+				716B2E4A91D74DE3733AA28119ED921B /* UILabel+HyExtension.h in Headers */,
+				8F29A2127DAF07FB7272189A059ED13F /* UINavigationController+HyExtension.h in Headers */,
+				76F0262C860CC101FEF401244684F400 /* UIScreen+HyExtension.h in Headers */,
+				7C33A663C18815F24FDB831B9ABF2F52 /* UIScrollView+HyExtension.h in Headers */,
+				66225D49950AB2901D2126972F03B153 /* UITabBarController+HyExtension.h in Headers */,
+				64F60F4EBD007CAF25BD22FA0DDDD278 /* UITableView+HyExtension.h in Headers */,
+				5AB08226E8EB0C68DA2BB40AE6F485E6 /* UITableViewCell+HyExtension.h in Headers */,
+				193F93AD62E174BC6C3CD533EA04FDC9 /* UITableViewHeaderFooterView+HyExtension.h in Headers */,
+				035D32AB448679EB9CED401CB00CE618 /* UITextField+HyExtension.h in Headers */,
+				970F4F426F8465FA2FBDDDB9D0DE2E75 /* UITextView+HyExtension.h in Headers */,
+				6F9E5579E486D20CBD0C8D1705D5354D /* UIView+HyExtension.h in Headers */,
+				3A5DE2BC41EEDD7DCDE3C3D13411FA83 /* UIViewController+HyExtension.h in Headers */,
+				13B1B4405733829C964C32480D781142 /* UIWindow+HyExtension.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C210C78957FB479BAAF0ADDD456A354 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0D593EEFE0D028C5F83D8DE34C5E2A0 /* HyCyclePageView.h in Headers */,
+				4C85E2DCEA9AB8D3CDE3E27BE4342429 /* HyCycleView-umbrella.h in Headers */,
+				684BC0C2A5778F87B7CE62E3B88A3A2B /* HyCycleView.h in Headers */,
+				9C27F6CFD584730A21BD331DA3C3634A /* HySegmentView.h in Headers */,
+				CF8DF74BD22B1FFF2E5DB2CF4AF98602 /* UIView+HyFrame.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED1CA2D62D7ECD56C71CD41CAB6E6494 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB68104789466E2EE0403595D47E5FAB /* Pods-HyChartsDemo-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7A14D14C04B09D68BA0181C34EA59C95 /* HyCycleView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C7B45F2647A53472C53124167D2346E /* Build configuration list for PBXNativeTarget "HyCycleView" */;
+			buildPhases = (
+				6C210C78957FB479BAAF0ADDD456A354 /* Headers */,
+				4E24962CC8E984F7CBD39210E2C8D5E7 /* Sources */,
+				E6FB6586FC44C1DE6C430EF5CA2EFDE2 /* Frameworks */,
+				40DE12DA7C7A44914757C677F9B8798B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HyCycleView;
+			productName = HyCycleView;
+			productReference = 9B7452BCF419C9CF02EA176624256644 /* HyCycleView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		A2470545B210860B4CF899C0FDF4C270 /* Pods-HyChartsDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 22107044852679366BB3ACA6F2EAAF30 /* Build configuration list for PBXNativeTarget "Pods-HyChartsDemo" */;
+			buildPhases = (
+				ED1CA2D62D7ECD56C71CD41CAB6E6494 /* Headers */,
+				DD0B975DBDF36427CEAD801ABB5F958E /* Sources */,
+				179B22F109C9E9D40600106FA17F2474 /* Frameworks */,
+				92B9F2E4F03BA253DB49F15687F62DD5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FEEE24A975E705D06F9FB57AD36EE485 /* PBXTargetDependency */,
+				2541EAC3B8CC83633C98B36F2DD0AC66 /* PBXTargetDependency */,
+			);
+			name = "Pods-HyChartsDemo";
+			productName = "Pods-HyChartsDemo";
+			productReference = 703B93B84245365A6C794331F3346DEE /* Pods_HyChartsDemo.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		D68B1811A65E05B734E2083390042DAC /* HyCategoriess */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F47A92F30C561319D00106980F2FD21E /* Build configuration list for PBXNativeTarget "HyCategoriess" */;
+			buildPhases = (
+				4ABDA7B4793C1D695335AEDCDBA445CA /* Headers */,
+				B9A939DB60C00D81A564873592918822 /* Sources */,
+				03897BE2695E666289795CE302449885 /* Frameworks */,
+				AD0F2F39672C6FF6B43313BE524DA7A2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HyCategoriess;
+			productName = HyCategoriess;
+			productReference = 710ACE1A009B61DC4FB222E225427BE1 /* HyCategoriess.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 10.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = 7ECC460ECCA7E590D065108B320983DB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D68B1811A65E05B734E2083390042DAC /* HyCategoriess */,
+				7A14D14C04B09D68BA0181C34EA59C95 /* HyCycleView */,
+				A2470545B210860B4CF899C0FDF4C270 /* Pods-HyChartsDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		40DE12DA7C7A44914757C677F9B8798B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92B9F2E4F03BA253DB49F15687F62DD5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD0F2F39672C6FF6B43313BE524DA7A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4E24962CC8E984F7CBD39210E2C8D5E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16F5266180B30D996AC43315E4D10BA8 /* HyCyclePageView.m in Sources */,
+				06BBD1BFFC43A46FF12955EB016C73B0 /* HyCycleView-dummy.m in Sources */,
+				CA5FDBD5234114DE4779A9F579F10D65 /* HyCycleView.m in Sources */,
+				50D3A7E6AD90A3FBD88BDDFF888551C5 /* HySegmentView.m in Sources */,
+				5C654A3F3D1A16B6BAEB8B4158E274BE /* UIView+HyFrame.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9A939DB60C00D81A564873592918822 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22970B1C25322C5D3472AD896921D14B /* HyCategoriess-dummy.m in Sources */,
+				28073348BAAB9C04DEB8C51AAA9397C9 /* HyRunTimeMethods.m in Sources */,
+				A9432EF807652993B0409D38035C4CA4 /* NSInvocation+HyExtension.m in Sources */,
+				C3FDEC0B769FB69D103B87EBA72A0D87 /* NSMethodSignature+HyExtension.m in Sources */,
+				EF728EC10E4CE406C97581FF398521D8 /* NSObject+HyExtension.m in Sources */,
+				ED9AB7BB25710B4140978EEE4BF6F70B /* UIApplication+HyExtension.m in Sources */,
+				18E0D539BF0B31325405E7A4540BACF0 /* UIBarButtonItem+HyExtension.m in Sources */,
+				36AFB10EE15ACBFF500BE3F6314DBB68 /* UIBezierPath+HyExtension.m in Sources */,
+				16E39B4C8EA9C0662DFEEF298AF0C994 /* UIButton+HyExtension.m in Sources */,
+				9D6D9016BE6C028E6CB488736C06F216 /* UICollectionReusableView+HyExtension.m in Sources */,
+				ABC215FE517FA75D01BDCDC02A047599 /* UICollectionView+HyExtension.m in Sources */,
+				4C4F6136604A613A71C3717135FA44EA /* UICollectionViewCell+HyExtension.m in Sources */,
+				383E8042E1A87E88FA1082B2F3067A6A /* UIColor+HyExtension.m in Sources */,
+				BF200FD336932D52285B010A554555DA /* UIControl+HyExtension.m in Sources */,
+				A88837CB1ECC15F80B90976C4FC0DA67 /* UIDevice+HyExtension.m in Sources */,
+				2E0AB25D39275671836E2CB1E91033D2 /* UIFont+HyExtension.m in Sources */,
+				2BAE1D7273004747D2D66D0AF16CDF35 /* UIGestureRecognizer+HyExtension.m in Sources */,
+				D55B86D371B35AEA4DD98AC30DD0236F /* UILabel+HyExtension.m in Sources */,
+				EF8F3FE15702D21D10CE0C5C758D85F6 /* UINavigationController+HyExtension.m in Sources */,
+				B3B621C7036A3ED1DC3C2DAE16E291D9 /* UIScreen+HyExtension.m in Sources */,
+				651507D9B28ABC207FCEE4C589B035CA /* UIScrollView+HyExtension.m in Sources */,
+				BCE33C4C4699D4D81D2E3964DBA7C9F3 /* UITabBarController+HyExtension.m in Sources */,
+				1324ED12E6E733199629215A485B8DDB /* UITableView+HyExtension.m in Sources */,
+				1E10C24F330A6BFBA16022493885B3B3 /* UITableViewCell+HyExtension.m in Sources */,
+				6FB0F588BA4A6BBB84D76D4502E6E21B /* UITableViewHeaderFooterView+HyExtension.m in Sources */,
+				4FE20C8E2526C124A34F92D256459608 /* UITextField+HyExtension.m in Sources */,
+				1DF4B58504C387E4E0EF9E993D460505 /* UITextView+HyExtension.m in Sources */,
+				6B2DABB1CDD9FA12B0F64287762EFBA8 /* UIView+HyExtension.m in Sources */,
+				489CE84E54C16735794CFB0064230683 /* UIViewController+HyExtension.m in Sources */,
+				79F3B68AC9B5797B417184D536EE36CF /* UIWindow+HyExtension.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD0B975DBDF36427CEAD801ABB5F958E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC729C7BC6D4022610DBADFF35B325FA /* Pods-HyChartsDemo-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2541EAC3B8CC83633C98B36F2DD0AC66 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HyCycleView;
+			target = 7A14D14C04B09D68BA0181C34EA59C95 /* HyCycleView */;
+			targetProxy = 38AF0278CE4486CF52C101E34332AF60 /* PBXContainerItemProxy */;
+		};
+		FEEE24A975E705D06F9FB57AD36EE485 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HyCategoriess;
+			target = D68B1811A65E05B734E2083390042DAC /* HyCategoriess */;
+			targetProxy = 22DC7F24B9649482763DE589C2242674 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2813ED3B2436771DBD1049F69D366C1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0EF3B7B3BACCF7CFB7853443BBC82D7 /* HyCycleView.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/HyCycleView/HyCycleView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/HyCycleView/HyCycleView-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/HyCycleView/HyCycleView.modulemap";
+				PRODUCT_MODULE_NAME = HyCycleView;
+				PRODUCT_NAME = HyCycleView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		28C786744D103DD515FA3E22088A99D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 040F706E5FD61D8D129062FE65A0808E /* HyCategoriess.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/HyCategoriess/HyCategoriess-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/HyCategoriess/HyCategoriess-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/HyCategoriess/HyCategoriess.modulemap";
+				PRODUCT_MODULE_NAME = HyCategoriess;
+				PRODUCT_NAME = HyCategoriess;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		4057F217AAA28ACA344AF616FB050745 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2CDC10C59520B3FD94B4806D7CB19064 /* Pods-HyChartsDemo.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-HyChartsDemo/Pods-HyChartsDemo-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-HyChartsDemo/Pods-HyChartsDemo.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8F17DC3A99F99FBAD606CE6963886315 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		8F71AD4A75379635783C3A11A510FBB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EFF722AF249A71D89E5A39ACA71AB5D0 /* Pods-HyChartsDemo.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-HyChartsDemo/Pods-HyChartsDemo-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-HyChartsDemo/Pods-HyChartsDemo.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		916E0404255105F480DC4950B7625F7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		C916C2BE6C2DBF1CC0C347CFB82CE25B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0EF3B7B3BACCF7CFB7853443BBC82D7 /* HyCycleView.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/HyCycleView/HyCycleView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/HyCycleView/HyCycleView-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/HyCycleView/HyCycleView.modulemap";
+				PRODUCT_MODULE_NAME = HyCycleView;
+				PRODUCT_NAME = HyCycleView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E5EAAC81ECC772ED9581031F2B64607F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 040F706E5FD61D8D129062FE65A0808E /* HyCategoriess.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/HyCategoriess/HyCategoriess-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/HyCategoriess/HyCategoriess-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/HyCategoriess/HyCategoriess.modulemap";
+				PRODUCT_MODULE_NAME = HyCategoriess;
+				PRODUCT_NAME = HyCategoriess;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		22107044852679366BB3ACA6F2EAAF30 /* Build configuration list for PBXNativeTarget "Pods-HyChartsDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F71AD4A75379635783C3A11A510FBB8 /* Debug */,
+				4057F217AAA28ACA344AF616FB050745 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				916E0404255105F480DC4950B7625F7A /* Debug */,
+				8F17DC3A99F99FBAD606CE6963886315 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6C7B45F2647A53472C53124167D2346E /* Build configuration list for PBXNativeTarget "HyCycleView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2813ED3B2436771DBD1049F69D366C1F /* Debug */,
+				C916C2BE6C2DBF1CC0C347CFB82CE25B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F47A92F30C561319D00106980F2FD21E /* Build configuration list for PBXNativeTarget "HyCategoriess" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28C786744D103DD515FA3E22088A99D0 /* Debug */,
+				E5EAAC81ECC772ED9581031F2B64607F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

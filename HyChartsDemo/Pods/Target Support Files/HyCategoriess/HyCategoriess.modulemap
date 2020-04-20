@@ -1,0 +1,6 @@
+framework module HyCategoriess {
+  umbrella header "HyCategoriess-umbrella.h"
+
+  export *
+  module * { export * }
+}
