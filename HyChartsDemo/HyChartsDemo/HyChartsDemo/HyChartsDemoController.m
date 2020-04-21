@@ -12,17 +12,6 @@
 
 @implementation HyChartsDemoController
 
-- (NSArray<NSString *> *)titleArray {
-    return @[@"柱状图", @"折/曲线图", @"K线图",  @"组合图"];
-}
-
-- (NSArray<NSString *> *)controllerArray {
-    return @[@"HyChartsBarDemoController",
-             @"HyChartsLineDemoController",
-             @"HyChartsKlineDemoController",
-             @"HyChartsReactChainsDemoController"];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -50,6 +39,17 @@
         tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
     }
     [self.view addSubview:tableView];
+}
+
+- (NSArray<NSString *> *)titleArray {
+    return @[@"柱状图", @"折/曲线图", @"K线图",  @"组合图"];
+}
+
+- (NSArray<NSString *> *)controllerArray {
+    return @[@"HyChartsBarDemoController",
+             @"HyChartsLineDemoController",
+             @"HyChartsKlineDemoController",
+             @"HyChartsReactChainsDemoController"];
 }
 
 /*

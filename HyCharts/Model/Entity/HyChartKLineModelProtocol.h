@@ -20,6 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HyVolumeChartModelProtocol;
 @protocol HyChartKLineModelProtocol <HyChartModelProtocol>
+
+/// 时间
+@property (nonatomic, copy) NSString *time;
 /// 最高价
 @property (nonatomic, strong) NSNumber *highPrice;
 /// 最低价

@@ -45,6 +45,7 @@
 @property (nonatomic, assign, getter=isReverseScrolling) BOOL reverseScrolling;
 @property (nonatomic, assign) NSInteger prepareStage;
 @property (nonatomic, strong) NSNumberFormatter *yAxisNunmberFormatter;
+@property (nonatomic,strong) dispatch_semaphore_t semaphore;
 @end
 
 
@@ -102,9 +103,9 @@
         
         CGFloat scale = configure.scale;
         CGFloat changeScale = sca - 1;
-        if (changeScale == 0 ||
+        if  (changeScale == 0 ||
             (changeScale > 0 && scale == configure.maxScale) ||
-           (changeScale < 0 && scale == configure.minScale )) {
+            (changeScale < 0 && scale == configure.minScale)) {
             return;
         }
                 
@@ -228,6 +229,8 @@
         [self.scrollView addGestureRecognizer:self.longPressGesture];
     }
     
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    
     id<HyChartConfigureProtocol> configure = self.dataSource.configreDataSource.configure;
     if (configure.autoMargin) {
         CGFloat xMargin = self.chartWidth / self.dataSource.axisDataSource.xAxisModel.indexs;
@@ -251,6 +254,7 @@
     } completion:^{
         self.prepareStage = 2;
         [self.layer setNeedsDisplay];
+        dispatch_semaphore_signal(self.semaphore);
     }];
 }
 
@@ -382,7 +386,7 @@
             return ^id(NSInteger index, id<HyChartModelProtocol> model){
                 if (!displayAxisZeroText && !index) {
                     return @"";
-                }                
+                }
                 if (index < xAxisModels.count) {
                     return xAxisModels[index].text;
                 }
@@ -446,7 +450,7 @@
             [yAxisModel.leftYAxisInfo configTextAtIndex:textBlock(yAxisModel.leftYAxisInfo.displayAxisZeroText)];
         }
         if (!yAxisModel.rightYAaxisDisabled && yAxisModel.rightYAxisInfo.autoSetText) {
-            [yAxisModel.rightYAxisInfo configTextAtIndex:textBlock(yAxisModel.leftYAxisInfo.displayAxisZeroText)];
+            [yAxisModel.rightYAxisInfo configTextAtIndex:textBlock(yAxisModel.rightYAxisInfo.displayAxisZeroText)];
         }
     }
 }
@@ -487,7 +491,6 @@
         case UIGestureRecognizerStateChanged: {
             if (index < self.dataSource.modelDataSource.models.count) {
                 self.pinchAction(index, margin, gesture.scale);
-                
                 if (gesture == self.pinchGesture) {
                     [self.reactChains enumerateObjectsUsingBlock:^(NSValue * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                         HyChartView *chartView = (HyChartView *)obj.nonretainedObjectValue;
@@ -556,6 +559,7 @@
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         CGFloat positionX = point.x;
+        
         if (self.configure.dataDirection == HyChartDataDirectionReverse) {
             positionX = self.chartContentWidth - positionX;
         }
@@ -567,11 +571,17 @@
             NSString *xText = model.text;
             CGPoint centerP = CGPointMake(model.visiblePosition + self.configure.scaleWidth / 2, point.y);
             
-            NSNumber *maxValue = self.dataSource.axisDataSource.yAxisModel.yAxisMaxValue;
-            NSNumber *minValue = self.dataSource.axisDataSource.yAxisModel.yAxisMinValue;
-            NSNumber *valueRate = DividingNumber(SubtractingNumber(maxValue, minValue), @(self.chartHeight));
-
-            NSString * yText = [self.yAxisNunmberFormatter stringFromNumber: AddingNumber(MultiplyingNumber(@(self.chartHeight - point.y), valueRate), minValue)];;
+            CGFloat chartH = self.chartHeight;
+            id<HyChartYAxisModelProtocol> yAxisModel = self.dataSource.axisDataSource.yAxisModel;
+            if ([self isKindOfClass:NSClassFromString(@"HyChartKLineView")]) {
+                chartH = ((id<HyChartKLineConfigureProtocol>)self.dataSource.configreDataSource.configure).klineViewDict[@(HyChartKLineViewTypeMain)].floatValue * (self.chartHeight + self.contentEdgeInsets.top + self.contentEdgeInsets.bottom) - self.contentEdgeInsets.top;
+                yAxisModel = self.dataSource.axisDataSource.yAxisModelWityViewType(HyChartKLineViewTypeMain);
+            }
+            
+            NSNumber *maxValue = yAxisModel.yAxisMaxValue;
+            NSNumber *minValue = yAxisModel.yAxisMinValue;
+            NSNumber *valueRate = DividingNumber(SubtractingNumber(maxValue, minValue), @(chartH));
+            NSString * yText = [self.yAxisNunmberFormatter stringFromNumber: AddingNumber(MultiplyingNumber(@(chartH - point.y), valueRate), minValue)];;
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.chartCursor.show(centerP, xText, yText, model, self);
@@ -580,7 +590,6 @@
     });
 }
 
-// 相对下标 相对位置
 - (NSInteger)avisibleIndexWithPosition:(CGFloat)position {
 
     __block NSInteger relativeIndex = -1;
@@ -595,7 +604,6 @@
     return relativeIndex;
 }
 
-// 绝对下标 绝对位置
 - (NSInteger)absoluteIndexWithPosition:(CGFloat)position {
     
     id<HyChartConfigureProtocol> configure = self.configure;
@@ -739,6 +747,13 @@
     return _reactChains;
 }
 
+- (dispatch_semaphore_t)semaphore{
+    if (!_semaphore) {
+        _semaphore = dispatch_semaphore_create(1);
+    }
+    return _semaphore;
+}
+
 - (void)setTechnicalType:(HyChartKLineTechnicalType)technicalType {
 
     if (technicalType != _technicalType &&
@@ -785,6 +800,5 @@
 //
 //    NSLog(@"drawRect");
 //}
-
 
 @end

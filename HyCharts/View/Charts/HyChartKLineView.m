@@ -24,35 +24,38 @@
 
 
 @interface HyChartKLineLayer : CALayer<HyChartLayerProtocol>
-@property (nonatomic, strong)NSArray<HyChartLayer<HyChartLayerProtocol> *> *layers;
+@property (nonatomic, strong) NSDictionary<NSNumber *, HyChartLayer *> *layersDict;
 @end
 @implementation HyChartKLineLayer
 - (void)setNeedsRendering {
-    [self.layers makeObjectsPerformSelector:@selector(setNeedsRendering)];
+    [self.layersDict.allValues makeObjectsPerformSelector:@selector(setNeedsRendering)];
 }
 @end
 
 
 @interface HyChartKLineAxisLayer : CALayer<HyChartLayerProtocol>
-@property (nonatomic, strong)NSArray<HyChartAxisLayer *> *layers;
+@property (nonatomic, strong) NSDictionary<NSNumber *, HyChartAxisLayer *> *layersDict;
 @property (nonatomic, assign) UIEdgeInsets contentEdgeInsets;
 @end
 @implementation HyChartKLineAxisLayer
 - (void)setNeedsRendering {
-    [self.layers makeObjectsPerformSelector:@selector(setNeedsRendering)];
+    [self.layersDict.allValues makeObjectsPerformSelector:@selector(setNeedsRendering)];
 }
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
     _contentEdgeInsets = contentEdgeInsets;
-    if (self.layers.count == 1) {
-        self.layers.firstObject.contentEdgeInsets = self.contentEdgeInsets;
-    } else if (self.layers.count == 2) {
-        self.layers.firstObject.contentEdgeInsets = UIEdgeInsetsMake(self.contentEdgeInsets.top, self.contentEdgeInsets.left, 0, self.contentEdgeInsets.right);
-        self.layers.lastObject.contentEdgeInsets = UIEdgeInsetsMake(0, self.contentEdgeInsets.left, self.contentEdgeInsets.bottom, self.contentEdgeInsets.right);
+    
+    NSArray<HyChartAxisLayer *> *layers = self.sublayers;
+    
+    if (layers.count == 1) {
+        layers.firstObject.contentEdgeInsets = self.contentEdgeInsets;
+    } else if (layers.count == 2) {
+        layers.firstObject.contentEdgeInsets = UIEdgeInsetsMake(self.contentEdgeInsets.top, self.contentEdgeInsets.left, 0, self.contentEdgeInsets.right);
+        layers.lastObject.contentEdgeInsets = UIEdgeInsetsMake(0, self.contentEdgeInsets.left, self.contentEdgeInsets.bottom, self.contentEdgeInsets.right);
     } else {
-        [self.layers enumerateObjectsUsingBlock:^(HyChartAxisLayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [layers enumerateObjectsUsingBlock:^(HyChartAxisLayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if (idx == 0) {
                 obj.contentEdgeInsets = UIEdgeInsetsMake(self.contentEdgeInsets.top, self.contentEdgeInsets.left, 0, self.contentEdgeInsets.right);
-            } else if (idx == self.layers.count - 1) {
+            } else if (idx == layers.count - 1) {
                 obj.contentEdgeInsets = UIEdgeInsetsMake(0, self.contentEdgeInsets.left, self.contentEdgeInsets.bottom, self.contentEdgeInsets.right);
             } else {
                obj.contentEdgeInsets = UIEdgeInsetsMake(0, self.contentEdgeInsets.left, 0, self.contentEdgeInsets.right);
@@ -81,33 +84,30 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    __block CGFloat axisLayerY = 0;
-    __block CGFloat chartLayerY = 0;
+    NSInteger index = 0;
+    CGFloat axisLayerY = 0;
+    CGFloat chartLayerY = 0;
     NSDictionary *klineViewDict = self.dataSource.configreDataSource.configure.klineViewDict;
-    for (HyChartLayer<HyChartLayerProtocol> *obj in self.chartLayer.layers) {
-        
-        NSInteger index = [self.chartLayer.layers indexOfObject:obj];
-        CGFloat height = [klineViewDict[klineViewDict.allKeys[index]] floatValue] * CGRectGetHeight(self.bounds);
-        
-        HyChartAxisLayer *axisLayer = self.axisLayer.layers[index];
-        axisLayer.frame = CGRectMake(0, axisLayerY, CGRectGetWidth(self.axisLayer.bounds), height);
-        axisLayerY += height;
-        
-        if (index == 0) {
-            height -= self.contentEdgeInsets.top;
+    for (NSNumber *type in self.klineViewTypes) {
+        HyChartLayer *chartLayer = self.chartLayer.layersDict[type];
+        HyChartAxisLayer *axisLayer = self.axisLayer.layersDict[type];
+        if (chartLayer) {
+            CGFloat height = [klineViewDict[type] floatValue] * CGRectGetHeight(self.bounds);
+            axisLayer.frame = CGRectMake(0, axisLayerY, CGRectGetWidth(self.axisLayer.bounds), height);
+            axisLayerY += height;
+            
+            if (index == 0) {
+                height -= self.contentEdgeInsets.top;
+            }
+            if (index == self.chartLayer.layersDict.allValues.count - 1) {
+                height -= self.contentEdgeInsets.bottom;
+            }
+            
+            chartLayer.frame = CGRectMake(0, chartLayerY, CGRectGetWidth(self.chartLayer.bounds), height);
+            chartLayerY += height;
+            index += 1;
         }
-        if (index == self.chartLayer.layers.count - 1) {
-            height -= self.contentEdgeInsets.bottom;
-        }
-        obj.frame = CGRectMake(0, chartLayerY, CGRectGetWidth(self.chartLayer.bounds), height);
-        chartLayerY += height;
     }
-    
-    [self.axisLayer.layers enumerateObjectsUsingBlock:^(HyChartAxisLayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        CGRect rect = obj.frame;
-        rect.size.width = CGRectGetWidth(self.axisLayer.bounds);
-        obj.frame = rect;
-    }];
 }
 
 - (void)handleVisibleModelsWithStartIndex:(NSInteger)startIndex endIndex:(NSInteger)endIndex {
@@ -203,7 +203,7 @@
 }
 
 - (BOOL)containKLineViewWithType:(HyChartKLineViewType)type {
-    if ([self.dataSource.configreDataSource.configure.klineViewDict[@(type)] floatValue] > 0) {
+    if (self.chartLayer.layersDict[@(type)]) {
         return YES;
     }
     return NO;
@@ -460,7 +460,6 @@
     
     NSDictionary *klineViewDict = self.dataSource.configreDataSource.configure.klineViewDict;
     [klineViewDict.allKeys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
         double maxValue = self.dataSource.modelDataSource.maxValueWithViewType([obj intValue]).doubleValue;
         double minValue = self.dataSource.modelDataSource.minValueWithViewType([obj intValue]).doubleValue;
         double subValue  = (maxValue - minValue);
@@ -469,13 +468,15 @@
         
         if (yAxisModel.yAxisMinValueBlock) {
             yAxisModel.yAxisMinValue = yAxisModel.yAxisMinValueBlock();
-            minValue = yAxisModel.yAxisMinValue.floatValue;
+            minValue = yAxisModel.yAxisMinValue.doubleValue;
         } else {
-            NSNumber *yAxisMinValueExtraPrecent = yAxisModel.yAxisMinValueExtraPrecent;
-            if (yAxisMinValueExtraPrecent) {
-                minValue = minValue - subValue * yAxisMinValueExtraPrecent.doubleValue;
+            if ([obj integerValue] != 1) {
+                NSNumber *yAxisMinValueExtraPrecent = yAxisModel.yAxisMinValueExtraPrecent;
+                if (yAxisMinValueExtraPrecent) {
+                    minValue = minValue - subValue * yAxisMinValueExtraPrecent.doubleValue;
+                }
             }
-            yAxisModel.yAxisMinValue = [NSNumber numberWithDouble:minValue];
+           yAxisModel.yAxisMinValue = [NSNumber numberWithDouble:minValue];
         }
 
         if (yAxisModel.yAxisMaxValueBlock) {
@@ -507,7 +508,7 @@
                 [yAxisModel.leftYAxisInfo configTextAtIndex:textBlock(yAxisModel.leftYAxisInfo.displayAxisZeroText)];
             }
             if (!yAxisModel.rightYAaxisDisabled && yAxisModel.rightYAxisInfo.autoSetText) {
-                [yAxisModel.rightYAxisInfo configTextAtIndex:textBlock(yAxisModel.leftYAxisInfo.displayAxisZeroText)];
+                [yAxisModel.rightYAxisInfo configTextAtIndex:textBlock(yAxisModel.rightYAxisInfo.displayAxisZeroText)];
             }
         }
     }];
@@ -531,14 +532,16 @@
                                @(HyChartKLineViewTypeVolume) : @"HyChartKLineVolumeLayer",
                                @(HyChartKLineViewTypeAuxiliary) : @"HyChartKLineAuxiliaryLayer",
                             };
-        NSMutableArray *marray = @[].mutableCopy;
-        NSDictionary *klineViewDict = self.dataSource.configreDataSource.configure.klineViewDict;
-        for (NSNumber *key in klineViewDict.allKeys) {
-            HyChartLayer *layer = [NSClassFromString(dict[key]) layerWithDataSource:self.dataSource];
-            [_chartLayer addSublayer:layer];
-            [marray addObject:layer];
+        NSMutableDictionary *mDict = @{}.mutableCopy;
+        for (NSNumber *type in self.klineViewTypes) {
+            NSNumber *viewNumber = self.dataSource.configreDataSource.configure.klineViewDict[type];
+            if (viewNumber && [viewNumber floatValue] > 0) {
+               HyChartLayer *layer = [NSClassFromString(dict[type]) layerWithDataSource:self.dataSource];
+                [_chartLayer addSublayer:layer];
+                [mDict setObject:layer forKey:type];
+            }
         }
-        _chartLayer.layers = marray.copy;
+        _chartLayer.layersDict = mDict.copy;
     }
     return _chartLayer;
 }
@@ -546,23 +549,33 @@
 - (HyChartKLineAxisLayer *)axisLayer {
     if (!_axisLayer) {
         _axisLayer = [HyChartKLineAxisLayer layer];
-        NSMutableArray *marray = @[].mutableCopy;
-        NSDictionary *klineViewDict = self.dataSource.configreDataSource.configure.klineViewDict;
-        for (NSNumber *key in klineViewDict.allKeys) {
-            HyChartAxisLayer *layer = [HyChartAxisLayer layerWithDataSource:self.dataSource xAxisModel:self.dataSource.axisDataSource.xAxisModelWityViewType([key integerValue]) yAxisModel:self.dataSource.axisDataSource.yAxisModelWityViewType([key integerValue])];
-            [_axisLayer addSublayer:layer];
-            [marray addObject:layer];
+        NSMutableDictionary *mDict = @{}.mutableCopy;
+        for (NSNumber *type in self.klineViewTypes) {
+            NSNumber *viewNumber = self.dataSource.configreDataSource.configure.klineViewDict[type];
+            if (viewNumber && [viewNumber floatValue] > 0) {
+               HyChartAxisLayer *layer = [HyChartAxisLayer layerWithDataSource:self.dataSource xAxisModel:self.dataSource.axisDataSource.xAxisModelWityViewType([type integerValue]) yAxisModel:self.dataSource.axisDataSource.yAxisModelWityViewType([type integerValue])];
+               [_axisLayer addSublayer:layer];
+               [mDict setObject:layer forKey:type];
+            }
         }
-        _axisLayer.layers = marray.copy;
+        _axisLayer.layersDict = mDict.copy;
     }
     return _axisLayer;
 }
 
+- (NSArray<NSNumber *> *)klineViewTypes {
+    return @[@(HyChartKLineViewTypeMain),
+             @(HyChartKLineViewTypeVolume),
+             @(HyChartKLineViewTypeAuxiliary)];
+}
+
 - (void)switchKLineTechnicalType:(HyChartKLineTechnicalType)type {
     NSMutableArray<HyChartLayer *> *klineLayers = @[].mutableCopy;
-    [self.chartLayer.layers enumerateObjectsUsingBlock:^(HyChartLayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:NSClassFromString(@"HyChartKLineMainLayer")] ||
-            ([obj isKindOfClass:NSClassFromString(@"HyChartKLineVolumeLayer")] && type != HyChartKLineTechnicalTypeBOLL)) {
+    
+    [self.chartLayer.layersDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, HyChartLayer * _Nonnull obj, BOOL * _Nonnull stop) {
+        NSInteger keyValue = [key integerValue];
+        if (keyValue == HyChartKLineViewTypeMain ||
+            (keyValue == HyChartKLineViewTypeVolume && type != HyChartKLineTechnicalTypeBOLL)) {
             [klineLayers addObject:obj];
             ((HyChartKLineMainLayer *)obj).technicalType = type;
         }
@@ -572,28 +585,36 @@
     }
 }
 
-- (void)setTimeLine:(BOOL)timeLine {
-    _timeLine = timeLine;
-    NSMutableArray<HyChartLayer *> *klineLayers = @[].mutableCopy;
-    [self.chartLayer.layers enumerateObjectsUsingBlock:^(HyChartLayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:NSClassFromString(@"HyChartKLineMainLayer")]) {
-            [klineLayers addObject:obj];
-            ((HyChartKLineMainLayer *)obj).timeLine = timeLine;
-        }
-    }];
-}
-
 - (void)switchKLineAuxiliaryType:(HyChartKLineAuxiliaryType)type {
-    NSMutableArray<HyChartLayer *> *klineLayers = @[].mutableCopy;
-    [self.chartLayer.layers enumerateObjectsUsingBlock:^(HyChartLayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:NSClassFromString(@"HyChartKLineAuxiliaryLayer")]) {
-            [klineLayers addObject:obj];
-            ((HyChartKLineAuxiliaryLayer *)obj).auxiliaryType = type;
-        }
-    }];
-    if (klineLayers.count) {
+    HyChartKLineAuxiliaryLayer *klineAuxiliaryLayer = (id)self.chartLayer.layersDict[@(HyChartKLineViewTypeAuxiliary)];
+    if (klineAuxiliaryLayer) {
+        klineAuxiliaryLayer.auxiliaryType = type;
         self.auxiliaryType = type;
     }
 }
 
+- (void)setTimeLine:(BOOL)timeLine {
+    _timeLine = timeLine;
+    HyChartKLineMainLayer *klineMainLayer = (id)self.chartLayer.layersDict[@(HyChartKLineViewTypeMain)];
+    if (klineMainLayer) {
+        klineMainLayer.timeLine = timeLine;
+    }
+}
+
+- (void)showCursorWithPoint:(CGPoint)point {
+    HyChartKLineMainLayer *klineMainLayer = (id)self.chartLayer.layersDict[@(HyChartKLineViewTypeMain)];
+    if (!klineMainLayer || point.y > CGRectGetMaxY(klineMainLayer.frame)) {
+        return;
+    }
+    
+    struct objc_super _super = {
+        .receiver = self,
+        .super_class = class_getSuperclass(object_getClass(self))
+    };
+    ((void (*)(struct objc_super *, SEL, CGPoint))objc_msgSendSuper)(&_super, sel_registerName("showCursorWithPoint:"), point);
+}
+
+- (NSNumberFormatter *)yAxisNunmberFormatter {
+    return self.dataSource.configreDataSource.configure.priceNunmberFormatter;
+}
 @end

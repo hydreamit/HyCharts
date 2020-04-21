@@ -47,7 +47,7 @@
     contentView.clipsToBounds = NO;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, CGRectGetWidth(frame) - 20, 25)];
-    titleLabel.text = @"24小时新增确诊人数国家Top10";
+    titleLabel.text = @"24小时新增数国家Top10";
     titleLabel.font = [UIFont systemFontOfSize:15];
     titleLabel.textColor = UIColor.darkTextColor;
     [contentView addSubview:titleLabel];
@@ -84,6 +84,7 @@
             yAxisInfo.axisTextFont = [UIFont systemFontOfSize:10];
             yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
             yAxisInfo.axisLineType = HyChartAxisLineTypeNone;
+            yAxisInfo.displayAxisZeroText = NO;
         }];
     }];
     
@@ -198,6 +199,7 @@
             yAxisInfo.axisTextFont = [UIFont systemFontOfSize:10];
             yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
             yAxisInfo.axisLineType = HyChartAxisLineTypeNone;
+            yAxisInfo.displayAxisZeroText = NO;
         }];
     }];
     
@@ -300,6 +302,7 @@
         [[[yAxisModel configNumberOfIndexs:5] configLeftYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
             yAxisInfo.axisTextFont = [UIFont systemFontOfSize:10];
             yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
+            yAxisInfo.displayAxisZeroText = NO;
         }] configRightYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
             yAxisInfo.autoSetText = NO;
         }];

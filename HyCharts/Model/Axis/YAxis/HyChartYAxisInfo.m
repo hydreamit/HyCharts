@@ -17,7 +17,7 @@
 @implementation HyChartYAxisInfo
 - (instancetype)init {
     if (self = [super init]) {
-        self.displayAxisZeroText = NO;
+//        self.displayAxisZeroText = NO;
     } return self;
 }
 

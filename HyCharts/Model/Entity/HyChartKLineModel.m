@@ -28,7 +28,7 @@
 
 
 @implementation HyChartKLineModel
-@synthesize highPrice = _highPrice, lowPrice = _lowPrice, openPrice = _openPrice, closePrice = _closePrice, volume = _volume, amount = _amount, trend = _trend, trendPercent = _trendPercent, trendChanging = _trendChanging, turnoverrate = _turnoverrate, maxPrice = _maxPrice, minPrice = _minPrice, maxVolume = _maxVolume, minVolume = _minVolume,priceNunmberFormatter = _priceNunmberFormatter, volumeNunmberFormatter = _volumeNunmberFormatter, maxAuxiliary = _maxAuxiliary, minAuxiliary = _minAuxiliary;
+@synthesize highPrice = _highPrice, lowPrice = _lowPrice, openPrice = _openPrice, closePrice = _closePrice, volume = _volume, amount = _amount, trend = _trend, trendPercent = _trendPercent, trendChanging = _trendChanging, turnoverrate = _turnoverrate, maxPrice = _maxPrice, minPrice = _minPrice, maxVolume = _maxVolume, minVolume = _minVolume,priceNunmberFormatter = _priceNunmberFormatter, volumeNunmberFormatter = _volumeNunmberFormatter, maxAuxiliary = _maxAuxiliary, minAuxiliary = _minAuxiliary, time = _time;
 
 
 - (void)setHighPrice:(NSNumber *)highPrice {
@@ -250,9 +250,9 @@
     } else if (self.openPrice.floatValue < self.closePrice.floatValue) {
         return HyChartKLineTrendUp;
     } else {
-        if (self.trendChanging > 0) {
+        if (self.trendChanging.floatValue > 0) {
             return HyChartKLineTrendUp;
-        } else if (self.trendChanging < 0) {
+        } else if (self.trendChanging.floatValue < 0) {
             return HyChartKLineTrendDown;
         } else {
             return HyChartKLineTrendEqual;

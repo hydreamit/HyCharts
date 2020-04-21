@@ -12,6 +12,7 @@
 #import <HyCategoriess/HyCategories.h>
 #import <HyCycleView/HySegmentView.h>
 #import "HyCharts.h"
+#import "HyChartsKLineDemoDataHandler.h"
 
 
 @interface HyChartsReactChainsDemoController ()
@@ -83,38 +84,11 @@
     [[session dataTaskWithURL:[NSURL URLWithString:string] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 
         if (!error) {
-            
             __strong typeof(_self) self = _self;
             NSDictionary *successObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            NSArray *array = successObject[@"Data"];
-            
-            NSInteger (^itemsBlock)(void) = ^NSInteger {
-                return array.count;
-            };
-            
-            void (^ItemAtIndexBlock)(id<HyChartKLineModelProtocol>, NSInteger) =
-            ^(id<HyChartKLineModelProtocol>  _Nonnull model, NSInteger index){
-                
-                NSDictionary *dict = array[index];
-                model.closePrice = [NSNumber numberWithFloat:[dict[@"Closed"] floatValue]];
-                model.openPrice = [NSNumber numberWithFloat:[dict[@"Opened"] floatValue]];
-                model.highPrice = [NSNumber numberWithFloat:[dict[@"Highest"] floatValue]];
-                model.lowPrice = [NSNumber numberWithFloat:[dict[@"Lowest"] floatValue]];
-                model.volume = [NSNumber numberWithFloat:[dict[@"DNum"] floatValue]];
-
-                time_t timeInterval = [dict[@"Timestamp"] doubleValue];
-                struct tm *cTime = localtime(&timeInterval);
-                NSString *string = [NSString stringWithFormat:@"%02d-%02d %02d:%02d", cTime->tm_mon + 1, cTime->tm_mday, cTime->tm_hour, cTime->tm_min];
-                model.text = string;
-                
-            };
-            
-            [[self.klineMainView.dataSource.modelDataSource configNumberOfItems:itemsBlock] configModelForItemAtIndex:ItemAtIndexBlock];
-            
-            [[self.volumeView.dataSource.modelDataSource configNumberOfItems:itemsBlock] configModelForItemAtIndex:ItemAtIndexBlock];
-            
-            [[self.auxiliaryView.dataSource.modelDataSource configNumberOfItems:itemsBlock] configModelForItemAtIndex:ItemAtIndexBlock];
-         
+            [HyChartsKLineDemoDataHandler handleWithArray:successObject[@"Data"] dataSorce:self.klineMainView.dataSource];
+            [HyChartsKLineDemoDataHandler handleWithArray:successObject[@"Data"] dataSorce:self.volumeView.dataSource];
+            [HyChartsKLineDemoDataHandler handleWithArray:successObject[@"Data"] dataSorce:self.auxiliaryView.dataSource];
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [indicatorView stopAnimating];
@@ -126,209 +100,6 @@
             });
         }
     }] resume];
-}
-
-- (HySegmentView *)segmentView {
-    if (!_segmentView){
-
-        NSArray<NSString *> *titleArray = @[@"Time", @"M5", @"M15", @"M30", @"H1", @"D1", @"W1", @"MN"];
-        NSArray<NSString *> *typeArray = @[@"101", @"102", @"103", @"104", @"201", @"301", @"310", @"401"];
-        __weak typeof(self) _self = self;
-        _segmentView =
-        [HySegmentView segmentViewWithFrame:CGRectMake(0, 0, self.view.width, 40)
-                             configureBlock:^(HySegmentViewConfigure * _Nonnull configure) {
-                        
-            configure
-            .numberOfItems(titleArray.count)
-            .startIndex(4)
-            .insetAndMarginRatio(.65)
-            .viewForItemAtIndex(^UIView *(UIView *currentView,
-                                          NSInteger currentIndex,
-                                          CGFloat progress,
-                                          HySegmentViewItemPosition position,
-                                          NSArray<UIView *> *animationViews){
-
-                UILabel *label = (UILabel *)currentView;
-                if (!label) {
-                    label = [UILabel new];
-                    label.text = titleArray[currentIndex];
-                    label.textAlignment = NSTextAlignmentCenter;
-                    label.textColor = UIColor.whiteColor;
-                    label.font = [UIFont systemFontOfSize:15];
-                    [label sizeToFit];
-                    label.width += 10;
-                }
-                if (progress == 0 || progress == 1) {
-                    label.textColor =  progress == 0 ? [UIColor hy_colorWithHexString:@"#3A5775"] : UIColor.whiteColor;
-                }
-                return label;
-            })
-            .animationViews(^NSArray<UIView *> *(NSArray<UIView *> *currentAnimations, UICollectionViewCell *fromCell, UICollectionViewCell *toCell, NSInteger fromIndex, NSInteger toIndex, CGFloat progress){
-                
-                NSArray<UIView *> *array = currentAnimations;
-                
-                if (!array.count) {
-                    UIView *view = [UIView new];
-                    view.backgroundColor = [UIColor hy_colorWithHexString:@"#2E7FD0"];
-                    view.layer.cornerRadius = 1;
-                    view.heightValue(24).topValue(8);
-                    view.layer.cornerRadius = view.height / 2;
-                    array = @[view];
-                }
-                
-                CGFloat margin = toCell.centerX - fromCell.centerX;
-                CGFloat widthMargin = (toCell.width - fromCell.width);
-                array.firstObject
-                .widthValue(fromCell.width + 15  + widthMargin * progress)
-                .centerXValue(fromCell.centerX + margin * progress);
-  
-                return array;
-            })
-            .clickItemAtIndex(^BOOL(NSInteger currentIndex, BOOL isRepeat){
-                 __weak typeof(_self) self = _self;
-                if (!isRepeat) {
-                    [self requestDataWithType:typeArray[currentIndex]];
-                }
-                return YES;
-            });
-        }];
-        _segmentView.backgroundColor = [UIColor colorWithRed:14.0 / 255 green:33.0 / 255 blue:60.0 / 255 alpha:1];
-    }
-    return _segmentView;
-}
-
-- (HySegmentView *)technicalSegmentView {
-    if (!_technicalSegmentView){
-
-        NSArray<NSString *> *titleArray = @[@"MA", @"EMA", @"BOLL"];
-        __weak typeof(self) _self = self;
-        _technicalSegmentView =
-        [HySegmentView segmentViewWithFrame:CGRectMake(0, self.segmentView.bottom + 1, self.view.width, 40)
-                             configureBlock:^(HySegmentViewConfigure * _Nonnull configure) {
-                        
-            configure
-            .numberOfItems(titleArray.count)
-            .itemMargin(20)
-            .viewForItemAtIndex(^UIView *(UIView *currentView,
-                                          NSInteger currentIndex,
-                                          CGFloat progress,
-                                          HySegmentViewItemPosition position,
-                                          NSArray<UIView *> *animationViews){
-
-                UILabel *label = (UILabel *)currentView;
-                if (!label) {
-                    label = [UILabel new];
-                    label.text = titleArray[currentIndex];
-                    label.textAlignment = NSTextAlignmentCenter;
-                    label.textColor = UIColor.whiteColor;
-                    label.font = [UIFont systemFontOfSize:15];
-                    [label sizeToFit];
-                    label.width += 10;
-                }
-                if (progress == 0 || progress == 1) {
-                    label.textColor =  progress == 0 ? [UIColor hy_colorWithHexString:@"#3A5775"] : UIColor.whiteColor;
-                }
-                return label;
-            })
-            .animationViews(^NSArray<UIView *> *(NSArray<UIView *> *currentAnimations, UICollectionViewCell *fromCell, UICollectionViewCell *toCell, NSInteger fromIndex, NSInteger toIndex, CGFloat progress){
-                
-                NSArray<UIView *> *array = currentAnimations;
-                
-                if (!array.count) {
-                    UIView *view = [UIView new];
-                    view.backgroundColor = [UIColor hy_colorWithHexString:@"#2E7FD0"];
-                    view.layer.cornerRadius = 1;
-                    view.heightValue(24).topValue(8);
-                    view.layer.cornerRadius = view.height / 2;
-                    array = @[view];
-                }
-                
-                CGFloat margin = toCell.centerX - fromCell.centerX;
-                CGFloat widthMargin = (toCell.width - fromCell.width);
-                array.firstObject
-                .widthValue(fromCell.width + 15  + widthMargin * progress)
-                .centerXValue(fromCell.centerX + margin * progress);
-  
-                return array;
-            })
-            .clickItemAtIndex(^BOOL(NSInteger currentIndex, BOOL isRepeat){
-                 __weak typeof(_self) self = _self;
-                if (!isRepeat) {
-                    [self.klineMainView switchKLineTechnicalType:currentIndex + 1];
-                }
-                return YES;
-            });
-        }];
-        _technicalSegmentView.backgroundColor = [UIColor colorWithRed:14.0 / 255 green:33.0 / 255 blue:60.0 / 255 alpha:1];
-    }
-    return _technicalSegmentView;
-}
-
-- (HySegmentView *)auxiliarySegmentView {
-    if (!_auxiliarySegmentView){
-        
-        NSArray<NSString *> *titleArray = @[@"MCAD", @"KDJ", @"RSI"];
-        __weak typeof(self) _self = self;
-        _auxiliarySegmentView =
-        [HySegmentView segmentViewWithFrame:CGRectMake(0, self.technicalSegmentView.bottom + 1, self.view.width, 40)
-                             configureBlock:^(HySegmentViewConfigure * _Nonnull configure) {
-                        
-            configure
-            .numberOfItems(titleArray.count)
-            .itemMargin(20)
-            .viewForItemAtIndex(^UIView *(UIView *currentView,
-                                          NSInteger currentIndex,
-                                          CGFloat progress,
-                                          HySegmentViewItemPosition position,
-                                          NSArray<UIView *> *animationViews){
-
-                UILabel *label = (UILabel *)currentView;
-                if (!label) {
-                    label = [UILabel new];
-                    label.text = titleArray[currentIndex];
-                    label.textAlignment = NSTextAlignmentCenter;
-                    label.textColor = UIColor.whiteColor;
-                    label.font = [UIFont systemFontOfSize:15];
-                    [label sizeToFit];
-                    label.width += 10;
-                }
-                if (progress == 0 || progress == 1) {
-                    label.textColor =  progress == 0 ? [UIColor hy_colorWithHexString:@"#3A5775"] : UIColor.whiteColor;
-                }
-                return label;
-            })
-            .animationViews(^NSArray<UIView *> *(NSArray<UIView *> *currentAnimations, UICollectionViewCell *fromCell, UICollectionViewCell *toCell, NSInteger fromIndex, NSInteger toIndex, CGFloat progress){
-                
-                NSArray<UIView *> *array = currentAnimations;
-                
-                if (!array.count) {
-                    UIView *view = [UIView new];
-                    view.backgroundColor = [UIColor hy_colorWithHexString:@"#2E7FD0"];
-                    view.layer.cornerRadius = 1;
-                    view.heightValue(24).topValue(8);
-                    view.layer.cornerRadius = view.height / 2;
-                    array = @[view];
-                }
-                
-                CGFloat margin = toCell.centerX - fromCell.centerX;
-                CGFloat widthMargin = (toCell.width - fromCell.width);
-                array.firstObject
-                .widthValue(fromCell.width + 15  + widthMargin * progress)
-                .centerXValue(fromCell.centerX + margin * progress);
-  
-                return array;
-            })
-            .clickItemAtIndex(^BOOL(NSInteger currentIndex, BOOL isRepeat){
-                 __weak typeof(_self) self = _self;
-                if (!isRepeat) {
-                    [self.auxiliaryView switchKLineAuxiliaryType:currentIndex];
-                }
-                return YES;
-            });
-        }];
-        _auxiliarySegmentView.backgroundColor = [UIColor colorWithRed:14.0 / 255 green:33.0 / 255 blue:60.0 / 255 alpha:1];
-    }
-    return _auxiliarySegmentView;
 }
 
 - (HyChartKLineMainView *)klineMainView {
@@ -378,8 +149,12 @@
             configure.trendUpColor = [UIColor hy_colorWithHexString:@"#E97C5E"];
             configure.trendDownColor = [UIColor hy_colorWithHexString:@"#1ABD93"];
             configure.minScaleToLine = YES;
-            configure.priceDecimal = 4;
-//            configure.trendUpKlineType = HyChartKLineTypeStroke;
+            configure.priceDecimal = 2;
+            configure.volumeDecimal = 4;
+            
+            configure.newpriceColor = UIColor.whiteColor;
+            configure.maxminPriceColor = UIColor.whiteColor;
+            configure.trendUpKlineType = HyChartKLineTypeStroke;
             
             UIColor *lineColor =   Hy_ColorWithRGBA(46, 127, 208, 1);
             NSArray<UIColor *> *colors = @[Hy_ColorWithRGBA(46, 127, 208, .2),
@@ -437,6 +212,7 @@
                 yAxisInfo.axisLineColor = [UIColor colorWithWhite:1 alpha:.25];
                 yAxisInfo.axisTextColor = UIColor.whiteColor;
                 yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
+                yAxisInfo.displayAxisZeroText = NO;
             }];
         }];
         
@@ -449,7 +225,9 @@
             configure.edgeInsetEnd = 3;
             configure.trendUpColor = [UIColor hy_colorWithHexString:@"#E97C5E"];
             configure.trendDownColor = [UIColor hy_colorWithHexString:@"#1ABD93"];
-//            configure.trendUpKlineType = HyChartKLineTypeStroke;
+            configure.trendUpKlineType = HyChartKLineTypeStroke;
+            configure.priceDecimal = 2;
+            configure.volumeDecimal = 4;
             
             configure.smaDict = @{@(5)  : UIColor.yellowColor,
                                   @(10) : UIColor.orangeColor,
@@ -508,7 +286,9 @@
             configure.edgeInsetEnd = 3;
             configure.trendUpColor = [UIColor hy_colorWithHexString:@"#E97C5E"];
             configure.trendDownColor = [UIColor hy_colorWithHexString:@"#1ABD93"];
-//            configure.trendUpKlineType = HyChartKLineTypeStroke;
+            configure.trendUpKlineType = HyChartKLineTypeStroke;
+            configure.priceDecimal = 2;
+            configure.volumeDecimal = 4;
            
             configure.macdDict = @{@[@12, @26, @9] : @[UIColor.orangeColor, UIColor.blueColor, [UIColor hy_colorWithHexString:@"#E97C5E"], [UIColor hy_colorWithHexString:@"#1ABD93"]]};
             configure.kdjDict = @{@[@9, @3, @3] : @[UIColor.orangeColor, UIColor.blueColor, UIColor.redColor]};
@@ -743,6 +523,120 @@
     self.chartsLineView = chartLineView;
 
     return contentView;
+}
+
+
+- (HySegmentView *)segmentView {
+    if (!_segmentView){
+
+        NSArray<NSString *> *titleArray = @[@"Time", @"M5", @"M15", @"M30", @"H1", @"D1", @"W1", @"MN"];
+        NSArray<NSString *> *typeArray = @[@"101", @"102", @"103", @"104", @"201", @"301", @"310", @"401"];
+        __weak typeof(self) _self = self;
+        _segmentView =
+        [self segmentViewWithFrame:CGRectMake(0, 0, self.view.width, 40)
+                        titleArray:titleArray
+                       clickAction:^(NSInteger currentIndex) {
+             __weak typeof(_self) self = _self;
+            [self requestDataWithType:typeArray[currentIndex]];
+        }];
+    }
+    return _segmentView;
+}
+
+- (HySegmentView *)technicalSegmentView {
+    if (!_technicalSegmentView){
+        NSArray<NSString *> *titleArray = @[@"MA", @"EMA", @"BOLL"];
+        __weak typeof(self) _self = self;
+        _technicalSegmentView =
+        [self segmentViewWithFrame:CGRectMake(0, self.segmentView.bottom + 1, self.view.width, 40)
+                        titleArray:titleArray
+                       clickAction:^(NSInteger currentIndex) {
+             __weak typeof(_self) self = _self;
+            [self.klineMainView switchKLineTechnicalType:currentIndex + 1];
+        }];
+    }
+    return _technicalSegmentView;
+}
+
+- (HySegmentView *)auxiliarySegmentView {
+    if (!_auxiliarySegmentView){
+        
+        NSArray<NSString *> *titleArray = @[@"MCAD", @"KDJ", @"RSI"];
+        __weak typeof(self) _self = self;
+        _auxiliarySegmentView =
+        [self segmentViewWithFrame:CGRectMake(0, self.technicalSegmentView.bottom + 1, self.view.width, 40)
+                        titleArray:titleArray
+                       clickAction:^(NSInteger currentIndex) {
+             __weak typeof(_self) self = _self;
+            [self.auxiliaryView switchKLineAuxiliaryType:currentIndex];
+        }];
+    }
+    return _auxiliarySegmentView;
+}
+
+- (HySegmentView *)segmentViewWithFrame:(CGRect)frame
+                             titleArray:(NSArray<NSString *> *)titleArray
+                                clickAction:(void(^)(NSInteger currentIndex))clickAction {
+    NSInteger startIndex = titleArray.count > 3 ? 4 : 0;
+    HySegmentView *segmentView =
+    [HySegmentView segmentViewWithFrame:frame
+                         configureBlock:^(HySegmentViewConfigure * _Nonnull configure) {
+                          
+              configure
+              .numberOfItems(titleArray.count)
+              .startIndex(startIndex)
+              .itemMargin(20)
+              .viewForItemAtIndex(^UIView *(UIView *currentView,
+                                            NSInteger currentIndex,
+                                            CGFloat progress,
+                                            HySegmentViewItemPosition position,
+                                            NSArray<UIView *> *animationViews){
+
+                  UILabel *label = (UILabel *)currentView;
+                  if (!label) {
+                      label = [UILabel new];
+                      label.text = titleArray[currentIndex];
+                      label.textAlignment = NSTextAlignmentCenter;
+                      label.textColor = UIColor.whiteColor;
+                      label.font = [UIFont systemFontOfSize:15];
+                      [label sizeToFit];
+                      label.width += 10;
+                  }
+                  if (progress == 0 || progress == 1) {
+                      label.textColor =  progress == 0 ? [UIColor hy_colorWithHexString:@"#3A5775"] : UIColor.whiteColor;
+                  }
+                  return label;
+              })
+              .animationViews(^NSArray<UIView *> *(NSArray<UIView *> *currentAnimations, UICollectionViewCell *fromCell, UICollectionViewCell *toCell, NSInteger fromIndex, NSInteger toIndex, CGFloat progress){
+                  
+                  NSArray<UIView *> *array = currentAnimations;
+                  
+                  if (!array.count) {
+                      UIView *view = [UIView new];
+                      view.backgroundColor = [UIColor hy_colorWithHexString:@"#2E7FD0"];
+                      view.layer.cornerRadius = 1;
+                      view.heightValue(24).topValue(8);
+                      view.layer.cornerRadius = view.height / 2;
+                      array = @[view];
+                  }
+                  
+                  CGFloat margin = toCell.centerX - fromCell.centerX;
+                  CGFloat widthMargin = (toCell.width - fromCell.width);
+                  array.firstObject
+                  .widthValue(fromCell.width + 15  + widthMargin * progress)
+                  .centerXValue(fromCell.centerX + margin * progress);
+    
+                  return array;
+              })
+              .clickItemAtIndex(^BOOL(NSInteger currentIndex, BOOL isRepeat){
+                  if (!isRepeat) {
+                      !clickAction ?: clickAction(currentIndex);
+                  }
+                  return YES;
+              });
+          }];
+    segmentView.backgroundColor = [UIColor colorWithRed:14.0 / 255 green:33.0 / 255 blue:60.0 / 255 alpha:1];
+    return segmentView;
 }
 
 @end

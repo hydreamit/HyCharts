@@ -75,7 +75,7 @@
 		5123D344244D90450052CB53 /* HyChartKLineVolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D314244D90440052CB53 /* HyChartKLineVolumeView.m */; };
 		5123D345244D90450052CB53 /* HyChartBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D315244D90440052CB53 /* HyChartBarView.m */; };
 		5123D346244D90450052CB53 /* HyChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D317244D90440052CB53 /* HyChartView.m */; };
-		5123D349244D93670052CB53 /* HyChartsKLineDemoCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D348244D93670052CB53 /* HyChartsKLineDemoCursor.m */; };
+		5123D34C244E8D430052CB53 /* HyChartsKLineDemoDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5123D34B244E8D430052CB53 /* HyChartsKLineDemoDataHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -267,8 +267,8 @@
 		5123D315244D90440052CB53 /* HyChartBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartBarView.m; sourceTree = "<group>"; };
 		5123D316244D90440052CB53 /* HyChartKLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartKLineView.h; sourceTree = "<group>"; };
 		5123D317244D90440052CB53 /* HyChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyChartView.m; sourceTree = "<group>"; };
-		5123D347244D93670052CB53 /* HyChartsKLineDemoCursor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HyChartsKLineDemoCursor.h; sourceTree = "<group>"; };
-		5123D348244D93670052CB53 /* HyChartsKLineDemoCursor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HyChartsKLineDemoCursor.m; sourceTree = "<group>"; };
+		5123D34A244E8D430052CB53 /* HyChartsKLineDemoDataHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HyChartsKLineDemoDataHandler.h; sourceTree = "<group>"; };
+		5123D34B244E8D430052CB53 /* HyChartsKLineDemoDataHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HyChartsKLineDemoDataHandler.m; sourceTree = "<group>"; };
 		B8CC2BBFE1DE80E67F19542C /* Pods-HyChartsDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HyChartsDemo.debug.xcconfig"; path = "Target Support Files/Pods-HyChartsDemo/Pods-HyChartsDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -383,8 +383,8 @@
 				5123D1572445605C0052CB53 /* HyChartsBarDemoCursor.m */,
 				5123D15F2445605C0052CB53 /* HyChartsLineDemoCursor.h */,
 				5123D1562445605C0052CB53 /* HyChartsLineDemoCursor.m */,
-				5123D347244D93670052CB53 /* HyChartsKLineDemoCursor.h */,
-				5123D348244D93670052CB53 /* HyChartsKLineDemoCursor.m */,
+				5123D34A244E8D430052CB53 /* HyChartsKLineDemoDataHandler.h */,
+				5123D34B244E8D430052CB53 /* HyChartsKLineDemoDataHandler.m */,
 			);
 			path = HyChartsDemo;
 			sourceTree = "<group>";
@@ -547,8 +547,8 @@
 				5123D2DD244D90440052CB53 /* HyChartAxisModelProtocol.h */,
 				5123D2DE244D90440052CB53 /* HyChartAxisInfoProtocol.h */,
 				5123D2DB244D90440052CB53 /* HyChartAxisGridLineInfoProtocol.h */,
-				5123D2E1244D90440052CB53 /* YAxis */,
 				5123D2E8244D90440052CB53 /* XAxis */,
+				5123D2E1244D90440052CB53 /* YAxis */,
 			);
 			path = Axis;
 			sourceTree = "<group>";
@@ -844,7 +844,6 @@
 				5123D32A244D90450052CB53 /* HyChartModel.m in Sources */,
 				5123D343244D90450052CB53 /* HyChartKLineMainView.m in Sources */,
 				5123D322244D90450052CB53 /* HyChartLineModelDataSource.m in Sources */,
-				5123D349244D93670052CB53 /* HyChartsKLineDemoCursor.m in Sources */,
 				5123D33C244D90450052CB53 /* HyChartLayer.m in Sources */,
 				5123D323244D90450052CB53 /* HyChartModelDataSource.m in Sources */,
 				5123D33F244D90450052CB53 /* HyChartCursor.m in Sources */,
@@ -884,6 +883,7 @@
 				5123D186244D81E10052CB53 /* HyChartsKlineMainDemoController.m in Sources */,
 				5123D32B244D90450052CB53 /* HyChartKLineModel.m in Sources */,
 				5123D32D244D90450052CB53 /* HyChartLineModel.m in Sources */,
+				5123D34C244E8D430052CB53 /* HyChartsKLineDemoDataHandler.m in Sources */,
 				5123D32E244D90450052CB53 /* HyChartAlgorithmContext.m in Sources */,
 				5123D06624455C4B0052CB53 /* SceneDelegate.m in Sources */,
 				5123D32F244D90450052CB53 /* HyChartAlgorithm.m in Sources */,

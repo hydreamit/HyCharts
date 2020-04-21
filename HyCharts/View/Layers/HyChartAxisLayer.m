@@ -349,9 +349,13 @@
         }
     }
     
+    BOOL changeFirst =
+    ([position isEqualToString:@"left"] && axisBaseInfo.axisTextPosition == HyChartAxisTextPositionPlus) ||
+    ([position isEqualToString:@"right"] && axisBaseInfo.axisTextPosition == HyChartAxisTextPositionBinus);
+    
     NSMutableArray<CATextLayer *> *mArray = @[].mutableCopy;
     for (int i = 0; i < axisModel.indexs + 1; i++) {
-        
+    
         CATextLayer *textlayer;
         if (self.axisTexts[position].count != axisModel.indexs + 1) {
             textlayer = [CATextLayer layer];
@@ -467,6 +471,9 @@
         }
         point.x -= (textSize.width * anchor.x - offset.x + angleOffsetX);
         point.y -= (textSize.height * anchor.y - offset.y + angleOffsetY);
+        if (i == 0 && changeFirst) {
+            point.y -= (textSize.height + 2 * offset.y);
+        }
         textlayer.frame = CGRectMake(point.x, point.y, textSize.width, textSize.height);
         if (isRotate) {
             textlayer.transform = CATransform3DMakeRotation(rotateAngle, 0, 0, 1);

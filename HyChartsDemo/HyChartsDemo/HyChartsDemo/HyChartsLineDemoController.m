@@ -335,6 +335,7 @@
         [[[yAxisModel configNumberOfIndexs:5] configLeftYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
             yAxisInfo.axisTextFont = [UIFont systemFontOfSize:10];
             yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
+            yAxisInfo.displayAxisZeroText = NO;
         }] configRightYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
             yAxisInfo.autoSetText = NO;
         }];
