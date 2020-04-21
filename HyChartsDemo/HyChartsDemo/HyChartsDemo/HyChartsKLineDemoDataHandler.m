@@ -7,6 +7,10 @@
 //
 
 #import "HyChartsKLineDemoDataHandler.h"
+#import <CoreText/CoreText.h>
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
 
 @implementation HyChartsKLineDemoDataHandler
 
@@ -37,5 +41,269 @@
         model.time = [NSString stringWithFormat:@"%02d-%@", cTime->tm_year + 1900, string];
     }];
 }
+
++ (CALayer *)technicalLayerWithDataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce {
+    
+    HyChartKLineTechnicalType type = dataSorce.modelDataSource.klineMianTechnicalType;
+    if (type == HyChartKLineTechnicalTypeBOLL) {
+        return nil;
+    }
+    
+    CALayer *layer = CALayer.layer;
+    id<HyChartKLineConfigureProtocol> configure = dataSorce.configreDataSource.configure;
+    NSArray<NSNumber *> *allKes;
+    switch (type) {
+       case HyChartKLineTechnicalTypeSMA:{
+           allKes = configure.smaDict.allKeys;
+        }break;
+        case HyChartKLineTechnicalTypeEMA:{
+            allKes = configure.emaDict.allKeys;
+        }break;
+        default:
+        break;
+    }
+    allKes =
+    [allKes sortedArrayUsingComparator:^NSComparisonResult(NSNumber *obj1, NSNumber *obj2) {
+        if (obj1.integerValue < obj2.integerValue) {
+            return NSOrderedAscending;
+        } else if (obj1.integerValue > obj2.integerValue) {
+            return NSOrderedDescending;
+        } else {
+            return NSOrderedSame;
+        }
+    }];
+    
+   
+    CGFloat left = 5;
+    CGFloat height = 0;
+    for (NSNumber *number in allKes) {
+        CATextLayer *textLayer = [CATextLayer layer];
+        textLayer.masksToBounds = YES;
+        textLayer.font = (__bridge CTFontRef)configure.newpriceFont;
+        textLayer.fontSize = configure.newpriceFont.pointSize;
+        textLayer.foregroundColor = configure.smaDict[number].CGColor;
+        textLayer.contentsScale = UIScreen.mainScreen.scale;
+        textLayer.alignmentMode = kCAAlignmentCenter;
+        [layer addSublayer:textLayer];
+        
+        NSString *title;
+        switch (type) {
+            case HyChartKLineTechnicalTypeSMA:{
+                title =
+                [dataSorce.modelDataSource.priceNunmberFormatter stringFromNumber:dataSorce.modelDataSource.models.firstObject.priceSMA(number.integerValue)];
+                title = [NSString stringWithFormat:@"MA%@: %@", number, title];
+            }break;
+            case HyChartKLineTechnicalTypeEMA:{
+                title =
+                [dataSorce.modelDataSource.priceNunmberFormatter stringFromNumber:dataSorce.modelDataSource.models.firstObject.priceEMA(number.integerValue)];
+                title = [NSString stringWithFormat:@"EMA%@: %@", number, title];
+            }break;
+            default:
+            break;
+        }
+
+        textLayer.string = title;
+        CGSize size = [title sizeWithAttributes:@{NSFontAttributeName : configure.newpriceFont}];
+        
+        textLayer.frame = CGRectMake(left, 0, size.width, size.height);
+        left = left + size.width + 10;
+        
+        height = size.height;
+    }
+    
+    layer.frame = CGRectMake(0, 0, left, height);
+
+    return layer;
+}
+
+
++ (CALayer *)volumTechnicalLayerWithDataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce {
+    
+    HyChartKLineTechnicalType type = dataSorce.modelDataSource.klineVolumeTechnicalType;
+    if (type == HyChartKLineTechnicalTypeBOLL) {
+        return nil;
+    }
+    
+    CALayer *layer = CALayer.layer;
+    
+    id<HyChartKLineConfigureProtocol> configure = dataSorce.configreDataSource.configure;
+    NSArray<NSNumber *> *allKes;
+    switch (type) {
+       case HyChartKLineTechnicalTypeSMA:{
+           allKes = configure.smaDict.allKeys;
+        }break;
+        case HyChartKLineTechnicalTypeEMA:{
+            allKes = configure.emaDict.allKeys;
+        }break;
+        default:
+        break;
+    }
+    allKes =
+    [allKes sortedArrayUsingComparator:^NSComparisonResult(NSNumber *obj1, NSNumber *obj2) {
+        if (obj1.integerValue < obj2.integerValue) {
+            return NSOrderedAscending;
+        } else if (obj1.integerValue > obj2.integerValue) {
+            return NSOrderedDescending;
+        } else {
+            return NSOrderedSame;
+        }
+    }];
+   
+    CGFloat left = 5;
+    CGFloat height = 0;
+    
+    CATextLayer *textLayer = [CATextLayer layer];
+    textLayer.masksToBounds = YES;
+    textLayer.font = (__bridge CTFontRef)configure.newpriceFont;
+    textLayer.fontSize = configure.newpriceFont.pointSize;
+    textLayer.foregroundColor = UIColor.whiteColor.CGColor;
+    textLayer.contentsScale = UIScreen.mainScreen.scale;
+    textLayer.alignmentMode = kCAAlignmentCenter;
+    [layer addSublayer:textLayer];
+    
+    textLayer.string = [NSString stringWithFormat:@"VOL: %@", [dataSorce.modelDataSource.volumeNunmberFormatter stringFromNumber:dataSorce.modelDataSource.models.firstObject.volume]];
+    CGSize size = [textLayer.string  sizeWithAttributes:@{NSFontAttributeName : configure.newpriceFont}];
+    textLayer.frame = CGRectMake(left, 0, size.width, size.height);
+    left = left + size.width + 10;
+    
+    for (NSNumber *number in allKes) {
+        if (layer.sublayers.count > 2) {
+            break;
+        }
+        CATextLayer *textLayer = [CATextLayer layer];
+        textLayer.masksToBounds = YES;
+        textLayer.font = (__bridge CTFontRef)configure.newpriceFont;
+        textLayer.fontSize = configure.newpriceFont.pointSize;
+        textLayer.foregroundColor = configure.smaDict[number].CGColor;
+        textLayer.contentsScale = UIScreen.mainScreen.scale;
+        textLayer.alignmentMode = kCAAlignmentCenter;
+        [layer addSublayer:textLayer];
+        
+        NSString *title;
+        switch (type) {
+            case HyChartKLineTechnicalTypeSMA:{
+                title =
+                [dataSorce.modelDataSource.priceNunmberFormatter stringFromNumber:dataSorce.modelDataSource.models.firstObject.priceSMA(number.integerValue)];
+                title = [NSString stringWithFormat:@"MA%@: %@", number, title];
+            }break;
+            case HyChartKLineTechnicalTypeEMA:{
+                title =
+                [dataSorce.modelDataSource.priceNunmberFormatter stringFromNumber:dataSorce.modelDataSource.models.firstObject.priceEMA(number.integerValue)];
+                title = [NSString stringWithFormat:@"EMA%@: %@", number, title];
+            }break;
+            default:
+            break;
+        }
+
+        textLayer.string = title;
+        CGSize size = [title sizeWithAttributes:@{NSFontAttributeName : configure.newpriceFont}];
+        
+        textLayer.frame = CGRectMake(left, 0, size.width, size.height);
+        left = left + size.width + 10;
+        
+        height = size.height;
+    }
+    
+    layer.frame = CGRectMake(0, 0, left, height);
+
+    return layer;
+}
+
++ (CALayer *)auxiliaryLayerWithDataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce {
+
+    CALayer *layer = CALayer.layer;
+
+    id<HyChartKLineConfigureProtocol> configure = dataSorce.configreDataSource.configure;
+    HyChartKLineAuxiliaryType type = dataSorce.modelDataSource.auxiliaryType;
+    NSString *string;
+    switch (type) {
+       case HyChartKLineAuxiliaryTypeMACD:{
+           NSArray<NSNumber *> *numbers = configure.macdDict.allKeys.firstObject;
+           string = [NSString stringWithFormat:@"MACD(%@,%@,%@)", numbers.firstObject, numbers[1], numbers.lastObject];
+        }break;
+        case HyChartKLineAuxiliaryTypeKDJ:{
+           NSArray<NSNumber *> *numbers = configure.kdjDict.allKeys.firstObject;
+            string = [NSString stringWithFormat:@"KJD(%@,%@,%@)", numbers.firstObject, numbers[1], numbers.lastObject];
+        }break;
+        case HyChartKLineAuxiliaryTypeRSI:{
+            NSNumber *number = configure.rsiDict.allKeys.firstObject;
+            string = [NSString stringWithFormat:@"RSI(%@): %@", number, [dataSorce.modelDataSource.priceNunmberFormatter stringFromNumber:dataSorce.modelDataSource.models.firstObject.priceRSI([number integerValue])]];
+        }break;
+        default:
+        break;
+    }
+
+      
+    CGFloat left = 5;
+    CGFloat height = 0;
+    CATextLayer *textLayer = [CATextLayer layer];
+    textLayer.masksToBounds = YES;
+    textLayer.font = (__bridge CTFontRef)configure.newpriceFont;
+    textLayer.fontSize = configure.newpriceFont.pointSize;
+    textLayer.foregroundColor = UIColor.whiteColor.CGColor;
+    textLayer.contentsScale = UIScreen.mainScreen.scale;
+    textLayer.alignmentMode = kCAAlignmentCenter;
+    [layer addSublayer:textLayer];
+    
+    textLayer.string = string;
+    CGSize size = [textLayer.string  sizeWithAttributes:@{NSFontAttributeName : configure.newpriceFont}];
+    textLayer.frame = CGRectMake(left, 0, size.width, size.height);
+    left = left + size.width + 10;
+    height = size.height;
+    
+    if (type != HyChartKLineAuxiliaryTypeRSI) {
+        
+        NSArray<NSString *> *titleArray = @[@"MACD: ", @"DIF: ", @"DEA: "];
+        NSArray *numberArray = configure.macdDict.allKeys.firstObject;
+        NSArray<UIColor *> *colorArray = configure.macdDict.allValues.firstObject;
+        if (type == HyChartKLineAuxiliaryTypeKDJ) {
+            titleArray = @[@"K: ", @"D: ", @"J: "];
+            numberArray = configure.kdjDict.allKeys.firstObject;
+            colorArray = configure.kdjDict.allValues.firstObject;
+        }
+        
+        id<HyChartKLineModelProtocol> model = dataSorce.modelDataSource.models.firstObject;
+        for (NSInteger i = 0; i < 3; i++) {
+            
+            CATextLayer *textLayer = [CATextLayer layer];
+            textLayer.masksToBounds = YES;
+            textLayer.font = (__bridge CTFontRef)configure.newpriceFont;
+            textLayer.fontSize = configure.newpriceFont.pointSize;
+            textLayer.foregroundColor = colorArray[i].CGColor;
+            textLayer.contentsScale = UIScreen.mainScreen.scale;
+            textLayer.alignmentMode = kCAAlignmentCenter;
+            [layer addSublayer:textLayer];
+            
+            NSNumber *number;
+            if (type == HyChartKLineAuxiliaryTypeMACD) {
+                if (i == 0) {
+                    number =  model.priceMACD([numberArray.firstObject integerValue], [numberArray[1] integerValue], [numberArray.lastObject integerValue]);
+                } else if (i == 1) {
+                    number =  model.priceDIF([numberArray.firstObject integerValue], [numberArray[1] integerValue]);
+                } else {
+                    number =  model.priceDEM([numberArray.firstObject integerValue], [numberArray[1] integerValue], [numberArray.lastObject integerValue]);
+                }
+            } else {
+                if (i == 0) {
+                    number =  model.priceK([numberArray.firstObject integerValue], [numberArray[1] integerValue]);
+                } else if (i == 1) {
+                    number =  model.priceD([numberArray.firstObject integerValue], [numberArray[1] integerValue], [numberArray.lastObject integerValue]);
+                } else {
+                    number =  model.priceJ([numberArray.firstObject integerValue], [numberArray[1] integerValue], [numberArray.lastObject integerValue]);
+                }
+            }
+
+            NSString *title = [NSString stringWithFormat:@"%@%@", titleArray[i], [dataSorce.modelDataSource.priceNunmberFormatter stringFromNumber:number]];
+            
+            textLayer.string = title;
+            CGSize size = [title sizeWithAttributes:@{NSFontAttributeName : configure.newpriceFont}];
+            textLayer.frame = CGRectMake(left, 0, size.width, size.height);
+            left = left + size.width + 10;
+        }
+    }
+   layer.frame = CGRectMake(0, 0, left, height);
+   return layer;
+}
+
 
 @end

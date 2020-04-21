@@ -12,7 +12,7 @@
 
 
 @interface HyChartBarLayer () <CAAnimationDelegate>
-@property (nonatomic,strong) NSArray<CAShapeLayer *> *layers;
+@property (nonatomic, strong) NSArray<CAShapeLayer *> *layers;
 @end
 
 
@@ -70,19 +70,6 @@
         _layers = mArray.copy;
     }
     return _layers;
-}
-
-
-- (void)addLayerAnimation:(CAShapeLayer *)layer needDellegate:(BOOL)need {
-
-    CABasicAnimation *basic = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    if (need) { basic.delegate = self;}
-    basic.duration = 0.01;
-    basic.fromValue = @(0);
-    basic.toValue = @(1);
-    basic.autoreverses = NO;
-    basic.fillMode = kCAFillModeForwards;
-    [layer addAnimation:basic forKey:nil];
 }
 
 @end

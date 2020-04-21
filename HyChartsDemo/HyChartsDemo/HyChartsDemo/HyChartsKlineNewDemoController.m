@@ -16,9 +16,12 @@
 
 @interface HyChartsKlineNewDemoController ()
 @property (nonatomic, strong) HyChartKLineView *klineView;
-@property (nonatomic,strong) HySegmentView *segmentView;
-@property (nonatomic,strong) HySegmentView *technicalSegmentView;
-@property (nonatomic,strong) HySegmentView *auxiliarySegmentView;
+@property (nonatomic, strong) HySegmentView *segmentView;
+@property (nonatomic, strong) HySegmentView *technicalSegmentView;
+@property (nonatomic, strong) HySegmentView *auxiliarySegmentView;
+@property (nonatomic, strong) CALayer *klineMainlTechnicalayer;
+@property (nonatomic, strong) CALayer *klineVolumTechnicalayer;
+@property (nonatomic, strong) CALayer *klineAuxiliarylayer;
 @end
 
 
@@ -72,6 +75,21 @@
                 [indicatorView removeFromSuperview];
                 self.klineView.timeLine = [type isEqualToString:@"101"];
                 [self.klineView setNeedsRendering];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.klineMainlTechnicalayer removeFromSuperlayer];
+                    self.klineMainlTechnicalayer = [HyChartsKLineDemoDataHandler technicalLayerWithDataSorce:self.klineView.dataSource];
+                    [self.klineView.layer addSublayer:self.klineMainlTechnicalayer];
+                    
+                    [self.klineVolumTechnicalayer removeFromSuperlayer];
+                    self.klineVolumTechnicalayer = [HyChartsKLineDemoDataHandler volumTechnicalLayerWithDataSorce:self.klineView.dataSource];
+                    [self.klineView.layer addSublayer:self.klineVolumTechnicalayer];
+                    self.klineVolumTechnicalayer.frame = CGRectMake(CGRectGetMinX(self.klineVolumTechnicalayer.frame), self.klineView.height * .58, CGRectGetWidth(self.klineVolumTechnicalayer.frame), CGRectGetHeight(self.klineVolumTechnicalayer.frame));
+                    
+                    [self.klineAuxiliarylayer removeFromSuperlayer];
+                    self.klineAuxiliarylayer = [HyChartsKLineDemoDataHandler auxiliaryLayerWithDataSorce:self.klineView.dataSource];
+                    [self.klineView.layer addSublayer:self.klineAuxiliarylayer];
+                    self.klineAuxiliarylayer.frame = CGRectMake(CGRectGetMinX(self.klineAuxiliarylayer.frame), self.klineView.height * .78, CGRectGetWidth(self.klineAuxiliarylayer.frame), CGRectGetHeight(self.klineAuxiliarylayer.frame));
+                });
             });
         }
     }] resume];
@@ -81,7 +99,7 @@
 - (HyChartKLineView *)klineView {
     if (!_klineView) {
         _klineView = HyChartKLineView.new;
-        _klineView.frame = CGRectMake(0, self.auxiliarySegmentView.bottom + 2, self.view.bounds.size.width, self.view.bounds.size.width * 1.3);
+        _klineView.frame = CGRectMake(0, self.auxiliarySegmentView.bottom + 2, self.view.bounds.size.width, self.view.bounds.size.width * 1.5);
         _klineView.backgroundColor = [UIColor colorWithRed:14.0 / 255 green:33.0 / 255 blue:60.0 / 255 alpha:1];
         _klineView.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 20, 0);
         
@@ -98,9 +116,9 @@
                 xAxisInfo.axisTextColor = [UIColor hy_colorWithHexString:@"#3A5775"];
             }];
         }] configYAxisWithModelAndViewType:^(id<HyChartYAxisModelProtocol>  _Nonnull yAxisModel, HyChartKLineViewType type) {
-            yAxisModel.yAxisMaxValueExtraPrecent = @(0.1);
+            yAxisModel.yAxisMaxValueExtraPrecent = @(0.12);
             if (type != HyChartKLineViewTypeVolume) {
-                yAxisModel.yAxisMinValueExtraPrecent = @(0.1);
+                yAxisModel.yAxisMinValueExtraPrecent = @(0.12);
             }
             yAxisModel.rightYAaxisDisabled = NO;
             [[[[yAxisModel configNumberOfIndexs:[yaxisIndexs[type] integerValue]] configLeftYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
@@ -112,7 +130,7 @@
                 yAxisInfo.axisLineColor = [UIColor colorWithWhite:1 alpha:.25];
                 yAxisInfo.axisTextColor = UIColor.whiteColor;
                 yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
-                if (type == HyChartKLineViewTypeVolume) {
+                if (type != HyChartKLineViewTypeMain) {
                     yAxisInfo.displayAxisZeroText = NO;
                 }
             }];
@@ -162,9 +180,9 @@
             configure.kdjDict = @{@[@9, @3, @3] : @[UIColor.orangeColor, UIColor.blueColor, UIColor.redColor]};
             configure.rsiDict = @{@6 : UIColor.orangeColor};
             
-            configure.klineViewDict = @{@(HyChartKLineViewTypeMain) : @(.6),
+            configure.klineViewDict = @{@(HyChartKLineViewTypeMain) : @(.58),
                                         @(HyChartKLineViewTypeVolume) : @(.2),
-                                        @(HyChartKLineViewTypeAuxiliary) : @(.2)};
+                                        @(HyChartKLineViewTypeAuxiliary) : @(.22)};
         }];
         
         [_klineView switchKLineTechnicalType:HyChartKLineTechnicalTypeSMA];
@@ -200,6 +218,16 @@
                        clickAction:^(NSInteger currentIndex) {
              __weak typeof(_self) self = _self;
             [self.klineView switchKLineTechnicalType:currentIndex + 1];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.klineMainlTechnicalayer removeFromSuperlayer];
+                self.klineMainlTechnicalayer = [HyChartsKLineDemoDataHandler technicalLayerWithDataSorce:self.klineView.dataSource];
+                [self.klineView.layer addSublayer:self.klineMainlTechnicalayer];
+                
+                [self.klineVolumTechnicalayer removeFromSuperlayer];
+                self.klineVolumTechnicalayer = [HyChartsKLineDemoDataHandler volumTechnicalLayerWithDataSorce:self.klineView.dataSource];
+                [self.klineView.layer addSublayer:self.klineVolumTechnicalayer];
+                self.klineVolumTechnicalayer.frame = CGRectMake(CGRectGetMinX(self.klineVolumTechnicalayer.frame), self.klineView.height * .58, CGRectGetWidth(self.klineVolumTechnicalayer.frame), CGRectGetHeight(self.klineVolumTechnicalayer.frame));
+            });
         }];
     }
     return _technicalSegmentView;
@@ -207,7 +235,6 @@
 
 - (HySegmentView *)auxiliarySegmentView {
     if (!_auxiliarySegmentView){
-        
         NSArray<NSString *> *titleArray = @[@"MCAD", @"KDJ", @"RSI"];
         __weak typeof(self) _self = self;
         _auxiliarySegmentView =
@@ -216,6 +243,13 @@
                        clickAction:^(NSInteger currentIndex) {
              __weak typeof(_self) self = _self;
             [self.klineView switchKLineAuxiliaryType:currentIndex];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.klineAuxiliarylayer removeFromSuperlayer];
+                self.klineAuxiliarylayer = [HyChartsKLineDemoDataHandler auxiliaryLayerWithDataSorce:self.klineView.dataSource];
+                [self.klineView.layer addSublayer:self.klineAuxiliarylayer];
+                self.klineAuxiliarylayer.frame = CGRectMake(CGRectGetMinX(self.klineAuxiliarylayer.frame), self.klineView.height * .78, CGRectGetWidth(self.klineAuxiliarylayer.frame), CGRectGetHeight(self.klineAuxiliarylayer.frame));
+            });
         }];
     }
     return _auxiliarySegmentView;

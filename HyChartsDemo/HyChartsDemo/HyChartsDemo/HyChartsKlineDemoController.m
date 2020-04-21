@@ -15,7 +15,7 @@
 @implementation HyChartsKlineDemoController
 
 - (NSArray<NSString *> *)titleArray {
-    return @[@"K线主图", @"K线交易量图", @"K线辅助图", @"K线图全图"];
+    return @[@"K线主图", @"K线交易量图", @"K线辅助图", @"K线图"];
 }
 
 - (NSArray<NSString *> *)controllerArray {

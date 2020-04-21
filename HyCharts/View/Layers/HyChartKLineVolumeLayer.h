@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HyChartKLineVolumeLayer : HyChartLayer<id<HyChartKLineDataSourceProtocol>>
 
-@property (nonatomic,assign) HyChartKLineTechnicalType technicalType;
+@property (nonatomic, assign) HyChartKLineTechnicalType technicalType;
 
 @end
 

@@ -14,9 +14,9 @@
 
 
 @interface HyChartsKlineVolumeDemoController ()
-@property (nonatomic,strong) HySegmentView *segmentView;
-@property (nonatomic,strong) HySegmentView *technicalSegmentView;
-@property (nonatomic,strong) HyChartKLineVolumeView *volumeView;
+@property (nonatomic, strong) HySegmentView *segmentView;
+@property (nonatomic, strong) HySegmentView *technicalSegmentView;
+@property (nonatomic, strong) HyChartKLineVolumeView *volumeView;
 @end
 
 

@@ -11,8 +11,8 @@
 
 
 @interface HyChartLineLayer ()
-@property (nonatomic,strong) NSDictionary<NSString *, NSArray *> *layerDict;
-@property (nonatomic,strong) NSArray<HyChartLineOneConfigure *> *configures;
+@property (nonatomic, strong) NSDictionary<NSString *, NSArray *> *layerDict;
+@property (nonatomic, strong) NSArray<HyChartLineOneConfigure *> *configures;
 @end
 
 

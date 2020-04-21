@@ -16,7 +16,7 @@
 
 @interface HyChartLineView ()
 @property (nonatomic, assign) CGFloat chartWidth;
-@property (nonatomic,strong) HyChartLineLayer *chartLayer;
+@property (nonatomic, strong) HyChartLineLayer *chartLayer;
 @property (nonatomic, strong) id<HyChartLineDataSourceProtocol> dataSource;
 @end
 
@@ -47,11 +47,11 @@
             maxModel = obj;
             minModel = obj;
         } else {
-            if (IsMax(obj.value, maxModel.value)) {
-              maxModel = obj;
+            if (obj.value.doubleValue > maxModel.value.doubleValue) {
+                maxModel = obj;
             } else
-            if (IsMin(obj.value, minModel.value)) {
-              minModel = obj;
+            if (obj.value.doubleValue < minModel.value.doubleValue) {
+                minModel = obj;
             }
         }
     }];

@@ -18,12 +18,12 @@
 
 
 @interface HyChartCursor ()
-@property (nonatomic,strong) CATextLayer *xTextLayer;
-@property (nonatomic,strong) CATextLayer *yTextLayer;
-@property (nonatomic,strong) CAShapeLayer *lineLayer;
-@property (nonatomic,strong) CAShapeLayer *dotLayer;
+@property (nonatomic, strong) CATextLayer *xTextLayer;
+@property (nonatomic, strong) CATextLayer *yTextLayer;
+@property (nonatomic, strong) CAShapeLayer *lineLayer;
+@property (nonatomic, strong) CAShapeLayer *dotLayer;
 @property (nonatomic, strong)CALayer *klineContentLayer;
-@property (nonatomic,strong) id<HyChartCursorConfigureProtocol> configure;
+@property (nonatomic, strong) id<HyChartCursorConfigureProtocol> configure;
 @end
 
 
@@ -163,7 +163,7 @@
     
     self.klineContentLayer = layer;
     
-    CGFloat width = 150;
+    CGFloat width = 160;
     NSArray<NSString *> *leftTitleArray = @[@"时间 ", @"开 ", @"高 ", @"低 ", @"收 ", @"涨跌额", @"涨跌幅", @"成交量"];
     NSArray<NSString *> *rightTitleArray = @[model.time,
                                              [model.priceNunmberFormatter stringFromNumber:model.openPrice],

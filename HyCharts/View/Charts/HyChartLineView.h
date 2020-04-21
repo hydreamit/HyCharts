@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-/// 单一折/曲线图
+/// 折/曲线图
 @interface HyChartLineView : HyChartView<id<HyChartLineDataSourceProtocol>>
 
 

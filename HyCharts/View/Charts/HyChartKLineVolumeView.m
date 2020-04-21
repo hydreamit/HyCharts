@@ -141,9 +141,11 @@
 }
 
 - (void)switchKLineTechnicalType:(HyChartKLineTechnicalType)type {
-    
-    self.technicalType = type;
-    self.chartLayer.technicalType = type;
+    if (type != HyChartKLineTechnicalTypeBOLL) {
+        self.technicalType = type;
+        self.chartLayer.technicalType = type;
+        self.dataSource.modelDataSource.klineVolumeTechnicalType = type;
+    }
 }
 
 - (NSNumberFormatter *)yAxisNunmberFormatter {

@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 虚线模板数组
 @property (nonatomic, strong) NSArray<NSNumber *> *axisLineDashPattern;
 /// 轴线样式
-@property (nonatomic,assign) HyChartAxisLineType axisLineType;
+@property (nonatomic, assign) HyChartAxisLineType axisLineType;
 
 @end
 

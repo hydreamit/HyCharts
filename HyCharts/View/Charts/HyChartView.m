@@ -22,7 +22,7 @@
 
 @interface HyChartView ()<UIScrollViewDelegate>
 /// 轴图层
-@property (nonatomic,strong) HyChartAxisLayer *axisLayer;
+@property (nonatomic, strong) HyChartAxisLayer *axisLayer;
 /// 滚动偏移量
 @property (nonatomic, strong) UIScrollView *scrollView;
 /// 点击手势
@@ -45,7 +45,7 @@
 @property (nonatomic, assign, getter=isReverseScrolling) BOOL reverseScrolling;
 @property (nonatomic, assign) NSInteger prepareStage;
 @property (nonatomic, strong) NSNumberFormatter *yAxisNunmberFormatter;
-@property (nonatomic,strong) dispatch_semaphore_t semaphore;
+@property (nonatomic, strong) dispatch_semaphore_t semaphore;
 @end
 
 

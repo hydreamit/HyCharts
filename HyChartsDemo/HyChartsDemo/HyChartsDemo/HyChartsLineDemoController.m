@@ -80,6 +80,7 @@
             yAxisInfo.axisTextFont = [UIFont systemFontOfSize:10];
             yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
             yAxisInfo.axisLineType = HyChartAxisLineTypeNone;
+            yAxisInfo.displayAxisZeroText = NO;
         }];
     }];
     
@@ -214,6 +215,7 @@
             yAxisInfo.axisTextFont = [UIFont systemFontOfSize:10];
             yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
             yAxisInfo.axisLineType = HyChartAxisLineTypeNone;
+            yAxisInfo.displayAxisZeroText = NO;
         }];
     }];
     

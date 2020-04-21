@@ -14,9 +14,9 @@
 
 
 @interface HyChartsKLineAuxiliaryDemoController ()
-@property (nonatomic,strong) HySegmentView *segmentView;
-@property (nonatomic,strong) HySegmentView *auxiliarySegmentView;
-@property (nonatomic,strong) HyChartKLineAuxiliaryView *auxiliaryView;
+@property (nonatomic, strong) HySegmentView *segmentView;
+@property (nonatomic, strong) HySegmentView *auxiliarySegmentView;
+@property (nonatomic, strong) HyChartKLineAuxiliaryView *auxiliaryView;
 @end
 
 

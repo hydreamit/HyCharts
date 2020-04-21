@@ -15,7 +15,8 @@
 
 
 @implementation HyChartKLineModelDataSource
-@synthesize visibleModels = _visibleModels, visibleXAxisModels = _visibleXAxisModels, visibleMaxPriceModel = _visibleMaxPriceModel, visibleMinPriceModel = _visibleMinPriceModel, visibleMaxVolumeModel = _visibleMaxVolumeModel, visibleMinVolumeModel = _visibleMinVolumeModel, maxPrice = _maxPrice , minPrice = _minPrice, maxVolume = _maxVolume, minVolume = _minVolume, maxAuxiliary = _maxAuxiliary, minAuxiliary = _minAuxiliary, models = _models, priceNunmberFormatter = _priceNunmberFormatter, volumeNunmberFormatter = _volumeNunmberFormatter;
+@synthesize visibleModels = _visibleModels, visibleXAxisModels = _visibleXAxisModels, visibleMaxPriceModel = _visibleMaxPriceModel, visibleMinPriceModel = _visibleMinPriceModel, visibleMaxVolumeModel = _visibleMaxVolumeModel, visibleMinVolumeModel = _visibleMinVolumeModel, maxPrice = _maxPrice , minPrice = _minPrice, maxVolume = _maxVolume, minVolume = _minVolume, maxAuxiliary = _maxAuxiliary, minAuxiliary = _minAuxiliary, models = _models, priceNunmberFormatter = _priceNunmberFormatter, volumeNunmberFormatter = _volumeNunmberFormatter, klineMianTechnicalType = _klineMianTechnicalType,klineVolumeTechnicalType = _klineVolumeTechnicalType, auxiliaryType = _auxiliaryType;
+
 
 - (instancetype)configModelForItemAtIndex:(void (^_Nullable)(id<HyChartKLineModelProtocol> model, NSInteger index))block {
     

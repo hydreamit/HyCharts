@@ -581,6 +581,10 @@
         }
     }];
     if (klineLayers.count) {
+        self.dataSource.modelDataSource.klineMianTechnicalType = type;
+        if (type != HyChartKLineTechnicalTypeBOLL) {
+            self.dataSource.modelDataSource.klineVolumeTechnicalType = type;
+        }
         self.technicalType = type;
     }
 }
@@ -589,6 +593,7 @@
     HyChartKLineAuxiliaryLayer *klineAuxiliaryLayer = (id)self.chartLayer.layersDict[@(HyChartKLineViewTypeAuxiliary)];
     if (klineAuxiliaryLayer) {
         klineAuxiliaryLayer.auxiliaryType = type;
+        self.dataSource.modelDataSource.auxiliaryType = type;
         self.auxiliaryType = type;
     }
 }

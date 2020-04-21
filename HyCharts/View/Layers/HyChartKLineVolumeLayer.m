@@ -10,11 +10,11 @@
 
 
 @interface HyChartKLineVolumeLayer ()
-@property (nonatomic,strong) CAShapeLayer *trendUpLayer;
-@property (nonatomic,strong) CAShapeLayer *trendDownLayer;
-@property (nonatomic,strong) NSDictionary<NSNumber *, CAShapeLayer *> *smaLayerDict;
-@property (nonatomic,strong) NSDictionary<NSNumber *, CAShapeLayer *> *emaLayerDict;
-@property (nonatomic,strong) NSDictionary<NSNumber *, NSArray<CAShapeLayer *> *> *bollLayerDict;
+@property (nonatomic, strong) CAShapeLayer *trendUpLayer;
+@property (nonatomic, strong) CAShapeLayer *trendDownLayer;
+@property (nonatomic, strong) NSDictionary<NSNumber *, CAShapeLayer *> *smaLayerDict;
+@property (nonatomic, strong) NSDictionary<NSNumber *, CAShapeLayer *> *emaLayerDict;
+@property (nonatomic, strong) NSDictionary<NSNumber *, NSArray<CAShapeLayer *> *> *bollLayerDict;
 @end
 
 

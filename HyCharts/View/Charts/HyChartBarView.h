@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// 柱形图
+/// 柱状图
 @interface HyChartBarView : HyChartView<id<HyChartBarDataSourceProtocol>>
 
 

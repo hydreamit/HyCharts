@@ -16,16 +16,17 @@
 
 
 @interface HyChartsReactChainsDemoController ()
-
-@property (nonatomic,strong) HySegmentView *segmentView;
-@property (nonatomic,strong) HySegmentView *technicalSegmentView;
-@property (nonatomic,strong) HySegmentView *auxiliarySegmentView;
-@property (nonatomic,strong) HyChartKLineMainView *klineMainView;
-@property (nonatomic,strong) HyChartKLineVolumeView *volumeView;
-@property (nonatomic,strong) HyChartKLineAuxiliaryView *auxiliaryView;
-
-@property (nonatomic,strong) HyChartBarView *chartsBarView;
-@property (nonatomic,strong) HyChartLineView *chartsLineView;
+@property (nonatomic, strong) HySegmentView *segmentView;
+@property (nonatomic, strong) HySegmentView *technicalSegmentView;
+@property (nonatomic, strong) HySegmentView *auxiliarySegmentView;
+@property (nonatomic, strong) HyChartKLineMainView *klineMainView;
+@property (nonatomic, strong) HyChartKLineVolumeView *volumeView;
+@property (nonatomic, strong) HyChartKLineAuxiliaryView *auxiliaryView;
+@property (nonatomic, strong) HyChartBarView *chartsBarView;
+@property (nonatomic, strong) HyChartLineView *chartsLineView;
+@property (nonatomic, strong) CALayer *klineMainlTechnicalayer;
+@property (nonatomic, strong) CALayer *klineVolumTechnicalayer;
+@property (nonatomic, strong) CALayer *klineAuxiliarylayer;
 @end
 
 @implementation HyChartsReactChainsDemoController
@@ -97,6 +98,19 @@
                 [self.klineMainView setNeedsRendering];
                 [self.volumeView setNeedsRendering];
                 [self.auxiliaryView setNeedsRendering];
+               dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.klineMainlTechnicalayer removeFromSuperlayer];
+                    self.klineMainlTechnicalayer = [HyChartsKLineDemoDataHandler technicalLayerWithDataSorce:self.klineMainView.dataSource];
+                    [self.klineMainView.layer addSublayer:self.klineMainlTechnicalayer];
+                    
+                    [self.klineVolumTechnicalayer removeFromSuperlayer];
+                    self.klineVolumTechnicalayer = [HyChartsKLineDemoDataHandler volumTechnicalLayerWithDataSorce:self.volumeView.dataSource];
+                    [self.volumeView.layer addSublayer:self.klineVolumTechnicalayer];
+                   
+                   [self.klineAuxiliarylayer removeFromSuperlayer];
+                   self.klineAuxiliarylayer = [HyChartsKLineDemoDataHandler auxiliaryLayerWithDataSorce:self.auxiliaryView.dataSource];
+                   [self.auxiliaryView.layer addSublayer:self.klineAuxiliarylayer];
+                });
             });
         }
     }] resume];
@@ -124,8 +138,8 @@
             }];
             
         }] configYAxisWithModel:^(id<HyChartYAxisModelProtocol>  _Nonnull yAxisModel) {
-            yAxisModel.yAxisMaxValueExtraPrecent = @(0.1);
-            yAxisModel.yAxisMinValueExtraPrecent = @(0.1);
+            yAxisModel.yAxisMaxValueExtraPrecent = @(0.12);
+            yAxisModel.yAxisMinValueExtraPrecent = @(0.12);
             yAxisModel.rightYAaxisDisabled = NO;
             [[[[yAxisModel configNumberOfIndexs:4] configLeftYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
                 yAxisInfo.axisLineColor = [UIColor colorWithWhite:1 alpha:.25];
@@ -201,7 +215,7 @@
                 axisGridLineModel.axisGridLineColor = [UIColor colorWithWhite:1 alpha:.25];
             }];
         }] configYAxisWithModel:^(id<HyChartYAxisModelProtocol>  _Nonnull yAxisModel) {
-            yAxisModel.yAxisMaxValueExtraPrecent = @(0.1);
+            yAxisModel.yAxisMaxValueExtraPrecent = @(0.12);
             yAxisModel.rightYAaxisDisabled = NO;
             [[[[yAxisModel configNumberOfIndexs:1] configLeftYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
                 yAxisInfo.axisLineColor = [UIColor colorWithWhite:1 alpha:.25];
@@ -262,8 +276,8 @@
                 axisGridLineModel.axisGridLineColor = [UIColor colorWithWhite:1 alpha:.25];
             }];
         }] configYAxisWithModel:^(id<HyChartYAxisModelProtocol>  _Nonnull yAxisModel) {
-            yAxisModel.yAxisMaxValueExtraPrecent = @(0.1);
-            yAxisModel.yAxisMinValueExtraPrecent = @(0.1);
+            yAxisModel.yAxisMaxValueExtraPrecent = @(0.12);
+            yAxisModel.yAxisMinValueExtraPrecent = @(0.12);
             yAxisModel.rightYAaxisDisabled = NO;
             [[[[yAxisModel configNumberOfIndexs:1] configLeftYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
                 yAxisInfo.axisLineColor = [UIColor colorWithWhite:1 alpha:.25];
@@ -274,6 +288,7 @@
                 yAxisInfo.axisLineColor = [UIColor colorWithWhite:1 alpha:.25];
                 yAxisInfo.axisTextColor = UIColor.whiteColor;
                 yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
+                yAxisInfo.displayAxisZeroText = NO;
             }];
         }];
         
@@ -369,6 +384,7 @@
         [[[yAxisModel configNumberOfIndexs:5] configLeftYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
             yAxisInfo.axisTextFont = [UIFont systemFontOfSize:10];
             yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
+            yAxisInfo.displayAxisZeroText = NO;
         }] configRightYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
             yAxisInfo.autoSetText = NO;
         }];
@@ -482,6 +498,7 @@
         [[[yAxisModel configNumberOfIndexs:5] configLeftYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
             yAxisInfo.axisTextFont = [UIFont systemFontOfSize:10];
             yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
+            yAxisInfo.displayAxisZeroText = NO;
         }] configRightYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
             yAxisInfo.autoSetText = NO;
         }];
@@ -569,6 +586,19 @@
                        clickAction:^(NSInteger currentIndex) {
              __weak typeof(_self) self = _self;
             [self.auxiliaryView switchKLineAuxiliaryType:currentIndex];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.klineMainlTechnicalayer removeFromSuperlayer];
+                self.klineMainlTechnicalayer = [HyChartsKLineDemoDataHandler technicalLayerWithDataSorce:self.klineMainView.dataSource];
+                [self.klineMainView.layer addSublayer:self.klineMainlTechnicalayer];
+                
+                [self.klineVolumTechnicalayer removeFromSuperlayer];
+                self.klineVolumTechnicalayer = [HyChartsKLineDemoDataHandler volumTechnicalLayerWithDataSorce:self.volumeView.dataSource];
+                [self.volumeView.layer addSublayer:self.klineVolumTechnicalayer];
+                
+                [self.klineAuxiliarylayer removeFromSuperlayer];
+                self.klineAuxiliarylayer = [HyChartsKLineDemoDataHandler auxiliaryLayerWithDataSorce:self.auxiliaryView.dataSource];
+                [self.auxiliaryView.layer addSublayer:self.klineAuxiliarylayer];
+            });
         }];
     }
     return _auxiliarySegmentView;

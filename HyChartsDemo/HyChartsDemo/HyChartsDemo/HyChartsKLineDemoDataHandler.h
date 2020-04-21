@@ -13,10 +13,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HyChartsKLineDemoDataHandler : NSObject
 
-
-
 + (void)handleWithArray:(NSArray *)array
               dataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce;
+
+
++ (CALayer *)technicalLayerWithDataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce;
+
++ (CALayer *)volumTechnicalLayerWithDataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce;
+
+
++ (CALayer *)auxiliaryLayerWithDataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce;
+
+
+
 
 @end
 

@@ -52,7 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSNumberFormatter *volumeNunmberFormatter;
 @property (nonatomic, copy, readonly) NSNumber *(^maxValueWithViewType)(HyChartKLineViewType type);
 @property (nonatomic, copy, readonly) NSNumber *(^minValueWithViewType)(HyChartKLineViewType type);
-
+@property (nonatomic, assign) HyChartKLineTechnicalType klineMianTechnicalType;
+@property (nonatomic, assign) HyChartKLineTechnicalType klineVolumeTechnicalType;
+@property (nonatomic, assign) HyChartKLineAuxiliaryType auxiliaryType;
 @end
 
 NS_ASSUME_NONNULL_END

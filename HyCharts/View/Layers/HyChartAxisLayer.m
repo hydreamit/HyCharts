@@ -13,10 +13,10 @@
 @interface HyChartAxisLayer ()
 @property (nonatomic, strong) id<HyChartXAxisModelProtocol> xAxisModel;
 @property (nonatomic, strong) id<HyChartYAxisModelProtocol> yAxisModel;
-@property (nonatomic,strong) NSMutableDictionary<NSString *, CAShapeLayer *> *axisLines;
-@property (nonatomic,strong) NSMutableDictionary<NSString *, CAShapeLayer *> *axisGridLines;
-@property (nonatomic,strong) NSMutableDictionary<NSString *, NSArray<CATextLayer *> *> *axisTexts;
-@property (nonatomic,strong) NSDictionary *attrDict;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, CAShapeLayer *> *axisLines;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, CAShapeLayer *> *axisGridLines;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSArray<CATextLayer *> *> *axisTexts;
+@property (nonatomic, strong) NSDictionary *attrDict;
 @end
 
 

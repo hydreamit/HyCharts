@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HyChartKLineAuxiliaryLayer : HyChartLayer<id<HyChartKLineDataSourceProtocol>>
 
-@property (nonatomic,assign) HyChartKLineAuxiliaryType auxiliaryType;
+@property (nonatomic, assign) HyChartKLineAuxiliaryType auxiliaryType;
 
 @end
 

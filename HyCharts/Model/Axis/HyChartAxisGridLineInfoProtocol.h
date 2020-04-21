@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 虚线模板数组
 @property (nonatomic, strong) NSArray<NSNumber *> *axisGridLineDashPattern;
 /// 网格样式
-@property (nonatomic,assign) HyChartAxisLineType axisGridLineType;
+@property (nonatomic, assign) HyChartAxisLineType axisGridLineType;
 
 @end
 

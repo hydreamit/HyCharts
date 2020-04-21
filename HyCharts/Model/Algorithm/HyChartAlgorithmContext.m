@@ -11,7 +11,7 @@
 
 
 @interface HyChartAlgorithmContext ()
-@property (nonatomic,strong) id<HyChartAlgorithmProtocol> algorithm;
+@property (nonatomic, strong) id<HyChartAlgorithmProtocol> algorithm;
 @end
 
 

@@ -46,14 +46,14 @@
         }
 
         if (!maxModel) {
-           maxModel = obj;
-           minModel = obj;
+            maxModel = obj;
+            minModel = obj;
         } else {
-           if (IsMax(obj.value, maxModel.value)) {
-             maxModel = obj;
+           if (obj.value.doubleValue > maxModel.value.doubleValue) {
+               maxModel = obj;
            } else
-           if (IsMin(obj.value, minModel.value)) {
-             minModel = obj;
+           if (obj.value.doubleValue < minModel.value.doubleValue) {
+               minModel = obj;
            }
         }
     }];

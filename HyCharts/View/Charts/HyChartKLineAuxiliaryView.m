@@ -130,6 +130,7 @@
     
     self.auxiliaryType = type;
     self.chartLayer.auxiliaryType = type;
+    self.dataSource.modelDataSource.auxiliaryType = type;
 }
 
 - (NSNumberFormatter *)yAxisNunmberFormatter {

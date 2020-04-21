@@ -15,9 +15,9 @@
 
 
 @interface HyChartsKlineMainDemoController ()
-@property (nonatomic,strong) HySegmentView *segmentView;
-@property (nonatomic,strong) HySegmentView *technicalSegmentView;
-@property (nonatomic,strong) HyChartKLineMainView *klineMainView;
+@property (nonatomic, strong) HySegmentView *segmentView;
+@property (nonatomic, strong) HySegmentView *technicalSegmentView;
+@property (nonatomic, strong) HyChartKLineMainView *klineMainView;
 @end
 
 
