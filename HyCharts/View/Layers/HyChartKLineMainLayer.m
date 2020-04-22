@@ -51,7 +51,7 @@
         maxValue = self.dataSource.axisDataSource.yAxisModel.yAxisMaxValue.doubleValue;
         minValue = self.dataSource.axisDataSource.yAxisModel.yAxisMinValue.doubleValue;
     }
-    CGFloat heightRate = height / (maxValue - minValue);
+    double heightRate = maxValue != minValue ? height / (maxValue - minValue) : 0;
     NSArray<id<HyChartKLineModelProtocol>> *visibleModels = self.dataSource.modelDataSource.visibleModels;
 
     [self handleDisPlayLayer];
@@ -280,7 +280,7 @@
     CGSize maxSize = [maxString sizeWithAttributes:@{NSFontAttributeName : self.dataSource.configreDataSource.configure.maxminPriceFont}];
     CGRect maxRect = CGRectMake(maxPriceP.x, maxPriceP.y - maxSize.height , maxSize.width, maxSize.height);
     if (CGRectGetMaxX(maxRect) > width) {
-        maxRect.origin.x = left - maxSize.width;
+        maxRect.origin.x = maxPriceP.x - maxSize.width;
         maxString = [NSString stringWithFormat:@"%@ ↘", highPrice];
     }
 
@@ -290,11 +290,11 @@
     CGSize minSize = [mixString sizeWithAttributes:@{NSFontAttributeName : self.dataSource.configreDataSource.configure.maxminPriceFont}];
     CGRect minRect = CGRectMake(minPriceP.x, minPriceP.y , minSize.width, minSize.height);
     if (CGRectGetMaxX(minRect) > width) {
-        minRect.origin.x = left - minSize.width;
+        minRect.origin.x = minPriceP.x - minSize.width;
         mixString = [NSString stringWithFormat:@"%@ ↗", lowPrice];
     }
     
-    CATransactionDisableActions(^{
+    TransactionDisableActions(^{
         self.newpriceTextLayer.frame = newPriceTextRect;
         self.newpriceTextLayer.string = newPriceString;
         self.newpriceLayer.path = newPricePath.CGPath;

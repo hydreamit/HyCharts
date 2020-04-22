@@ -21,11 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (CALayer *)volumTechnicalLayerWithDataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce;
 
-
 + (CALayer *)auxiliaryLayerWithDataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce;
-
-
-
 
 @end
 

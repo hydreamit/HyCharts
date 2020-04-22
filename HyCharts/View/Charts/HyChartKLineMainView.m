@@ -143,6 +143,7 @@
 
 - (void)switchKLineTechnicalType:(HyChartKLineTechnicalType)type {
     
+    
     self.technicalType = type;
     self.chartLayer.technicalType = type;
     self.dataSource.modelDataSource.klineMianTechnicalType = type;

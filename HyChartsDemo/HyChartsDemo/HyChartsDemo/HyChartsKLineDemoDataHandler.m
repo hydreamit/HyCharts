@@ -10,6 +10,7 @@
 #import <CoreText/CoreText.h>
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import <HyCategoriess/HyCategories.h>
 
 
 @implementation HyChartsKLineDemoDataHandler
@@ -76,11 +77,13 @@
    
     CGFloat left = 5;
     CGFloat height = 0;
+    UIFont *font = [UIFont systemFontOfSize:12];
     for (NSNumber *number in allKes) {
         CATextLayer *textLayer = [CATextLayer layer];
         textLayer.masksToBounds = YES;
-        textLayer.font = (__bridge CTFontRef)configure.newpriceFont;
-        textLayer.fontSize = configure.newpriceFont.pointSize;
+       
+        textLayer.font = (__bridge CTFontRef)font;
+        textLayer.fontSize = font.pointSize;
         textLayer.foregroundColor = configure.smaDict[number].CGColor;
         textLayer.contentsScale = UIScreen.mainScreen.scale;
         textLayer.alignmentMode = kCAAlignmentCenter;
@@ -103,7 +106,7 @@
         }
 
         textLayer.string = title;
-        CGSize size = [title sizeWithAttributes:@{NSFontAttributeName : configure.newpriceFont}];
+        CGSize size = [title sizeWithAttributes:@{NSFontAttributeName : font}];
         
         textLayer.frame = CGRectMake(left, 0, size.width, size.height);
         left = left + size.width + 10;
@@ -156,12 +159,12 @@
     textLayer.masksToBounds = YES;
     textLayer.font = (__bridge CTFontRef)configure.newpriceFont;
     textLayer.fontSize = configure.newpriceFont.pointSize;
-    textLayer.foregroundColor = UIColor.whiteColor.CGColor;
+    textLayer.foregroundColor = [UIColor grayColor].CGColor;
     textLayer.contentsScale = UIScreen.mainScreen.scale;
     textLayer.alignmentMode = kCAAlignmentCenter;
     [layer addSublayer:textLayer];
     
-    textLayer.string = [NSString stringWithFormat:@"VOL: %@", [dataSorce.modelDataSource.volumeNunmberFormatter stringFromNumber:dataSorce.modelDataSource.models.firstObject.volume]];
+    textLayer.string = [NSString stringWithFormat:@"VOL: %@", SafetyString([dataSorce.modelDataSource.volumeNunmberFormatter stringFromNumber:dataSorce.modelDataSource.models.firstObject.volume])];
     CGSize size = [textLayer.string  sizeWithAttributes:@{NSFontAttributeName : configure.newpriceFont}];
     textLayer.frame = CGRectMake(left, 0, size.width, size.height);
     left = left + size.width + 10;
@@ -240,7 +243,7 @@
     textLayer.masksToBounds = YES;
     textLayer.font = (__bridge CTFontRef)configure.newpriceFont;
     textLayer.fontSize = configure.newpriceFont.pointSize;
-    textLayer.foregroundColor = UIColor.whiteColor.CGColor;
+    textLayer.foregroundColor = UIColor.grayColor.CGColor;
     textLayer.contentsScale = UIScreen.mainScreen.scale;
     textLayer.alignmentMode = kCAAlignmentCenter;
     [layer addSublayer:textLayer];

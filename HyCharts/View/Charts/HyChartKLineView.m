@@ -288,10 +288,10 @@
                         maxPrice = MAX(obj.priceBoll([key integerValue], @"up").doubleValue, maxPrice);
                         minPrice = MIN(obj.priceBoll([key integerValue], @"dn").doubleValue, minPrice);
                     }
-//                    if (klineVolume) {
-//                        maxVolume = MAX(obj.volumeBoll([key integerValue], @"up").doubleValue, maxVolume);
-//                        minVolume = MIN(obj.volumeBoll([key integerValue], @"dn").doubleValue, minVolume);
-//                    }
+                    if (klineVolume) {
+                        maxVolume = MAX(obj.volumeBoll([key integerValue], @"up").doubleValue, maxVolume);
+                        minVolume = MIN(obj.volumeBoll([key integerValue], @"dn").doubleValue, minVolume);
+                    }
                 }];
             } break;
             default:
@@ -371,7 +371,7 @@
                 }] configBottomXAxisInfo:^(id<HyChartXAxisInfoProtocol>  _Nonnull xAxisInfo) {
                     xAxisInfo.autoSetText = NO;
                     xAxisInfo.axisLineColor = bottomXAxisInfo.axisLineColor;
-                    xAxisInfo.axisLineWidth = bottomXAxisInfo.axisLineWidth;
+                    xAxisInfo.axisLineWidth = bottomXAxisInfo.axisLineWidth < 1 ? 1 : bottomXAxisInfo.axisLineWidth;
                     xAxisInfo.axisLineDashPhase = bottomXAxisInfo.axisLineDashPhase;
                     xAxisInfo.axisLineDashPattern = bottomXAxisInfo.axisLineDashPattern;
                     xAxisInfo.axisLineType = bottomXAxisInfo.axisLineType;

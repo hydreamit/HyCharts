@@ -28,7 +28,7 @@
     CGFloat height = CGRectGetHeight(self.bounds);
     CGFloat width = self.dataSource.configreDataSource.configure.scaleWidth;
     double maxValue = self.dataSource.axisDataSource.yAxisModel.yAxisMaxValue.doubleValue;
-    CGFloat heightRate = height / maxValue;
+    double heightRate = maxValue != 0 ? height / maxValue : 0;
     CGFloat oneBarWidth = width / self.layers.count;
     
     NSMutableArray<UIBezierPath *> *paths = @[].mutableCopy;

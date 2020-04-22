@@ -7,6 +7,7 @@
 //
 
 #import "HyChartKLineVolumeLayer.h"
+#import "HyChartsMethods.h"
 
 
 @interface HyChartKLineVolumeLayer ()
@@ -39,18 +40,18 @@
         maxValue = self.dataSource.axisDataSource.yAxisModel.yAxisMaxValue.doubleValue;
         minValue = self.dataSource.axisDataSource.yAxisModel.yAxisMinValue.doubleValue;
     }
-    double heightRate = h / maxValue;
-        
+    double heightRate = maxValue != 0 ? h / maxValue : 0;
+
     UIBezierPath *trendUpPath = UIBezierPath.bezierPath;
     UIBezierPath *trendDownPath = UIBezierPath.bezierPath;
-    
+
     NSMutableDictionary<NSNumber *, UIBezierPath *> *smaPathDict = nil;
     NSMutableDictionary<NSNumber *, UIBezierPath *> *emaPathDict =nil;
     NSMutableDictionary<NSNumber *, NSArray<UIBezierPath *> *> *bollPathDict = nil;
-    
+
     switch (self.technicalType) {
        case HyChartKLineTechnicalTypeNone: {
-           
+
        } break;
        case HyChartKLineTechnicalTypeSMA: {
            smaPathDict = @{}.mutableCopy;
@@ -74,22 +75,22 @@
        default:
        break;
     }
-    
+
     NSArray<id<HyChartKLineModelProtocol>> *visibleModels = self.dataSource.modelDataSource.visibleModels;
     [visibleModels enumerateObjectsUsingBlock:^(id<HyChartKLineModelProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
+
         x = obj.visiblePosition;
         height = (obj.volume.doubleValue) * heightRate;
         y = h - height;
-        
+
         CGRect rect = CGRectMake(x,  y, width, height);
-        
+
         if (obj.trend == HyChartKLineTrendDown) {
             [trendDownPath appendPath:[UIBezierPath bezierPathWithRect:rect]];
         } else {
             [trendUpPath appendPath:[UIBezierPath bezierPathWithRect:rect]];
         }
-        
+
         if (smaPathDict) {
             [smaPathDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIBezierPath * _Nonnull path, BOOL * _Nonnull stop) {
                 CGPoint cuurentPoint = CGPointMake(x + width / 2, h - ((obj.volumeSMA([key integerValue]).doubleValue - minValue) * heightRate));
@@ -99,7 +100,7 @@
                    [path addLineToPoint:cuurentPoint];
                 }
             }];
-            
+
         } else if (emaPathDict) {
             [emaPathDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIBezierPath * _Nonnull path, BOOL * _Nonnull stop) {
                 CGPoint cuurentPoint = CGPointMake(x + width / 2, h - ((obj.volumeEMA([key integerValue]).doubleValue - minValue) * heightRate));
@@ -109,7 +110,7 @@
                    [path addLineToPoint:cuurentPoint];
                 }
             }];
-            
+
         } else if (bollPathDict) {
             [bollPathDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSArray<UIBezierPath *> * _Nonnull paths, BOOL * _Nonnull stop) {
                 [paths enumerateObjectsUsingBlock:^(UIBezierPath * _Nonnull path, NSUInteger pathIdx, BOOL * _Nonnull stop) {
@@ -134,8 +135,7 @@
             }];
         }
     }];
-        
-            
+
     if (smaPathDict) {
         [self.smaLayerDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, CAShapeLayer * _Nonnull obj, BOOL * _Nonnull stop) {
             obj.path = smaPathDict[key].CGPath;

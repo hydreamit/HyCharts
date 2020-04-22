@@ -6,11 +6,11 @@
 //  Copyright © 2018 Hy. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "HyChartsDemoController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HyChartsReactChainsDemoController : UIViewController
+@interface HyChartsReactChainsDemoController : HyChartsDemoController
 
 @end
 

@@ -66,10 +66,10 @@
                 emaVolume = model.volume.doubleValue;
             }
     
-           [model.priceEMADict setObject:[NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:emaPrice]]]
+           [model.priceEMADict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:emaPrice]]])
                                   forKey:@(number)];
             
-           [model.volumeEMADict setObject:[NSDecimalNumber decimalNumberWithString:[model.volumeNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:emaVolume]]]
+           [model.volumeEMADict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.volumeNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:emaVolume]]])
                                    forKey:@(number)];
         }
     };
@@ -153,10 +153,10 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
                      difEMA = dif;
                   }
                   
-                  [model.priceDEMDict setObject:[NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:difEMA]]]
+                  [model.priceDEMDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:difEMA]]])
                                          forKey:demdKey];
                   
-                  [model.priceMACDDict setObject:[NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:dif - difEMA]]]
+                  [model.priceMACDDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:dif - difEMA]]])
                                          forKey:demdKey];
             }
         }
@@ -190,8 +190,11 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
                 minValue = MIN(minValue, model.lowPrice.doubleValue);
             }
             
-            rsvValue = 100.0 *  (model.closePrice.doubleValue - minValue) / (maxValue - minValue);
-            
+            if (maxValue - minValue != 0) {
+                rsvValue = 100.0 * (model.closePrice.doubleValue - minValue) / (maxValue - minValue);
+            } else {
+                rsvValue = 0;
+            }
             if (index > 0) {
                 kValue = (rsvValue + 2 * kValue) / number2;
                 dValue = (kValue + 2 * dValue) / number3;
@@ -202,13 +205,13 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
                jValue = 50;
             }
             
-            [model.priceRSIDict setObject:[NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:rsvValue]]]
+            [model.priceRSIDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:rsvValue]]])
                                    forKey:@(number1)];
-            [model.priceKDict setObject:[NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:kValue]]]
+            [model.priceKDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:kValue]]])
                                  forKey:[NSString stringWithFormat:@"%ld+%ld", (long)number1, (long)number2]];
-            [model.priceDDict setObject:[NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:dValue]]]
+            [model.priceDDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:dValue]]])
                                  forKey:[NSString stringWithFormat:@"%ld+%ld+%ld", (long)number1, (long)number2, (long)number3]];
-            [model.priceJDict setObject:[NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:jValue]]]
+            [model.priceJDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:jValue]]])
                                  forKey:[NSString stringWithFormat:@"%ld+%ld+%ld", (long)number1, (long)number2, (long)number3]];
         }
     };
@@ -235,7 +238,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
                 aValue = (a + (number - 1) * aValue) / number;
                 bValue = (b + (number - 1) * bValue) / number;
                 rsiValue = (aValue / bValue) * 100;
-                [model.priceRSIDict setObject:[NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:rsiValue]]]
+                [model.priceRSIDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:rsiValue]]])
                                        forKey:@(number)];
             }
         }
@@ -261,8 +264,8 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
         priceValue = priceValue / totalNumber;
         volumeValue = volumeValue / totalNumber;
         
-        return @[[NSDecimalNumber decimalNumberWithString:[models.firstObject.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:priceValue]]],
-                 [NSDecimalNumber decimalNumberWithString:[models.firstObject.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:volumeValue]]]];
+        return @[SafetyNumber([NSDecimalNumber decimalNumberWithString:[models.firstObject.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:priceValue]]]),
+                 SafetyNumber([NSDecimalNumber decimalNumberWithString:[models.firstObject.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:volumeValue]]])];
     };
 }
 
@@ -302,14 +305,14 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
         CGFloat k = 2.0;
         
         NSNumberFormatter *priceNunmberFormatter = models.firstObject.priceNunmberFormatter;
-        NSNumber *priceMbNumber = [NSDecimalNumber decimalNumberWithString:[priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:priceMb]]];
-        NSNumber *priceUp = [NSDecimalNumber decimalNumberWithString:[priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:priceMb + k * priceMd]]];
-        NSNumber *priceDn = [NSDecimalNumber decimalNumberWithString:[priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:priceMb - k * priceMd]]];
+        NSNumber *priceMbNumber = SafetyNumber([NSDecimalNumber decimalNumberWithString:[priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:priceMb]]]);
+        NSNumber *priceUp = SafetyNumber([NSDecimalNumber decimalNumberWithString:[priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:priceMb + k * priceMd]]]);
+        NSNumber *priceDn = SafetyNumber([NSDecimalNumber decimalNumberWithString:[priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:priceMb - k * priceMd]]]);
         
         NSNumberFormatter *volumeNunmberFormatter = models.firstObject.volumeNunmberFormatter;
-        NSNumber *volumeMbNumber = [NSDecimalNumber decimalNumberWithString:[volumeNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:volumeMb]]];
-        NSNumber *volumeUp = [NSDecimalNumber decimalNumberWithString:[volumeNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:volumeMb + k * volumeMd]]];
-        NSNumber *volumeDn = [NSDecimalNumber decimalNumberWithString:[volumeNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:volumeMb - k * volumeMd]]];
+        NSNumber *volumeMbNumber = SafetyNumber([NSDecimalNumber decimalNumberWithString:[volumeNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:volumeMb]]]);
+        NSNumber *volumeUp = SafetyNumber([NSDecimalNumber decimalNumberWithString:[volumeNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:volumeMb + k * volumeMd]]]);
+        NSNumber *volumeDn = SafetyNumber([NSDecimalNumber decimalNumberWithString:[volumeNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:volumeMb - k * volumeMd]]]);
 
         NSDictionary *priceDict = @{@"mb" : priceMbNumber, @"up" : priceUp, @"dn" : priceDn};
         NSDictionary *volumeDict = @{@"mb" : volumeMbNumber, @"up" : volumeUp, @"dn" : volumeDn};

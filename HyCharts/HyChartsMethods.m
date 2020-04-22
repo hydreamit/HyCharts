@@ -15,7 +15,7 @@ void AsyncHandler(dispatch_block_t (^block)(void)) {
     });
 }
 
-void CATransactionDisableActions(void (^block)(void)) {
+void TransactionDisableActions(void (^block)(void)) {
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     !block ?: block();
@@ -98,4 +98,21 @@ NSNumber *DividingNumber(NSNumber *numberOne, NSNumber *numberTwo) {
     });
 }
 
+NSNumber *SafetyNumber(NSNumber *number) {
+    if (![number isKindOfClass:NSNumber.class] ||
+        [number isEqualToNumber:NSDecimalNumber.notANumber]) {
+        return [NSDecimalNumber decimalNumberWithString:@"0"];
+    }
+    return number;
+}
+
+NSString *SafetyString(NSString *string) {
+    NSString *str = [NSString stringWithFormat:@"%@", string];
+    str = [str stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+    str = [str stringByReplacingOccurrencesOfString:@"<null>" withString:@""];
+    if ([string isEqualToString:@"nan"] || [string isEqualToString:@"NaN"]) {
+        return @"0";
+    }
+    return str;
+}
 

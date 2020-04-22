@@ -35,7 +35,7 @@
         maxValue = self.dataSource.axisDataSource.yAxisModel.yAxisMaxValue.doubleValue;
         minValue = self.dataSource.axisDataSource.yAxisModel.yAxisMinValue.doubleValue;
     }
-    double heightRate = height / (maxValue - minValue);
+    double heightRate = maxValue != minValue ? height / (maxValue - minValue) : 0;
     
     id<HyChartKLineConfigureProtocol> configure = self.dataSource.configreDataSource.configure;
     NSArray<UIBezierPath *> *paths =
@@ -201,7 +201,7 @@
                    if (colors.count == 4) {
                        for (CAShapeLayer *layer in _layers) {
                            NSInteger index = [_layers indexOfObject:layer];
-                           CATransactionDisableActions(^{
+                           TransactionDisableActions(^{
                                layer.path = UIBezierPath.bezierPath.CGPath;
                                layer.strokeColor = colors[index].CGColor;
                                layer.lineWidth = configure.technicalLineWidth;
@@ -235,7 +235,7 @@
                        for (UIColor *color in colors) {
                            NSInteger index = [colors indexOfObject:color];
                            CAShapeLayer *layer = _layers[index];
-                           CATransactionDisableActions(^{
+                           TransactionDisableActions(^{
                                layer.strokeColor = color.CGColor;
                                layer.fillColor = UIColor.clearColor.CGColor;
                                layer.lineWidth = configure.technicalLineWidth;
@@ -249,7 +249,7 @@
            case HyChartKLineAuxiliaryTypeRSI: {
                if (configure.rsiDict.allKeys.count) {
                    CAShapeLayer *layer = _layers.firstObject;
-                   CATransactionDisableActions(^{
+                   TransactionDisableActions(^{
                        layer.strokeColor = configure.rsiDict.allValues.firstObject.CGColor;
                        layer.fillColor = UIColor.clearColor.CGColor;
                        layer.lineWidth = configure.technicalLineWidth;

@@ -77,7 +77,7 @@
          self.xTextLayer.string = xText;
          self.yTextLayer.string = yText;
         
-        CATransactionDisableActions(^{
+        TransactionDisableActions(^{
             self.dotLayer.path = dotPath.CGPath;
             self.lineLayer.path = path.CGPath;
             self.xTextLayer.frame = xRect;

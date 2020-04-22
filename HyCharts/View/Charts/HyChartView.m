@@ -302,10 +302,11 @@
 
 - (void)asyncHandler:(void(^)(void))hander
           completion:(void(^)(void))completion {
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
         !hander ?: hander();
-        dispatch_async(dispatch_get_main_queue(), completion);
-    });
+        !completion ?: completion();
+//        dispatch_async(dispatch_get_main_queue(), completion);
+//    });
 }
 
 - (CGFloat)contentWidth {
@@ -556,38 +557,33 @@
 
 - (void)showCursorWithPoint:(CGPoint)point {
     
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    CGFloat positionX = point.x;
+    if (self.configure.dataDirection == HyChartDataDirectionReverse) {
+        positionX = self.chartContentWidth - positionX;
+    }
+    
+    NSInteger index = [self absoluteIndexWithPosition:positionX];
+    if (index < self.dataSource.modelDataSource.models.count) {
+        id<HyChartModelProtocol> model = self.dataSource.modelDataSource.models[index];
         
-        CGFloat positionX = point.x;
+        NSString *xText = model.text;
+        CGPoint centerP = CGPointMake(model.visiblePosition + self.configure.scaleWidth / 2, point.y);
         
-        if (self.configure.dataDirection == HyChartDataDirectionReverse) {
-            positionX = self.chartContentWidth - positionX;
+        CGFloat chartH = self.chartHeight;
+        id<HyChartYAxisModelProtocol> yAxisModel = self.dataSource.axisDataSource.yAxisModel;
+        if ([self isKindOfClass:NSClassFromString(@"HyChartKLineView")]) {
+            chartH = ((id<HyChartKLineConfigureProtocol>)self.dataSource.configreDataSource.configure).klineViewDict[@(HyChartKLineViewTypeMain)].floatValue * (self.chartHeight + self.contentEdgeInsets.top + self.contentEdgeInsets.bottom) - self.contentEdgeInsets.top;
+            yAxisModel = self.dataSource.axisDataSource.yAxisModelWityViewType(HyChartKLineViewTypeMain);
         }
         
-        NSInteger index = [self absoluteIndexWithPosition:positionX];
-        if (index < self.dataSource.modelDataSource.models.count) {
-            id<HyChartModelProtocol> model = self.dataSource.modelDataSource.models[index];
+        NSNumber *maxValue = yAxisModel.yAxisMaxValue;
+        NSNumber *minValue = yAxisModel.yAxisMinValue;
+        NSNumber *valueRate = DividingNumber(SubtractingNumber(maxValue, minValue), @(chartH));
+        NSString * yText = [self.yAxisNunmberFormatter stringFromNumber: AddingNumber(MultiplyingNumber(@(chartH - point.y), valueRate), minValue)];
+        
+        self.chartCursor.show(centerP, xText, yText, model, self);
             
-            NSString *xText = model.text;
-            CGPoint centerP = CGPointMake(model.visiblePosition + self.configure.scaleWidth / 2, point.y);
-            
-            CGFloat chartH = self.chartHeight;
-            id<HyChartYAxisModelProtocol> yAxisModel = self.dataSource.axisDataSource.yAxisModel;
-            if ([self isKindOfClass:NSClassFromString(@"HyChartKLineView")]) {
-                chartH = ((id<HyChartKLineConfigureProtocol>)self.dataSource.configreDataSource.configure).klineViewDict[@(HyChartKLineViewTypeMain)].floatValue * (self.chartHeight + self.contentEdgeInsets.top + self.contentEdgeInsets.bottom) - self.contentEdgeInsets.top;
-                yAxisModel = self.dataSource.axisDataSource.yAxisModelWityViewType(HyChartKLineViewTypeMain);
-            }
-            
-            NSNumber *maxValue = yAxisModel.yAxisMaxValue;
-            NSNumber *minValue = yAxisModel.yAxisMinValue;
-            NSNumber *valueRate = DividingNumber(SubtractingNumber(maxValue, minValue), @(chartH));
-            NSString * yText = [self.yAxisNunmberFormatter stringFromNumber: AddingNumber(MultiplyingNumber(@(chartH - point.y), valueRate), minValue)];;
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.chartCursor.show(centerP, xText, yText, model, self);
-            });
-        }
-    });
+    }
 }
 
 - (NSInteger)avisibleIndexWithPosition:(CGFloat)position {
@@ -756,7 +752,9 @@
 
 - (void)setTechnicalType:(HyChartKLineTechnicalType)technicalType {
 
-    if (technicalType != _technicalType &&
+    HyChartKLineTechnicalType lastType = _technicalType;
+    _technicalType = technicalType;
+    if (lastType != _technicalType &&
         self.dataSource.modelDataSource.models.count &&
         !self.timeLine) {
         [self asyncHandler:^{
@@ -770,13 +768,17 @@
             [self.chartLayer setNeedsRendering];
         }];
     }
-    _technicalType = technicalType;
+    
 }
 
 - (void)setAuxiliaryType:(HyChartKLineAuxiliaryType)auxiliaryType {
-    
-    if (auxiliaryType != _auxiliaryType &&
+    HyChartKLineAuxiliaryType lastType = auxiliaryType;
+    _auxiliaryType = auxiliaryType;
+    if (lastType != _auxiliaryType &&
         self.dataSource.modelDataSource.models.count) {
+        
+        _auxiliaryType = auxiliaryType;
+        
         [self asyncHandler:^{
             [self handleMaxMinValue];
             [self handleVisibleModels];
@@ -788,17 +790,7 @@
             [self.chartLayer setNeedsRendering];
         }];
     }
-    _auxiliaryType = auxiliaryType;
+    
 }
-
-// 调用 CALayerDelegate - [self setNeedsDisplay]; 方法
-// 1. 调用[self.layer setNeedsDisplay];
-// 2.实现 - (void)drawRect:(CGRect)rect [self layoutSubviews] 后 会自动调一次
-// 3.实现 - (void)drawRect:(CGRect)rect  调用 [self setNeedsDisplay]会调一次
-//- (void)drawRect:(CGRect)rect {
-//    [super drawRect:rect];
-//
-//    NSLog(@"drawRect");
-//}
 
 @end

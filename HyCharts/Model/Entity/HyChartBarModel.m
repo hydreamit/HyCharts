@@ -18,7 +18,7 @@
     NSMutableArray<NSNumber *> *mArray = @[].mutableCopy;
     [values enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSString *numberString = [self.numberFormatter stringFromNumber:obj];
-        NSDecimalNumber *deNumber = [NSDecimalNumber decimalNumberWithString:numberString];
+        NSNumber *deNumber = SafetyNumber([NSDecimalNumber decimalNumberWithString:numberString]);
         [mArray addObject:deNumber];
         if (!maxVaule) {
             maxVaule = deNumber;

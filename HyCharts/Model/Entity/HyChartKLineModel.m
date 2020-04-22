@@ -7,6 +7,7 @@
 //
 
 #import "HyChartKLineModel.h"
+#import "HyChartsMethods.h"
 
 
 @interface HyChartKLineModel ()
@@ -32,25 +33,25 @@
 
 
 - (void)setHighPrice:(NSNumber *)highPrice {
-    _highPrice = [NSDecimalNumber decimalNumberWithString:[self.priceNunmberFormatter stringFromNumber:highPrice]];
+    _highPrice = SafetyNumber([NSDecimalNumber decimalNumberWithString:[self.priceNunmberFormatter stringFromNumber:highPrice]]);
     _maxPrice = _highPrice;
 }
 
 - (void)setLowPrice:(NSNumber *)lowPrice {
-    _lowPrice = [NSDecimalNumber decimalNumberWithString:[self.priceNunmberFormatter stringFromNumber:lowPrice]];
+    _lowPrice = SafetyNumber([NSDecimalNumber decimalNumberWithString:[self.priceNunmberFormatter stringFromNumber:lowPrice]]);
     _minPrice = _lowPrice;
 }
 
 - (void)setClosePrice:(NSNumber *)closePrice {
-    _closePrice = [NSDecimalNumber decimalNumberWithString:[self.priceNunmberFormatter stringFromNumber:closePrice]];
+    _closePrice = SafetyNumber([NSDecimalNumber decimalNumberWithString:[self.priceNunmberFormatter stringFromNumber:closePrice]]);
 }
 
 - (void)setOpenPrice:(NSNumber *)openPrice {
-    _openPrice = [NSDecimalNumber decimalNumberWithString:[self.priceNunmberFormatter stringFromNumber:openPrice]];
+    _openPrice = SafetyNumber([NSDecimalNumber decimalNumberWithString:[self.priceNunmberFormatter stringFromNumber:openPrice]]);
 }
 
 - (void)setVolume:(NSNumber *)volume {
-    _volume = [NSDecimalNumber decimalNumberWithString:[self.volumeNunmberFormatter stringFromNumber:volume]];;
+    _volume = SafetyNumber([NSDecimalNumber decimalNumberWithString:[self.volumeNunmberFormatter stringFromNumber:volume]]);
     _maxVolume = volume;
 }
 
