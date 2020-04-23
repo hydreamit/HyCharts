@@ -461,10 +461,6 @@
     
     if (self.pinchGestureDisabled) { return; }
     
-    if (self.chartCursor.isShowing) {
-        [self.chartCursor dismiss];
-    }
-    
     id<HyChartConfigureProtocol> configure = self.configure;
     static NSInteger index = -1;
     static CGFloat margin = 0;
@@ -528,6 +524,9 @@
 }
 
 - (void)startPinch {
+    if (self.chartCursor.isShowing) {
+        [self.chartCursor dismiss];
+    }
     self.pinching = YES;
     self.scrollView.scrollEnabled = NO;
 }
