@@ -4,12 +4,12 @@
 __Podfile__
 
 ```
-pod 'HyCycleView'
+pod 'HyCharts'
 ```
 
 __手动导入__
 
-直接将`HyCycleView`文件夹拖入项目中
+直接将`HyCharts`文件夹拖入项目中
 
 ## Demo图片
 <div>
