@@ -387,28 +387,29 @@
                        UIView *line = [UIView new];
                        line.backgroundColor = UIColor.darkTextColor;
                        line.layer.cornerRadius = 1.5;
-                       line.heightValue(3).bottomValue(34);
+                       line.heightValue(3).bottomValue(34).widthValue(15);
                        array = @[line];
                    }
                    
-                   CGFloat margin = ABS(toCell.centerX - fromCell.centerX);
-                   CGFloat currentProgress = progress <= 0.5 ? progress : (1 - progress);
-                   CGFloat width = 15;
-                   array.firstObject.widthValue(width + margin * currentProgress * 2);
-                   
-                   if (fromIndex < toIndex) {
-                       if (progress <= 0.5) {
-                           array.firstObject.leftValue(fromCell.centerX - width / 2);
-                       } else {
-                           array.firstObject.rightValue(toCell.centerX + width / 2);
-                       }
-                   } else {
-                       if (progress <= 0.5) {
-                           array.firstObject.rightValue(fromCell.centerX + width / 2);
-                       } else {
-                           array.firstObject.leftValue(toCell.centerX - width / 2);
-                       };
-                   }
+                  array.firstObject.centerXValue((1 - progress) * fromCell.centerX + progress * toCell.centerX);
+//                   CGFloat margin = ABS(toCell.centerX - fromCell.centerX);
+//                   CGFloat currentProgress = progress <= 0.5 ? progress : (1 - progress);
+//                   CGFloat width = 15;
+//                   array.firstObject.widthValue(width + margin * currentProgress * 2);
+//                   
+//                   if (fromIndex < toIndex) {
+//                       if (progress <= 0.5) {
+//                           array.firstObject.leftValue(fromCell.centerX - width / 2);
+//                       } else {
+//                           array.firstObject.rightValue(toCell.centerX + width / 2);
+//                       }
+//                   } else {
+//                       if (progress <= 0.5) {
+//                           array.firstObject.rightValue(fromCell.centerX + width / 2);
+//                       } else {
+//                           array.firstObject.leftValue(toCell.centerX - width / 2);
+//                       };
+//                   }
                    
                    return array;
                })
