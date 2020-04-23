@@ -128,9 +128,9 @@
 
 - (void)switchKLineAuxiliaryType:(HyChartKLineAuxiliaryType)type {
     
-    self.auxiliaryType = type;
     self.chartLayer.auxiliaryType = type;
     self.dataSource.modelDataSource.auxiliaryType = type;
+    self.auxiliaryType = type;
 }
 
 - (NSNumberFormatter *)yAxisNunmberFormatter {

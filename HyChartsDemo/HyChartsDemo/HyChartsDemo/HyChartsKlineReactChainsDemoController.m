@@ -13,9 +13,13 @@
 #import <HyCycleView/HySegmentView.h>
 #import "HyCharts.h"
 #import "HyChartsKLineDemoDataHandler.h"
+#import "HyChartsKLineDemoCursor.h"
+
 
 
 @interface HyChartsKlineReactChainsDemoController ()
+
+@property (nonatomic, strong) HySegmentView *segmentView;
 @property (nonatomic, strong) HyChartKLineMainView *klineMainView;
 @property (nonatomic, strong) HyChartKLineVolumeView *volumeView;
 @property (nonatomic, strong) HyChartKLineAuxiliaryView *auxiliaryView;
@@ -27,6 +31,7 @@
 @property (nonatomic,strong) UIView *klineAuxiliaryView;
 @property (nonatomic,strong) UIView *klineContentView;
 @end
+
 
 
 @implementation HyChartsKlineReactChainsDemoController
@@ -42,14 +47,17 @@
     [self.view addSubview:scrollView];
     
     
+    [scrollView addSubview:self.segmentView];
+    
+    
     self.klineMainlTechnicView = UIView.new;
-    self.klineMainlTechnicView.frame = CGRectMake(5, 10, self.view.width - 10, 15);
+    self.klineMainlTechnicView.frame = CGRectMake(0, self.segmentView.bottom + 2, self.view.width, 15);
     [scrollView addSubview:self.klineMainlTechnicView];
     
     
     UIView *klineContentView = UIView.new;
     klineContentView.backgroundColor = UIColor.whiteColor;
-    klineContentView.frame = CGRectMake(5, self.klineMainlTechnicView.bottom, self.view.width - 10, self.view.width * (0.6 + 0.25 + 0.25) + 30 + 20);
+    klineContentView.frame = CGRectMake(5, self.klineMainlTechnicView.bottom, self.view.width - 10, self.view.width * (0.6 + 0.25 + 0.25) + 30 + 10);
     [scrollView addSubview:klineContentView];
     self.klineContentView = klineContentView;
     
@@ -59,10 +67,12 @@
     HyChartView.addReactChains(@[self.klineMainView, self.volumeView, self.auxiliaryView]);
     
     self.klineVolumTechnicView = UIView.new;
+    self.klineVolumTechnicView.left = -5;
     self.klineVolumTechnicView.top = self.klineMainView.bottom;
     [klineContentView addSubview:self.klineVolumTechnicView];
    
     self.klineAuxiliaryView = UIView.new;
+    self.klineAuxiliaryView.left = -5;
     self.klineAuxiliaryView.top = self.volumeView.bottom;
     [klineContentView addSubview:self.klineAuxiliaryView];
     
@@ -76,6 +86,7 @@
     NSString *string = [NSString stringWithFormat:@"https://api.idcs.io:8323/api/LineData/GetLineData?TradingConfigId=_DSQ3BmslE-cS-HP3POlnA&LineType=%@&PageIndex=1&PageSize=400&ClientType=2&LanguageCode=zh-CN", type];
     
     UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicatorView.color = UIColor.orangeColor;
     indicatorView.center = CGPointMake(self.klineContentView.width / 2, self.klineContentView.height / 2);
     [self.klineContentView addSubview:indicatorView];
     [indicatorView startAnimating];
@@ -100,6 +111,10 @@
                 [self.auxiliaryView setNeedsRendering];
                 
                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                   
+                   [self.klineMainlTechnicView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+                   [self.klineVolumTechnicView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+                   [self.klineAuxiliaryView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
                    
                     CALayer *klineMainlTechnicalayer = [HyChartsKLineDemoDataHandler technicalLayerWithDataSorce:self.klineMainView.dataSource];
                     [self.klineMainlTechnicView.layer addSublayer:klineMainlTechnicalayer];
@@ -169,21 +184,23 @@
             configure.timeLineShadeColors =
             configure.minScaleLineShadeColors = colors;
             
+            configure.smaDict = @{@(5)  : Hy_ColorWithRGB(246, 164, 84),
+                                  @(10) : Hy_ColorWithRGB(105, 140, 180),
+                                  @(30) : Hy_ColorWithRGB(179, 90, 142)};
             
-            configure.smaDict = @{@(5)  : UIColor.yellowColor,
-                                  @(10) : UIColor.orangeColor,
-                                  @(30) : UIColor.purpleColor};
+            configure.emaDict = @{@(5)  : Hy_ColorWithRGB(246, 164, 84),
+                                  @(10) : Hy_ColorWithRGB(105, 140, 180),
+                                  @(30) : Hy_ColorWithRGB(179, 90, 142)};
             
-            configure.emaDict = @{@(5)  : UIColor.yellowColor,
-                                  @(10) : UIColor.orangeColor,
-                                  @(30) : UIColor.purpleColor};
-            
-            configure.bollDict = @{@"20" : @[UIColor.yellowColor,
-                                             UIColor.orangeColor,
-                                             UIColor.purpleColor]};
+            configure.bollDict = @{@"20" : @[Hy_ColorWithRGB(246, 164, 84),
+                                             Hy_ColorWithRGB(105, 140, 180),
+                                             Hy_ColorWithRGB(179, 90, 142)]};
         }];
-        _klineMainView.tapGestureDisabled = YES;
-        _klineMainView.longPressGestureDisabled = YES;
+
+        HyChartsKLineDemoCursor *cursor = HyChartsKLineDemoCursor.new;
+        cursor.showView = self.klineContentView;
+        [_klineMainView resetChartCursor:cursor];
+        
         [_klineMainView switchKLineTechnicalType:HyChartKLineTechnicalTypeSMA];
     }
     return _klineMainView;
@@ -228,16 +245,14 @@
                         
             configure.trendUpKlineType = HyChartKLineTypeStroke;
             
-            configure.smaDict = @{@(5)  : UIColor.yellowColor,
-                                  @(10) : UIColor.orangeColor,
-                                  @(30) : UIColor.purpleColor};
-            configure.emaDict = @{@(5)  : UIColor.yellowColor,
-                                  @(10) : UIColor.orangeColor,
-                                  @(30) : UIColor.purpleColor};
+            configure.smaDict = @{@(5)  : Hy_ColorWithRGB(246, 164, 84),
+                                  @(10) : Hy_ColorWithRGB(105, 140, 180),
+                                  @(30) : Hy_ColorWithRGB(179, 90, 142)};
             
-            configure.bollDict = @{@"20" : @[UIColor.yellowColor,
-                                             UIColor.orangeColor,
-                                             UIColor.purpleColor]};
+            configure.emaDict = @{@(5)  : Hy_ColorWithRGB(246, 164, 84),
+                                  @(10) : Hy_ColorWithRGB(105, 140, 180),
+                                  @(30) : Hy_ColorWithRGB(179, 90, 142)};
+
         }];
         
         _volumeView.tapGestureDisabled = YES;
@@ -247,13 +262,13 @@
     return _volumeView;
 }
 
+
 - (HyChartKLineAuxiliaryView *)auxiliaryView {
     if (!_auxiliaryView){
         _auxiliaryView = HyChartKLineAuxiliaryView.new;
         _auxiliaryView.frame = CGRectMake(0, self.volumeView.bottom + 15, self.view.bounds.size.width - 10, self.view.bounds.size.width * .25 + 20);
-        _auxiliaryView.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 20, 0);
+        _auxiliaryView.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 10, 0);
         _auxiliaryView.backgroundColor = UIColor.whiteColor;
-//        _auxiliaryView.backgroundColor = [UIColor colorWithRed:14.0 / 255 green:33.0 / 255 blue:60.0 / 255 alpha:1];
         
         // 配置坐标轴
         [[_auxiliaryView.dataSource.axisDataSource configXAxisWithModel:^(id<HyChartXAxisModelProtocol>  _Nonnull xAxisModel) {
@@ -288,8 +303,8 @@
            configure.width = 2;
            configure.margin = 4;
            
-            configure.macdDict = @{@[@12, @26, @9] : @[UIColor.orangeColor, UIColor.blueColor, [UIColor hy_colorWithHexString:@"#E97C5E"], [UIColor hy_colorWithHexString:@"#1ABD93"]]};
-            configure.kdjDict = @{@[@9, @3, @3] : @[UIColor.orangeColor, UIColor.blueColor, UIColor.redColor]};
+            configure.macdDict = @{@[@12, @26, @9] : @[Hy_ColorWithRGB(246, 164, 84), Hy_ColorWithRGB(165, 83, 127), Hy_ColorWithRGB(225, 82, 71), Hy_ColorWithRGB(79, 184, 126)]};
+            configure.kdjDict = @{@[@9, @3, @3] : @[Hy_ColorWithRGB(246, 164, 84), Hy_ColorWithRGB(165, 83, 127), Hy_ColorWithRGB(105, 140, 180)]};
             configure.rsiDict = @{@6 : UIColor.orangeColor};
         }];
         _auxiliaryView.tapGestureDisabled = YES;
@@ -303,10 +318,109 @@
     configure.margin = 2;
     configure.edgeInsetStart = 2;
     configure.edgeInsetEnd = 2;
-    configure.trendUpColor = [UIColor hy_colorWithHexString:@"#E97C5E"];
-    configure.trendDownColor = [UIColor hy_colorWithHexString:@"#1ABD93"];
+    configure.trendUpColor = Hy_ColorWithRGB(225, 82, 71);
+    configure.trendDownColor = Hy_ColorWithRGB(79, 184, 126);
     configure.priceDecimal = 2;
     configure.volumeDecimal = 4;
+    configure.minScale = .5;
+}
+
+
+- (HySegmentView *)segmentView {
+    if (!_segmentView){
+
+        NSArray<NSString *> *titleArray = @[@"Time", @"M5", @"M15", @"M30", @"H1", @"D1", @"W1", @"MN"];
+        NSArray<NSString *> *typeArray = @[@"101", @"102", @"103", @"104", @"201", @"301", @"310", @"401"];
+        __weak typeof(self) _self = self;
+        _segmentView =
+        [self segmentViewWithFrame:CGRectMake(0, 0, self.view.width, 35)
+                        titleArray:titleArray
+                       clickAction:^(NSInteger currentIndex) {
+             __weak typeof(_self) self = _self;
+            [self requestDataWithType:typeArray[currentIndex]];
+        }];
+        
+        UIView *line = UIView.new;
+        line.backgroundColor = UIColor.groupTableViewBackgroundColor;
+        line.frame = CGRectMake(0, _segmentView.height - 1, _segmentView.width, 1);
+        [_segmentView addSubview:line];
+    }
+    return _segmentView;
+}
+
+
+- (HySegmentView *)segmentViewWithFrame:(CGRect)frame
+                             titleArray:(NSArray<NSString *> *)titleArray
+                                clickAction:(void(^)(NSInteger currentIndex))clickAction {
+    NSInteger startIndex = titleArray.count > 3 ? 4 : 0;
+    HySegmentView *segmentView =
+    [HySegmentView segmentViewWithFrame:frame
+                         configureBlock:^(HySegmentViewConfigure * _Nonnull configure) {
+                          
+              configure
+              .numberOfItems(titleArray.count)
+              .startIndex(startIndex)
+              .insetAndMarginRatio(.65)
+              .viewForItemAtIndex(^UIView *(UIView *currentView,
+                                            NSInteger currentIndex,
+                                            CGFloat progress,
+                                            HySegmentViewItemPosition position,
+                                            NSArray<UIView *> *animationViews){
+
+                  UILabel *label = (UILabel *)currentView;
+                  if (!label) {
+                      label = [UILabel new];
+                      label.text = titleArray[currentIndex];
+                      label.textAlignment = NSTextAlignmentCenter;
+                      label.font = [UIFont systemFontOfSize:15];
+                      [label sizeToFit];
+                  }
+                  if (progress == 0 || progress == 1) {
+                      label.textColor =  progress == 0 ?  UIColor.grayColor : UIColor.darkTextColor;
+                  }
+                  return label;
+              })
+               .animationViews(^NSArray<UIView *> *(NSArray<UIView *> *currentAnimations, UICollectionViewCell *fromCell, UICollectionViewCell *toCell, NSInteger fromIndex, NSInteger toIndex, CGFloat progress){
+                   
+                   NSArray<UIView *> *array = currentAnimations;
+                   if (!array.count) {
+                       UIView *line = [UIView new];
+                       line.backgroundColor = UIColor.darkTextColor;
+                       line.layer.cornerRadius = 1.5;
+                       line.heightValue(3).bottomValue(34);
+                       array = @[line];
+                   }
+                   
+                   CGFloat margin = ABS(toCell.centerX - fromCell.centerX);
+                   CGFloat currentProgress = progress <= 0.5 ? progress : (1 - progress);
+                   CGFloat width = 15;
+                   array.firstObject.widthValue(width + margin * currentProgress * 2);
+                   
+                   if (fromIndex < toIndex) {
+                       if (progress <= 0.5) {
+                           array.firstObject.leftValue(fromCell.centerX - width / 2);
+                       } else {
+                           array.firstObject.rightValue(toCell.centerX + width / 2);
+                       }
+                   } else {
+                       if (progress <= 0.5) {
+                           array.firstObject.rightValue(fromCell.centerX + width / 2);
+                       } else {
+                           array.firstObject.leftValue(toCell.centerX - width / 2);
+                       };
+                   }
+                   
+                   return array;
+               })
+              .clickItemAtIndex(^BOOL(NSInteger currentIndex, BOOL isRepeat){
+                  if (!isRepeat) {
+                      !clickAction ?: clickAction(currentIndex);
+                  }
+                  return YES;
+              });
+          }];
+    segmentView.backgroundColor = UIColor.whiteColor;
+    return segmentView;
 }
 
 @end

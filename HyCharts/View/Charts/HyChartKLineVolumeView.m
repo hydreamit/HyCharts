@@ -142,9 +142,9 @@
 
 - (void)switchKLineTechnicalType:(HyChartKLineTechnicalType)type {
     if (type != HyChartKLineTechnicalTypeBOLL) {
-        self.technicalType = type;
         self.chartLayer.technicalType = type;
         self.dataSource.modelDataSource.klineVolumeTechnicalType = type;
+        self.technicalType = type;
     }
 }
 

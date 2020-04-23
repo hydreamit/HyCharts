@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HyChartsKLineDemoCursor : NSObject<HyChartCursorProtocol>
 
+@property (nonatomic,weak) UIView *showView;
+
 @end
 
 NS_ASSUME_NONNULL_END

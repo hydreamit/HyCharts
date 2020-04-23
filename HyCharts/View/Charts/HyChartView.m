@@ -772,13 +772,11 @@
 }
 
 - (void)setAuxiliaryType:(HyChartKLineAuxiliaryType)auxiliaryType {
-    HyChartKLineAuxiliaryType lastType = auxiliaryType;
+    HyChartKLineAuxiliaryType lastType = _auxiliaryType;
     _auxiliaryType = auxiliaryType;
     if (lastType != _auxiliaryType &&
         self.dataSource.modelDataSource.models.count) {
-        
-        _auxiliaryType = auxiliaryType;
-        
+                
         [self asyncHandler:^{
             [self handleMaxMinValue];
             [self handleVisibleModels];

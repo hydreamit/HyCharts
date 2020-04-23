@@ -22,7 +22,7 @@
 @property (nonatomic, strong) CATextLayer *yTextLayer;
 @property (nonatomic, strong) CAShapeLayer *lineLayer;
 @property (nonatomic, strong) CAShapeLayer *dotLayer;
-@property (nonatomic, strong)CALayer *klineContentLayer;
+@property (nonatomic, strong) CALayer *klineContentLayer;
 @property (nonatomic, strong) id<HyChartCursorConfigureProtocol> configure;
 @end
 
@@ -153,7 +153,7 @@
     }
     
     CALayer *layer = CALayer.layer;
-    layer.backgroundColor = [UIColor colorWithRed:.0 green:.0 blue:.0 alpha:.65].CGColor;
+    layer.backgroundColor = [UIColor colorWithRed:.0 green:.0 blue:.0 alpha:.75].CGColor;
     layer.cornerRadius = 3;
     layer.borderWidth = 1.0;
     layer.borderColor = [UIColor colorWithWhite:1 alpha:.65].CGColor;
@@ -188,12 +188,14 @@
         NSInteger index = [leftTitleArray indexOfObject:title];
         
         CATextLayer *leftTextLayer = self.textLayer;
+        leftTextLayer.foregroundColor = UIColor.whiteColor.CGColor;
         leftTextLayer.string = title;
         [layer addSublayer:leftTextLayer];
         CGSize leftSize = [title sizeWithAttributes:@{NSFontAttributeName : (__bridge UIFont *)leftTextLayer.font}];
         leftTextLayer.frame = CGRectMake(left, top, leftSize.width, leftSize.height);
         
         CATextLayer *rightTextLayer = self.textLayer;
+        rightTextLayer.foregroundColor = UIColor.whiteColor.CGColor;
         rightTextLayer.string = rightTitleArray[index];
         [layer addSublayer:rightTextLayer];
         CGSize rightSize = [rightTextLayer.string sizeWithAttributes:@{NSFontAttributeName : (__bridge UIFont *)leftTextLayer.font}];

@@ -154,7 +154,7 @@
 
 - (HySegmentView *)technicalSegmentView {
     if (!_technicalSegmentView){
-        NSArray<NSString *> *titleArray = @[@"MA", @"EMA", @"BOLL"];
+        NSArray<NSString *> *titleArray = @[@"MA", @"EMA"];
         __weak typeof(self) _self = self;
         _technicalSegmentView =
         [self segmentViewWithFrame:CGRectMake(0, self.segmentView.bottom + 1, self.view.width, 40)

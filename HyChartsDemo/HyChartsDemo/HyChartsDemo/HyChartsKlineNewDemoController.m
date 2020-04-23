@@ -75,7 +75,7 @@
                 [indicatorView removeFromSuperview];
                 self.klineView.timeLine = [type isEqualToString:@"101"];
                 [self.klineView setNeedsRendering];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self.klineMainlTechnicalayer removeFromSuperlayer];
                     self.klineMainlTechnicalayer = [HyChartsKLineDemoDataHandler technicalLayerWithDataSorce:self.klineView.dataSource];
                     [self.klineView.layer addSublayer:self.klineMainlTechnicalayer];
@@ -218,7 +218,7 @@
                        clickAction:^(NSInteger currentIndex) {
              __weak typeof(_self) self = _self;
             [self.klineView switchKLineTechnicalType:currentIndex + 1];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.klineMainlTechnicalayer removeFromSuperlayer];
                 self.klineMainlTechnicalayer = [HyChartsKLineDemoDataHandler technicalLayerWithDataSorce:self.klineView.dataSource];
                 [self.klineView.layer addSublayer:self.klineMainlTechnicalayer];
@@ -244,7 +244,7 @@
              __weak typeof(_self) self = _self;
             [self.klineView switchKLineAuxiliaryType:currentIndex];
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.klineAuxiliarylayer removeFromSuperlayer];
                 self.klineAuxiliarylayer = [HyChartsKLineDemoDataHandler auxiliaryLayerWithDataSorce:self.klineView.dataSource];
                 [self.klineView.layer addSublayer:self.klineAuxiliarylayer];
