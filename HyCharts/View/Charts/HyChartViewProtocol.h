@@ -26,11 +26,15 @@ NS_ASSUME_NONNULL_BEGIN
 /// 内边距
 @property (nonatomic, assign) UIEdgeInsets contentEdgeInsets;
 
+@property (nonatomic, copy) void(^tapGestureAction)(void);
+
+@property (nonatomic, copy) void(^longGestureAction)(void);
+
 /// 配置默认游标参数
 - (void)configChartCursor:(void(^)(id<HyChartCursorConfigureProtocol> configure))block;
 
 /// 自定义游标
-- (void)resetChartCursor:(id<HyChartCursorProtocol>)cursor;
+- (void)resetChartCursor:(id<HyChartCursorProtocol>_Nullable)cursor;
 
 /// 渲染
 - (void)setNeedsRendering;

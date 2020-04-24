@@ -462,10 +462,14 @@
     self.configure.hy_clickItemAtIndex(indexPath.row, indexPath.row == self.currentSelectedIndex);
     
     if (needHandle) {
+        self.userInteractionEnabled = NO;
         [HySegmentViewAnimate.new animateWithDuration:.25 animations:^(CGFloat progress) {
             [self handleAnimationViewWithFromIndex:fromIndex
                                            toIndex:indexPath.row
                                           progress:progress];
+            if (progress == 1) {
+                self.userInteractionEnabled = YES;
+            }
         }];
     }
 }

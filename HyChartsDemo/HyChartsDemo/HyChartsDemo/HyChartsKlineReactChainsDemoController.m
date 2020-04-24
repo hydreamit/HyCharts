@@ -30,6 +30,8 @@
 @property (nonatomic,strong) UIView *klineVolumTechnicView;
 @property (nonatomic,strong) UIView *klineAuxiliaryView;
 @property (nonatomic,strong) UIView *klineContentView;
+
+@property (nonatomic,strong) HyChartsKLineDemoCursor *klineCursor;
 @end
 
 
@@ -38,6 +40,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+   
     
     self.view.backgroundColor = UIColor.whiteColor;
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
@@ -197,9 +202,9 @@
                                              Hy_ColorWithRGB(179, 90, 142)]};
         }];
 
-        HyChartsKLineDemoCursor *cursor = HyChartsKLineDemoCursor.new;
-        cursor.showView = self.klineContentView;
-        [_klineMainView resetChartCursor:cursor];
+        self.klineCursor = HyChartsKLineDemoCursor.new;
+        self.klineCursor.showView = self.klineContentView;
+        [_klineMainView resetChartCursor:self.klineCursor];
         
         [_klineMainView switchKLineTechnicalType:HyChartKLineTechnicalTypeSMA];
     }
@@ -255,7 +260,12 @@
 
         }];
         
-        _volumeView.tapGestureDisabled = YES;
+//        _volumeView.tapGestureDisabled = YES;
+        [_volumeView resetChartCursor:nil];
+        _volumeView.tapGestureAction = ^{
+            __strong typeof(_self) self = _self;
+            [self.klineCursor dismiss];
+        };
         _volumeView.longPressGestureDisabled = YES;
         [_volumeView switchKLineTechnicalType:HyChartKLineTechnicalTypeSMA];
     }
@@ -307,8 +317,15 @@
             configure.kdjDict = @{@[@9, @3, @3] : @[Hy_ColorWithRGB(246, 164, 84), Hy_ColorWithRGB(165, 83, 127), Hy_ColorWithRGB(105, 140, 180)]};
             configure.rsiDict = @{@6 : UIColor.orangeColor};
         }];
-        _auxiliaryView.tapGestureDisabled = YES;
+//        _auxiliaryView.tapGestureDisabled = YES;
+        [_auxiliaryView resetChartCursor:nil];
+        _auxiliaryView.tapGestureAction = ^{
+            __strong typeof(_self) self = _self;
+            [self.klineCursor dismiss];
+            
+        };
         _auxiliaryView.longPressGestureDisabled = YES;
+        
     }
     return _auxiliaryView;
 }
@@ -378,6 +395,7 @@
                   if (progress == 0 || progress == 1) {
                       label.textColor =  progress == 0 ?  UIColor.grayColor : UIColor.darkTextColor;
                   }
+                  label.transform =  CGAffineTransformMakeScale(1 + 0.1 * progress, 1 + 0.1 * progress);
                   return label;
               })
                .animationViews(^NSArray<UIView *> *(NSArray<UIView *> *currentAnimations, UICollectionViewCell *fromCell, UICollectionViewCell *toCell, NSInteger fromIndex, NSInteger toIndex, CGFloat progress){
@@ -390,28 +408,8 @@
                        line.heightValue(3).bottomValue(34).widthValue(15);
                        array = @[line];
                    }
-                   
                   array.firstObject.centerXValue((1 - progress) * fromCell.centerX + progress * toCell.centerX);
-//                   CGFloat margin = ABS(toCell.centerX - fromCell.centerX);
-//                   CGFloat currentProgress = progress <= 0.5 ? progress : (1 - progress);
-//                   CGFloat width = 15;
-//                   array.firstObject.widthValue(width + margin * currentProgress * 2);
-//                   
-//                   if (fromIndex < toIndex) {
-//                       if (progress <= 0.5) {
-//                           array.firstObject.leftValue(fromCell.centerX - width / 2);
-//                       } else {
-//                           array.firstObject.rightValue(toCell.centerX + width / 2);
-//                       }
-//                   } else {
-//                       if (progress <= 0.5) {
-//                           array.firstObject.rightValue(fromCell.centerX + width / 2);
-//                       } else {
-//                           array.firstObject.leftValue(toCell.centerX - width / 2);
-//                       };
-//                   }
-                   
-                   return array;
+                  return array;
                })
               .clickItemAtIndex(^BOOL(NSInteger currentIndex, BOOL isRepeat){
                   if (!isRepeat) {

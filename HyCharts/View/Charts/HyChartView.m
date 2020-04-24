@@ -46,11 +46,12 @@
 @property (nonatomic, assign) NSInteger prepareStage;
 @property (nonatomic, strong) NSNumberFormatter *yAxisNunmberFormatter;
 @property (nonatomic, strong) dispatch_semaphore_t semaphore;
+@property (nonatomic, assign) BOOL hasResetChartCursor;
 @end
 
 
 @implementation HyChartView
-@synthesize contentEdgeInsets = _contentEdgeInsets, pinchGestureDisabled = _pinchGestureDisabled, tapGestureDisabled = _tapGestureDisabled, longPressGestureDisabled = _longPressGestureDisabled;
+@synthesize contentEdgeInsets = _contentEdgeInsets, pinchGestureDisabled = _pinchGestureDisabled, tapGestureDisabled = _tapGestureDisabled, longPressGestureDisabled = _longPressGestureDisabled, longGestureAction = _longGestureAction, tapGestureAction = _tapGestureAction;
 
 #pragma mark — lief cycle
 - (void)didMoveToSuperview {
@@ -86,6 +87,7 @@
 
 - (void)resetChartCursor:(id<HyChartCursorProtocol>)cursor {
     if (!cursor || [cursor conformsToProtocol:@protocol(HyChartCursorProtocol)]) {
+        self.hasResetChartCursor = YES;
         self.chartCursor = cursor;
     }
 }
@@ -545,6 +547,8 @@
     } else {
         [self showCursorWithPoint:[gesture locationInView:self.scrollView]];
     }
+    
+    !self.tapGestureAction ?: self.tapGestureAction();
 }
 
 - (void)longPressGestureAction:(UILongPressGestureRecognizer *)gesture {
@@ -552,9 +556,12 @@
         return;
     }
     [self showCursorWithPoint:[gesture locationInView:self.scrollView]];
+    !self.longGestureAction ?: self.longGestureAction();
 }
 
 - (void)showCursorWithPoint:(CGPoint)point {
+    
+    if (!self.chartCursor) {return;}
     
     CGFloat positionX = point.x;
     if (self.configure.dataDirection == HyChartDataDirectionReverse) {
@@ -718,7 +725,7 @@
 }
 
 - (id<HyChartCursorProtocol>)chartCursor {
-    if (!_chartCursor){
+    if (!_chartCursor && !self.hasResetChartCursor){
         _chartCursor = [HyChartCursor chartCursorWithLayer:self.layer];
     }
     return _chartCursor;
