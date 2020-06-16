@@ -205,6 +205,7 @@
             smaLayer.lineCap = kCALineCapRound;
             smaLayer.lineJoin = kCALineCapRound;
             smaLayer.masksToBounds = YES;
+            smaLayer.zPosition = 999;
             smaLayer.frame = self.bounds;
             [self addSublayer:smaLayer];
             [mDict setObject:smaLayer forKey:key];
@@ -226,6 +227,7 @@
             emaLayer.lineJoin = kCALineCapRound;
             emaLayer.masksToBounds = YES;
             emaLayer.frame = self.bounds;
+            emaLayer.zPosition = 999;
             [self addSublayer:emaLayer];
             [mDict setObject:emaLayer forKey:key];
         }];
@@ -249,6 +251,7 @@
                     bollLayer.lineJoin = kCALineCapRound;
                     bollLayer.masksToBounds = YES;
                     bollLayer.frame = self.bounds;
+                    bollLayer.zPosition = 999;
                     [self addSublayer:bollLayer];
                     [layers addObject:bollLayer];
                 }

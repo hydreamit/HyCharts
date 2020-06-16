@@ -58,16 +58,19 @@
     [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration];
     [[session dataTaskWithURL:[NSURL URLWithString:string] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 
+        __strong typeof(_self) self = _self;
+        if (!self) {return;}
         if (!error) {
-            __strong typeof(_self) self = _self;
             NSDictionary *successObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             [HyChartsKLineDemoDataHandler handleWithArray:successObject[@"Data"] dataSorce:self.volumeView.dataSource];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [indicatorView stopAnimating];
-                [indicatorView removeFromSuperview];
-                [self.volumeView setNeedsRendering];
-            });
         }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [indicatorView stopAnimating];
+            [indicatorView removeFromSuperview];
+            if (!error) {
+               [self.volumeView setNeedsRendering];
+            }
+        });
     }] resume];
 }
 

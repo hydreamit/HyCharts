@@ -45,6 +45,10 @@
 
 + (CALayer *)technicalLayerWithDataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce {
     
+    if (!dataSorce.modelDataSource.models.count) {
+        return nil;
+    }
+    
     HyChartKLineTechnicalType type = dataSorce.modelDataSource.klineMianTechnicalType;
     if (type == HyChartKLineTechnicalTypeBOLL) {
         return nil;
@@ -121,6 +125,10 @@
 
 
 + (CALayer *)volumTechnicalLayerWithDataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce {
+    
+    if (!dataSorce.modelDataSource.models.count) {
+        return nil;
+    }
     
     HyChartKLineTechnicalType type = dataSorce.modelDataSource.klineVolumeTechnicalType;
     if (type == HyChartKLineTechnicalTypeBOLL) {
@@ -213,6 +221,10 @@
 }
 
 + (CALayer *)auxiliaryLayerWithDataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce {
+    
+    if (!dataSorce.modelDataSource.models.count) {
+        return nil;
+    }
 
     CALayer *layer = CALayer.layer;
 
@@ -307,6 +319,5 @@
    layer.frame = CGRectMake(0, 0, left, height);
    return layer;
 }
-
 
 @end

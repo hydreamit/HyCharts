@@ -40,10 +40,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-   
-    
+
     self.view.backgroundColor = UIColor.whiteColor;
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     
@@ -99,39 +96,40 @@
     NSURLSession *session =
     [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration];
     [[session dataTaskWithURL:[NSURL URLWithString:string] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-
+        
+        __strong typeof(_self) self = _self;
+        if (!self) {return;}
         if (!error) {
-            __strong typeof(_self) self = _self;
             NSDictionary *successObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             [HyChartsKLineDemoDataHandler handleWithArray:successObject[@"Data"] dataSorce:self.klineMainView.dataSource];
             [HyChartsKLineDemoDataHandler handleWithArray:successObject[@"Data"] dataSorce:self.volumeView.dataSource];
             [HyChartsKLineDemoDataHandler handleWithArray:successObject[@"Data"] dataSorce:self.auxiliaryView.dataSource];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [indicatorView stopAnimating];
-                [indicatorView removeFromSuperview];
-                self.klineMainView.timeLine = [type isEqualToString:@"101"];
-                [self.klineMainView setNeedsRendering];
-                [self.volumeView setNeedsRendering];
-                [self.auxiliaryView setNeedsRendering];
-                
-               dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                   
-                   [self.klineMainlTechnicView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-                   [self.klineVolumTechnicView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-                   [self.klineAuxiliaryView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-                   
-                    CALayer *klineMainlTechnicalayer = [HyChartsKLineDemoDataHandler technicalLayerWithDataSorce:self.klineMainView.dataSource];
-                    [self.klineMainlTechnicView.layer addSublayer:klineMainlTechnicalayer];
-
-                    CALayer *klineVolumTechnicalayer = [HyChartsKLineDemoDataHandler volumTechnicalLayerWithDataSorce:self.volumeView.dataSource];
-                    [self.klineVolumTechnicView.layer addSublayer:klineVolumTechnicalayer];
-
-                   CALayer *klineAuxiliarylayer = [HyChartsKLineDemoDataHandler auxiliaryLayerWithDataSorce:self.auxiliaryView.dataSource];
-                   [self.klineAuxiliaryView.layer addSublayer:klineAuxiliarylayer];
-                });
-            });
         }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [indicatorView stopAnimating];
+            [indicatorView removeFromSuperview];
+            if (error) { return; }
+            
+            self.klineMainView.timeLine = [type isEqualToString:@"101"];
+            [self.klineMainView setNeedsRendering];
+            [self.volumeView setNeedsRendering];
+            [self.auxiliaryView setNeedsRendering];
+           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+               
+               [self.klineMainlTechnicView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+               [self.klineVolumTechnicView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+               [self.klineAuxiliaryView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+               
+                CALayer *klineMainlTechnicalayer = [HyChartsKLineDemoDataHandler technicalLayerWithDataSorce:self.klineMainView.dataSource];
+                [self.klineMainlTechnicView.layer addSublayer:klineMainlTechnicalayer];
+
+                CALayer *klineVolumTechnicalayer = [HyChartsKLineDemoDataHandler volumTechnicalLayerWithDataSorce:self.volumeView.dataSource];
+                [self.klineVolumTechnicView.layer addSublayer:klineVolumTechnicalayer];
+
+               CALayer *klineAuxiliarylayer = [HyChartsKLineDemoDataHandler auxiliaryLayerWithDataSorce:self.auxiliaryView.dataSource];
+               [self.klineAuxiliaryView.layer addSublayer:klineAuxiliarylayer];
+            });
+        });
     }] resume];
 }
 
