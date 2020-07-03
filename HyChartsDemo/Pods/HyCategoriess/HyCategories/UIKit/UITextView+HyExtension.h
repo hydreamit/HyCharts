@@ -13,19 +13,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @interface HyTextViewDelegateConfigure : NSObject
-- (instancetype)configTextViewShouldBeginEditing:(BOOL (^)(UITextView *textView))block;
-- (instancetype)configTextViewShouldEndEditing:(BOOL (^)(UITextView *textView))block;
-- (instancetype)configTextViewDidBeginEditing:(void (^)(UITextView *textView))block;
-- (instancetype)configTextViewDidEndEditing:(void (^)(UITextView *textView))block;
-- (instancetype)configTextViewDidChange:(void (^)(UITextView *textView))block;
-- (instancetype)configTextViewDidChangeSelection:(void (^)(UITextView *textView))block;
-- (instancetype)configTextViewShouldChangeTextInRange:(BOOL (^)(UITextView *textView, NSRange range, NSString *text))block;
+@property (nonatomic,copy,readonly) HyTextViewDelegateConfigure *(^configTextViewShouldBeginEditing)(BOOL (^)(UITextView *textView));
+@property (nonatomic,copy,readonly) HyTextViewDelegateConfigure *(^configTextViewShouldEndEditing)(BOOL (^)(UITextView *textView));
+@property (nonatomic,copy,readonly) HyTextViewDelegateConfigure *(^configTextViewDidBeginEditing)(void (^)(UITextView *textView));
+@property (nonatomic,copy,readonly) HyTextViewDelegateConfigure *(^configTextViewDidEndEditing)(void (^)(UITextView *textView));
+@property (nonatomic,copy,readonly) HyTextViewDelegateConfigure *(^configTextViewDidChange)(void (^)(UITextView *textView));
+@property (nonatomic,copy,readonly) HyTextViewDelegateConfigure *(^configTextViewDidChangeSelection)(BOOL (^)(UITextView *textView));
+@property (nonatomic,copy,readonly) HyTextViewDelegateConfigure *(^configTextViewShouldChangeTextInRange)(BOOL (^)(UITextView *textView, NSRange range, NSString *text));
 @end
 
 
 
 @interface UITextView (HyExtension)
-
 
 + (instancetype)hy_textFieldWithFrame:(CGRect)frame
                                  font:(UIFont *)font

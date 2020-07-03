@@ -30,63 +30,104 @@
 
 
 @implementation HyScrollViewDelegateConfigure
-- (instancetype)configScrollViewDidScroll:(void (^)(UIScrollView *scrollView))block {
-    self.scrollViewDidScroll = [block copy];
-    return self;
+
+- (HyScrollViewDelegateConfigure *(^)(void (^)(UIScrollView *)))configScrollViewDidScroll {
+    return ^(void (^block)(UIScrollView *)){
+        self.scrollViewDidScroll = [block copy];
+        return self;
+    };
 }
-- (instancetype)configScrollViewDidZoom:(void (^)(UIScrollView *scrollView))block {
-    self.scrollViewDidZoom = [block copy];
-    return self;
+
+- (HyScrollViewDelegateConfigure *(^)(void (^)(UIScrollView *)))configScrollViewDidZoom {
+    return ^(void (^block)(UIScrollView *)){
+        self.scrollViewDidZoom = [block copy];
+        return self;
+    };
 }
-- (instancetype)configScrollViewWillBeginDragging:(void (^)(UIScrollView *scrollView))block{
-    self.scrollViewWillBeginDragging = [block copy];
-    return self;
+
+- (HyScrollViewDelegateConfigure *(^)(void (^)(UIScrollView *)))configScrollViewWillBeginDragging {
+    return ^(void (^block)(UIScrollView *)){
+        self.scrollViewWillBeginDragging = [block copy];
+        return self;
+    };
 }
-- (instancetype)configScrollViewWillBeginDecelerating:(void (^)(UIScrollView *scrollView))block{
-    self.scrollViewWillBeginDecelerating = [block copy];
-    return self;
+
+- (HyScrollViewDelegateConfigure *(^)(void (^)(UIScrollView *)))configScrollViewWillBeginDecelerating {
+    return ^(void (^block)(UIScrollView *)){
+        self.scrollViewWillBeginDecelerating = [block copy];
+        return self;
+    };
 }
-- (instancetype)configScrollViewDidEndDecelerating:(void (^)(UIScrollView *scrollView))block{
-    self.scrollViewDidEndDecelerating = [block copy];
-    return self;
+
+- (HyScrollViewDelegateConfigure *(^)(void (^)(UIScrollView *)))configScrollViewDidEndDecelerating {
+    return ^(void (^block)(UIScrollView *)){
+        self.scrollViewDidEndDecelerating = [block copy];
+        return self;
+    };
 }
-- (instancetype)configScrollViewDidEndScrollingAnimation:(void (^)(UIScrollView *scrollView))block{
-    self.scrollViewDidEndScrollingAnimation = [block copy];
-    return self;
+
+- (HyScrollViewDelegateConfigure *(^)(void (^)(UIScrollView *)))configScrollViewDidEndScrollingAnimation {
+    return ^(void (^block)(UIScrollView *)){
+        self.scrollViewDidEndScrollingAnimation = [block copy];
+        return self;
+    };
 }
-- (instancetype)configScrollViewDidScrollToTop:(void (^)(UIScrollView *scrollView))block{
-    self.scrollViewDidScrollToTop = [block copy];
-    return self;
+
+- (HyScrollViewDelegateConfigure *(^)(void (^)(UIScrollView *)))configScrollViewDidScrollToTop {
+    return ^(void (^block)(UIScrollView *)){
+        self.scrollViewDidScrollToTop = [block copy];
+        return self;
+    };
 }
-- (instancetype)configScrollViewDidChangeAdjustedContentInset:(void (^)(UIScrollView *scrollView))block{
-    self.scrollViewDidChangeAdjustedContentInset = [block copy];
-    return self;
+
+- (HyScrollViewDelegateConfigure *(^)(void (^)(UIScrollView *)))configScrollViewDidChangeAdjustedContentInset {
+    return ^(void (^block)(UIScrollView *)){
+        self.scrollViewDidChangeAdjustedContentInset = [block copy];
+        return self;
+    };
 }
-- (instancetype)configScrollViewShouldScrollToTop:(BOOL (^)(UIScrollView *scrollView))block{
-    self.scrollViewShouldScrollToTop = [block copy];
-    return self;
+
+
+- (HyScrollViewDelegateConfigure *(^)(BOOL (^)(UIScrollView *)))configScrollViewShouldScrollToTop {
+    return ^(BOOL (^block)(UIScrollView *)){
+        self.scrollViewShouldScrollToTop = [block copy];
+        return self;
+    };
 }
-- (instancetype)configScrollViewForZoomingInScrollView:(UIView *(^)(UIScrollView *scrollView))block{
-    self.viewForZoomingInScrollView = [block copy];
-    return self;
+
+- (HyScrollViewDelegateConfigure *(^)(UIView *(^)(UIScrollView *)))configScrollViewForZoomingInScrollView {
+    return ^(UIView *(^block)(UIScrollView *scrollView)){
+        self.viewForZoomingInScrollView = [block copy];
+        return self;
+    };
 }
-- (instancetype)configScrollViewWillBeginZooming:(void (^)(UIScrollView *scrollView, UIView *view))block{
-    self.scrollViewWillBeginZooming = [block copy];
-    return self;
+
+- (HyScrollViewDelegateConfigure *(^)(void (^)(UIScrollView *, UIView *)))configScrollViewWillBeginZooming {
+    return ^(void (^block)(UIScrollView *, UIView *)){
+        self.scrollViewWillBeginZooming = [block copy];
+        return self;
+    };
 }
-- (instancetype)configScrollViewDidEndZooming:(void (^)(UIScrollView *scrollView, UIView *view, CGFloat scale))block{
-    self.scrollViewDidEndZooming = [block copy];
-    return self;
+
+- (HyScrollViewDelegateConfigure *(^)(void (^)(UIScrollView *, UIView *, CGFloat)))configScrollViewDidEndZooming {
+    return ^(void (^block)(UIScrollView *, UIView *, CGFloat)){
+        self.scrollViewDidEndZooming = [block copy];
+        return self;
+    };
 }
-- (instancetype)configScrollViewWillEndDragging:(void (^)(UIScrollView *scrollView,
-                                                          CGPoint velocity,
-                                                          CGPoint targetContentOffset))block{
-    self.scrollViewWillEndDragging = [block copy];
-    return self;
+
+- (HyScrollViewDelegateConfigure *(^)(void (^)(UIScrollView *, CGPoint, CGPoint)))configScrollViewWillEndDragging {
+    return ^(void (^block)(UIScrollView *, CGPoint, CGPoint)){
+        self.scrollViewWillEndDragging = [block copy];
+        return self;
+    };
 }
-- (instancetype)configScrollViewDidEndDragging:(void (^)(UIScrollView *scrollView, BOOL willDecelerate))block{
-    self.scrollViewDidEndDragging = [block copy];
-    return self;
+
+- (HyScrollViewDelegateConfigure *(^)(void (^)(UIScrollView *, BOOL)))configScrollViewDidEndDragging {
+    return ^(void (^block)(UIScrollView *, BOOL)){
+        self.scrollViewDidEndDragging = [block copy];
+        return self;
+    };
 }
 
 #pragma mark — UIScrollViewDelegate
@@ -112,7 +153,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     !self.scrollViewDidEndDecelerating  ?:
-    self.scrollViewDidEndDecelerating (scrollView);
+    self.scrollViewDidEndDecelerating(scrollView);
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {

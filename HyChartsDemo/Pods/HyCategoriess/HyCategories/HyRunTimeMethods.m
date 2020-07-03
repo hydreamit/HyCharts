@@ -33,7 +33,16 @@ void hy_swizzleTwoClassMethods(Class fromCls, SEL fromSel, Class toCls, SEL toSe
                             method_getTypeEncoding(fromMethod));
         
     } else {
-        method_exchangeImplementations(fromMethod, toMethod);
+        
+        class_replaceMethod(toMetacls,
+                            toSel,
+                            class_replaceMethod(fromMetacls,
+                                                fromSel,
+                                                method_getImplementation(toMethod),
+                                                method_getTypeEncoding(toMethod)),
+                            method_getTypeEncoding(fromMethod));
+        
+//        method_exchangeImplementations(fromMethod, toMethod);
     }
 }
 
@@ -60,7 +69,16 @@ void hy_swizzleTwoInstanceMethods(Class fromCls, SEL fromSel, Class toCls, SEL t
                             method_getTypeEncoding(fromMethod));
         
     } else {
-        method_exchangeImplementations(fromMethod, toMethod);
+        
+        class_replaceMethod(toClass,
+                            toSel,
+                            class_replaceMethod(fromClass,
+                                                fromSel,
+                                                method_getImplementation(toMethod),
+                                                method_getTypeEncoding(toMethod)),
+                            method_getTypeEncoding(fromMethod));
+        
+//        method_exchangeImplementations(fromMethod, toMethod);
     }
 }
 

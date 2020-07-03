@@ -22,16 +22,16 @@
     __weak typeof(self) _self = self;
     UITableView *tableView =
     [UITableView hy_tableViewWithFrame:self.view.bounds style:UITableViewStylePlain tableViewData:titleArray cellClasses:@[UITableViewCell.class] headerFooterViewClasses:nil delegateConfigure:^(HyTableViewDelegateConfigure *configure) {
-        [[configure configCellWithData:^(UITableViewCell *cell, id cellData, NSIndexPath *indexPath) {
+        configure.configCellWithData(^(UITableViewCell *cell, id cellData, NSIndexPath *indexPath) {
             cell.textLabel.text = (NSString *)cellData;
-        }] configDidSelectRowAtIndexPath:^(UITableView *tableView, NSIndexPath *indexPath) {
+        }).configDidSelectRowAtIndexPath(^(UITableView *tableView, NSIndexPath *indexPath) {
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             __strong typeof(_self) self = _self;
             UIViewController *vc = NSClassFromString(controllerArray[indexPath.row]).new;
             vc.hidesBottomBarWhenPushed = YES;
             vc.navigationItem.title = titleArray[indexPath.row];
             [self.navigationController pushViewController:vc animated:YES];
-        }];
+        });
     }];
     
     tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;

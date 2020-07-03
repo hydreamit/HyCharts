@@ -25,33 +25,53 @@
 
 @implementation HyTextFieldDelegateConfigure
 
-- (instancetype)configTextFieldShouldBeginEditing:(BOOL (^)(UITextField *textField))block {
-    self.textFieldShouldBeginEditing = [block copy];
-    return self;
+- (HyTextFieldDelegateConfigure *(^)(BOOL (^)(UITextField *)))configTextFieldShouldBeginEditing {
+    return ^(BOOL (^block)(UITextField *)){
+        self.textFieldShouldBeginEditing = [block copy];
+        return self;
+    };
 }
-- (instancetype)configTextFieldShouldEndEditing:(BOOL (^)(UITextField *textField))block {
-    self.textFieldShouldEndEditing = [block copy];
-    return self;
+
+- (HyTextFieldDelegateConfigure *(^)(BOOL (^)(UITextField *)))configTextFieldShouldEndEditing {
+    return ^(BOOL (^block)(UITextField *)){
+        self.textFieldShouldEndEditing = [block copy];
+        return self;
+    };
 }
-- (instancetype)configTextFieldShouldReturn:(BOOL (^)(UITextField *textField))block {
-    self.textFieldShouldReturn = [block copy];
-    return self;
+
+- (HyTextFieldDelegateConfigure *(^)(BOOL (^)(UITextField *)))configTextFieldShouldReturn {
+    return ^(BOOL (^block)(UITextField *)){
+        self.textFieldShouldReturn = [block copy];
+        return self;
+    };
 }
-- (instancetype)configTextFieldDidBeginEditing:(void (^)(UITextField *textField))block {
-    self.textFieldDidBeginEditing = [block copy];
-    return self;
+
+- (HyTextFieldDelegateConfigure *(^)(void (^)(UITextField *)))configTextFieldDidBeginEditing {
+    return ^(void (^block)(UITextField *)){
+        self.textFieldDidBeginEditing = [block copy];
+        return self;
+    };
 }
-- (instancetype)configTextFieldDidEndEditing:(void (^)(UITextField *textField))block {
-    self.textFieldDidEndEditing = [block copy];
-    return self;
+
+- (HyTextFieldDelegateConfigure *(^)(void (^)(UITextField *)))configTextFieldDidEndEditing {
+    return ^(void (^block)(UITextField *)){
+        self.textFieldDidEndEditing = [block copy];
+        return self;
+    };
 }
-- (instancetype)configTextFieldShouldClear:(BOOL (^)(UITextField *textField))block {
-    self.textFieldShouldClear = [block copy];
-    return self;
+
+- (HyTextFieldDelegateConfigure *(^)(BOOL (^)(UITextField *)))configTextFieldShouldClear {
+    return ^(BOOL (^block)(UITextField *)){
+        self.textFieldShouldClear = [block copy];
+        return self;
+    };
 }
-- (instancetype)configTextFieldShouldChange:(BOOL (^)(UITextField *textField, NSRange range, NSString *replacementString))block {
-    self.textFieldShouldChange = [block copy];
-    return self;
+
+- (HyTextFieldDelegateConfigure *(^)(BOOL (^)(UITextField *, NSRange, NSString *)))configTextFieldShouldChange {
+    return ^(BOOL (^block)(UITextField *, NSRange, NSString *)){
+        self.textFieldShouldChange = [block copy];
+        return self;
+    };
 }
 
 #pragma mark — UITextFieldDelegate

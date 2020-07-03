@@ -20,6 +20,28 @@
 
 @implementation UITableViewHeaderFooterView (HyExtension)
 
++ (void)load {
+   static dispatch_once_t onceToken;
+   dispatch_once(&onceToken, ^{
+
+       hy_swizzleInstanceMethodToBlock([self class], @selector(initWithReuseIdentifier:), ^id(SEL sel, IMP (^impBlock)(void)) {
+           return ^UITableViewHeaderFooterView *(UITableViewHeaderFooterView *_self, NSString *reuseIdentifier) {
+               _self = HyObjectImpFuctoin(_self, sel, reuseIdentifier);
+               [_self hy_headerFooterViewLoad];
+               return _self;
+           };
+       });
+       
+       hy_swizzleInstanceMethodToBlock([self class], @selector(initWithCoder:), ^id(SEL sel, IMP (^impBlock)(void)) {
+           return ^UITableViewHeaderFooterView *(UITableViewHeaderFooterView *_self, NSCoder *coder) {
+               _self = HyObjectImpFuctoin(_self, sel, coder);
+               [_self hy_headerFooterViewLoad];
+               return _self;
+           };
+       });
+   });
+}
+
 + (instancetype)hy_headerFooterViewWithTableView:(UITableView *)tableView
                                          section:(NSInteger)section
                                seactionViewKinds:(HyTableSeactionViewKinds)seactionViewKinds
@@ -30,7 +52,6 @@
     headerFooterView.hy_section = section;
     headerFooterView.hy_seactionViewKinds = seactionViewKinds;
     headerFooterView.hy_sectionData = sectionData;
-    [headerFooterView hy_headerFooterViewLoad];
     return headerFooterView;
 }
 

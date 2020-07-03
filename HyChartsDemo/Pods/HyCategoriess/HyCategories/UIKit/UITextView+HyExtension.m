@@ -20,33 +20,54 @@
 @property (nonatomic,copy) BOOL (^textViewShouldChangeTextInRange)(UITextView *textView, NSRange range, NSString *text);
 @end
 @implementation HyTextViewDelegateConfigure
-- (instancetype)configTextViewShouldBeginEditing:(BOOL (^)(UITextView *textView))block {
-    self.textViewShouldBeginEditing = [block copy];
-    return self;
+
+- (HyTextViewDelegateConfigure *(^)(BOOL (^)(UITextView *)))configTextViewShouldBeginEditing {
+    return ^(BOOL (^block)(UITextView *)){
+        self.textViewShouldBeginEditing = [block copy];
+        return self;
+    };
 }
-- (instancetype)configTextViewShouldEndEditing:(BOOL (^)(UITextView *textView))block {
-    self.textViewShouldEndEditing = [block copy];
-    return self;
+
+- (HyTextViewDelegateConfigure *(^)(BOOL (^)(UITextView *)))configTextViewShouldEndEditing {
+    return ^(BOOL (^block)(UITextView *)){
+        self.textViewShouldEndEditing = [block copy];
+        return self;
+    };
 }
-- (instancetype)configTextViewDidBeginEditing:(void (^)(UITextView *textView))block {
-    self.textViewDidBeginEditing = [block copy];
-    return self;
+
+- (HyTextViewDelegateConfigure *(^)(void (^)(UITextView *)))configTextViewDidBeginEditing {
+    return ^(void (^block)(UITextView *)){
+        self.textViewDidBeginEditing = [block copy];
+        return self;
+    };
 }
-- (instancetype)configTextViewDidEndEditing:(void (^)(UITextView *textView))block {
-    self.textViewDidEndEditing = [block copy];
-    return self;
+
+- (HyTextViewDelegateConfigure *(^)(void (^)(UITextView *)))configTextViewDidEndEditing {
+    return ^(void (^block)(UITextView *)){
+        self.textViewDidEndEditing = [block copy];
+        return self;
+    };
 }
-- (instancetype)configTextViewDidChange:(void (^)(UITextView *textView))block {
-    self.textViewDidChange = [block copy];
-    return self;
+
+- (HyTextViewDelegateConfigure *(^)(void (^)(UITextView *)))configTextViewDidChange {
+    return ^(void (^block)(UITextView *)){
+        self.textViewDidChange = [block copy];
+        return self;
+    };
 }
-- (instancetype)configTextViewDidChangeSelection:(void (^)(UITextView *textView))block {
-    self.textViewDidChangeSelection = [block copy];
-    return self;
+
+- (HyTextViewDelegateConfigure *(^)(BOOL (^)(UITextView *)))configTextViewDidChangeSelection {
+    return ^(BOOL (^block)(UITextView *)){
+        self.textViewDidChangeSelection = [block copy];
+        return self;
+    };
 }
-- (instancetype)configTextViewShouldChangeTextInRange:(BOOL (^)(UITextView *textView, NSRange range, NSString *text))block {
-    self.textViewShouldChangeTextInRange = [block copy];
-    return self;
+
+- (HyTextViewDelegateConfigure *(^)(BOOL (^)(UITextView *, NSRange, NSString *)))configTextViewShouldChangeTextInRange {
+    return ^(BOOL (^block)(UITextView *, NSRange, NSString *)){
+        self.textViewShouldChangeTextInRange = [block copy];
+        return self;
+    };
 }
 
 #pragma mark — UITextViewDelegate

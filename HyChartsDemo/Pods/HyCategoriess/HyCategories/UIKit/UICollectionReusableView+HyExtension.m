@@ -20,6 +20,28 @@
 
 @implementation UICollectionReusableView (HyExtension)
 
++ (void)load {
+   static dispatch_once_t onceToken;
+   dispatch_once(&onceToken, ^{
+
+       hy_swizzleInstanceMethodToBlock([self class], @selector(initWithFrame:), ^id(SEL sel, IMP (^impBlock)(void)) {
+           return ^UICollectionReusableView *(UICollectionReusableView *_self, CGRect frame){
+               _self = HyObjectImpFuctoin(_self, sel, frame);
+               [_self hy_headerFooterViewLoad];
+               return _self;
+           };
+       });
+       
+       hy_swizzleInstanceMethodToBlock([self class], @selector(initWithCoder:), ^id(SEL sel, IMP (^impBlock)(void)) {
+           return ^UICollectionReusableView *(UICollectionReusableView *_self, NSCoder *coder) {
+               _self = HyObjectImpFuctoin(_self, sel, coder);
+               [_self hy_headerFooterViewLoad];
+               return _self;
+           };
+       });
+   });
+}
+
 + (instancetype)hy_headerFooterViewWithCollectionView:(UICollectionView *)collectionView
                                             indexPath:(NSIndexPath *)indexPath
                                     seactionViewKinds:(HyCollectionSeactionViewKinds)seactionViewKinds
@@ -34,7 +56,6 @@
     headerFooterView.hy_seactionViewKinds = seactionViewKinds;
     headerFooterView.hy_section = indexPath.section;
     headerFooterView.hy_sectionData = sectionData;
-    [headerFooterView hy_headerFooterViewLoad];
     return headerFooterView;
 }
 

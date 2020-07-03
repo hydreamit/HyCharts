@@ -12,13 +12,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HyTextFieldDelegateConfigure : NSObject
-- (instancetype)configTextFieldShouldBeginEditing:(BOOL (^)(UITextField *textField))block;
-- (instancetype)configTextFieldShouldEndEditing:(BOOL (^)(UITextField *textField))block;
-- (instancetype)configTextFieldShouldReturn:(BOOL (^)(UITextField *textField))block;
-- (instancetype)configTextFieldDidBeginEditing:(void (^)(UITextField *textField))block;
-- (instancetype)configTextFieldDidEndEditing:(void (^)(UITextField *textField))block;
-- (instancetype)configTextFieldShouldClear:(BOOL (^)(UITextField *textField))block;
-- (instancetype)configTextFieldShouldChange:(BOOL (^)(UITextField *textField, NSRange range, NSString *replacementString))block;
+@property (nonatomic,copy,readonly) HyTextFieldDelegateConfigure *(^configTextFieldShouldBeginEditing)(BOOL (^)(UITextField *textField));
+@property (nonatomic,copy,readonly) HyTextFieldDelegateConfigure *(^configTextFieldShouldEndEditing)(BOOL (^)(UITextField *textField));
+@property (nonatomic,copy,readonly) HyTextFieldDelegateConfigure *(^configTextFieldShouldReturn)(BOOL (^)(UITextField *textField));
+@property (nonatomic,copy,readonly) HyTextFieldDelegateConfigure *(^configTextFieldDidBeginEditing)(void (^)(UITextField *textField));
+@property (nonatomic,copy,readonly) HyTextFieldDelegateConfigure *(^configTextFieldDidEndEditing)(void (^)(UITextField *textField));
+@property (nonatomic,copy,readonly) HyTextFieldDelegateConfigure *(^configTextFieldShouldClear)(BOOL (^)(UITextField *textField));
+@property (nonatomic,copy,readonly) HyTextFieldDelegateConfigure *(^configTextFieldShouldChange)(BOOL (^)(UITextField *textField, NSRange range, NSString *replacementString));
 @end
 
 

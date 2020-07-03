@@ -35,7 +35,7 @@
 }
 
 + (instancetype)hy_gestureRecognizerWithActionBlock:(void (^)(UIGestureRecognizer *gesture))block {
-    UIGestureRecognizer *gesture = [[UIGestureRecognizer alloc] init];
+    UIGestureRecognizer *gesture = [[self alloc] init];
     [gesture hy_addActionBlock:block];
     return gesture;
 }

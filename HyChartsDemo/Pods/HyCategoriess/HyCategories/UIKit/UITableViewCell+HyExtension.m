@@ -18,6 +18,29 @@
 
 @implementation UITableViewCell (HyExtension)
 
++ (void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+
+        hy_swizzleInstanceMethodToBlock([self class], @selector(initWithStyle:reuseIdentifier:), ^id(SEL sel, IMP (^impBlock)(void)) {
+           
+            return ^UITableViewCell *(UITableViewCell *_self, UITableViewCellStyle style, NSString *reuseIdentifier) {
+                _self = HyObjectImpFuctoin(_self, sel, style, reuseIdentifier);
+                [_self hy_cellLoad];
+                return _self;
+            };
+        });
+        
+        hy_swizzleInstanceMethodToBlock([self class], @selector(initWithCoder:), ^id(SEL sel, IMP (^impBlock)(void)) {
+            return ^UITableViewCell *(UITableViewCell *_self, NSCoder *coder) {
+                _self = HyObjectImpFuctoin(_self, sel, coder);
+                [_self hy_cellLoad];
+                return _self;
+            };
+        });
+    });
+ }
+
 + (instancetype)hy_cellWithTableView:(UITableView *)tableview
                            indexPath:(NSIndexPath *)indexPath
                             cellData:(id)cellData {
@@ -26,7 +49,6 @@
                                                             forIndexPath:indexPath];
     cell.hy_cellData = cellData;
     cell.hy_indexPath = indexPath;
-    [cell hy_cellLoad];
     return cell;
 }
 

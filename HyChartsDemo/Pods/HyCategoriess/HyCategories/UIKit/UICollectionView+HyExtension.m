@@ -43,95 +43,147 @@
 @property (nonatomic,strong) NSArray<Class> *footerViewClasses;
 @end
 @implementation HyCollectionViewDelegateConfigure
-- (instancetype)configNumberOfSections:(NSInteger (^)(UICollectionView *collectionView))block {
-    self.numberOfSections = [block copy];
-    return self;
+- (HyCollectionViewDelegateConfigure *(^)(NSInteger (^)(UICollectionView *)))configNumberOfSections {
+    return ^(NSInteger (^block)(UICollectionView *)){
+        self.numberOfSections = [block copy];
+        return self;
+    };
 }
-- (instancetype)configNumberOfItemsInSection:(NSInteger (^)(UICollectionView *collectionView, NSInteger section))block {
-    self.numberOfItemsInSection = [block copy];
-    return self;
+
+- (HyCollectionViewDelegateConfigure *(^)(NSInteger (^)(UICollectionView *, NSInteger)))configNumberOfItemsInSection {
+    return ^(NSInteger (^block)(UICollectionView *, NSInteger)){
+        self.numberOfItemsInSection = [block copy];
+        return self;
+    };
 }
+
 // cell
-- (instancetype)configCellForItemAtIndexPath:(UICollectionViewCell *(^)(UICollectionView *collectionView, NSIndexPath *indexPath))block {
-    self.cellForItemAtIndexPath = [block copy];
-    return self;
+- (HyCollectionViewDelegateConfigure *(^)(UICollectionViewCell *(^)(UICollectionView *, NSIndexPath *)))configCellForItemAtIndexPath {
+    return ^(UICollectionViewCell *(^block)(UICollectionView *, NSIndexPath *)){
+        self.cellForItemAtIndexPath = [block copy];
+        return self;
+    };
 }
-- (instancetype)configHeightForRowAtIndexPath:(CGFloat (^)(UICollectionView *collectionView, NSIndexPath *indexPath))block {
-    self.heightForRowAtIndexPath = [block copy];
-    return self;
+
+- (HyCollectionViewDelegateConfigure *(^)(CGFloat (^)(UICollectionView *, NSIndexPath *)))configHeightForRowAtIndexPath {
+    return ^(CGFloat (^block)(UICollectionView *, NSIndexPath *)){
+        self.heightForRowAtIndexPath = [block copy];
+        return self;
+    };
 }
-- (instancetype)configDidSelectItemAtIndexPath:(void (^)(UITableView *tableView, NSIndexPath *indexPath))block {
-    self.didSelectItemAtIndexPath = [block copy];
-    return self;
+
+- (HyCollectionViewDelegateConfigure *(^)(void (^)(UITableView *, NSIndexPath *)))configDidSelectItemAtIndexPath {
+    return ^(void (^block)(UITableView *, NSIndexPath *)){
+        self.didSelectItemAtIndexPath = [block copy];
+        return self;
+    };
 }
-- (instancetype)configWillDisplayCell:(void(^)(UICollectionView *collectionView,UICollectionViewCell *cell, NSIndexPath * indexPath))block {
-    self.willDisplayCell = [block copy];
-    return self;
+
+- (HyCollectionViewDelegateConfigure *(^)(void (^)(UICollectionView *, UICollectionViewCell *, NSIndexPath *)))configWillDisplayCell {
+    return ^(void (^block)(UICollectionView *, UICollectionViewCell *, NSIndexPath *)){
+        self.willDisplayCell = [block copy];
+        return self;
+    };
 }
+
 // header footer
-- (instancetype)configSeactionHeaderFooterViewAtIndexPath:(UICollectionReusableView *(^)(UICollectionView *collectionView,NSString *kind, NSIndexPath * indexPath))block {
-    self.seactionHeaderFooterView = [block copy];
-    return self;
+- (HyCollectionViewDelegateConfigure *(^)(UICollectionReusableView *(^)(UICollectionView *, NSString *, NSIndexPath *)))configSeactionHeaderFooterViewAtIndexPath {
+    return ^(UICollectionReusableView *(^block)(UICollectionView *, NSString *, NSIndexPath *)){
+        self.seactionHeaderFooterView = [block copy];
+        return self;
+    };
 }
-- (instancetype)configWillDisPlayHeaderFooterViewAtIndexPath:(void (^)(UICollectionView *collectionView,UICollectionReusableView *view,NSString *kind, NSIndexPath * indexPath))block {
-    self.willDisPlayHeaderFooterView = [block copy];
-    return self;
-}
-- (instancetype)configLayoutSize:(CGSize (^)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSIndexPath *indexPath))block {
-    self.layoutSize = [block copy];
-    return self;
-}
-- (instancetype)configLayoutInsets:(UIEdgeInsets (^)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section))block {
-    self.layoutInsets = [block copy];
-    return self;
-}
-- (instancetype)configLayoutMinimumLineSpacing:(CGFloat (^)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section))block {
-    self.layoutMinimumLineSpacing = [block copy];
-    return self;
+             
+
+- (HyCollectionViewDelegateConfigure *(^)(void (^)(UICollectionView *, UICollectionReusableView *, NSString *, NSIndexPath *)))configWillDisPlayHeaderFooterViewAtIndexPath {
+    return ^(void (^block)(UICollectionView *, UICollectionReusableView *, NSString *, NSIndexPath *)){
+        self.willDisPlayHeaderFooterView = [block copy];
+        return self;
+    };
 }
 
-- (instancetype)configLayoutMinimumInteritemSpacing:(CGFloat (^)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section))block{
-    self.layoutMinimumInteritemSpacing = [block copy];
-    return self;
-}
-- (instancetype)configLayoutReferenceSizeForHeader:(CGSize (^)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section))block {
-    self.layoutReferenceSizeForHeader = [block copy];
-    return self;
-}
-- (instancetype)configLayoutReferenceSizeForFooter:(CGSize (^)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section))block {
-    self.layoutReferenceSizeForFooter = [block copy];
-    return self;
+- (HyCollectionViewDelegateConfigure *(^)(CGSize (^)(UICollectionView *, UICollectionViewLayout *, NSIndexPath *)))configLayoutSize {
+    return ^(CGSize (^block)(UICollectionView *, UICollectionViewLayout *, NSIndexPath *)){
+        self.layoutSize = [block copy];
+        return self;
+    };
 }
 
-- (instancetype)configSectionAndCellDataKey:(NSArray<NSString *> *(^)(void))block {
-    self.sectionAndCellDataKey = [block copy];
-    return self;
-}
-- (instancetype)configCellClassForRow:(Class (^)(id cellData, NSIndexPath * indexPath))block {
-    self.cellClassForRow = [block copy];
-    return self;
-}
-- (instancetype)configCellWithData:(void (^)(UICollectionViewCell *cell, id cellData, NSIndexPath *indexPath))block {
-    self.cellWithData = [block copy];
-    return self;
-}
-- (instancetype)configSectionHeaderFooterViewClassAtSection:(Class (^)(id sectionData,
-                                                                       HyCollectionSeactionViewKinds seactionViewKinds,
-                                                                       NSUInteger section))block {
-    self.sectionHeaderFooterViewClassAtSection = [block copy];
-    return self;
-}
-- (instancetype)configSectionHeaderFooterViewWithSectionData:(void (^)(UIView *headerFooterView,
-                                                                       id sectionData,
-                                                                       HyCollectionSeactionViewKinds seactionViewKinds,
-                                                                       NSUInteger section))block {
-    self.sectionHeaderFooterViewWithSectionData = [block copy];
-    return self;
+- (HyCollectionViewDelegateConfigure *(^)(UIEdgeInsets (^)(UICollectionView *, UICollectionViewLayout *, NSInteger)))configLayoutInsets {
+    return ^(UIEdgeInsets (^block)(UICollectionView *, UICollectionViewLayout *, NSInteger)){
+        self.layoutInsets = [block copy];
+        return self;
+    };
 }
 
-- (instancetype)configEmtyView:(void(^)(UICollectionView *tableView, UIView *emtyContainerView))block {
-    self.emtyViewBlock = [block copy];
-    return self;
+- (HyCollectionViewDelegateConfigure *(^)(CGFloat (^)(UICollectionView *, UICollectionViewLayout *, NSInteger)))configLayoutMinimumLineSpacing {
+    return ^(CGFloat (^block)(UICollectionView *, UICollectionViewLayout *, NSInteger)){
+        self.layoutMinimumLineSpacing = [block copy];
+        return self;
+    };
+}
+
+- (HyCollectionViewDelegateConfigure *(^)(CGFloat (^)(UICollectionView *, UICollectionViewLayout *, NSInteger)))configLayoutMinimumInteritemSpacing {
+    return ^(CGFloat (^block)(UICollectionView *, UICollectionViewLayout *, NSInteger)){
+        self.layoutMinimumInteritemSpacing = [block copy];
+        return self;
+    };
+}
+
+- (HyCollectionViewDelegateConfigure *(^)(CGSize (^)(UICollectionView *, UICollectionViewLayout *, NSInteger)))configLayoutReferenceSizeForHeader {
+    return ^(CGSize (^block)(UICollectionView *, UICollectionViewLayout *, NSInteger)){
+        self.layoutReferenceSizeForHeader = [block copy];
+        return self;
+    };
+}
+
+- (HyCollectionViewDelegateConfigure *(^)(CGSize (^)(UICollectionView *, UICollectionViewLayout *, NSInteger)))configLayoutReferenceSizeForFooter {
+    return ^(CGSize (^block)(UICollectionView *, UICollectionViewLayout *, NSInteger)){
+        self.layoutReferenceSizeForFooter = [block copy];
+        return self;
+    };
+}
+
+- (HyCollectionViewDelegateConfigure *(^)(NSArray<NSString *> *(^)(void)))configSectionAndCellDataKey {
+    return ^(NSArray<NSString *> *(^block)(void)){
+        self.sectionAndCellDataKey = [block copy];
+        return self;
+    };
+}
+
+- (HyCollectionViewDelegateConfigure *(^)(Class (^)(id, NSIndexPath *)))configCellClassForRow {
+    return ^(Class (^block)(id, NSIndexPath *)){
+        self.cellClassForRow = [block copy];
+        return self;
+    };
+}
+
+- (HyCollectionViewDelegateConfigure *(^)(void (^)(UICollectionViewCell *, id, NSIndexPath *)))configCellWithData {
+    return ^(void (^block)(UICollectionViewCell *, id, NSIndexPath *)){
+        self.cellWithData = [block copy];
+        return self;
+    };
+}
+
+- (HyCollectionViewDelegateConfigure *(^)(Class (^)(id, HyCollectionSeactionViewKinds, NSUInteger)))configSectionHeaderFooterViewClassAtSection {
+    return ^(Class (^block)(id, HyCollectionSeactionViewKinds, NSUInteger)){
+        self.sectionHeaderFooterViewClassAtSection = [block copy];
+        return self;
+    };
+}
+
+- (HyCollectionViewDelegateConfigure *(^)(void (^)(UIView *, id, HyCollectionSeactionViewKinds, NSUInteger)))configSectionHeaderFooterViewWithSectionData {
+    return ^(void (^block)(UIView *, id, HyCollectionSeactionViewKinds, NSUInteger)){
+        self.sectionHeaderFooterViewWithSectionData = [block copy];
+        return self;
+    };
+}
+
+- (HyCollectionViewDelegateConfigure *(^)(void (^)(UICollectionView *, UIView *)))configEmtyView {
+    return ^(void (^block)(UICollectionView *, UIView *)){
+        self.emtyViewBlock = [block copy];
+        return self;
+    };
 }
 
 #pragma mark - UICollectionViewDataSource, UICollectionViewDelegate

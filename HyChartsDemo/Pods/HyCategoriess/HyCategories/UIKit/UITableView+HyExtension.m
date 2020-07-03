@@ -57,120 +57,197 @@
 @property (nonatomic,strong) NSArray<Class> *headerFooterViewClasses;
 @end
 @implementation HyTableViewDelegateConfigure
-- (instancetype)configNumberOfSections:(NSInteger (^)(UITableView *tableView))block {
-    self.numberOfSections = [block copy];
-    return self;
-}
-- (instancetype)configNumberOfRowsInSection:(NSInteger (^)(UITableView *tableView, NSInteger section))block {
-    self.numberOfRowsInSection = [block copy];
-    return self;
-}
-- (instancetype)configCellForRowAtIndexPath:(UITableViewCell *(^)(UITableView *tableView, NSIndexPath *indexPath))block {
-    self.cellForRowAtIndexPath = [block copy];
-    return self;
-}
-- (instancetype)configHeightForRowAtIndexPath:(CGFloat (^)(UITableView *tableView, NSIndexPath *indexPath))block {
-    self.heightForRowAtIndexPath = [block copy];
-    return self;
-}
-- (instancetype)configDidSelectRowAtIndexPath:(void (^)(UITableView *tableView, NSIndexPath *indexPath))block {
-    self.didSelectRowAtIndexPath = [block copy];
-    return self;
-}
-- (instancetype)configDidDeselectRowAtIndexPath:(void (^)(UITableView *tableView, NSIndexPath *indexPath))block {
-    self.didDeselectRowAtIndexPath = [block copy];
-    return self;
-}
-- (instancetype)configWillDisplayCell:(void (^)(UITableView *tableView,UITableViewCell *cell, NSIndexPath * indexPath))block {
-    self.willDisplayCell = [block copy];
-    return self;
-}
-- (instancetype)configHeightForHeaderInSection:(CGFloat (^)(UITableView *tableView,NSInteger section))block {
-    self.heightForHeaderInSection = [block copy];
-    return self;
-}
-- (instancetype)configViewForHeaderInSection:(UIView *(^)(UITableView *tableView,NSInteger section))block {
-    self.viewForHeaderInSection = [block copy];
-    return self;
-}
-- (instancetype)configWillDisplayHeaderView:(void (^)(UITableView *tableView,UIView *view,NSInteger section))block {
-    self.willDisplayHeaderView = [block copy];
-    return self;
-}
-- (instancetype)configHeightForFooterInSection:(CGFloat (^)(UITableView *tableView,NSInteger section))block {
-    self.heightForFooterInSection = [block copy];
-    return self;
-}
-- (instancetype)configViewForFooterInSection:(UIView *(^)(UITableView *tableView,NSInteger section))block {
-    self.viewForFooterInSection = [block copy];
-    return self;
-}
-- (instancetype)configWillDisplayFooterView:(void (^)(UITableView *tableView,UIView *view,NSInteger section))block {
-    self.willDisplayFooterView = [block copy];
-    return self;
-}
-- (instancetype)configCanEditRowAtIndexPath:(BOOL (^)(UITableView *tableView, NSIndexPath * indexPath))block {
-    self.canEditRowAtIndexPath = [block copy];
-    return self;
-}
-- (instancetype)configEditingStyleForRowAtIndexPath:(UITableViewCellEditingStyle (^)(UITableView *tableView, NSIndexPath * indexPath))block {
-    self.editingStyleForRowAtIndexPath = [block copy];
-    return self;
-}
-- (instancetype)configCommitEditingStyle:(UITableViewCellEditingStyle (^)(UITableView *tableView,UITableViewCellEditingStyle editingStyle ,NSIndexPath * indexPath))block {
-    self.commitEditingStyle = [block copy];
-    return self;
-}
-- (instancetype)configEditActionsForRowAtIndexPath:(NSArray<UITableViewRowAction *> * (^)(UITableView *tableView ,NSIndexPath * indexPath))block {
-    self.editActionsForRowAtIndexPath = [block copy];
-    return self;
-}
-- (instancetype)configCanMoveRowAtIndexPath:(BOOL(^)(UITableView *tableView, NSIndexPath * indexPath))block {
-    self.canMoveRowAtIndexPath = [block copy];
-    return self;
-}
-- (instancetype)configShouldIndentWhileEditingRowAtIndexPath:(BOOL(^)(UITableView *tableView, NSIndexPath * indexPath))block {
-    self.shouldIndentWhileEditingRowAtIndexPath = [block copy];
-    return self;
-}
-- (instancetype)configTargetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *(^)(UITableView *tableView, NSIndexPath *sourceIndexPath , NSIndexPath *toProposedIndexPath))block {
-    self.targetIndexPathForMoveFromRowAtIndexPath = [block copy];
-    return self;
-}
-- (instancetype)configMoveRowAtIndexPath:(void(^)(UITableView *tableView, NSIndexPath * sourceIndexPath,  NSIndexPath * destinationIndexPath))block {
-    self.moveRowAtIndexPath = [block copy];
-    return self;
-}
-- (instancetype)configSectionAndCellDataKey:(NSArray<NSString *> *(^)(void))block {
-    self.sectionAndCellDataKey = [block copy];
-    return self;
-}
-- (instancetype)configCellClassForRow:(Class (^)(id cellData, NSIndexPath * indexPath))block {
-    self.cellClassForRow = [block copy];
-    return self;
-}
-- (instancetype)configCellWithData:(void (^)(UITableViewCell *cell, id cellData, NSIndexPath *indexPath))block {
-    self.cellWithData = [block copy];
-    return self;
-}
-- (instancetype)configSectionHeaderFooterViewClassAtSection:(Class (^)(id sectionData,
-                                                                       HyTableSeactionViewKinds seactionViewKinds,
-                                                                       NSUInteger section))block {
-    self.sectionHeaderFooterViewClassAtSection = [block copy];
-    return self;
-}
-- (instancetype)configSectionHeaderFooterViewWithSectionData:(void (^)(UIView *headerFooterView,
-                                                                       id sectionData,
-                                                                       HyTableSeactionViewKinds seactionViewKinds,
-                                                                       NSUInteger section))block {
-    self.sectionHeaderFooterViewWithSectionData = [block copy];
-    return self;
+- (HyTableViewDelegateConfigure *(^)(NSInteger (^)(UITableView *)))configNumberOfSections {
+    return ^(NSInteger (^block)(UITableView *)){
+        self.numberOfSections = [block copy];
+        return self;
+    };
 }
 
-- (instancetype)configEmtyView:(void(^)(UITableView *tableView, UIView *emtyContainerView))block {
-    self.emtyViewBlock = [block copy];
-    return self;
+- (HyTableViewDelegateConfigure *(^)(NSInteger (^)(UITableView *, NSInteger)))configNumberOfRowsInSection {
+    return ^(NSInteger (^block)(UITableView *, NSInteger)){
+        self.numberOfRowsInSection = [block copy];
+        return self;
+    };
 }
+
+- (HyTableViewDelegateConfigure *(^)(UITableViewCell *(^)(UITableView *, NSIndexPath *)))configCellForRowAtIndexPath {
+    return ^(UITableViewCell *(^block)(UITableView *, NSIndexPath *)){
+        self.cellForRowAtIndexPath = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(CGFloat (^)(UITableView *, NSIndexPath *)))configHeightForRowAtIndexPath {
+    return ^(CGFloat (^block)(UITableView *, NSIndexPath *)){
+        self.heightForRowAtIndexPath = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(void (^)(UITableView *, NSIndexPath *)))configDidSelectRowAtIndexPath {
+    return ^(void (^block)(UITableView *, NSIndexPath *)){
+        self.didSelectRowAtIndexPath = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(void (^)(UITableView *, NSIndexPath *)))configDidDeselectRowAtIndexPath {
+    return ^(void (^block)(UITableView *, NSIndexPath *)){
+        self.didDeselectRowAtIndexPath = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(void (^)(UITableView *, UITableViewCell *, NSIndexPath *)))configWillDisplayCell {
+    return ^(void (^block)(UITableView *, UITableViewCell *, NSIndexPath *)){
+        self.willDisplayCell = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(CGFloat (^)(UITableView *, NSInteger)))configHeightForHeaderInSection {
+    return ^(CGFloat (^block)(UITableView *, NSInteger)){
+        self.heightForHeaderInSection = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(UIView *(^)(UITableView *, NSInteger)))configViewForHeaderInSection {
+    return ^(UIView *(^block)(UITableView *, NSInteger)){
+        self.viewForHeaderInSection = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(void (^)(UITableView *, UIView *, NSInteger)))configWillDisplayHeaderView {
+    return ^(void (^block)(UITableView *, UIView *, NSInteger)){
+        self.willDisplayHeaderView = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(CGFloat (^)(UITableView *, NSInteger)))configHeightForFooterInSection {
+    return ^(CGFloat (^block)(UITableView *, NSInteger)){
+        self.heightForFooterInSection = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(UIView *(^)(UITableView *, NSInteger)))configViewForFooterInSection {
+    return ^(UIView *(^block)(UITableView *, NSInteger)){
+        self.viewForFooterInSection = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(void (^)(UITableView *, UIView *, NSInteger)))configWillDisplayFooterView {
+    return ^(void (^block)(UITableView *, UIView *, NSInteger)){
+        self.willDisplayFooterView = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(BOOL (^)(UITableView *, NSIndexPath *)))configCanEditRowAtIndexPath {
+    return ^(BOOL (^block)(UITableView *, NSIndexPath *)){
+        self.canEditRowAtIndexPath = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(UITableViewCellEditingStyle (^)(UITableView *, NSIndexPath *)))configEditingStyleForRowAtIndexPath {
+    return ^(UITableViewCellEditingStyle (^block)(UITableView *, NSIndexPath *)){
+        self.editingStyleForRowAtIndexPath = [block copy];
+        return self;
+    };
+}
+
+
+- (HyTableViewDelegateConfigure *(^)(UITableViewCellEditingStyle (^)(UITableView *, UITableViewCellEditingStyle, NSIndexPath *)))configCommitEditingStyle {
+    return ^(UITableViewCellEditingStyle (^block)(UITableView *, UITableViewCellEditingStyle, NSIndexPath *)){
+        self.commitEditingStyle = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(NSArray<UITableViewRowAction *> *(^)(UITableView *, NSIndexPath *)))configEditActionsForRowAtIndexPath {
+    return ^(NSArray<UITableViewRowAction *> *(^block)(UITableView *, NSIndexPath *)){
+        self.editActionsForRowAtIndexPath = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(BOOL (^)(UITableView *, NSIndexPath *)))configCanMoveRowAtIndexPath {
+    return ^(BOOL (^block)(UITableView *, NSIndexPath *)){
+        self.canMoveRowAtIndexPath = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(BOOL (^)(UITableView *, NSIndexPath *)))configShouldIndentWhileEditingRowAtIndexPath {
+    return ^(BOOL (^block)(UITableView *, NSIndexPath *)){
+        self.shouldIndentWhileEditingRowAtIndexPath = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(NSIndexPath *(^)(UITableView *, NSIndexPath *, NSIndexPath *)))configTargetIndexPathForMoveFromRowAtIndexPath {
+    return ^(NSIndexPath *(^block)(UITableView *, NSIndexPath *, NSIndexPath *)){
+        self.targetIndexPathForMoveFromRowAtIndexPath = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(void (^)(UITableView *, NSIndexPath *, NSIndexPath *)))configMoveRowAtIndexPath {
+    return ^(void (^block)(UITableView *, NSIndexPath *, NSIndexPath *)){
+        self.moveRowAtIndexPath = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(NSArray<NSString *> *(^)(void)))configSectionAndCellDataKey {
+    return ^(NSArray<NSString *> *(^block)(void)){
+        self.sectionAndCellDataKey = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(Class (^)(id, NSIndexPath *)))configCellClassForRow {
+    return ^(Class (^block)(id, NSIndexPath *)){
+        self.cellClassForRow = [block copy];
+        return self;
+    };
+}
+
+
+- (HyTableViewDelegateConfigure *(^)(void (^)(UITableViewCell *, id, NSIndexPath *)))configCellWithData {
+    return ^(void (^block)(UITableViewCell *, id, NSIndexPath *)){
+        self.cellWithData = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(Class (^)(id, HyTableSeactionViewKinds, NSUInteger)))configSectionHeaderFooterViewClassAtSection {
+    return ^(Class (^block)(id, HyTableSeactionViewKinds, NSUInteger)){
+        self.sectionHeaderFooterViewClassAtSection = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(void (^)(UIView *, id, HyTableSeactionViewKinds, NSUInteger)))configSectionHeaderFooterViewWithSectionData {
+    return ^(void (^block)(UIView *, id, HyTableSeactionViewKinds, NSUInteger)){
+        self.sectionHeaderFooterViewWithSectionData = [block copy];
+        return self;
+    };
+}
+
+- (HyTableViewDelegateConfigure *(^)(void (^)(UITableView *, UIView *)))configEmtyView {
+    return ^(void (^block)(UITableView *, UIView *)){
+        self.emtyViewBlock = [block copy];
+        return self;
+    };
+}
+
 
 #pragma mark - UITableViewDataSource, UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

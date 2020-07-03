@@ -14,46 +14,41 @@
 
 
 @interface HyTableViewDelegateConfigure : HyScrollViewDelegateConfigure
-- (instancetype)configNumberOfSections:(NSInteger (^)(UITableView *tableView))block;
-- (instancetype)configNumberOfRowsInSection:(NSInteger (^)(UITableView *tableView, NSInteger section))block;
+
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configNumberOfSections)(NSInteger (^)(UITableView *tableView));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configNumberOfRowsInSection)(NSInteger (^)(UITableView *tableView, NSInteger section));
 // cell
-- (instancetype)configCellForRowAtIndexPath:(UITableViewCell *(^)(UITableView *tableView, NSIndexPath *indexPath))block;
-- (instancetype)configHeightForRowAtIndexPath:(CGFloat (^)(UITableView *tableView, NSIndexPath *indexPath))block;
-- (instancetype)configDidSelectRowAtIndexPath:(void (^)(UITableView *tableView, NSIndexPath *indexPath))block;
-- (instancetype)configDidDeselectRowAtIndexPath:(void (^)(UITableView *tableView, NSIndexPath *indexPath))block;
-- (instancetype)configWillDisplayCell:(void(^)(UITableView *tableView,UITableViewCell *cell, NSIndexPath * indexPath))block;
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configCellForRowAtIndexPath)(UITableViewCell *(^)(UITableView *tableView, NSIndexPath *indexPath));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configHeightForRowAtIndexPath)(CGFloat (^)(UITableView *tableView, NSIndexPath *indexPath));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configDidSelectRowAtIndexPath)(void (^)(UITableView *tableView, NSIndexPath *indexPath));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configDidDeselectRowAtIndexPath)(void (^)(UITableView *tableView, NSIndexPath *indexPath));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configWillDisplayCell)(void(^)(UITableView *tableView,UITableViewCell *cell, NSIndexPath * indexPath));
 // sectionHeader
-- (instancetype)configHeightForHeaderInSection:(CGFloat (^)(UITableView *tableView,NSInteger section))block;
-- (instancetype)configViewForHeaderInSection:(UIView *(^)(UITableView *tableView,NSInteger section))block;
-- (instancetype)configWillDisplayHeaderView:(void (^)(UITableView *tableView,UIView *view,NSInteger section))block;
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configHeightForHeaderInSection)(CGFloat (^)(UITableView *tableView,NSInteger section));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configViewForHeaderInSection)(UIView *(^)(UITableView *tableView,NSInteger section));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configWillDisplayHeaderView)(void (^)(UITableView *tableView,UIView *view,NSInteger section));
 // sectionFooter
-- (instancetype)configHeightForFooterInSection:(CGFloat (^)(UITableView *tableView,NSInteger section))block;
-- (instancetype)configViewForFooterInSection:(UIView *(^)(UITableView *tableView,NSInteger section))block;
-- (instancetype)configWillDisplayFooterView:(void (^)(UITableView *tableView,UIView *view,NSInteger section))block;
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configHeightForFooterInSection)(CGFloat (^)(UITableView *tableView,NSInteger section));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configViewForFooterInSection)(UIView *(^)(UITableView *tableView,NSInteger section));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configWillDisplayFooterView)(void (^)(UITableView *tableView,UIView *view,NSInteger section));
 //Edit
-- (instancetype)configCanEditRowAtIndexPath:(BOOL (^)(UITableView *tableView, NSIndexPath * indexPath))block;
-- (instancetype)configEditingStyleForRowAtIndexPath:(UITableViewCellEditingStyle (^)(UITableView *tableView, NSIndexPath * indexPath))block;
-- (instancetype)configCommitEditingStyle:(UITableViewCellEditingStyle (^)(UITableView *tableView,UITableViewCellEditingStyle editingStyle ,NSIndexPath * indexPath))block;
-- (instancetype)configEditActionsForRowAtIndexPath:(NSArray<UITableViewRowAction *> * (^)(UITableView *tableView ,NSIndexPath * indexPath))block;
-- (instancetype)configCanMoveRowAtIndexPath:(BOOL(^)(UITableView *tableView, NSIndexPath * indexPath))block;
-- (instancetype)configShouldIndentWhileEditingRowAtIndexPath:(BOOL(^)(UITableView *tableView, NSIndexPath * indexPath))block;
-- (instancetype)configTargetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *(^)(UITableView *tableView, NSIndexPath *sourceIndexPath , NSIndexPath *toProposedIndexPath))block;
-- (instancetype)configMoveRowAtIndexPath:(void(^)(UITableView *tableView, NSIndexPath * sourceIndexPath,  NSIndexPath * destinationIndexPath))block;
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configCanEditRowAtIndexPath)(BOOL (^)(UITableView *tableView, NSIndexPath * indexPath));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configEditingStyleForRowAtIndexPath)(UITableViewCellEditingStyle (^)(UITableView *tableView, NSIndexPath * indexPath));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configCommitEditingStyle)(UITableViewCellEditingStyle (^)(UITableView *tableView,UITableViewCellEditingStyle editingStyle ,NSIndexPath * indexPath));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configEditActionsForRowAtIndexPath)(NSArray<UITableViewRowAction *> * (^)(UITableView *tableView ,NSIndexPath * indexPath));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configCanMoveRowAtIndexPath)(BOOL(^)(UITableView *tableView, NSIndexPath * indexPath));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configShouldIndentWhileEditingRowAtIndexPath)(BOOL(^)(UITableView *tableView, NSIndexPath * indexPath));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configTargetIndexPathForMoveFromRowAtIndexPath)(NSIndexPath *(^)(UITableView *tableView, NSIndexPath *sourceIndexPath , NSIndexPath *toProposedIndexPath));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configMoveRowAtIndexPath)(void(^)(UITableView *tableView, NSIndexPath * sourceIndexPath,  NSIndexPath * destinationIndexPath));
 
 
-- (instancetype)configSectionAndCellDataKey:(NSArray<NSString *> *(^)(void))block;
-- (instancetype)configCellClassForRow:(Class (^)(id cellData, NSIndexPath * indexPath))block;
-- (instancetype)configCellWithData:(void (^)(UITableViewCell *cell, id cellData, NSIndexPath *indexPath))block;
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configSectionAndCellDataKey)(NSArray<NSString *> *(^)(void));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configCellClassForRow)(Class (^)(id cellData, NSIndexPath * indexPath));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configCellWithData)(void (^)(UITableViewCell *cell, id cellData, NSIndexPath *indexPath));
 
-- (instancetype)configSectionHeaderFooterViewClassAtSection:(Class (^)(id sectionData,
-                                                                       HyTableSeactionViewKinds seactionViewKinds,
-                                                                       NSUInteger section))block;
-- (instancetype)configSectionHeaderFooterViewWithSectionData:(void (^)(UIView *headerFooterView,
-                                                                       id sectionData,
-                                                                       HyTableSeactionViewKinds seactionViewKinds,
-                                                                       NSUInteger section))block;
-
-- (instancetype)configEmtyView:(void(^)(UITableView *tableView,UIView *emtyContainerView))block;
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configSectionHeaderFooterViewClassAtSection)(Class (^)(id sectionData,HyTableSeactionViewKinds seactionViewKinds,NSUInteger section));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configSectionHeaderFooterViewWithSectionData)(void (^)(UIView *headerFooterView,id sectionData,HyTableSeactionViewKinds seactionViewKinds,NSUInteger section));
+@property (nonatomic,copy,readonly) HyTableViewDelegateConfigure *(^configEmtyView)(void(^)(UITableView *tableView,UIView *emtyContainerView));
 
 @end
 

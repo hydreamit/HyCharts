@@ -11,20 +11,20 @@
 
 
 @interface HyScrollViewDelegateConfigure : NSObject
-- (instancetype)configScrollViewDidScroll:(void (^)(UIScrollView *scrollView))block;
-- (instancetype)configScrollViewDidZoom:(void (^)(UIScrollView *scrollView))block;
-- (instancetype)configScrollViewWillBeginDragging:(void (^)(UIScrollView *scrollView))block;
-- (instancetype)configScrollViewWillBeginDecelerating:(void (^)(UIScrollView *scrollView))block;
-- (instancetype)configScrollViewDidEndDecelerating:(void (^)(UIScrollView *scrollView))block;
-- (instancetype)configScrollViewDidEndScrollingAnimation:(void (^)(UIScrollView *scrollView))block;
-- (instancetype)configScrollViewDidScrollToTop:(void (^)(UIScrollView *scrollView))block;
-- (instancetype)configScrollViewDidChangeAdjustedContentInset:(void (^)(UIScrollView *scrollView))block;
-- (instancetype)configScrollViewShouldScrollToTop:(BOOL (^)(UIScrollView *scrollView))block;
-- (instancetype)configScrollViewForZoomingInScrollView:(UIView *(^)(UIScrollView *scrollView))block;
-- (instancetype)configScrollViewWillBeginZooming:(void (^)(UIScrollView *scrollView, UIView *view))block;
-- (instancetype)configScrollViewDidEndZooming:(void (^)(UIScrollView *scrollView, UIView *view, CGFloat scale))block;
-- (instancetype)configScrollViewWillEndDragging:(void (^)(UIScrollView *scrollView, CGPoint velocity, CGPoint targetContentOffset))block;
-- (instancetype)configScrollViewDidEndDragging:(void (^)(UIScrollView *scrollView, BOOL willDecelerate))block;
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewDidScroll)(void (^)(UIScrollView *scrollView));
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewDidZoom)(void (^)(UIScrollView *scrollView));
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewWillBeginDragging)(void (^)(UIScrollView *scrollView));
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewWillBeginDecelerating)(void (^)(UIScrollView *scrollView));
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewDidEndDecelerating)(void (^)(UIScrollView *scrollView));
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewDidEndScrollingAnimation)(void (^)(UIScrollView *scrollView));
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewDidScrollToTop)(void (^)(UIScrollView *scrollView));
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewDidChangeAdjustedContentInset)(void (^)(UIScrollView *scrollView));
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewShouldScrollToTop)(BOOL (^)(UIScrollView *scrollView));
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewForZoomingInScrollView)(UIView *(^)(UIScrollView *scrollView));
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewWillBeginZooming)(void (^)(UIScrollView *scrollView, UIView *view));
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewDidEndZooming)(void (^)(UIScrollView *scrollView, UIView *view, CGFloat scale));
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewWillEndDragging)(void (^)(UIScrollView *scrollView, CGPoint velocity, CGPoint targetContentOffset));
+@property (nonatomic,copy,readonly) HyScrollViewDelegateConfigure *(^configScrollViewDidEndDragging)(void (^)(UIScrollView *scrollView, BOOL willDecelerate));
 @end
 
 

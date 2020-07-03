@@ -19,6 +19,28 @@
 
 @implementation UICollectionViewCell (HyExtension)
 
++ (void)load {
+   static dispatch_once_t onceToken;
+   dispatch_once(&onceToken, ^{
+
+       hy_swizzleInstanceMethodToBlock([self class], @selector(initWithFrame:), ^id(SEL sel, IMP (^impBlock)(void)) {
+           return ^UICollectionViewCell *(UICollectionViewCell *_self, CGRect frame){
+               _self = HyObjectImpFuctoin(_self, sel, frame);
+               [_self hy_cellLoad];
+               return _self;
+           };
+       });
+       
+       hy_swizzleInstanceMethodToBlock([self class], @selector(initWithCoder:), ^id(SEL sel, IMP (^impBlock)(void)) {
+           return ^UICollectionViewCell *(UICollectionViewCell *_self, NSCoder *coder) {
+               _self = HyObjectImpFuctoin(_self, sel, coder);
+               [_self hy_cellLoad];
+               return _self;
+           };
+       });
+   });
+}
+
 + (instancetype)hy_cellWithCollectionView:(UICollectionView *)collectionView
                                 indexPath:(NSIndexPath *)indexPath
                                  cellData:(id)cellData {
@@ -28,7 +50,6 @@
                                               forIndexPath:indexPath];
     cell.hy_indexPath = indexPath;
     cell.hy_cellData = cellData;
-    [cell hy_cellLoad];
     return cell;
 }
 

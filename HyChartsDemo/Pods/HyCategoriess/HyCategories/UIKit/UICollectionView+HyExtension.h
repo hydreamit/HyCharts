@@ -15,39 +15,32 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HyCollectionViewDelegateConfigure : HyScrollViewDelegateConfigure
-- (instancetype)configNumberOfSections:(NSInteger (^_Nullable)(UICollectionView *collectionView))block;
-- (instancetype)configNumberOfItemsInSection:(NSInteger (^_Nullable)(UICollectionView *collectionView, NSInteger section))block;
+
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configNumberOfSections)(NSInteger (^)(UICollectionView *collectionView));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configNumberOfItemsInSection)(NSInteger (^)(UICollectionView *collectionView, NSInteger section));
 // cell
-- (instancetype)configCellForItemAtIndexPath:(UICollectionViewCell *(^_Nullable)(UICollectionView *collectionView, NSIndexPath *indexPath))block;
-- (instancetype)configHeightForRowAtIndexPath:(CGFloat (^_Nullable)(UICollectionView *collectionView, NSIndexPath *indexPath))block;
-- (instancetype)configDidSelectItemAtIndexPath:(void (^_Nullable)(UITableView *tableView, NSIndexPath *indexPath))block;
-- (instancetype)configWillDisplayCell:(void(^_Nullable)(UICollectionView *collectionView,UICollectionViewCell *cell, NSIndexPath * indexPath))block;
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configCellForItemAtIndexPath)(UICollectionViewCell *(^)(UICollectionView *collectionView, NSIndexPath *indexPath));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configHeightForRowAtIndexPath)(CGFloat (^)(UICollectionView *collectionView, NSIndexPath *indexPath));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configDidSelectItemAtIndexPath)(void (^)(UITableView *tableView, NSIndexPath *indexPath));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configWillDisplayCell)(void(^)(UICollectionView *collectionView,UICollectionViewCell *cell, NSIndexPath * indexPath));
 // header footer
-- (instancetype)configSeactionHeaderFooterViewAtIndexPath:(UICollectionReusableView *(^_Nullable)(UICollectionView *collectionView,NSString *kind, NSIndexPath * indexPath))block;
-- (instancetype)configWillDisPlayHeaderFooterViewAtIndexPath:(void (^_Nullable)(UICollectionView *collectionView,UICollectionReusableView *view,NSString *kind, NSIndexPath * indexPath))block;
-
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configSeactionHeaderFooterViewAtIndexPath)(UICollectionReusableView *(^)(UICollectionView *collectionView,NSString *kind, NSIndexPath * indexPath));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configWillDisPlayHeaderFooterViewAtIndexPath)(void (^)(UICollectionView *collectionView,UICollectionReusableView *view,NSString *kind, NSIndexPath * indexPath));
 // layout
-- (instancetype)configLayoutSize:(CGSize (^_Nullable)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSIndexPath *indexPath))block;
-- (instancetype)configLayoutInsets:(UIEdgeInsets (^_Nullable)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section))block;
-- (instancetype)configLayoutMinimumLineSpacing:(CGFloat (^_Nullable)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section))block;
-- (instancetype)configLayoutMinimumInteritemSpacing:(CGFloat (^_Nullable)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section))block;
-- (instancetype)configLayoutReferenceSizeForHeader:(CGSize (^_Nullable)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section))block;
-- (instancetype)configLayoutReferenceSizeForFooter:(CGSize (^_Nullable)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section))block;
 
-// 
-- (instancetype)configSectionAndCellDataKey:(NSArray<NSString *> *(^_Nullable)(void))block;
-- (instancetype)configCellClassForRow:(Class (^_Nullable)(id cellData, NSIndexPath * indexPath))block;
-- (instancetype)configCellWithData:(void (^_Nullable)(UICollectionViewCell *cell, id cellData, NSIndexPath *indexPath))block;
-- (instancetype)configSectionHeaderFooterViewClassAtSection:(Class (^_Nullable)(id sectionData,
-                                                                       HyCollectionSeactionViewKinds seactionViewKinds,
-                                                                       NSUInteger section))block;
-- (instancetype)configSectionHeaderFooterViewWithSectionData:(void (^_Nullable)(UIView *headerFooterView,
-                                                                       id sectionData,
-                                                                       HyCollectionSeactionViewKinds seactionViewKinds,
-                                                                       NSUInteger section))block;
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configLayoutSize)(CGSize (^)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSIndexPath *indexPath));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configLayoutInsets)(UIEdgeInsets (^)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configLayoutMinimumLineSpacing)(CGFloat (^)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configLayoutMinimumInteritemSpacing)(CGFloat (^)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configLayoutReferenceSizeForHeader)(CGSize (^)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configLayoutReferenceSizeForFooter)(CGSize (^)(UICollectionView *collectionView, UICollectionViewLayout *layout, NSInteger section));
 
-- (instancetype)configEmtyView:(void(^)(UICollectionView *tableView, UIView *emtyContainerView))block;
-
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configSectionAndCellDataKey)(NSArray<NSString *> *(^)(void));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configCellClassForRow)(Class (^)(id cellData, NSIndexPath * indexPath));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configCellWithData)(void (^)(UICollectionViewCell *cell, id cellData, NSIndexPath *indexPath));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configSectionHeaderFooterViewClassAtSection)(Class (^)(id sectionData,HyCollectionSeactionViewKinds seactionViewKinds,NSUInteger section));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configSectionHeaderFooterViewWithSectionData)(void (^)(UIView *headerFooterView,id sectionData,HyCollectionSeactionViewKinds seactionViewKinds,NSUInteger section));
+@property (nonatomic,copy,readonly) HyCollectionViewDelegateConfigure *(^configEmtyView)(void(^)(UICollectionView *tableView, UIView *emtyContainerView));
 @end
 
 
