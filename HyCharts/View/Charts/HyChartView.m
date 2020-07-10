@@ -31,6 +31,7 @@
 @property (nonatomic, strong) UIPinchGestureRecognizer *pinchGesture;
 /// 长按手势
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGesture;
+/// 默认游标
 @property (nonatomic, strong) id<HyChartCursorProtocol> chartCursor;
 
 @property (nonatomic, assign) CGFloat chartWidth;
@@ -51,7 +52,7 @@
 
 
 @implementation HyChartView
-@synthesize contentEdgeInsets = _contentEdgeInsets, pinchGestureDisabled = _pinchGestureDisabled, tapGestureDisabled = _tapGestureDisabled, longPressGestureDisabled = _longPressGestureDisabled, longGestureAction = _longGestureAction, tapGestureAction = _tapGestureAction;
+@synthesize contentEdgeInsets = _contentEdgeInsets, pinchGestureDisabled = _pinchGestureDisabled, tapGestureDisabled = _tapGestureDisabled, longPressGestureDisabled = _longPressGestureDisabled, longGestureAction = _longGestureAction, tapGestureAction = _tapGestureAction, pinchGestureAction = _pinchGestureAction, scrollAction = _scrollAction, bounces = _bounces;
 
 #pragma mark — lief cycle
 - (void)didMoveToSuperview {
@@ -92,13 +93,13 @@
     }
 }
 
-- (void(^)(CGPoint contentOffset, BOOL animated))scrollAction {
+- (void(^)(CGPoint contentOffset, BOOL animated))scroll {
     return ^(CGPoint contentOffset, BOOL animated) {
         [self.scrollView setContentOffset:contentOffset animated:animated];
     };
 }
 
-- (void(^)(NSInteger, CGFloat, CGFloat))pinchAction {
+- (void(^)(NSInteger, CGFloat, CGFloat))pinch {
     return ^(NSInteger index, CGFloat margin, CGFloat sca) {
         
         id<HyChartConfigureProtocol> configure = self.configure;
@@ -458,7 +459,7 @@
     }
 }
 
-#pragma mark — 手势处理
+#pragma mark — Gesture
 - (void)pinchGestureAction:(UIPinchGestureRecognizer *)gesture {
     
     if (self.pinchGestureDisabled) { return; }
@@ -489,12 +490,12 @@
             
         case UIGestureRecognizerStateChanged: {
             if (index < self.dataSource.modelDataSource.models.count) {
-                self.pinchAction(index, margin, gesture.scale);
+                self.pinch(index, margin, gesture.scale);
                 if (gesture == self.pinchGesture) {
                     [self.reactChains enumerateObjectsUsingBlock:^(NSValue * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                         HyChartView *chartView = (HyChartView *)obj.nonretainedObjectValue;
                         if (chartView != self) {
-                            chartView.pinchAction(index, margin, gesture.scale);
+                            chartView.pinch(index, margin, gesture.scale);
                         }
                     }];
                 }
@@ -519,6 +520,8 @@
         default:
         break;
     }
+    
+    !self.pinchGestureAction ?: self.pinchGestureAction(gesture);
     
     if (self.pinchGesture == gesture) {
        gesture.scale = 1;
@@ -548,7 +551,7 @@
         [self showCursorWithPoint:[gesture locationInView:self.scrollView]];
     }
     
-    !self.tapGestureAction ?: self.tapGestureAction();
+    !self.tapGestureAction ?: self.tapGestureAction(gesture);
 }
 
 - (void)longPressGestureAction:(UILongPressGestureRecognizer *)gesture {
@@ -556,7 +559,7 @@
         return;
     }
     [self showCursorWithPoint:[gesture locationInView:self.scrollView]];
-    !self.longGestureAction ?: self.longGestureAction();
+    !self.longGestureAction ?: self.longGestureAction(gesture);
 }
 
 - (void)showCursorWithPoint:(CGPoint)point {
@@ -588,7 +591,6 @@
         NSString * yText = [self.yAxisNunmberFormatter stringFromNumber: AddingNumber(MultiplyingNumber(@(chartH - point.y), valueRate), minValue)];
         
         self.chartCursor.show(centerP, xText, yText, model, self);
-            
     }
 }
 
@@ -640,7 +642,7 @@
         [self.reactChains enumerateObjectsUsingBlock:^(NSValue * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             HyChartView *chartView = (HyChartView *)obj.nonretainedObjectValue;
             if (chartView != self) {
-                chartView.scrollAction(scrollView.contentOffset, NO);
+                chartView.scroll(scrollView.contentOffset, NO);
             }
         }];
     }
@@ -657,6 +659,9 @@
     } completion:^{
        [self.layer setNeedsDisplay];
     }];
+    
+    !self.scrollAction ?:
+    self.scrollAction(scrollView.contentOffset.x, self.chartWidth, self.chartContentWidth);
 }
 
 #pragma mark - CALayerDelegate
@@ -696,6 +701,11 @@
         _scrollView.bounces = NO;
     }
     return _scrollView;
+}
+
+- (void)setBounces:(BOOL)bounces {
+    _bounces = bounces;
+    self.scrollView.bounces = bounces;
 }
 
 - (UIPinchGestureRecognizer *)pinchGesture {
@@ -774,7 +784,6 @@
             [self.chartLayer setNeedsRendering];
         }];
     }
-    
 }
 
 - (void)setAuxiliaryType:(HyChartKLineAuxiliaryType)auxiliaryType {
@@ -794,7 +803,6 @@
             [self.chartLayer setNeedsRendering];
         }];
     }
-    
 }
 
 @end

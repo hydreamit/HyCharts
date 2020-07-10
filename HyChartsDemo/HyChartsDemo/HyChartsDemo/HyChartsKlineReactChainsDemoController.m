@@ -260,7 +260,7 @@
         
 //        _volumeView.tapGestureDisabled = YES;
         [_volumeView resetChartCursor:nil];
-        _volumeView.tapGestureAction = ^{
+        _volumeView.tapGestureAction = ^(UITapGestureRecognizer * _Nonnull gesture) {
             __strong typeof(_self) self = _self;
             [self.klineCursor dismiss];
         };
@@ -317,10 +317,9 @@
         }];
 //        _auxiliaryView.tapGestureDisabled = YES;
         [_auxiliaryView resetChartCursor:nil];
-        _auxiliaryView.tapGestureAction = ^{
+        _auxiliaryView.tapGestureAction = ^(UITapGestureRecognizer * _Nonnull gesture) {
             __strong typeof(_self) self = _self;
             [self.klineCursor dismiss];
-            
         };
         _auxiliaryView.longPressGestureDisabled = YES;
         
