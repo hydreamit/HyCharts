@@ -12,8 +12,8 @@
 
 @implementation HyChartsBarDemoCursor
 
-- (void(^)(CGPoint point, NSString *xText, NSString *yText, id<HyChartModelProtocol> model, HyChartView *chartView))show {
-    return ^(CGPoint point, NSString *xText, NSString *yText, id<HyChartModelProtocol> model, HyChartView *chartView) {
+- (void (^)(HyChartView * _Nonnull, id<HyChartModelProtocol> _Nonnull, NSString * _Nonnull, NSString * _Nonnull, CGPoint))show {
+    return ^(HyChartView *chartView, id<HyChartModelProtocol> model, NSString *xText, NSString *yText, CGPoint centerPoint) {
         
         [self dismiss];
         
@@ -71,7 +71,7 @@
         contentView.width = maxWidth + 5;
         contentView.height = lastView.bottom + 8;
         contentView.left = chartBarModel.visiblePosition + edgeInset.left + 1;
-        CGFloat y = point.y;
+        CGFloat y = centerPoint.y;
         if (y + contentView.height > self.showView.height) {
             y = self.showView.height - contentView.height;
         }

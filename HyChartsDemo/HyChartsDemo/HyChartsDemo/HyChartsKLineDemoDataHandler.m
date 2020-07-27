@@ -11,6 +11,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <HyCategoriess/HyCategories.h>
+#import "HyChartsMethods.h"
 
 
 @implementation HyChartsKLineDemoDataHandler

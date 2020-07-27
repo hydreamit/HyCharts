@@ -132,7 +132,6 @@
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex, endIndex - startIndex + 1)];
     self.dataSource.modelDataSource.visibleModels = [self.dataSource.modelDataSource.models objectsAtIndexes:indexSet];
     [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(id<HyChartKLineModelProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
         obj.visibleIndex = idx;
         if (dataDirection == HyChartDataDirectionForward) {
             obj.position = configure.scaleEdgeInsetStart + obj.index * configure.scaleItemWidth ;
@@ -430,11 +429,8 @@
         self.dataSource.modelDataSource.visibleXAxisModels = xAxisModels.copy;
         
         [klineViewDict.allKeys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-             
             id<HyChartXAxisModelProtocol> currentXAxisModel = self.dataSource.axisDataSource.xAxisModelWityViewType([obj integerValue]);
-
-            typedef id(^TextAtIndexBlock)(NSInteger, id<HyChartModelProtocol>);
-            TextAtIndexBlock (^textBlock)(BOOL) = ^TextAtIndexBlock(BOOL displayAxisZeroText){
+            typeof(id(^)(NSInteger, id<HyChartModelProtocol>)) (^textBlock)(BOOL) = ^(BOOL displayAxisZeroText){
                 return ^id(NSInteger index, id<HyChartModelProtocol> model){
                     if (!displayAxisZeroText && !index) {
                         return @"";
@@ -492,9 +488,8 @@
 
         if (yAxisModel.indexs) {
             NSNumberFormatter *formatter = [obj intValue] == HyChartKLineViewTypeVolume ? self.dataSource.modelDataSource.volumeNunmberFormatter : self.dataSource.modelDataSource.priceNunmberFormatter;
-            CGFloat averageMargin = (maxValue - minValue) / yAxisModel.indexs;
-            typedef id(^TextAtIndexBlock)(NSInteger, NSNumber *, NSNumber *);
-            TextAtIndexBlock (^textBlock)(BOOL) = ^TextAtIndexBlock(BOOL displayAxisZeroText){
+            CGFloat averageMargin = (maxValue - minValue) / yAxisModel.indexs;            
+            typeof(id(^)(NSInteger, NSNumber *, NSNumber *)) (^textBlock)(BOOL) = ^(BOOL displayAxisZeroText){
                 return ^id(NSInteger index, NSNumber * _Nonnull maxV, NSNumber * _Nonnull minV){
                     if (!displayAxisZeroText && !index) {
                         return @"";

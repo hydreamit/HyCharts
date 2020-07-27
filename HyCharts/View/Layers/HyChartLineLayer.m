@@ -43,71 +43,56 @@
 
     for (NSInteger i = 1; i < self.dataSource.modelDataSource.visibleModels.count; i++) {
 
-       NSMutableArray *startPoints = @[].mutableCopy;
-       id<HyChartLineModelProtocol> startModel = self.dataSource.modelDataSource.visibleModels[i - 1];
-       [startModel.values enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        id<HyChartLineModelProtocol> startModel = self.dataSource.modelDataSource.visibleModels[i - 1];
+        id<HyChartLineModelProtocol> endModel = self.dataSource.modelDataSource.visibleModels[i];
+                
+        for (NSInteger j = 0; j < valueCount; j ++) {
            
-           CGPoint startPoint = CGPointMake(startModel.visiblePosition + width / 2, height - (obj.doubleValue * heightRate));
-           [startPoints addObject:[NSValue valueWithCGPoint:startPoint]];
-           
+           CGPoint startPoint = CGPointMake(startModel.visiblePosition + width / 2, height - (startModel.values[j].doubleValue * heightRate));
+           [self convertPoint:startPoint toLayer:self.layers[j]];
            if (i == 1) {
-               [self convertPoint:startPoint toLayer:self.layers[idx]];
-               [paths[idx] moveToPoint:startPoint];
-               [startPs addObject:[NSValue valueWithCGPoint:startPoint]];
+              [paths[j] moveToPoint:startPoint];
+              [startPs addObject:[NSValue valueWithCGPoint:startPoint]];
            }
-       }];
-       
-       NSMutableArray *endPoints = @[].mutableCopy;
-       id<HyChartLineModelProtocol> endModel = self.dataSource.modelDataSource.visibleModels[i];
-       [endModel.values enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-           CGPoint endPoint = CGPointMake(endModel.visiblePosition + width / 2, height - (obj.doubleValue * heightRate));
-            [endPoints addObject:[NSValue valueWithCGPoint:endPoint]];
+           
+           CGPoint endPoint = CGPointMake(endModel.visiblePosition + width / 2, height - (endModel.values[j].doubleValue * heightRate));
            if (i == count - 1) {
-               [endPs addObject:[NSValue valueWithCGPoint:endPoint]];
+              [endPs addObject:[NSValue valueWithCGPoint:endPoint]];
            }
-       }];
-
-       for (NSInteger j = 0; j < valueCount; j ++) {
            
            HyChartLineOneConfigure *configure = self.configures[j];
-           CGPoint startP = [startPoints[j] CGPointValue];
-           CGPoint endP = [endPoints[j] CGPointValue];
+           if (configure.lineType == HyChartLineTypeStraight) {
+               [paths[j] addLineToPoint:endPoint];
+           } else {
+               [paths[j] addCurveToPoint:endPoint
+               controlPoint1:CGPointMake((startPoint.x + endPoint.x) / 2, startPoint.y)
+               controlPoint2:CGPointMake((startPoint.x + endPoint.x) / 2, endPoint.y)];
+           }
            
            if (configure.linePointType != HyChartLinePointTypeNone) {
                
                CGRect startRect = CGRectZero;
                if (i == 1) {
-                   startRect = CGRectMake(startP.x - (configure.linePointSize.width / 2), startP.y - (configure.linePointSize.height / 2), configure.linePointSize.width, configure.linePointSize.height);
+                   startRect = CGRectMake(startPoint.x - (configure.linePointSize.width / 2), startPoint.y - (configure.linePointSize.height / 2), configure.linePointSize.width, configure.linePointSize.height);
                }
                
-               CGRect endRect = CGRectMake(endP.x - (configure.linePointSize.width / 2), endP.y - (configure.linePointSize.height / 2), configure.linePointSize.width, configure.linePointSize.height);
+               CGRect endRect = CGRectMake(endPoint.x - (configure.linePointSize.width / 2), endPoint.y - (configure.linePointSize.height / 2), configure.linePointSize.width, configure.linePointSize.height);
+               
                if (configure.linePointType == HyChartLinePointTypeRect) {
-                   if (i == 1) {
-                       [dotPaths[j] appendPath:[UIBezierPath bezierPathWithRect:startRect]];
-                   }
-                  [dotPaths[j] appendPath:[UIBezierPath bezierPathWithRect:endRect]];
-
-               } else  {
+                    if (i == 1) {
+                        [dotPaths[j] appendPath:[UIBezierPath bezierPathWithRect:startRect]];
+                    }
+                    [dotPaths[j] appendPath:[UIBezierPath bezierPathWithRect:endRect]];
+                } else  {
                    if (i == 1) {
                        [dotPaths[j] appendPath:[UIBezierPath bezierPathWithOvalInRect:startRect]];
                    }
                    [dotPaths[j] appendPath:[UIBezierPath bezierPathWithOvalInRect:endRect]];
-               }
-           }
-
-           if (configure.lineType == HyChartLineTypeStraight) {
-               [paths[j] addLineToPoint:endP];
-           } else {
-               //  二次贝塞尔曲线 addQuadCurveToPoint
-               //  三次贝塞尔曲线
-               [paths[j] addCurveToPoint:endP
-               controlPoint1:CGPointMake((startP.x + endP.x) / 2, startP.y)
-               controlPoint2:CGPointMake((startP.x + endP.x) / 2, endP.y)];
-           }
+                }
+            }
        }
     }
     
-            
     [self.layers enumerateObjectsUsingBlock:^(CAShapeLayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         obj.path = paths[idx].CGPath;

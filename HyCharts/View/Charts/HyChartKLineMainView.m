@@ -94,7 +94,6 @@
         
         __block double maxPrice = obj.highPrice.doubleValue;
         __block double minPrice = obj.lowPrice.doubleValue;
-        
         switch (self.technicalType) {
             case HyChartKLineTechnicalTypeSMA: {
                 [klineConfigure.smaDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull color, BOOL * _Nonnull stop) {

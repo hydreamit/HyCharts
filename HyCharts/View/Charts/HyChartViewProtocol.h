@@ -27,11 +27,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// 点击手势事件
-@property (nonatomic, copy) void(^tapGestureAction)(UITapGestureRecognizer *gesture);
+@property (nonatomic, copy) void(^tapGestureAction)(HyChartView *chartView, id<HyChartModelProtocol> model, NSUInteger index, CGPoint point);
 /// 长按手势事件
-@property (nonatomic, copy) void(^longGestureAction)(UILongPressGestureRecognizer *gesture);
+@property (nonatomic, copy) void(^longGestureAction)(HyChartView *chartView, id<HyChartModelProtocol> model, NSUInteger index, CGPoint point);
 /// 缩放手势事件
-@property (nonatomic, copy) void(^pinchGestureAction)(UIPinchGestureRecognizer *gesture);
+@property (nonatomic, copy) void(^pinchGestureAction)(HyChartView *chartView, id<HyChartModelProtocol> model, NSUInteger index, CGFloat scale, UIGestureRecognizerState state);
 /// 滚动事件
 @property (nonatomic, copy) void(^scrollAction)(CGFloat contentOffset, CGFloat chartWidth, CGFloat chartContentWidth);
 
@@ -66,7 +66,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (void(^)(NSArray<HyChartView *> *chartViews))addReactChains;
 /// 删除联动图表
 + (void(^)(NSArray<HyChartView *> *chartViews))removeReactChains;
-
 
 
 @end

@@ -150,7 +150,8 @@
             configure.newpriceColor = UIColor.whiteColor;
             configure.maxminPriceColor = UIColor.whiteColor;
             configure.trendUpKlineType = HyChartKLineTypeStroke;
-            
+//            configure.disPlayNewprice = NO;
+//            configure.disPlayMaxMinPrice = NO;
         
             UIColor *lineColor =   Hy_ColorWithRGBA(46, 127, 208, 1);
             NSArray<UIColor *> *colors = @[Hy_ColorWithRGBA(46, 127, 208, .2),

@@ -24,11 +24,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @property (nonatomic, assign) CGFloat trans;
+
+/// 当前缩放值
 @property (nonatomic, assign) CGFloat scale;
-@property (nonatomic, assign) CGFloat maxScale;
+/// 最小缩放值
 @property (nonatomic, assign) CGFloat minScale;
+/// 最大缩放值
+@property (nonatomic, assign) CGFloat maxScale;
+/// 当前展示范围
+@property (nonatomic, assign) CGFloat displayWidth;
+/// 最小展示范围(优先级别高于minScale)
+@property (nonatomic, assign) CGFloat minDisplayWidth;
+/// 最大展示范围(优先级别高于maxScale)
+@property (nonatomic, assign) CGFloat maxDisplayWidth;
 
 
+/// 精度
 @property (nonatomic, assign) NSInteger decimal;
 @property (nonatomic, strong, readonly) NSNumberFormatter *numberFormatter;
 

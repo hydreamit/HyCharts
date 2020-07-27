@@ -44,7 +44,7 @@
             obj.position = configure.scaleEdgeInsetStart + obj.index * configure.scaleItemWidth + configure.scaleWidth;
             obj.visiblePosition = self.chartWidth - (obj.position - configure.trans);
         }
-        
+
         maxValue = MAX(maxValue, obj.maxAuxiliary.doubleValue);
         minValue = MIN(minValue, obj.minAuxiliary.doubleValue);
     }];
@@ -55,7 +55,7 @@
 
 - (void)handleTechnicalData {
     
-     id<HyChartKLineConfigureProtocol> configure = (id)self.dataSource.configreDataSource.configure;
+    id<HyChartKLineConfigureProtocol> configure = (id)self.dataSource.configreDataSource.configure;
         
     [configure.macdDict enumerateKeysAndObjectsUsingBlock:^(NSArray<NSNumber *> * _Nonnull key, NSArray<UIColor *> * _Nonnull obj, BOOL * _Nonnull stop) {
         HyChartAlgorithmContext.handleMACD([key.firstObject integerValue], [key[1] integerValue], [key.lastObject integerValue], (id<HyChartKLineModelDataSourceProtocol>)self.dataSource.modelDataSource);
@@ -74,7 +74,7 @@
     
     id<HyChartKLineConfigureProtocol> configure = (id)self.dataSource.configreDataSource.configure;
     [self.dataSource.modelDataSource.models enumerateObjectsUsingBlock:^(id<HyChartKLineModelProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
+    
         __block double maxValue = - MAXFLOAT;
         __block double minValue = MAXFLOAT;
         switch (self.auxiliaryType) {

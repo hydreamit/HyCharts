@@ -66,6 +66,7 @@
     [klineContentView addSubview:self.klineMainView];
     [klineContentView addSubview:self.volumeView];
     [klineContentView addSubview:self.auxiliaryView];
+    // 添加图表联动
     HyChartView.addReactChains(@[self.klineMainView, self.volumeView, self.auxiliaryView]);
     
     self.klineVolumTechnicView = UIView.new;
@@ -260,7 +261,7 @@
         
 //        _volumeView.tapGestureDisabled = YES;
         [_volumeView resetChartCursor:nil];
-        _volumeView.tapGestureAction = ^(UITapGestureRecognizer * _Nonnull gesture) {
+        _volumeView.tapGestureAction = ^(HyChartView * _Nonnull chartView, id<HyChartModelProtocol>  _Nonnull model, NSUInteger index, CGPoint point) {
             __strong typeof(_self) self = _self;
             [self.klineCursor dismiss];
         };
@@ -317,7 +318,7 @@
         }];
 //        _auxiliaryView.tapGestureDisabled = YES;
         [_auxiliaryView resetChartCursor:nil];
-        _auxiliaryView.tapGestureAction = ^(UITapGestureRecognizer * _Nonnull gesture) {
+        _auxiliaryView.tapGestureAction = ^(HyChartView * _Nonnull chartView, id<HyChartModelProtocol>  _Nonnull model, NSUInteger index, CGPoint point) {
             __strong typeof(_self) self = _self;
             [self.klineCursor dismiss];
         };

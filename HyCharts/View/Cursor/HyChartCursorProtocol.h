@@ -15,11 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol HyChartCursorProtocol <NSObject>
 @required
 
-- (void(^)(CGPoint point,
+- (void(^)(HyChartView *chartView,
+           id<HyChartModelProtocol> model,
            NSString *xText,
            NSString *yText,
-           id<HyChartModelProtocol> model,
-           HyChartView *chartView))show;
+           CGPoint point))show;
 
 - (void)dismiss;
 

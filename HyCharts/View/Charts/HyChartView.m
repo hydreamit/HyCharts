@@ -321,6 +321,20 @@
     if (itemsCount > 0) {
         id<HyChartConfigureProtocol> configure = self.dataSource.configreDataSource.configure;
         CGFloat width = configure.edgeInsetStart + configure.edgeInsetEnd + itemsCount * (configure.width + configure.margin) - configure.margin;
+        if (configure.minDisplayWidth > 0 &&
+            configure.minDisplayWidth <= width) {
+            configure.minScale = configure.minDisplayWidth / width;
+        }
+        if (configure.maxDisplayWidth > 0 &&
+            configure.maxDisplayWidth >= width) {
+            CGFloat maxScale = configure.maxDisplayWidth / width;
+            if (maxScale >= configure.minScale) {
+                configure.maxScale = maxScale;
+            }
+        }
+        if (configure.displayWidth > 0) {
+            configure.scale = configure.displayWidth / width;
+        }
         width = width * configure.scale;
         if (width > contentWidth) {
             contentWidth = width;
@@ -385,8 +399,8 @@
         }
         
         self.dataSource.modelDataSource.visibleXAxisModels = xAxisModels.copy;
-        typedef id(^TextAtIndexBlock)(NSInteger, id<HyChartModelProtocol>);
-        TextAtIndexBlock (^textBlock)(BOOL) = ^TextAtIndexBlock(BOOL displayAxisZeroText){
+        typeof(id(^)(NSInteger, id<HyChartModelProtocol>))(^textBlock)(BOOL) =
+        ^(BOOL displayAxisZeroText){
             return ^id(NSInteger index, id<HyChartModelProtocol> model){
                 if (!displayAxisZeroText && !index) {
                     return @"";
@@ -439,8 +453,8 @@
     
     if (yAxisModel.indexs) {
         CGFloat averageMargin = (maxValue - minValue) / yAxisModel.indexs;
-        typedef id(^TextAtIndexBlock)(NSInteger, NSNumber *, NSNumber *);
-        TextAtIndexBlock (^textBlock)(BOOL) = ^TextAtIndexBlock(BOOL displayAxisZeroText){
+        typeof(id(^)(NSInteger, NSNumber *, NSNumber *))(^textBlock)(BOOL) =
+        ^(BOOL displayAxisZeroText){
             return ^id(NSInteger index, NSNumber * _Nonnull maxV, NSNumber * _Nonnull minV){
                 if (!displayAxisZeroText && !index) {
                     return @"";
@@ -521,8 +535,11 @@
         break;
     }
     
-    !self.pinchGestureAction ?: self.pinchGestureAction(gesture);
-    
+    if (index > -1 && index < self.dataSource.modelDataSource.models.count) {
+        !self.pinchGestureAction ?:
+        self.pinchGestureAction(self, self.dataSource.modelDataSource.models[index], index, self.dataSource.configreDataSource.configure.scale, gesture.state);
+    }
+
     if (self.pinchGesture == gesture) {
        gesture.scale = 1;
     }
@@ -542,30 +559,43 @@
 }
 
 - (void)tapGestureAction:(UITapGestureRecognizer *)gesture {
+    
     if (self.tapGestureDisabled) {
         return;
     }
     if (self.chartCursor.isShowing) {
         [self.chartCursor dismiss];
     } else {
-        [self showCursorWithPoint:[gesture locationInView:self.scrollView]];
+        if (self.chartCursor || self.tapGestureAction) {
+            [self handleGestureWithPoint:[gesture locationInView:self.scrollView]
+                              completion:^(id<HyChartModelProtocol> model, NSInteger index,
+                                           CGPoint centerPoint, NSString *xText, NSString *yText) {
+                !self.chartCursor.show ?: self.chartCursor.show(self, model, xText, yText, centerPoint);
+                !self.tapGestureAction ?: self.tapGestureAction(self, model, index, centerPoint);
+            }];
+        }
     }
-    
-    !self.tapGestureAction ?: self.tapGestureAction(gesture);
 }
 
 - (void)longPressGestureAction:(UILongPressGestureRecognizer *)gesture {
     if (self.longPressGestureDisabled) {
         return;
     }
-    [self showCursorWithPoint:[gesture locationInView:self.scrollView]];
-    !self.longGestureAction ?: self.longGestureAction(gesture);
+    if (self.chartCursor || self.longGestureAction) {
+        [self handleGestureWithPoint:[gesture locationInView:self.scrollView]
+                          completion:^(id<HyChartModelProtocol> model, NSInteger index,
+                                       CGPoint centerPoint, NSString *xText, NSString *yText) {
+            !self.chartCursor.show ?: self.chartCursor.show(self, model, xText, yText, centerPoint);
+            !self.longGestureAction ?: self.longGestureAction(self, model, index, centerPoint);
+        }];
+    }
 }
 
-- (void)showCursorWithPoint:(CGPoint)point {
-    
-    if (!self.chartCursor) {return;}
-    
+- (void)handleGestureWithPoint:(CGPoint)point
+                    completion:(void(^)(id<HyChartModelProtocol> model,
+                                        NSInteger index, CGPoint centerPoint,
+                                        NSString *xText,NSString *yText))completion {
+ 
     CGFloat positionX = point.x;
     if (self.configure.dataDirection == HyChartDataDirectionReverse) {
         positionX = self.chartContentWidth - positionX;
@@ -573,8 +603,8 @@
     
     NSInteger index = [self absoluteIndexWithPosition:positionX];
     if (index < self.dataSource.modelDataSource.models.count) {
-        id<HyChartModelProtocol> model = self.dataSource.modelDataSource.models[index];
         
+        id<HyChartModelProtocol> model = self.dataSource.modelDataSource.models[index];
         NSString *xText = model.text;
         CGPoint centerP = CGPointMake(model.visiblePosition + self.configure.scaleWidth / 2, point.y);
         
@@ -588,9 +618,9 @@
         NSNumber *maxValue = yAxisModel.yAxisMaxValue;
         NSNumber *minValue = yAxisModel.yAxisMinValue;
         NSNumber *valueRate = DividingNumber(SubtractingNumber(maxValue, minValue), @(chartH));
-        NSString * yText = [self.yAxisNunmberFormatter stringFromNumber: AddingNumber(MultiplyingNumber(@(chartH - point.y), valueRate), minValue)];
+        NSString *yText = [self.yAxisNunmberFormatter stringFromNumber: AddingNumber(MultiplyingNumber(@(chartH - point.y), valueRate), minValue)];
         
-        self.chartCursor.show(centerP, xText, yText, model, self);
+        !completion ?: completion(model,index, centerP, xText, yText);
     }
 }
 

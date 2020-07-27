@@ -30,29 +30,29 @@ NSComparisonResult DecimalCompare(NSNumber *numberOne, NSNumber *numberTwo) {
 
 BOOL IsMax(NSNumber *numberOne, NSNumber *numberTwo) {
     return DecimalCompare(numberOne, numberTwo) == NSOrderedDescending;
-};
+}
 
 BOOL IsMin(NSNumber *numberOne, NSNumber *numberTwo) {
     return DecimalCompare(numberOne, numberTwo) == NSOrderedAscending;
-};
+}
 
 BOOL IsSame(NSNumber *numberOne, NSNumber *numberTwo) {
     return DecimalCompare(numberOne, numberTwo) == NSOrderedSame;
-};
+}
 
 NSNumber *MaxNumber(NSNumber *numberOne, NSNumber *numberTwo) {
     if (IsMax(numberOne, numberTwo)) {
         return numberOne;
     }
     return numberTwo;
-};
+}
 
 NSNumber *MinNumber(NSNumber *numberOne, NSNumber *numberTwo) {
     if (IsMin(numberOne, numberTwo)) {
         return numberOne;
     }
     return numberTwo;
-};
+}
 
 NSDecimalNumber *DecimalNumber(NSNumber *number) {
     if ([number isKindOfClass:NSDecimalNumber.class]) {
@@ -110,7 +110,7 @@ NSString *SafetyString(NSString *string) {
     NSString *str = [NSString stringWithFormat:@"%@", string];
     str = [str stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
     str = [str stringByReplacingOccurrencesOfString:@"<null>" withString:@""];
-    if ([string isEqualToString:@"nan"] || [string isEqualToString:@"NaN"]) {
+    if ([str isEqualToString:@"nan"] || [str isEqualToString:@"NaN"]) {
         return @"0";
     }
     return str;

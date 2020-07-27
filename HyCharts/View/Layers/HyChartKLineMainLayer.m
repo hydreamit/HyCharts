@@ -261,10 +261,12 @@
     NSString *newPriceString = @"";
     UIBezierPath *newPricePath = UIBezierPath.bezierPath;
     CGFloat changef = self.dataSource.modelDataSource.models.firstObject.closePrice.doubleValue - minValue;
-    if (self.dataSource.modelDataSource.models.firstObject.closePrice.doubleValue < maxValue &&
-     changef > 0) {
+    if (self.dataSource.configreDataSource.configure.disPlayNewprice &&
+        self.dataSource.modelDataSource.models.firstObject.closePrice.doubleValue < maxValue &&
+        changef > 0) {
+        
         CGFloat y = height - changef * heightRate;
-        newPriceString = [self.dataSource.modelDataSource.priceNunmberFormatter stringFromNumber:self.dataSource.modelDataSource.models.firstObject.closePrice];
+        newPriceString = SafetyString([self.dataSource.modelDataSource.priceNunmberFormatter stringFromNumber:self.dataSource.modelDataSource.models.firstObject.closePrice]);
      
         CGSize xSize = [newPriceString sizeWithAttributes:@{NSFontAttributeName : self.dataSource.configreDataSource.configure.newpriceFont}];
         xSize = CGSizeMake(xSize.width + 6, xSize.height);
@@ -273,27 +275,34 @@
         [newPricePath moveToPoint:CGPointMake(CGRectGetMaxX(newPriceTextRect), y)];
         [newPricePath addLineToPoint:CGPointMake(CGRectGetMaxX(self.frame), y)];
     }
-
-    id<HyChartKLineModelProtocol> maxPriceModel = self.dataSource.modelDataSource.visibleMaxPriceModel;
-    NSString *highPrice = [self.dataSource.modelDataSource.priceNunmberFormatter stringFromNumber:maxPriceModel.highPrice];
-    NSString *maxString = [NSString stringWithFormat:@"↙ %@", highPrice];
-    CGSize maxSize = [maxString sizeWithAttributes:@{NSFontAttributeName : self.dataSource.configreDataSource.configure.maxminPriceFont}];
-    CGRect maxRect = CGRectMake(maxPriceP.x, maxPriceP.y - maxSize.height , maxSize.width, maxSize.height);
-    if (CGRectGetMaxX(maxRect) > width) {
-        maxRect.origin.x = maxPriceP.x - maxSize.width;
-        maxString = [NSString stringWithFormat:@"%@ ↘", highPrice];
-    }
-
-    id<HyChartKLineModelProtocol> minPriceModel = self.dataSource.modelDataSource.visibleMinPriceModel;
-    NSString *lowPrice = [self.dataSource.modelDataSource.priceNunmberFormatter stringFromNumber:minPriceModel.lowPrice];
-    NSString *mixString = [NSString stringWithFormat:@"↖ %@", lowPrice];
-    CGSize minSize = [mixString sizeWithAttributes:@{NSFontAttributeName : self.dataSource.configreDataSource.configure.maxminPriceFont}];
-    CGRect minRect = CGRectMake(minPriceP.x, minPriceP.y , minSize.width, minSize.height);
-    if (CGRectGetMaxX(minRect) > width) {
-        minRect.origin.x = minPriceP.x - minSize.width;
-        mixString = [NSString stringWithFormat:@"%@ ↗", lowPrice];
-    }
     
+    NSString *maxString = @"";
+    NSString *mixString = @"";
+    CGRect minRect = CGRectZero;
+    CGRect maxRect = CGRectZero;
+    if (self.dataSource.configreDataSource.configure.disPlayMaxMinPrice) {
+        
+        id<HyChartKLineModelProtocol> maxPriceModel = self.dataSource.modelDataSource.visibleMaxPriceModel;
+        NSString *highPrice = [self.dataSource.modelDataSource.priceNunmberFormatter stringFromNumber:maxPriceModel.highPrice];
+         maxString = [NSString stringWithFormat:@"↙ %@", highPrice];
+        CGSize maxSize = [maxString sizeWithAttributes:@{NSFontAttributeName : self.dataSource.configreDataSource.configure.maxminPriceFont}];
+        maxRect = CGRectMake(maxPriceP.x, maxPriceP.y - maxSize.height , maxSize.width, maxSize.height);
+        if (CGRectGetMaxX(maxRect) > width) {
+            maxRect.origin.x = maxPriceP.x - maxSize.width;
+            maxString = [NSString stringWithFormat:@"%@ ↘", SafetyString(highPrice)];
+        }
+        
+        id<HyChartKLineModelProtocol> minPriceModel = self.dataSource.modelDataSource.visibleMinPriceModel;
+         NSString *lowPrice = [self.dataSource.modelDataSource.priceNunmberFormatter stringFromNumber:minPriceModel.lowPrice];
+         mixString = [NSString stringWithFormat:@"↖ %@", lowPrice];
+         CGSize minSize = [mixString sizeWithAttributes:@{NSFontAttributeName : self.dataSource.configreDataSource.configure.maxminPriceFont}];
+         minRect = CGRectMake(minPriceP.x, minPriceP.y , minSize.width, minSize.height);
+         if (CGRectGetMaxX(minRect) > width) {
+             minRect.origin.x = minPriceP.x - minSize.width;
+             mixString = [NSString stringWithFormat:@"%@ ↗", SafetyString(lowPrice)];
+         }
+    }
+
     TransactionDisableActions(^{
         self.newpriceTextLayer.frame = newPriceTextRect;
         self.newpriceTextLayer.string = newPriceString;
@@ -369,7 +378,7 @@
         }];
         if (mDict.allKeys.count) {
             _smaLayerDict = mDict.copy;
-        } 
+        }
     }
     return _smaLayerDict;
 }

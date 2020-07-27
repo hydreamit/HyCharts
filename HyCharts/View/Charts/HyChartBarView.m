@@ -35,7 +35,6 @@
     HyChartDataDirection dataDirection =  self.dataSource.configreDataSource.configure.dataDirection;
     
     [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(id<HyChartBarModelProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
         obj.visibleIndex = idx;
         if (dataDirection == HyChartDataDirectionForward) {
             obj.position = configure.scaleEdgeInsetStart + obj.index * configure.scaleItemWidth ;

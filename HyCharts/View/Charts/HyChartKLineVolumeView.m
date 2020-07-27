@@ -37,31 +37,32 @@
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex, endIndex - startIndex + 1)];
      self.dataSource.modelDataSource.visibleModels = [self.dataSource.modelDataSource.models objectsAtIndexes:indexSet];
     [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(id<HyChartKLineModelProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        obj.visibleIndex = idx;
-        if (dataDirection == HyChartDataDirectionForward) {
-            obj.position = configure.scaleEdgeInsetStart + obj.index * configure.scaleItemWidth ;
-            obj.visiblePosition = obj.position - configure.trans;
-        } else {
-            obj.position = configure.scaleEdgeInsetStart + obj.index * configure.scaleItemWidth + configure.scaleWidth;
-            obj.visiblePosition = self.chartWidth - (obj.position - configure.trans);
-        }
-        
-         if (!maxModel || !minModel) {
-             maxModel = obj;
-             minModel = obj;
-             maxValue = obj.maxVolume.doubleValue;
-             minValue = MIN(0, obj.minVolume.doubleValue);
-         } else {
-             if (obj.volume.doubleValue > maxModel.volume.doubleValue) {
+        if (obj) {
+            obj.visibleIndex = idx;
+            if (dataDirection == HyChartDataDirectionForward) {
+                obj.position = configure.scaleEdgeInsetStart + obj.index * configure.scaleItemWidth ;
+                obj.visiblePosition = obj.position - configure.trans;
+            } else {
+                obj.position = configure.scaleEdgeInsetStart + obj.index * configure.scaleItemWidth + configure.scaleWidth;
+                obj.visiblePosition = self.chartWidth - (obj.position - configure.trans);
+            }
+            
+             if (!maxModel || !minModel) {
                  maxModel = obj;
-             } else
-             if (obj.volume.doubleValue < maxModel.volume.doubleValue) {
                  minModel = obj;
+                 maxValue = obj.maxVolume.doubleValue;
+                 minValue = MIN(0, obj.minVolume.doubleValue);
+             } else {
+                 if (obj.volume.doubleValue > maxModel.volume.doubleValue) {
+                     maxModel = obj;
+                 } else
+                 if (obj.volume.doubleValue < maxModel.volume.doubleValue) {
+                     minModel = obj;
+                 }
+                 maxValue = MAX(maxValue, obj.maxVolume.doubleValue);
+                 minValue = MIN(minValue, obj.minVolume.doubleValue);
              }
-             maxValue = MAX(maxValue, obj.maxVolume.doubleValue);
-             minValue = MIN(minValue, obj.minVolume.doubleValue);
-         }
+        }
     }];
     
     self.dataSource.modelDataSource.maxValue = [NSNumber numberWithDouble:maxValue];

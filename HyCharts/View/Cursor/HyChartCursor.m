@@ -40,8 +40,8 @@
     return cursor;
 }
 
-- (void (^)(CGPoint, NSString * _Nonnull, NSString * _Nonnull, id<HyChartModelProtocol> _Nonnull, HyChartView *))show {
-    return ^(CGPoint centerPoint, NSString *xText, NSString *yText, id<HyChartModelProtocol> model, HyChartView *chartView){
+- (void (^)(HyChartView * _Nonnull, id<HyChartModelProtocol> _Nonnull, NSString * _Nonnull, NSString * _Nonnull, CGPoint))show {
+    return ^(HyChartView *chartView, id<HyChartModelProtocol> model, NSString *xText, NSString *yText, CGPoint centerPoint){
         
         [self dismiss];
         
@@ -165,14 +165,14 @@
     
     CGFloat width = 160;
     NSArray<NSString *> *leftTitleArray = @[@"时间 ", @"开 ", @"高 ", @"低 ", @"收 ", @"涨跌额", @"涨跌幅", @"成交量"];
-    NSArray<NSString *> *rightTitleArray = @[model.time,
-                                             [model.priceNunmberFormatter stringFromNumber:model.openPrice],
-                                             [model.priceNunmberFormatter stringFromNumber:model.highPrice],
-                                             [model.priceNunmberFormatter stringFromNumber:model.lowPrice],
-                                             [model.priceNunmberFormatter stringFromNumber:model.closePrice],
-                                             [model.priceNunmberFormatter stringFromNumber:model.trendChanging],
+    NSArray<NSString *> *rightTitleArray = @[SafetyString(model.time),
+                                             SafetyString([model.priceNunmberFormatter stringFromNumber:model.openPrice]),
+                                             SafetyString([model.priceNunmberFormatter stringFromNumber:model.highPrice]),
+                                             SafetyString([model.priceNunmberFormatter stringFromNumber:model.lowPrice]),
+                                             SafetyString([model.priceNunmberFormatter stringFromNumber:model.closePrice]),
+                                             SafetyString([model.priceNunmberFormatter stringFromNumber:model.trendChanging]),
                                              [NSString stringWithFormat:@"%.2f%@", model.trendPercent.floatValue * 100, @"%"],
-                                             [model.volumeNunmberFormatter stringFromNumber:model.volume]];
+                                             SafetyString([model.volumeNunmberFormatter stringFromNumber:model.volume])];
     
     UIColor *trendColor = UIColor.whiteColor;
     if (model.trend == HyChartKLineTrendUp) {

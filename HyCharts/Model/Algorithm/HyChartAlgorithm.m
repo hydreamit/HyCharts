@@ -17,6 +17,7 @@
 - (void (^)(NSInteger number,id<HyChartKLineModelDataSourceProtocol> modelDataSource))handleSMA {
     return ^(NSInteger number, id<HyChartKLineModelDataSourceProtocol> modelDataSource) {
         
+        
         NSArray<id<HyChartKLineModelProtocol>> *models = modelDataSource.models;
         models = [[models reverseObjectEnumerator] allObjects];
         

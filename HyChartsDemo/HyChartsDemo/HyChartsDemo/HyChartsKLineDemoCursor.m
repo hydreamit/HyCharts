@@ -29,12 +29,12 @@
     return _chartCursour;
 }
 
-- (void(^)(CGPoint point, NSString *xText, NSString *yText, id<HyChartModelProtocol> model, HyChartView *chartView))show {
-    return ^(CGPoint point, NSString *xText, NSString *yText, id<HyChartModelProtocol> model, HyChartView *chartView) {
-        if (point.y < CGRectGetMaxY(chartView.frame)) {
+- (void (^)(HyChartView * _Nonnull, id<HyChartModelProtocol> _Nonnull, NSString * _Nonnull, NSString * _Nonnull, CGPoint))show {
+    return ^(HyChartView *chartView, id<HyChartModelProtocol> model, NSString *xText, NSString *yText, CGPoint centerPoint) {
+        if (centerPoint.y < CGRectGetMaxY(chartView.frame)) {
             [self dismiss];
             [self.showView.layer addSublayer:self.chartCursour];
-            self.chartCursour.show(point, xText, yText, model, chartView);
+            self.chartCursour.show(chartView, model, xText, yText, centerPoint);
         }
     };
 }

@@ -43,7 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSNumber *turnoverrate;
 
 
-
 /// 涨/跌
 @property (nonatomic, assign, readonly) HyChartKLineTrend trend;
 
