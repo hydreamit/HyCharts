@@ -21,6 +21,7 @@
     
     HyChartConfigure *configure = [[self alloc] init];
     
+    
     configure.margin = 5;
     configure.width = 10;
     configure.edgeInsetStart = 5;

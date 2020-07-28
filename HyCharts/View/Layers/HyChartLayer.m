@@ -30,4 +30,17 @@
     }
 }
 
+- (CGFloat (^)(NSNumber * _Nonnull))valuePositon {
+    return ^(NSNumber *value){
+        return .0;
+    };
+}
+
+- (CGFloat (^)(NSNumber * _Nonnull))valueHeight {
+    return ^(NSNumber *value){
+        return .0;
+    };
+}
+
+
 @end

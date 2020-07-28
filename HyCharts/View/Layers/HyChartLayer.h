@@ -16,7 +16,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface HyChartLayer<__covariant DataSourceType : id<HyChartDataSourceProtocol>> : CALayer<HyChartLayerProtocol>
+@interface HyChartLayer<__covariant DataSourceType : id<HyChartDataSourceProtocol>> : CALayer<HyChartLayerProtocol, HyChartValuePositonProviderProtocol>
 
 + (instancetype)layerWithDataSource:(DataSourceType)dataSource;
 

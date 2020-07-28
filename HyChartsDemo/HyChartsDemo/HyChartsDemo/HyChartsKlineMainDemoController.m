@@ -126,7 +126,7 @@
             configure.volumeDecimal = 4;
             configure.newpriceColor = UIColor.whiteColor;
             configure.maxminPriceColor = UIColor.whiteColor;
-            
+                        
             UIColor *lineColor =   Hy_ColorWithRGBA(46, 127, 208, 1);
             NSArray<UIColor *> *colors = @[Hy_ColorWithRGBA(46, 127, 208, .2),
                                            Hy_ColorWithRGBA(46, 127, 208, .1),

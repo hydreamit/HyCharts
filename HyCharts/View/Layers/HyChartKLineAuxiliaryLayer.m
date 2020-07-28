@@ -263,4 +263,26 @@
        }
 }
 
+- (CGFloat (^)(NSNumber * _Nonnull))valuePositon {
+    return ^(NSNumber *value) {
+        return CGRectGetHeight(self.bounds) - self.valueHeight(value);
+    };
+}
+
+- (CGFloat (^)(NSNumber * _Nonnull))valueHeight {
+    return ^(NSNumber *value) {
+        double maxValue = 0;
+        double minValue = 0;
+        if ([self.superlayer isKindOfClass:NSClassFromString(@"HyChartKLineLayer")]) {
+           maxValue = self.dataSource.axisDataSource.yAxisModelWityViewType(HyChartKLineViewTypeAuxiliary).yAxisMaxValue.doubleValue;
+           minValue = self.dataSource.axisDataSource.yAxisModelWityViewType(HyChartKLineViewTypeAuxiliary).yAxisMinValue.doubleValue;
+        } else {
+           maxValue = self.dataSource.axisDataSource.yAxisModel.yAxisMaxValue.doubleValue;
+           minValue = self.dataSource.axisDataSource.yAxisModel.yAxisMinValue.doubleValue;
+        }
+        double heightRate = maxValue != minValue ? CGRectGetHeight(self.bounds) / (maxValue - minValue) : 0;
+        return (value.doubleValue - minValue) * heightRate;
+    };
+}
+
 @end

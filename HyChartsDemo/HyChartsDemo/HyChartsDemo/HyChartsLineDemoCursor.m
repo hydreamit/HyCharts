@@ -8,6 +8,7 @@
 
 #import "HyChartsLineDemoCursor.h"
 #import <HyCategoriess/HyCategories.h>
+#import "HyChartBarModelProtocol.h"
 
 
 @implementation HyChartsLineDemoCursor
@@ -15,6 +16,7 @@
 - (void (^)(HyChartView * _Nonnull, id<HyChartModelProtocol> _Nonnull, NSString * _Nonnull, NSString * _Nonnull, CGPoint))show {
     return ^(HyChartView *chartView, id<HyChartModelProtocol> model, NSString *xText, NSString *yText, CGPoint centerPoint) {
         if (centerPoint.y < CGRectGetMaxY(chartView.frame)) {
+            
             [self dismiss];
             
             id<HyChartLineModelProtocol> chartLineModel = (id)model;

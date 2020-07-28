@@ -285,6 +285,7 @@
         } else {
             model.numberFormatter = self.configure.numberFormatter;
         }
+        [model setValuePositonProvider:(id)self.chartLayer];
         self.dataSource.modelDataSource.modelForItemAtIndexBlock(model, i);
         [self.dataSource.modelDataSource.models addObject:model];
     }

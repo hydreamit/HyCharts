@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) CGFloat trans;
 
+
+
 /// 当前缩放值
 @property (nonatomic, assign) CGFloat scale;
 /// 最小缩放值

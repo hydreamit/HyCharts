@@ -40,7 +40,7 @@
     [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(id<HyChartBarModelProtocol>  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
         [model.values enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             y = obj.doubleValue * heightRate;
-            [paths[idx] appendPath:[UIBezierPath bezierPathWithRect:CGRectMake(model.visiblePosition + (idx * oneBarWidth),  y, oneBarWidth, height - y)]];
+            [paths[idx] appendPath:[UIBezierPath bezierPathWithRect:CGRectMake(model.visiblePosition + (idx * oneBarWidth),  height - y, oneBarWidth, y)]];
         }];
     }];
         
@@ -70,6 +70,20 @@
         _layers = mArray.copy;
     }
     return _layers;
+}
+
+- (CGFloat (^)(NSNumber * _Nonnull))valueHeight {
+    return ^(NSNumber *value) {
+        double maxValue = self.dataSource.axisDataSource.yAxisModel.yAxisMaxValue.doubleValue;
+        double heightRate = maxValue != 0 ? CGRectGetHeight(self.bounds) / maxValue : 0;
+        return value.doubleValue * heightRate;
+    };
+}
+
+- (CGFloat (^)(NSNumber * _Nonnull))valuePositon {
+    return ^(NSNumber *value){
+        return CGRectGetHeight(self.bounds) - self.valueHeight(value);
+    };
 }
 
 @end
