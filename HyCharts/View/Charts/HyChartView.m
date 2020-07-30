@@ -453,6 +453,7 @@
     }
     
     if (yAxisModel.indexs) {
+        __weak typeof(self) _self = self;
         CGFloat averageMargin = (maxValue - minValue) / yAxisModel.indexs;
         typeof(id(^)(NSInteger, NSNumber *, NSNumber *))(^textBlock)(BOOL) =
         ^(BOOL displayAxisZeroText){
@@ -460,6 +461,7 @@
                 if (!displayAxisZeroText && !index) {
                     return @"";
                 }
+                __strong typeof(_self) self = _self;
                 double current = minValue + averageMargin * index;
                 return [self.yAxisNunmberFormatter stringFromNumber:@(current)];
             };
