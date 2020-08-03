@@ -138,11 +138,8 @@
             }
         }
                 
-        [self asyncHandler:^{
-            [self handleVisibleModels];
-        } completion:^{
-            [self.layer setNeedsDisplay];
-        }];
+        [self handleVisibleModels];
+        [self.layer setNeedsDisplay];
     };
 }
 
@@ -306,11 +303,10 @@
 
 - (void)asyncHandler:(void(^)(void))hander
           completion:(void(^)(void))completion {
-//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
         !hander ?: hander();
-        !completion ?: completion();
-//        dispatch_async(dispatch_get_main_queue(), completion);
-//    });
+        dispatch_async(dispatch_get_main_queue(), completion);
+    });
 }
 
 - (CGFloat)contentWidth {
@@ -687,11 +683,8 @@
        self.configure.trans = scrollView.contentOffset.x;
     }
 
-    [self asyncHandler:^{
-       [self handleVisibleModels];
-    } completion:^{
-       [self.layer setNeedsDisplay];
-    }];
+    [self handleVisibleModels];
+    [self.layer setNeedsDisplay];
     
     !self.scrollAction ?:
     self.scrollAction(scrollView.contentOffset.x, self.chartWidth, self.chartContentWidth);
