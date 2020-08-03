@@ -198,6 +198,10 @@
 }
 
 - (void)setNeedsRendering {
+    [self setNeedsRenderingWithCompletion:nil];
+}
+
+- (void)setNeedsRenderingWithCompletion:(void(^ _Nullable)(void))completion {
     
     if (!self.dataSource) { return; }
 
@@ -229,8 +233,8 @@
         [self.scrollView addGestureRecognizer:self.longPressGesture];
     }
     
-    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    
+     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+        
     id<HyChartConfigureProtocol> configure = self.dataSource.configreDataSource.configure;
     if (configure.autoMargin) {
         CGFloat xMargin = self.chartWidth / self.dataSource.axisDataSource.xAxisModel.indexs;
@@ -247,15 +251,19 @@
     [self.scrollView setContentOffset:CGPointMake(currentTrans, 0)
                              animated:NO];
     self.reverseScrolling = NO;
-        
-    [self asyncHandler:^{
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [self handleModels];
         [self handleVisibleModels];
-    } completion:^{
-        self.prepareStage = 2;
-        [self.layer setNeedsDisplay];
-        dispatch_semaphore_signal(self.semaphore);
-    }];
+        long signalValue = dispatch_semaphore_signal(self.semaphore);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (signalValue == 0) {
+                self.prepareStage = 2;
+                [self.layer setNeedsDisplay];
+            }
+            !completion ?: completion();
+        });
+    });
 }
 
 #pragma mark — private methods

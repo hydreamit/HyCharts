@@ -54,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 渲染
 - (void)setNeedsRendering;
+- (void)setNeedsRenderingWithCompletion:(void(^ _Nullable)(void))completion;
 
 
 /// 滚动
