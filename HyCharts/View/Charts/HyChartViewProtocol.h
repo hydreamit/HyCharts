@@ -50,10 +50,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)configChartCursor:(void(^)(id<HyChartCursorConfigureProtocol> configure))block;
 /// 自定义游标
 - (void)resetChartCursor:(id<HyChartCursorProtocol>_Nullable)cursor;
+/// 游标状态
+@property (nonatomic, copy) void(^chartCursorState)(HyChartCursorState state);
 
 
 /// 渲染
 - (void)setNeedsRendering;
+/// 渲染及完成回调
 - (void)setNeedsRenderingWithCompletion:(void(^ _Nullable)(void))completion;
 
 

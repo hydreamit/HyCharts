@@ -57,6 +57,17 @@ typedef NS_ENUM (NSUInteger, HyChartDataDirection) {
     HyChartDataDirectionReverse
 };
 
+/// 游标状态
+typedef NS_ENUM (NSUInteger, HyChartCursorState) {
+    /// 将要展示
+    HyChartCursorStateWillShowing,
+    /// 长按滚动展示
+    HyChartCursorStateScrollShowing,
+    /// 结束展示
+    HyChartCursorStateDidEndShowing
+};
+
+
 
 /// K线图种类
 typedef NS_ENUM (NSUInteger, HyChartKLineViewType) {

@@ -52,7 +52,7 @@
 
 
 @implementation HyChartView
-@synthesize contentEdgeInsets = _contentEdgeInsets, pinchGestureDisabled = _pinchGestureDisabled, tapGestureDisabled = _tapGestureDisabled, longPressGestureDisabled = _longPressGestureDisabled, longGestureAction = _longGestureAction, tapGestureAction = _tapGestureAction, pinchGestureAction = _pinchGestureAction, scrollAction = _scrollAction, bounces = _bounces;
+@synthesize contentEdgeInsets = _contentEdgeInsets, pinchGestureDisabled = _pinchGestureDisabled, tapGestureDisabled = _tapGestureDisabled, longPressGestureDisabled = _longPressGestureDisabled, longGestureAction = _longGestureAction, tapGestureAction = _tapGestureAction, pinchGestureAction = _pinchGestureAction, scrollAction = _scrollAction, bounces = _bounces, chartCursorState = _chartCursorState;
 
 #pragma mark — lief cycle
 - (void)didMoveToSuperview {
@@ -572,11 +572,13 @@
     }
     if (self.chartCursor.isShowing) {
         [self.chartCursor dismiss];
+        !self.chartCursorState ?: self.chartCursorState(HyChartCursorStateDidEndShowing);
     } else {
         if (self.chartCursor || self.tapGestureAction) {
             [self handleGestureWithPoint:[gesture locationInView:self.scrollView]
                               completion:^(id<HyChartModelProtocol> model, NSInteger index,
                                            CGPoint centerPoint, NSString *xText, NSString *yText) {
+                !self.chartCursorState ?: self.chartCursorState(HyChartCursorStateWillShowing);
                 !self.chartCursor.show ?: self.chartCursor.show(self, model, xText, yText, centerPoint);
                 !self.tapGestureAction ?: self.tapGestureAction(self, model, index, centerPoint);
             }];
@@ -592,6 +594,13 @@
         [self handleGestureWithPoint:[gesture locationInView:self.scrollView]
                           completion:^(id<HyChartModelProtocol> model, NSInteger index,
                                        CGPoint centerPoint, NSString *xText, NSString *yText) {
+            
+            if (gesture.state == UIGestureRecognizerStateBegan &&
+                !self.chartCursor.isShowing) {
+                !self.chartCursorState ?: self.chartCursorState(HyChartCursorStateWillShowing);
+            } else {
+                !self.chartCursorState ?: self.chartCursorState(HyChartCursorStateScrollShowing);
+            }
             !self.chartCursor.show ?: self.chartCursor.show(self, model, xText, yText, centerPoint);
             !self.longGestureAction ?: self.longGestureAction(self, model, index, centerPoint);
         }];
