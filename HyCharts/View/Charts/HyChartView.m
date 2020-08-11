@@ -293,13 +293,15 @@
     }
     
     BOOL isKline = [self.model conformsToProtocol:@protocol(HyChartKLineModelProtocol)];
-    HyChartModel * model = self._dataSource.modelDataSource.models.firstObject;
+    HyChartModel *model = self._dataSource.modelDataSource.models.firstObject;
     BOOL contain = [self._dataSource.modelDataSource.visibleModels containsObject:model];
     
     if (itemsCount == modelsCount) {
         
         [self asyncHandler:^{
+            
             if (isKline) {
+                self._dataSource.modelDataSource.modelForItemAtIndexBlock(model, 0);
                 [self handleTechnicalDataWithRangeIndex:1];
                 [self handleMaxMinValueWithRangeIndex:1];
             }
