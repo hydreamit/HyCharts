@@ -26,16 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (id<HyChartAxisDataSourceProtocol>)configYAxisWithModel:(void(^)(id<HyChartYAxisModelProtocol> yAxisModel))block;
 
 
-/// X轴数据
-@property (nonatomic, strong, readonly) id<HyChartXAxisModelProtocol> xAxisModel;
-/// X轴数据
-@property (nonatomic, strong, readonly) id<HyChartYAxisModelProtocol> yAxisModel;
-
-
-/// 使用HyChartKlineView 需要配置对应视图的Y轴数据
+/// 使用HyChartKlineView   配置Y轴数据
 - (id<HyChartAxisDataSourceProtocol>)configYAxisWithModelAndViewType:(void(^)(id<HyChartYAxisModelProtocol> yAxisModel, HyChartKLineViewType type))block;
-@property (nonatomic, strong, readonly) id<HyChartYAxisModelProtocol>(^yAxisModelWityViewType)(HyChartKLineViewType type);
-@property (nonatomic, strong, readonly) id<HyChartXAxisModelProtocol>(^xAxisModelWityViewType)(HyChartKLineViewType type);
+
 
 @end
 

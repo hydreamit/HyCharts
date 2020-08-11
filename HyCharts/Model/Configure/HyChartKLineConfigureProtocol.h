@@ -16,8 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HyChartKLineConfigureProtocol <HyChartConfigureProtocol>
 
-/// 影线宽度 (默认 1)
-@property (nonatomic, assign) CGFloat hatchWidth;
+
+/// 上影线、下影线、实体空心线、技术指标线 宽度
+@property (nonatomic, assign) CGFloat lineWidth;
+/// 当缩小时 线宽是否跟着缩小 默认NO
+//@property (nonatomic, assign) BOOL lineWidthCanScale;
 /// 上涨颜色
 @property (nonatomic, strong) UIColor *trendUpColor;
 /// 下跌颜色
@@ -62,14 +65,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIFont *maxminPriceFont;
 
 
-/// 技术指标线宽度
-@property (nonatomic, assign) CGFloat technicalLineWidth;
-
-
-
+/// 价格精度
 @property (nonatomic, assign) NSInteger priceDecimal;
+/// 成交量精度
 @property (nonatomic, assign) NSInteger volumeDecimal;
+/// 价格格式转化器
 @property (nonatomic, strong, readonly) NSNumberFormatter *priceNunmberFormatter;
+/// 成交量格式转化器
 @property (nonatomic, strong, readonly) NSNumberFormatter *volumeNunmberFormatter;
 
 
@@ -87,7 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 配置 MACD 技术指标参数(NSArray 个数三个) 和 线条颜色数组(dif线颜色， dem线颜色, MACD 正值柱颜色 和 负值柱颜色)
 @property (nonatomic, strong) NSDictionary<NSArray<NSNumber *> *, NSArray<UIColor *> *> *macdDict;
-/// 配置 RSI 技术指标参数 和 线条颜色
+/// 配置 RSI 技术指标参数 和 线条颜色 最多三条
 @property (nonatomic, strong) NSDictionary<NSNumber *, UIColor *> *rsiDict;
 /// 配置 KDJ 技术指标参数(NSArray 个数三个) 和 线条颜色数组(K、D、J线颜色)
 @property (nonatomic, strong) NSDictionary<NSArray<NSNumber *> *, NSArray<UIColor *> *> *kdjDict;

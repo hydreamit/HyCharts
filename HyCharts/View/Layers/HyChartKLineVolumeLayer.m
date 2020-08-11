@@ -175,7 +175,7 @@
     id<HyChartKLineConfigureProtocol> configure = self.dataSource.configreDataSource.configure;
     
     CAShapeLayer *layer = [CAShapeLayer layer];
-    layer.lineWidth = configure.hatchWidth;
+    layer.lineWidth = configure.lineWidth;
     
     layer.strokeColor = trend == HyChartKLineTrendUp ?
     configure.trendUpColor.CGColor : configure.trendDownColor.CGColor;
@@ -200,7 +200,7 @@
         [self.dataSource.configreDataSource.configure.smaDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull obj, BOOL * _Nonnull stop) {
             CAShapeLayer *smaLayer = [CAShapeLayer layer];
             smaLayer.strokeColor = obj.CGColor;
-            smaLayer.lineWidth = self.dataSource.configreDataSource.configure.technicalLineWidth;;
+            smaLayer.lineWidth = self.dataSource.configreDataSource.configure.lineWidth;;
             smaLayer.fillColor = UIColor.clearColor.CGColor;
             smaLayer.lineCap = kCALineCapRound;
             smaLayer.lineJoin = kCALineCapRound;
@@ -221,7 +221,7 @@
         [self.dataSource.configreDataSource.configure.emaDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull obj, BOOL * _Nonnull stop) {
             CAShapeLayer *emaLayer = [CAShapeLayer layer];
             emaLayer.strokeColor = obj.CGColor;
-            emaLayer.lineWidth = self.dataSource.configreDataSource.configure.technicalLineWidth;;
+            emaLayer.lineWidth = self.dataSource.configreDataSource.configure.lineWidth;;
             emaLayer.fillColor = UIColor.clearColor.CGColor;
             emaLayer.lineCap = kCALineCapRound;
             emaLayer.lineJoin = kCALineCapRound;
@@ -245,7 +245,7 @@
                 for (UIColor *color in colors) {
                     CAShapeLayer *bollLayer = [CAShapeLayer layer];
                     bollLayer.strokeColor = color.CGColor;
-                    bollLayer.lineWidth = self.dataSource.configreDataSource.configure.technicalLineWidth;
+                    bollLayer.lineWidth = self.dataSource.configreDataSource.configure.lineWidth;
                     bollLayer.fillColor = UIColor.clearColor.CGColor;
                     bollLayer.lineCap = kCALineCapRound;
                     bollLayer.lineJoin = kCALineCapRound;

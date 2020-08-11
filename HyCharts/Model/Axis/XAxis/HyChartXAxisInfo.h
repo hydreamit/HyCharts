@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HyChartXAxisInfo : HyChartAxisInfo<HyChartXAxisInfoProtocol>
 
+@property (nonatomic, copy, readonly) id(^textAtIndexBlock)(NSInteger, id<HyChartModelProtocol>);
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -13,12 +13,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-@protocol HyChartValuePositonProviderProtocol <NSObject>
-@property (nonatomic,copy, readonly) CGFloat (^valuePositon)(NSNumber *value);
-@property (nonatomic,copy, readonly) CGFloat (^valueHeight)(NSNumber *value);
-@end
-
-
 @protocol HyChartModelProtocol <NSObject>
 
 /// X轴上显示内容
@@ -26,15 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// y 轴上的值(X轴点对应最大Y值)
 @property (nonatomic, strong) NSNumber *value;
 
-/// 总下标
-@property (nonatomic, assign) NSInteger index;
-/// 可见数据下标
-@property (nonatomic, assign) NSInteger visibleIndex;
-
 /// 图层上x轴上的绝对位置
-@property (nonatomic, assign) CGFloat position;
+@property (nonatomic, assign,readonly) CGFloat position;
 /// 图层上x轴上的可见相对位置
-@property (nonatomic, assign) CGFloat visiblePosition;
+@property (nonatomic, assign,readonly) CGFloat visiblePosition;
 
 /// 图层上数据y轴上位置
 @property (nonatomic,copy, readonly) CGFloat (^valuePositon)(NSNumber *value);
@@ -43,14 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 用来保存自己需要的额外数据
 @property (nonatomic, strong) id exData;
-
-
-
-
-
-@property (nonatomic, strong) NSNumberFormatter *numberFormatter;
-
-- (void)setValuePositonProvider:(id<HyChartValuePositonProviderProtocol>)provider;
 
 @end
 

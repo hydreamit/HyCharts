@@ -15,14 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 设置总个数
 - (instancetype)configNumberOfIndexs:(NSInteger)indexs;
-/// 总个数
-@property (nonatomic, assign, readonly) NSInteger indexs;
-
-
 /// 设置网格数据
 - (instancetype)configAxisGridLineInfo:(void(^)(id<HyChartAxisGridLineInfoProtocol> axisGridLineInfo))block;
-/// 网格数据
-@property (nonatomic, strong, readonly) id<HyChartAxisGridLineInfoProtocol> axisGridLineInfo;
 
 
 @end

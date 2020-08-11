@@ -12,12 +12,14 @@
 #import "HyChartLineModel.h"
 #import "HyChartKLineConfigureProtocol.h"
 #import "HyChartsMethods.h"
+#import <objc/message.h>
+#import "HyChartLineModel.h"
 
 
 @interface HyChartLineView ()
 @property (nonatomic, assign) CGFloat chartWidth;
 @property (nonatomic, strong) HyChartLineLayer *chartLayer;
-@property (nonatomic, strong) id<HyChartLineDataSourceProtocol> dataSource;
+@property (nonatomic, strong) HyChartLineDataSource *dataSource;
 @end
 
 
@@ -25,21 +27,21 @@
 
 - (void)handleVisibleModelsWithStartIndex:(NSInteger)startIndex endIndex:(NSInteger)endIndex {
     
-    __block id<HyChartLineModelProtocol> maxModel = nil;
-    __block id<HyChartLineModelProtocol> minModel = nil;
-    id<HyChartLineConfigureProtocol> configure =  self.dataSource.configreDataSource.configure;
+    __block HyChartLineModel *maxModel = nil;
+    __block HyChartLineModel *minModel = nil;
+    HyChartLineConfigure *configure =  self.dataSource.configreDataSource.configure;
     
     HyChartDataDirection dataDirection =  self.dataSource.configreDataSource.configure.dataDirection;
     
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex, endIndex - startIndex + 1)];
     self.dataSource.modelDataSource.visibleModels = [self.dataSource.modelDataSource.models objectsAtIndexes:indexSet];
-    [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(id<HyChartLineModelProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        obj.visibleIndex = idx;
+    [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(HyChartLineModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSInteger index = [self.dataSource.modelDataSource.models indexOfObject:obj];
         if (dataDirection == HyChartDataDirectionForward) {
-            obj.position = configure.scaleEdgeInsetStart + obj.index * configure.scaleItemWidth ;
+            obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth ;
             obj.visiblePosition = obj.position - configure.trans;
         } else {
-            obj.position = configure.scaleEdgeInsetStart + obj.index * configure.scaleItemWidth + configure.scaleWidth;
+            obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth + configure.scaleWidth;
             obj.visiblePosition = self.chartWidth - (obj.position - configure.trans);
         }
 
@@ -69,14 +71,14 @@
     return _chartLayer;
 }
 
-- (id<HyChartLineDataSourceProtocol>)dataSource {
+- (HyChartLineDataSource *)dataSource {
     if (!_dataSource){
         _dataSource = [[HyChartLineDataSource alloc] init];
     }
     return _dataSource;
 }
 
-- (id<HyChartLineModelProtocol>)model {
+- (HyChartLineModel *)model {
     return HyChartLineModel.new;
 }
 

@@ -13,6 +13,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HyChartKLineModel : HyChartModel<HyChartKLineModelProtocol>
 
+@property (nonatomic, strong) NSNumber *maxPrice;
+@property (nonatomic, strong) NSNumber *minPrice;
+@property (nonatomic, strong) NSNumber *maxVolume;
+@property (nonatomic, strong) NSNumber *minVolume;
+@property (nonatomic, strong) NSNumber *maxAuxiliary;
+@property (nonatomic, strong) NSNumber *minAuxiliary;
+@property (nonatomic, strong) NSNumberFormatter *priceNunmberFormatter;
+@property (nonatomic, strong) NSNumberFormatter *volumeNunmberFormatter;
+
 @end
 
 NS_ASSUME_NONNULL_END

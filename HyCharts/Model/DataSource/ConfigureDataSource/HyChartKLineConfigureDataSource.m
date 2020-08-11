@@ -10,19 +10,15 @@
 #import "HyChartKLineConfigure.h"
 
 @interface HyChartKLineConfigureDataSource ()
-@property (nonatomic, strong) id<HyChartKLineConfigureProtocol> configure;
+@property (nonatomic, strong) HyChartKLineConfigure *configure;
 @end
 
 @implementation HyChartKLineConfigureDataSource
+@synthesize configure = _configure;
 
-- (id<HyChartKLineConfigureDataSourceProtocol>)configConfigure:(void (^_Nullable)(id<HyChartKLineConfigureProtocol> configure))block {
-    !block ?: block(self.configure);
-    return self;
-}
-
-- (id<HyChartKLineConfigureProtocol>)configure {
+- (HyChartKLineConfigure *)configure {
     if (!_configure){
-        _configure = [HyChartKLineConfigure defaultConfigure];
+        _configure = [[HyChartKLineConfigure alloc] init];
     }
     return _configure;
 }

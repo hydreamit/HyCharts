@@ -26,35 +26,35 @@
 @property (nonatomic, assign) CGPoint origin;
 @property (nonatomic, assign, readonly) CGPoint middlePoint;
 
-- (UIView *(^)(CGFloat left, CGFloat top, CGFloat width, CGFloat heigth))rectValue;
+@property (nonatomic,copy,readonly) UIView *(^rectValue)(CGFloat left, CGFloat top, CGFloat width, CGFloat heigth);
 
-- (UIView *(^)(CGFloat value))widthValue;
-- (UIView *(^)(CGFloat value))heightValue;
-- (UIView *(^)(CGFloat width, CGFloat height))sizeValue;
+@property (nonatomic,copy,readonly) UIView *(^widthValue)(CGFloat width);
+@property (nonatomic,copy,readonly) UIView *(^heightValue)(CGFloat heigth);
+@property (nonatomic,copy,readonly) UIView *(^sizeValue)(CGFloat width, CGFloat heigth);
 
-- (UIView *(^)(CGFloat value))leftValue;
-- (UIView *(^)(CGFloat value))topValue;
-- (UIView *(^)(CGFloat value))rightValue;
-- (UIView *(^)(CGFloat value))bottomValue;
+@property (nonatomic,copy,readonly) UIView *(^leftValue)(CGFloat left);
+@property (nonatomic,copy,readonly) UIView *(^topValue)(CGFloat top);
+@property (nonatomic,copy,readonly) UIView *(^rightValue)(CGFloat right);
+@property (nonatomic,copy,readonly) UIView *(^bottomValue)(CGFloat bottom);
 
-- (UIView *(^)(CGFloat value))centerXValue;
-- (UIView *(^)(CGFloat value))centerYValue;
-- (UIView *(^)(CGFloat left, CGFloat top))originValue;
+@property (nonatomic,copy,readonly) UIView *(^centerXValue)(CGFloat centerX);
+@property (nonatomic,copy,readonly) UIView *(^centerYValue)(CGFloat centerY);
+@property (nonatomic,copy,readonly) UIView *(^originValue)(CGFloat left, CGFloat top);
 
-- (UIView *(^)(UIView *value))widthIsEqualTo;
-- (UIView *(^)(UIView *value))heightIsEqualTo;
-- (UIView *(^)(UIView *value))sizeIsEqualTo;
+@property (nonatomic,copy,readonly) UIView *(^widthIsEqualTo)(UIView *view);
+@property (nonatomic,copy,readonly) UIView *(^heightIsEqualTo)(UIView *view);
+@property (nonatomic,copy,readonly) UIView *(^sizeIsEqualTo)(UIView *view);
 
-- (UIView *(^)(UIView *value))leftIsEqualTo;
-- (UIView *(^)(UIView *value))topIsEqualTo;
-- (UIView *(^)(UIView *value))rightIsEqualTo;
-- (UIView *(^)(UIView *value))bottomIsEqualTo;
+@property (nonatomic,copy,readonly) UIView *(^leftIsEqualTo)(UIView *view);
+@property (nonatomic,copy,readonly) UIView *(^topIsEqualTo)(UIView *view);
+@property (nonatomic,copy,readonly) UIView *(^rightIsEqualTo)(UIView *view);
+@property (nonatomic,copy,readonly) UIView *(^bottomIsEqualTo)(UIView *view);
 
-- (UIView *(^)(UIView *value))centerXIsEqualTo;
-- (UIView *(^)(UIView *value))centerYIsEqualTo;
-- (UIView *(^)(UIView *value))originIsEqualTo;
+@property (nonatomic,copy,readonly) UIView *(^centerXIsEqualTo)(UIView *view);
+@property (nonatomic,copy,readonly) UIView *(^centerYIsEqualTo)(UIView *view);
+@property (nonatomic,copy,readonly) UIView *(^originIsEqualTo)(UIView *view);
 
-- (UIView *(^)(UIView *value))containTo;
+@property (nonatomic,copy,readonly) UIView *(^containTo)(UIView *view);
 
 @end
 

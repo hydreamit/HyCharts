@@ -8,11 +8,11 @@
 
 #import "HyChartLayer.h"
 #import "HyChartsTypedef.h"
-#import "HyChartKLineDataSourceProtocol.h"
+#import "HyChartKLineDataSource.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HyChartKLineVolumeLayer : HyChartLayer<id<HyChartKLineDataSourceProtocol>>
+@interface HyChartKLineVolumeLayer : HyChartLayer<HyChartKLineDataSource *>
 
 @property (nonatomic, assign) HyChartKLineTechnicalType technicalType;
 

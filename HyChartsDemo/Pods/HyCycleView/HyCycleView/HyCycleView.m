@@ -7,12 +7,135 @@
 //  Copyright © 2016年 Hy. All rights reserved.
 //
 
+
 #import "HyCycleView.h"
 
 
-@interface HyGestureScrollView : UIScrollView <UIGestureRecognizerDelegate>
+@interface HyCycleViewProvider ()
+@property (nonatomic, assign) NSInteger index;
+@property (nonatomic, strong) UIView *view;
+@property (nonatomic, strong) id protocolObject;
+@property (nonatomic, copy) UIView *(^hy_view)(id);
+@property (nonatomic, copy) void (^hy_viewWillAppear)(id, id, BOOL);
+@property (nonatomic, copy) void (^hy_viewDidDisAppear)(id, id);
+@property (nonatomic, copy) void (^hy_viewClickAction)(id, id);
 @end
-@implementation HyGestureScrollView
+@implementation HyCycleViewProvider
+- (instancetype)view:(UIView * _Nonnull (^)(id _Nonnull))block {
+    self.hy_view = [block copy];
+    return self;
+}
+- (instancetype)viewWillAppear:(void (^)(id _Nonnull, id _Nonnull, BOOL))block {
+    self.hy_viewWillAppear = [block copy];
+    return self;
+}
+- (instancetype)viewDidDisAppear:(void (^)(id _Nonnull, id _Nonnull))block {
+    self.hy_viewDidDisAppear = [block copy];
+    return self;
+}
+- (instancetype)viewClickAction:(void (^)(id _Nonnull, id _Nonnull))block {
+    self.hy_viewClickAction = [block copy];
+    return self;
+}
+@end
+
+
+@interface HyCycleViewConfigure ()
+@property (nonatomic, assign) BOOL hy_isCycle;
+@property (nonatomic, assign) BOOL hy_isAutoCycle;
+@property (nonatomic, assign) NSTimeInterval hy_interval;
+@property (nonatomic, assign) HyCycleViewDirection hy_direction;
+@property (nonatomic, assign) HyCycleViewLoadStyle hy_loadStyle;
+@property (nonatomic, copy) NSInteger (^hy_totalIndexs)(id);
+@property (nonatomic, copy) NSInteger (^hy_startIndex)(id);
+@property (nonatomic,copy) id (^hy_viewAtIndex)(id, NSInteger);
+@property (nonatomic,copy) void(^hy_viewWillAppearAtIndex)(id, id, NSInteger, BOOL);
+@property (nonatomic,copy) void(^hy_viewDidDisAppearAtIndex)(id, id, NSInteger);
+@property (nonatomic,copy) void(^hy_clickActionAtIndex)(id, id, NSInteger);
+@property (nonatomic,copy) void(^hy_currentIndexChange)(id, NSInteger, NSInteger);
+@property (nonatomic,copy) void(^hy_roundingIndexChange)(id, NSInteger, NSInteger);
+@property (nonatomic,copy) void(^hy_scrollProgress)(id, NSInteger, NSInteger, CGFloat);
+@property (nonatomic,weak) id<HyCycleViewScrollDelegate> hy_scrollDelegate;
+@end
+
+@implementation HyCycleViewConfigure
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.hy_interval = 2;
+//        self.hy_loadStyle  = 1;
+//        self.hy_isAutoCycle = YES;
+//        self.hy_isCycle = YES;
+//        self.hy_direction = HyCycleViewDirectionTop;
+    }
+    return self;
+}
+- (instancetype)isCycle:(BOOL)isCycle {
+    self.hy_isCycle = isCycle;
+    return self;
+}
+- (instancetype)isAutoCycle:(BOOL)isAutoCycle {
+    self.hy_isAutoCycle = isAutoCycle;
+    return self;
+}
+- (instancetype)interval:(NSTimeInterval)interval {
+    self.hy_interval = interval;
+    return self;
+}
+- (instancetype)direction:(HyCycleViewDirection)direction {
+    self.hy_direction = direction;
+    return self;
+}
+- (instancetype)loadStyle:(HyCycleViewLoadStyle)loadStyle {
+    self.hy_loadStyle = loadStyle;
+    return self;
+}
+- (instancetype)startIndex:(NSInteger(^)(id))block {
+    self.hy_startIndex = [block copy];
+    return self;
+}
+- (instancetype)totalIndexs:(NSInteger(^)(id))block {
+    self.hy_totalIndexs = [block copy];
+    return self;
+}
+- (instancetype)viewProviderAtIndex:(id  _Nonnull (^)(id _Nonnull, NSInteger))block {
+    self.hy_viewAtIndex = [block copy];
+    return self;
+}
+- (instancetype)viewWillAppearAtIndex:(void (^)(id _Nonnull, id _Nonnull, NSInteger, BOOL))block {
+    self.hy_viewWillAppearAtIndex = [block copy];
+    return self;
+}
+- (instancetype)viewDidDisAppearAtIndex:(void (^)(id _Nonnull, id _Nonnull, NSInteger))block {
+    self.hy_viewDidDisAppearAtIndex = [block copy];
+    return self;
+}
+- (instancetype)clickActionAtIndex:(void (^)(id _Nonnull,id _Nonnull, NSInteger))block {
+    self.hy_clickActionAtIndex = [block copy];
+    return self;
+}
+- (instancetype)currentIndexChange:(void (^)(id _Nonnull, NSInteger, NSInteger))block {
+    self.hy_currentIndexChange = [block copy];
+    return self;
+}
+- (instancetype)roundingIndexChange:(void (^)(id _Nonnull, NSInteger, NSInteger))block {
+    self.hy_roundingIndexChange = [block copy];
+    return self;
+}
+- (instancetype)scrollProgress:(void (^)(id _Nonnull, NSInteger, NSInteger, CGFloat))block {
+    self.hy_scrollProgress = [block copy];
+    return self;
+}
+- (instancetype)scrollDelegate:(id<HyCycleViewScrollDelegate>)delegate {
+    self.hy_scrollDelegate = delegate;
+    return self;
+}
+@end
+
+
+@interface HyGestureColletionView : UICollectionView <UIGestureRecognizerDelegate>
+@end
+@implementation HyGestureColletionView
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if ([otherGestureRecognizer.view isKindOfClass:NSClassFromString(@"UILayoutContainerView")]) {
@@ -25,1055 +148,659 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 }
 @end
 
-
-@interface HyCycleViewConfigure ()
-@property (nonatomic, assign) BOOL hy_isCycleLoop;
-@property (nonatomic, assign) NSInteger hy_totalPage;
-@property (nonatomic, assign) NSInteger hy_startPage;
-@property (nonatomic, assign) NSTimeInterval hy_timeInterval;
-
-@property (nonatomic, strong) NSArray *hy_cycleInstances;
-@property (nonatomic, strong) NSArray<Class> *hy_cycleClasses;
-@property (nonatomic, strong) Class(^hy_cycleClass)(HyCycleView *, NSInteger);
-@property (nonatomic, strong) id (^hy_cycleInstance)(HyCycleView *, NSInteger);
-
-@property (nonatomic, assign) HyCycleViewScrollStyle hy_scrollStyle;
-@property (nonatomic, assign) HyCycleViewScrollLoadStyle hy_loadStyle;
-@property (nonatomic, assign) HyCycleViewScrollDirection hy_scrollDirection;
-@property (nonatomic, copy) void(^hy_clickAction)(HyCycleView *, NSInteger);
-@property (nonatomic, copy) void(^hy_viewWillAppear)(HyCycleView *,
-                                                     id,
-                                                     NSInteger,
-                                                     BOOL);
-@property (nonatomic, copy) void(^hy_currentPageChange)(HyCycleView *,
-                                                        NSInteger,
-                                                        NSInteger);
-
-@property (nonatomic, copy) void(^hy_roundingPageChange)(HyCycleView *,
-                                                         NSInteger,
-                                                         NSInteger);
-
-@property (nonatomic, copy) void(^hy_scrollProgress)(HyCycleView *,
-                                                     NSInteger,
-                                                     NSInteger,
-                                                     CGFloat);
-
-@property (nonatomic, copy) void(^hy_scrollState)(HyCycleView *, BOOL);
-@property (nonatomic,weak) HyCycleView *cycleView;
-+ (instancetype)defaultConfigure;
-- (void)clearConfigure;
-- (void)deallocBlock;
+@interface HyCycleViewCell : UICollectionViewCell
+@property (nonatomic,strong) NSIndexPath *indexPath;
+@property (nonatomic,assign) BOOL isTempAddView;
+@end
+@implementation HyCycleViewCell
++ (instancetype)cellWithCollectionView:(UICollectionView *)collectionView
+                             indexPath:(NSIndexPath *)indexPath {
+    HyCycleViewCell *cell =
+    [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(self.class)
+    forIndexPath:indexPath];
+    cell.indexPath = indexPath;
+    return cell;
+}
 @end
 
 
-@interface HyCycleView () <UIScrollViewDelegate>
+
+@interface HyCycleView () <UICollectionViewDelegate, UICollectionViewDataSource>
+@property (nonatomic, strong) HyCycleViewConfigure *configure;
+@property (nonatomic, strong) UICollectionViewFlowLayout *layout;
+@property (nonatomic, strong) HyGestureColletionView *collectionView;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, HyCycleViewProvider<HyCycleView *> *> *viewProviderDict;
+@property (nonatomic, strong) NSMutableIndexSet *didLoadIndexSet;
+@property (nonatomic, assign) NSInteger totalIndexs;
+@property (nonatomic, assign) NSInteger repeatCount;
+@property (nonatomic, assign) BOOL isCycle;
+@property (nonatomic, assign) BOOL isAutoCycle;
+@property (nonatomic, assign) NSTimeInterval interval;
+@property (nonatomic, assign) HyCycleViewDirection direction;
+@property (nonatomic, assign) HyCycleViewLoadStyle loadStyle;
+@property (nonatomic, assign) NSInteger currentIndex;
+@property (nonatomic, assign) NSInteger roundingIndex;
+@property (nonatomic, assign) NSInteger currentCycleIndex;
+@property (nonatomic, assign) NSInteger targetIndex;
 @property (nonatomic, strong) dispatch_source_t timer;
-@property (nonatomic, assign)  BOOL isSetPage;
 @property (nonatomic, assign) CGFloat lastScrollProgress;
 @property (nonatomic, assign) NSInteger lastFromIndex;
 @property (nonatomic, assign) NSInteger lastToIndex;
-@property (nonatomic, strong) HyGestureScrollView *scrollView;
-@property (nonatomic, assign) NSInteger totalCycleCount;
-
-@property (nonatomic, assign) NSInteger roundingCyclePage;
-@property (nonatomic, assign) NSInteger currentCyclePage;
-
-@property (nonatomic, strong) NSMutableArray *addedCycleViews;
-@property (nonatomic, strong) HyCycleViewConfigure *configure;
 @property (nonatomic, strong) dispatch_semaphore_t semaphore;
-@property (nonatomic, copy) void(^configureBlock)(HyCycleViewConfigure *configure);
-@property (nonatomic, assign) BOOL scrollState;
+@property (nonatomic, assign) BOOL isNoAnimation;
+@property (nonatomic, assign) CGFloat lastP;
+@property (nonatomic, strong) NSIndexPath *lastViewWillAppearIndexPath;
 @end
 
-
-static int const CycleContentViewCount = 3;
 @implementation HyCycleView
-#pragma mark — public methods
-+ (instancetype)cycleViewWithFrame:(CGRect)frame
-                    configureBlock:(void (^)(HyCycleViewConfigure *configure))configureBlock {
-    
-    HyCycleView *cycleView = [[self alloc] initWithFrame:frame];
-    
-    [cycleView addSubview:cycleView.scrollView];
-    cycleView.configureBlock = [configureBlock copy];
-    !configureBlock ?: configureBlock(cycleView.configure);
-    
-    if (cycleView.configure.hy_cycleInstances.count) {
-        
-        cycleView.totalCycleCount = cycleView.configure.hy_cycleInstances.count;
-        
-    } else if (cycleView.configure.hy_cycleClasses.count) {
-        
-        if (cycleView.configure.hy_cycleClasses.count == 1 ||
-            cycleView.configure.hy_totalPage <= cycleView.configure.hy_cycleClasses.count) {
-            
-            cycleView.totalCycleCount = cycleView.configure.hy_totalPage;
-            
-        } else {
-            
-            NSMutableArray *mArray = [NSMutableArray arrayWithArray:cycleView.configure.hy_cycleClasses];
-            NSInteger count = cycleView.configure.hy_totalPage - cycleView.configure.hy_cycleClasses.count;
-            for (int i = 0; i < count; i++) {
-                [mArray addObject:mArray.lastObject];
-            }
-            cycleView.configure.hy_cycleClasses = mArray.copy;
-            cycleView.totalCycleCount = cycleView.configure.hy_totalPage;
-        }
-        
-    } else if (cycleView.configure.hy_cycleClass || cycleView.configure.hy_cycleInstance) {
-        cycleView.totalCycleCount = cycleView.configure.hy_totalPage;
+#pragma mark — life cycle methods
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        [self addSubview:self.collectionView];
     }
-    
-    if (cycleView.totalCycleCount > 0) {
-        
-        for (int i = 0; i < CycleContentViewCount; i++) {
-            UIView *contentView = [[UIView alloc] init];
-            contentView.backgroundColor = UIColor.clearColor;
-            contentView.clipsToBounds = YES;
-            [cycleView.scrollView addSubview:contentView];
-            [contentView addGestureRecognizer:[[UITapGestureRecognizer alloc]
-                                               initWithTarget:cycleView
-                                               action:@selector(tap:)]];
-        }
-        
-        [cycleView handleStartCyclePage];
-        [cycleView handleContentViewFrame];
-        [cycleView handleScrollViewContentSize];
-        
-        cycleView.scrollView.scrollEnabled = cycleView.totalCycleCount != 1;
-    }
-    cycleView.configure.cycleView = cycleView;
-    return cycleView;
-}
-
-- (void)didMoveToSuperview {
-    [super didMoveToSuperview];
-    
-    if (self.superview) {
-        if (self.configure.hy_scrollStyle == HyCycleViewScrollAuto &&
-            self.totalCycleCount > 1) {
-            [self startTimer];
-        }
-    }
-}
-
-- (void)scrollToNextPageWithAnimated:(BOOL)animated {
-    [self scrollToNextPageWithAnimated:animated
-                           handleTimer:YES];
-}
-
-- (void)scrollToNextPageWithAnimated:(BOOL)animated
-                         handleTimer:(BOOL)handleTime {
-    
-    if (self.totalCycleCount <= 1) { return;}
-    
-    if (handleTime &&
-        animated &&
-        self.configure.hy_scrollStyle == HyCycleViewScrollAuto) {
-        [self stopTimer];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
-                                     (int64_t)(.25 * NSEC_PER_SEC)),
-                       dispatch_get_main_queue(), ^{
-                           [self startTimer];
-                       });
-    }
-    
-    NSInteger nextPage = [self getCurrentPage] + 1;
-    nextPage = nextPage > self.totalCycleCount - 1 ? 0 : nextPage;
-    [self scrollToPage:nextPage
-              animated:animated];
-}
-
-- (void)scrollToLastPageWithAnimated:(BOOL)animated {
-    
-    if (self.totalCycleCount <= 1) { return;}
-    
-    NSInteger lastPage = [self getCurrentPage] - 1;
-    lastPage = lastPage < 0 ? self.totalCycleCount - 1 : lastPage;
-    [self scrollToPage:lastPage
-              animated:animated];
-}
-
-- (void)reloadConfigureBlock {
-    
-    if (self.configureBlock) {
-        dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-        [self.configure clearConfigure];
-        self.configureBlock(self.configure);
-        [self reloadData];
-        dispatch_semaphore_signal(self.semaphore);
-    }
-}
-
-- (void)reloadConfigureChange {
-    
-    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    [self reloadData];
-    dispatch_semaphore_signal(self.semaphore);
-}
-
-- (void)reloadData {
-    
-    [self clearData];
-    
-    if (self.configure.hy_cycleInstances.count) {
-        
-        self.totalCycleCount = self.configure.hy_cycleInstances.count;
-        
-    } else if (self.configure.hy_cycleClasses.count) {
-        
-        if (self.configure.hy_cycleClasses.count == 1 ||
-            self.configure.hy_totalPage <= self.configure.hy_cycleClasses.count) {
-            
-            self.totalCycleCount = self.configure.hy_totalPage;
-            
-        } else {
-            
-            NSMutableArray *mArray = [NSMutableArray arrayWithArray:self.configure.hy_cycleClasses];
-            NSInteger count = self.configure.hy_totalPage - self.configure.hy_cycleClasses.count;
-            for (int i = 0; i < count; i++) {
-                [mArray addObject:mArray.lastObject];
-            }
-            self.configure.hy_cycleClasses = mArray.copy;
-            self.totalCycleCount = self.configure.hy_totalPage;
-        }
-        
-    } else if (self.configure.hy_cycleClass || self.configure.hy_cycleInstance) {
-        self.totalCycleCount = self.configure.hy_totalPage;
-    }
-    
-    if (self.totalCycleCount > 0) {
-        
-        if (!self.scrollView.subviews.count) {
-            for (int i = 0; i < CycleContentViewCount; i++) {
-                UIView *contentView = [[UIView alloc] init];
-                contentView.backgroundColor = UIColor.clearColor;
-                contentView.clipsToBounds = YES;
-                [self.scrollView addSubview:contentView];
-                [contentView addGestureRecognizer:[[UITapGestureRecognizer alloc]
-                                                   initWithTarget:self
-                                                   action:@selector(tap:)]];
-                
-                [self handleContentViewFrame];
-                [self handleScrollViewContentSize];
-            }
-        }
-        
-        [self handleStartCyclePage];
-        [self handleScrollViewAndContentView];
-        
-        if (self.totalCycleCount == 1) {
-            self.scrollView.scrollEnabled = NO;
-            if (self.configure.hy_scrollStyle == HyCycleViewScrollAuto) {
-                [self stopTimer];
-            }
-        } else {
-            self.scrollView.scrollEnabled = YES;
-            if (self.configure.hy_scrollStyle == HyCycleViewScrollAuto) {
-                [self startTimer];
-            }
-        }
-    }
-    
-    NSInteger currentPage = self.currentCyclePage;
-    if (self.configure.hy_scrollDirection == HyCycleViewScrollRight ||
-        self.configure.hy_scrollDirection == HyCycleViewScrollBottom) {
-        currentPage = self.totalCycleCount - 1 - currentPage;
-    }
-    
-    !self.configure.hy_currentPageChange ?:
-    self.configure.hy_currentPageChange(self, self.totalCycleCount, currentPage);
-    
-    !self.configure.hy_roundingPageChange ?:
-    self.configure.hy_roundingPageChange(self, self.totalCycleCount, currentPage);
-}
-
-- (void)scrollToPage:(NSInteger)page animated:(BOOL)animated {
-    
-    if (self.totalCycleCount <= 1) { return;}
-    
-    if (page >= 0 && page < self.totalCycleCount) {
-        CGFloat index = [self getScrollViewContentOffsetIndex];
-        if (self.scrollView.isDragging ||
-            self.scrollView.isTracking ||
-            self.scrollView.isDecelerating ||
-            (index != 0 && index != 1 && index != 2)) {
-            return;
-        }
-        
-        NSInteger changePage = page - [self getCurrentPage];
-        if (changePage == 0) { return;}
-        
-        NSInteger cycleIndex = page;
-        if (self.configure.hy_scrollDirection == HyCycleViewScrollRight ||
-            self.configure.hy_scrollDirection == HyCycleViewScrollBottom) {
-            cycleIndex = self.totalCycleCount - 1 - page;
-        }
-        
-        BOOL isNotCycleLoop =
-        !self.configure.hy_isCycleLoop &&
-        self.configure.hy_scrollStyle == HyCycleViewScrollStatic;
-        
-        if (!animated) {
-            self.configure.hy_scrollProgress(self, [self getCurrentPage], page, 1);
-        }
-        
-        if (isNotCycleLoop &&
-            cycleIndex == self.totalCycleCount - 1) {
-            
-            if (animated && self.currentCyclePage == 0) {
-                [self removeAllCycleViews];
-                [self addViewWithContentViewIndex:1
-                                        pageIndex:self.currentCyclePage
-                             isResetContentOffset:NO];
-                self.scrollView.subviews[1].tag = self.currentCyclePage;
-                self.lastFromIndex = self.currentCyclePage;
-                self.lastToIndex = self.currentCyclePage;
-                [self handleScrollViewToCenterWithAnimated:NO];
-            }
-            
-            [self handleRightBottomContentViewTag];
-            [self handleScrollViewToRightBottomWithAnimated:animated];
-            
-            if (!animated) {
-                [self removeAllCycleViews];
-                [self addViewWithContentViewIndex:2
-                                        pageIndex:cycleIndex
-                             isResetContentOffset:self.configure.hy_loadStyle == HyCycleViewScrollLoadStyleDidAppear];
-                self.currentCyclePage = cycleIndex;
-                self.roundingCyclePage = cycleIndex;
-            }
-            
-        } else if (isNotCycleLoop &&
-                   cycleIndex == 0) {
-            
-            if (animated && self.currentCyclePage == self.totalCycleCount - 1) {
-                [self removeAllCycleViews];
-                [self addViewWithContentViewIndex:1
-                                        pageIndex:self.currentCyclePage
-                             isResetContentOffset:NO];
-                self.scrollView.subviews[1].tag = self.currentCyclePage;
-                self.lastFromIndex = self.currentCyclePage;
-                self.lastToIndex = self.currentCyclePage;
-                [self handleScrollViewToCenterWithAnimated:NO];
-            }
-            
-            [self handleLeftTopContentViewTag];
-            [self handleScrollViewToLeftTopWithAnimated:animated];
-            
-            if (!animated) {
-                [self removeAllCycleViews];
-                [self addViewWithContentViewIndex:0
-                                        pageIndex:cycleIndex
-                             isResetContentOffset:self.configure.hy_loadStyle == HyCycleViewScrollLoadStyleDidAppear];
-                self.currentCyclePage = cycleIndex;
-                self.roundingCyclePage = cycleIndex;
-            }
-            
-            
-        } else if (isNotCycleLoop &&
-                   (self.currentCyclePage == 0 || self.currentCyclePage == self.totalCycleCount - 1)) {
-            
-            for (int i = 0; i < self.scrollView.subviews.count; i++) {
-                UIView *contentView = self.scrollView.subviews[i];
-                NSInteger index = cycleIndex;
-                if (i == 0) {
-                    index --;
-                } else if (i == 2) {
-                    index ++;
-                }
-                if (index < 0) {
-                    index = self.totalCycleCount - 1;
-                } else if (index >= self.totalCycleCount) {
-                    index = 0;
-                }
-                contentView.tag = index;
-            }
-            
-            [self.scrollView.subviews[1].subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-            [self addViewWithContentViewIndex:1
-                                    pageIndex:cycleIndex
-                         isResetContentOffset:self.configure.hy_loadStyle == HyCycleViewScrollLoadStyleDidAppear];
-            
-            [self handleScrollViewToCenterWithAnimated:animated];
-            
-            if (!animated) {
-                self.currentCyclePage = cycleIndex;
-                self.roundingCyclePage = cycleIndex;
-            }
-            
-        } else {
-            
-            if (animated) {
-                
-                BOOL isNext =
-                (changePage > 0 && changePage != self.totalCycleCount - 1) ||
-                changePage == 1 - self.totalCycleCount;
-                if (self.totalCycleCount == 2) {
-                    isNext = cycleIndex == 1;
-                }
-                
-                BOOL isJump =
-                changePage != 1 &&
-                changePage != -1 &&
-                changePage != 1 - self.totalCycleCount &&
-                changePage !=  self.totalCycleCount - 1;
-                
-                BOOL isLeftTop =
-                self.configure.hy_scrollDirection == HyCycleViewScrollLeft||
-                self.configure.hy_scrollDirection == HyCycleViewScrollTop;
-                
-                if (isJump) {
-                    
-                    NSInteger indess = 0;
-                    if (isLeftTop) {
-                        if (isNext > 0) {
-                            indess = page - 1;
-                            if (indess < 0) {
-                                indess = self.totalCycleCount - 1;
-                            }
-                        } else {
-                            indess = page + 1;
-                            if (indess > self.totalCycleCount - 1) {
-                                indess = 0;
-                            }
-                        }
-                    } else {
-                        
-                        if (isNext) {
-                            indess = self.totalCycleCount - page;
-                            if (indess > self.totalCycleCount - 1) {
-                                indess = 0;
-                            }
-                        } else {
-                            indess = (self.totalCycleCount - 1 - page) - 1;
-                            if (indess < 0) {
-                                indess = self.totalCycleCount - 1;
-                            }
-                        }
-                    }
-                    
-                    NSInteger centerTag = indess;
-                    NSInteger leftTag = indess - 1 < 0 ?  (self.totalCycleCount - 1) : indess - 1;
-                    NSInteger rightTag = indess + 1 > self.totalCycleCount - 1 ? 0 : indess + 1;
-                    [self.scrollView.subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop) {
-                        if (idx == 0) {
-                            obj.tag = leftTag;
-                        } else if (idx == 2) {
-                            obj.tag = rightTag;
-                        } else {
-                            obj.tag = centerTag;
-                        }
-                    }];
-                }
-                
-                if (isNext) {
-                    
-                    switch (self.configure.hy_scrollDirection) {
-                        case HyCycleViewScrollLeft: {
-                            [self.scrollView setContentOffset:CGPointMake(2 * self.scrollView.width, 0)
-                                                     animated:animated];
-                        }break;
-                        case HyCycleViewScrollRight:
-                        case HyCycleViewScrollBottom: {
-                            [self.scrollView setContentOffset:CGPointZero animated:animated];
-                        }break;
-                        case HyCycleViewScrollTop: {
-                            [self.scrollView setContentOffset:CGPointMake(0, 2 * self.scrollView.height)
-                                                     animated:animated];
-                        }break;
-                        default:
-                            break;
-                    }
-                    
-                } else {
-                    
-                    switch (self.configure.hy_scrollDirection) {
-                        case HyCycleViewScrollLeft:
-                        case HyCycleViewScrollTop:{
-                            [self.scrollView setContentOffset:CGPointZero
-                                                     animated:animated];
-                        }break;
-                        case HyCycleViewScrollRight: {
-                            [self.scrollView setContentOffset:CGPointMake(2 * self.scrollView.width, 0)
-                                                     animated:animated];
-                        }break;
-                        case HyCycleViewScrollBottom: {
-                            [self.scrollView setContentOffset:CGPointMake(0, 2 * self.scrollView.height)
-                                                     animated:animated];
-                        }break;
-                        default:
-                            break;
-                    }
-                }
-                
-            } else {
-                
-                self.currentCyclePage = cycleIndex;
-                self.roundingCyclePage = cycleIndex;
-                [self handleContentViewTag];
-                [self removeAllCycleViews];
-                [self addViewWithContentViewIndex:1
-                                        pageIndex:self.currentCyclePage
-                             isResetContentOffset:self.configure.hy_loadStyle == HyCycleViewScrollLoadStyleDidAppear];
-            }
-        }
-    }
-}
-
-- (void)clearData {
-    self.totalCycleCount = 0;
-    self.addedCycleViews = nil;
-    [self removeAllCycleViews];
-    [self stopTimer];
+    return  self;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
-    self.scrollView.containTo(self);
-    [self handleContentViewFrame];
-    [self handleScrollViewContentSize];
-    [self handleScrollViewAndContentView];
-    
-    NSInteger currentPage = self.currentCyclePage;
-    if (self.configure.hy_scrollDirection == HyCycleViewScrollRight ||
-        self.configure.hy_scrollDirection == HyCycleViewScrollBottom) {
-        currentPage = self.totalCycleCount - 1 - currentPage;
-    }
-    
-    !self.configure.hy_currentPageChange ?:
-    self.configure.hy_currentPageChange(self, self.totalCycleCount, currentPage);
-    
-    !self.configure.hy_roundingPageChange ?:
-    self.configure.hy_roundingPageChange(self, self.totalCycleCount, currentPage);
+    self.collectionView.frame = self.bounds;
+    self.layout.itemSize = self.collectionView.bounds.size;
 }
 
-- (void)handleScrollViewAndContentView {
+#pragma mark — public methods
+- (void)reloadData {
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     
-    if ([self isNotCycleLoop]) {
+    [self clearData];
+    self.interval = self.configure.hy_interval;
+    self.direction = self.configure.hy_direction;
+    self.loadStyle = self.configure.hy_loadStyle;
+    self.totalIndexs = self.configure.hy_totalIndexs ? self.configure.hy_totalIndexs(self) : 0;
+    NSInteger startIndex = self.configure.hy_startIndex ? self.configure.hy_startIndex(self) : 0;
+    if (startIndex > self.totalIndexs - 1) { startIndex = 0;}
+    self.isCycle = self.totalIndexs > 1 && self.configure.hy_isCycle;
+    self.isAutoCycle = self.configure.hy_isAutoCycle && self.totalIndexs > 1;
+    self.repeatCount = self.isCycle ? 200 : 1;
+    self.currentCycleIndex = (NSInteger)(self.repeatCount / 2) - (self.isReverse ? 1 : 0);
+    self.targetIndex = startIndex;
+    self.layout.scrollDirection =
+    (self.direction == HyCycleViewDirectionLeft || self.direction == HyCycleViewDirectionRight) ?
+    UICollectionViewScrollDirectionHorizontal :
+    UICollectionViewScrollDirectionVertical;
+    [self.collectionView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self _scrollToIndex:self.totalIndexs * self.currentCycleIndex + self.indexWithIndex(startIndex)  animated:NO];
+        if (self.isAutoCycle) {
+            [self startTimer];
+        }
+    });
+    
+    dispatch_semaphore_signal(self.semaphore);
+}
+
+- (void)scrollToNextIndexWithAnimated:(BOOL)animated {
+    NSInteger index = self.currentIndex + 1;
+    if (index > self.totalIndexs - 1) {
+        index = 0;
+    }
+    [self scrollToIndex:index animated:animated];
+}
+
+- (void)scrollToLastIndexWithAnimated:(BOOL)animated {
+    NSInteger index = self.currentIndex - 1;
+    if (index < 0) {
+        index = self.totalIndexs - 1;
+    }
+    [self scrollToIndex:index animated:animated];
+}
+
+- (void)scrollToIndex:(NSInteger)index animated:(BOOL)animated {
+    
+    if (index == self.currentIndex || index > self.totalIndexs - 1) {return;}
+
+    [self closeAndOpenTimer];
+    
+    if (self.isCycle) {
         
-        switch (self.configure.hy_scrollDirection) {
-            case HyCycleViewScrollLeft:
-            case HyCycleViewScrollRight:{
-                if (self.currentCyclePage == 0) {
-                    [self handleLeftTopContentViewTag];
-                    self.scrollView.contentOffset = CGPointZero;
-                } else {
-                    [self handleRightBottomContentViewTag];
-                    self.scrollView.contentOffset = CGPointMake(2 * self.scrollView.width, 0);
+        NSInteger cyclePage = [self getCurrentCycleIndex];
+        if (index < self.currentIndex) {
+            if (self.isReverse) {
+                if (cyclePage - 1 < 0) {
+                    [self _scrollToIndex:self.totalIndexs * (NSInteger)(self.repeatCount / 2) + self.indexWithIndex(self.currentIndex) animated:NO];
                 }
-            }break;
-            case HyCycleViewScrollTop:
-            case HyCycleViewScrollBottom: {
-                if (self.currentCyclePage == 0) {
-                    [self handleLeftTopContentViewTag];
-                    self.scrollView.contentOffset = CGPointZero;
-                } else {
-                    [self handleRightBottomContentViewTag];
-                    self.scrollView.contentOffset = CGPointMake(0, 2 * self.scrollView.height);
+                cyclePage = [self getCurrentCycleIndex];
+                cyclePage -= 1;
+            } else {
+                if (cyclePage + 1 >= self.repeatCount) {
+                    [self _scrollToIndex:self.totalIndexs * (NSInteger)(self.repeatCount / 2 - 1) + self.currentIndex animated:NO];
                 }
-            }break;
-            default:
-                break;
+                cyclePage = [self getCurrentCycleIndex];
+                cyclePage += 1;
+            }
         }
         
-        NSInteger loadOnIndex = 0;
-        if (self.scrollView.contentOffset.x != 0 ||
-            self.scrollView.contentOffset.y != 0) {
-            loadOnIndex = 2;
+        int absInt = abs((int)(index - self.currentIndex));
+        if (animated && ((absInt >= 2 || index < self.currentIndex) && !(self.currentIndex == self.totalIndexs - 1 && index == 0))) {
+            UIView *view = self.viewAtIndex(self.currentIndex);
+            NSInteger tempIndex = cyclePage * self.totalIndexs + self.indexWithIndex(index) + ((self.isReverse) ? 1 : - 1);
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:tempIndex inSection:0];
+            self.isNoAnimation = YES;
+            [self.collectionView performBatchUpdates:^{
+                [self.collectionView scrollToItemAtIndexPath:indexPath
+                                            atScrollPosition:self.scrollPosition
+                                                    animated:NO];
+            } completion:^(BOOL finished) {
+                self.isNoAnimation = NO;
+                HyCycleViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+                if (cell) {
+                    [cell.contentView addSubview:view];
+                    view.frame = cell.contentView.bounds;
+                    cell.isTempAddView = YES;
+                }
+                [self _scrollToIndex:cyclePage * self.totalIndexs + self.indexWithIndex(index) animated:animated];
+            }];
+        } else {
+            [self _scrollToIndex:cyclePage * self.totalIndexs + self.indexWithIndex(index) animated:animated];
         }
-        [self addViewWithContentViewIndex:loadOnIndex
-                                pageIndex:self.currentCyclePage
-                     isResetContentOffset:self.configure.hy_loadStyle == HyCycleViewScrollLoadStyleDidAppear];
         
     } else {
         
-        [self handleContentViewTag];
-        [self handleScrollViewToCenterWithAnimated:NO];
-        [self addViewWithContentViewIndex:1
-                                pageIndex:self.currentCyclePage
-                     isResetContentOffset:self.configure.hy_loadStyle == HyCycleViewScrollLoadStyleDidAppear];
-    }
-}
-
-- (void)handleLeftTopContentViewTag {
-    [self.scrollView.subviews enumerateObjectsUsingBlock:^(UIView *obj,
-                                                           NSUInteger idx,
-                                                           BOOL *stop) {
-        obj.tag = idx;
-    }];
-}
-
-- (void)handleRightBottomContentViewTag {
-    [self.scrollView.subviews enumerateObjectsUsingBlock:^(UIView *obj,
-                                                           NSUInteger idx,
-                                                           BOOL *stop) {
-        if (idx == 2) {
-            obj.tag = self.totalCycleCount - 1;
-        } else if (idx == 1) {
-            obj.tag = self.totalCycleCount - 2;
+        int absInt = abs((int)(index - self.currentIndex));
+        if (animated && absInt >= 2) {
+            UIView *view = self.viewAtIndex(self.currentIndex);
+            NSInteger tempValue = self.isReverse ? -1 : 1;
+            NSInteger tempIndex = index > self.currentIndex ? index - tempValue : index + tempValue;
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:tempIndex inSection:0];
+            [self.collectionView performBatchUpdates:^{
+                self.isNoAnimation = YES;
+                [self.collectionView scrollToItemAtIndexPath:indexPath
+                                            atScrollPosition:self.scrollPosition
+                                                    animated:NO];
+            } completion:^(BOOL finished) {
+                self.isNoAnimation = NO;
+                HyCycleViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+                if (cell) {
+                    [cell.contentView addSubview:view];
+                    view.frame = cell.contentView.bounds;
+                    cell.isTempAddView = YES;
+                }
+                [self _scrollToIndex:self.indexWithIndex(index) animated:animated];
+            }];
         } else {
-            obj.tag = self.totalCycleCount - 3;
+            [self _scrollToIndex:self.indexWithIndex(index) animated:animated];
+        }
+    }
+}
+
+#pragma mark — private methods
+- (void)_scrollToIndex:(NSInteger)index animated:(BOOL)animated {
+    if (index > [self.collectionView numberOfItemsInSection:0] - 1) {
+        return;
+    }
+    NSInteger targetIndex = self.indexWithIndex(index % self.totalIndexs);
+    self.targetIndex = targetIndex;
+    self.isNoAnimation = !animated;
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]
+                                    atScrollPosition:self.scrollPosition
+                                            animated:animated];
+    } completion:^(BOOL finished) {
+        self.isNoAnimation = NO;
+        if (!animated) {
+            if (self.loadStyle == HyCycleViewLoadStyleDidAppear &&
+                ![self.didLoadIndexSet containsIndex:index]) {
+                self.targetIndex = targetIndex;
+                [self addViewWithDidApper];
+            }
+            NSInteger lastIndex = self.currentIndex;
+            [self handleRecycleWithIndex:index];
+            [self updateCurrentIndex];
+            [self updateCurrentCycleIndex];
+            self.roundingIndex = self.currentIndex;
+            if (lastIndex < 0) {
+              lastIndex = self.currentIndex;
+            }
+            !self.configure.hy_scrollProgress ?:
+            self.configure.hy_scrollProgress(self, lastIndex, self.currentIndex, 1.0);
         }
     }];
 }
 
-#pragma mark — prevate methods
-- (void)handleScrollViewContentSize {
+- (void)addViewForCell:(HyCycleViewCell *)cell
+     isWillDisplayCell:(BOOL)flag {
     
-    switch (self.configure.hy_scrollDirection) {
-        case HyCycleViewScrollLeft:
-        case HyCycleViewScrollRight:{
-            self.scrollView.contentSize = CGSizeMake(CycleContentViewCount * self.width, 0);
-        }break;
-        case HyCycleViewScrollTop:
-        case HyCycleViewScrollBottom:{
-            self.scrollView.contentSize = CGSizeMake(0, CycleContentViewCount * self.height);
-        }break;
-        default:
-        break;
+    NSIndexPath *indexPath = cell.indexPath;
+    NSInteger index = self.indexWithIndexPath(indexPath);
+    if (index != self.targetIndex) {
+        return;
+    }
+    
+    UIView *view = self.viewAtIndex(index);
+    BOOL hasLoad = [self.didLoadIndexSet containsIndex:index];
+    if (flag &&
+        !hasLoad &&
+        self.loadStyle == HyCycleViewLoadStyleDidAppear) {
+        return;
+    }
+        
+    if (!hasLoad &&
+        self.configure.hy_viewAtIndex) {
+        [self.didLoadIndexSet addIndex:index];
+        if (self.configure.hy_viewAtIndex) {
+            id<HyCycleViewProviderProtocol> protocolObject = self.configure.hy_viewAtIndex(self, index);
+            if (protocolObject && [protocolObject respondsToSelector:@selector(configCycleView:index:)]) {
+                HyCycleViewProvider *provider = [[HyCycleViewProvider alloc] init];
+                provider.index = index;
+                [protocolObject configCycleView:provider index:index];
+                if (provider.retainProvider) {
+                    provider.protocolObject = protocolObject;
+                }
+                [self.viewProviderDict setObject:provider forKey:@(index)];
+                if (provider.hy_view) {
+                    view = provider.hy_view(self);
+                    if ([view isKindOfClass:UIView.class]) {
+                        provider.view = view;
+                    }
+                }
+            }
+        }
+    }
+    
+    if ([view isKindOfClass:UIView.class]) {
+        [cell.contentView addSubview:view];
+        view.frame = cell.contentView.bounds;
+        if (!(self.lastViewWillAppearIndexPath &&
+             self.lastViewWillAppearIndexPath.row != indexPath.row &&
+             self.indexWithIndexPath(self.lastViewWillAppearIndexPath) == index)) {
+            [self viewProviderWithIndex:index handler:^(HyCycleViewProvider *provider) {
+                !provider.hy_viewWillAppear ?:
+                provider.hy_viewWillAppear(self, view, !hasLoad);
+            }];
+            !self.configure.hy_viewWillAppearAtIndex ?:
+            self.configure.hy_viewWillAppearAtIndex(self, view, index, !
+                                                    hasLoad);
+        }
+        self.lastViewWillAppearIndexPath = indexPath;
     }
 }
 
-- (void)handleContentViewFrame {
-    
-    [self.scrollView.subviews enumerateObjectsUsingBlock:^(UIView *obj,
-                                                           NSUInteger idx,
-                                                           BOOL *stop) {
-        
-        switch (self.configure.hy_scrollDirection) {
-            case HyCycleViewScrollLeft:
-            case HyCycleViewScrollRight: {
-                obj.rectValue(idx * self.scrollView.width,
-                              0,
-                              self.scrollView.width,
-                              self.scrollView.height);
-            }break;
-            case HyCycleViewScrollTop:
-            case HyCycleViewScrollBottom: {
-                obj.rectValue(0,
-                              idx * self.scrollView.height,
-                              self.scrollView.width,
-                              self.scrollView.height);
-            }break;
-            default:
-                break;
-        }
-        [obj.subviews enumerateObjectsUsingBlock:^(UIView *subObj,
-                                                   NSUInteger idx,
-                                                   BOOL *stop) {
-            subObj.containTo(obj);
+- (void)viewProviderWithIndex:(NSInteger)index
+                      handler:(void(^)(HyCycleViewProvider *provider))handler {
+    HyCycleViewProvider *provider = [self.viewProviderDict objectForKey:@(index)];
+    if (provider) {
+        !handler ?: handler(provider);
+    }
+}
+
+- (void)DidEndScroll {
+    if (self.loadStyle == HyCycleViewLoadStyleDidAppear) {
+        [self addViewWithDidApper];
+    }
+    [self updateCurrentIndex];
+    [self updateCurrentCycleIndex];
+}
+
+- (void)clearData {
+    self.currentIndex = -1;
+    self.roundingIndex = -1;
+    self.lastViewWillAppearIndexPath = nil;
+    [self stopTimer];
+    [self.viewProviderDict removeAllObjects];
+    [self.didLoadIndexSet removeAllIndexes];
+}
+
+- (void)updateCurrentIndex {
+    if (self.layout.scrollDirection == UICollectionViewScrollDirectionHorizontal) {
+        NSInteger index = (int)(self.collectionView.contentOffset.x / self.collectionView.bounds.size.width) % self.totalIndexs;
+        self.currentIndex = self.indexWithIndex(index);
+    } else {
+        NSInteger index = (int)(self.collectionView.contentOffset.y / self.collectionView.bounds.size.height) % self.totalIndexs;
+        self.currentIndex = self.indexWithIndex(index);
+    }
+}
+
+- (void)updateCurrentCycleIndex {
+    self.currentCycleIndex = [self getCurrentCycleIndex];
+}
+
+- (void)addViewWithDidApper {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(__kindof HyCycleViewCell * _Nonnull obj,
+                                                                       NSUInteger idx, BOOL * _Nonnull stop) {
+            NSInteger index = self.indexWithIndexPath(obj.indexPath);
+            if (![self.didLoadIndexSet containsIndex:index]) {
+                [self addViewForCell:obj isWillDisplayCell:NO];
+            }
         }];
-    }];
+    });
 }
 
-- (void)handleScrollViewToCenterWithAnimated:(BOOL)animated {
-    
-    switch (self.configure.hy_scrollDirection) {
-        case HyCycleViewScrollLeft:
-        case HyCycleViewScrollRight: {
-            [self.scrollView setContentOffset:CGPointMake(self.scrollView.width, 0)
-                                     animated:animated];
-        }break;
-        case HyCycleViewScrollTop:
-        case HyCycleViewScrollBottom: {
-            [self.scrollView setContentOffset:CGPointMake(0, self.scrollView.height)
-                                     animated:animated];
-        }break;
-        default:
-        break;
-    }
-}
-
-- (void)handleScrollViewToLeftTopWithAnimated:(BOOL)animated {
-    [self.scrollView setContentOffset:CGPointZero
-                             animated:animated];
-}
-
-- (void)handleScrollViewToRightBottomWithAnimated:(BOOL)animated {
-    switch (self.configure.hy_scrollDirection) {
-        case HyCycleViewScrollLeft:
-        case HyCycleViewScrollRight: {
-            [self.scrollView setContentOffset:CGPointMake(2 * self.scrollView.width, 0)
-                                     animated:animated];
-        }break;
-        case HyCycleViewScrollTop:
-        case HyCycleViewScrollBottom:{
-            [self.scrollView setContentOffset:CGPointMake(0, 2 * self.scrollView.height)
-                                     animated:animated];
-        }break;
-        default:
-        break;
-    }
-}
-
-- (void)handleStartCyclePage {
-    
-    switch (self.configure.hy_scrollDirection) {
-        case HyCycleViewScrollLeft:
-        case HyCycleViewScrollTop:{
-            NSInteger startIndex = self.configure.hy_startPage;
-            if (startIndex > self.totalCycleCount - 1) {
-                startIndex = 0;
+- (void)handleRecycleWithIndex:(NSInteger)index {
+    if (self.isCycle) {
+        if (self.isBoundary(index)) {
+            NSInteger offsetIndex = - 1;
+            if (index == 0) {
+                offsetIndex = 0;
             }
-            self.currentCyclePage = startIndex;
-            self.roundingCyclePage = startIndex;
-        }break;
-        case HyCycleViewScrollRight:
-        case HyCycleViewScrollBottom:{
-            NSInteger startIndex = self.totalCycleCount - 1 - self.configure.hy_startPage;
-            if (startIndex < 0) {
-                startIndex = self.totalCycleCount - 1;
-            }
-            self.currentCyclePage = startIndex;
-            self.roundingCyclePage = startIndex;
-        }break;
-        default:
-        break;
-    }
-    
-    self.lastFromIndex = self.currentCyclePage;
-    self.lastToIndex = self.currentCyclePage;
-    
-    !self.configure.hy_currentPageChange ?:
-    self.configure.hy_currentPageChange(self, self.totalCycleCount, self.configure.hy_startPage);
-    
-    !self.configure.hy_roundingPageChange ?:
-    self.configure.hy_roundingPageChange(self, self.totalCycleCount, self.configure.hy_startPage);
-}
-
-
-- (void)handleContentViewTag {
-    
-    for (int i = 0; i < self.scrollView.subviews.count; i++) {
-        UIView *contentView = self.scrollView.subviews[i];
-        NSInteger index = self.currentCyclePage;
-        if (i == 0) {
-            index --;
-        } else if (i == 2) {
-            index ++;
+            [self _scrollToIndex:(self.totalIndexs * ((NSInteger)self.repeatCount / 2)  + offsetIndex) animated:NO];
         }
-        
+    }
+}
+
+- (NSInteger)getCurrentCycleIndex {
+    NSInteger index = 0;
+    if (self.layout.scrollDirection == UICollectionViewScrollDirectionHorizontal) {
+        index = (self.collectionView.contentOffset.x / (self.collectionView.bounds.size.width * self.totalIndexs));
+    } else {
+        index = (self.collectionView.contentOffset.y / (self.collectionView.bounds.size.height * self.totalIndexs));
+    }
+    return MAX(0, index);
+}
+
+- (UIView *(^)(NSInteger))viewAtIndex {
+    return ^UIView *(NSInteger index){
+        HyCycleViewProvider *provider = [self.viewProviderDict objectForKey:@(index)];
+        if (provider) {
+            return provider.view;
+        }
+        return nil;
+    };
+}
+
+- (NSInteger(^)(NSIndexPath *))indexWithIndexPath {
+    return ^(NSIndexPath *indexPath){
+        NSInteger index = indexPath.row % self.totalIndexs;
+        if (self.isReverse) {
+            index = self.totalIndexs - index - 1;
+        }
+        return index;
+    };
+}
+
+- (NSInteger(^)(NSInteger))indexWithIndex {
+    return ^(NSInteger index){
+        if (self.isReverse) {
+            index = self.totalIndexs - 1 - index;
+        }
+        if (index > self.totalIndexs - 1) {
+            index = self.totalIndexs - 1 - index;
+        }
         if (index < 0) {
-            index = self.totalCycleCount - 1;
-        } else if (index >= self.totalCycleCount) {
-            index = 0;
+            index = self.totalIndexs - 1 + index;
         }
-        contentView.tag = index;
-    }
+        return index;
+    };
 }
 
-- (BOOL)isNotCycleLoop {
-    return !self.configure.hy_isCycleLoop &&
-    self.configure.hy_scrollStyle == HyCycleViewScrollStatic &&
-    self.totalCycleCount > 2 &&
-    (self.currentCyclePage == 0 || self.currentCyclePage == self.totalCycleCount - 1);
+- (UICollectionViewScrollPosition)scrollPosition {
+    return 
+    self.layout.scrollDirection == UICollectionViewScrollDirectionVertical ?
+    UICollectionViewScrollPositionCenteredVertically :
+    UICollectionViewScrollPositionCenteredHorizontally;
 }
 
-- (void)updateContentOffsetAndContentView {
-    
-    if (!self.scrollView.subviews.count) {return;}
-    
-    self.currentCyclePage = self.roundingCyclePage;
-    
-    if ([self isNotCycleLoop]) {
-        
-        NSInteger loadOnIndex = 0;
-        switch (self.configure.hy_scrollDirection) {
-            case HyCycleViewScrollLeft:
-            case HyCycleViewScrollRight:{
-                if (self.scrollView.contentOffset.x > self.scrollView.width) {
-                    loadOnIndex = 2;
-                }
-            }break;
-            case HyCycleViewScrollTop:
-            case HyCycleViewScrollBottom:{
-                if (self.scrollView.contentOffset.y > self.scrollView.height) {
-                    loadOnIndex = 2;
-                }
-            }break;
-            default:
-                break;
-        }
-        
-        [self removeAllCycleViews];
-        [self addViewWithContentViewIndex:loadOnIndex
-                                pageIndex:self.currentCyclePage
-                     isResetContentOffset:YES];
-        
-        return;
-    }
-    
-    
-    [self handleContentViewTag];
-    [self handleScrollViewToCenterWithAnimated:NO];
-    [self removeAllCycleViews];
-    [self addViewWithContentViewIndex:1
-                            pageIndex:self.currentCyclePage
-                 isResetContentOffset:YES];
+- (BOOL)isReverse {
+    return self.direction == HyCycleViewDirectionRight || self.direction == HyCycleViewDirectionBottom;
 }
 
-- (void)addViewWithContentViewIndex:(NSInteger)index
-                          pageIndex:(NSInteger)pageIndex
-               isResetContentOffset:(BOOL)isResetContentOffset {
-    
-    if (self.scrollView.subviews.count == 0 ||
-        index > self.scrollView.subviews.count - 1) {
-        return;
+- (BOOL (^)(CGFloat))isBoundary {
+    return ^BOOL (CGFloat index){
+        return index == 0 || index == [self.collectionView numberOfItemsInSection:0] - 1;
+    };
+}
+
+#pragma mark — UICollectionViewDataSource, UICollectionViewDelegate
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+    return self.totalIndexs * self.repeatCount;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return [HyCycleViewCell cellWithCollectionView:collectionView
+                                         indexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+       willDisplayCell:(HyCycleViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (collectionView.isDragging || self.viewAtIndex(self.indexWithIndexPath(indexPath))) {
+        self.targetIndex = self.indexWithIndexPath(indexPath);
     }
-    
-    UIView *contentView = self.scrollView.subviews[index];
-    if (contentView.subviews.count) {return;}
-    
-    NSInteger dataIndex = pageIndex;
-    if (self.configure.hy_scrollDirection == HyCycleViewScrollLeft ||
-        self.configure.hy_scrollDirection == HyCycleViewScrollTop) {
-        if (dataIndex > self.totalCycleCount - 1) {
-            dataIndex = 0;
-        }
-    } else {
-        dataIndex = self.totalCycleCount - 1 - pageIndex;
-        if (dataIndex < 0) {
-            dataIndex = self.totalCycleCount - 1;
-        }
-    }
-    
-    BOOL isfistrLoad = NO;
-    UIView *willAddView = [self.addedCycleViews objectAtIndex:dataIndex];
-    
-    //    NSArray *viewArray = [self getAddedCycleViewWithIndex:dataIndex];
-    //    UIView *willAddView = viewArray.firstObject;
-    //    BOOL isfistrLoad = ![viewArray.lastObject boolValue];
-    
-    if (![willAddView isKindOfClass:UIView.class] &&
-        ![willAddView isKindOfClass:UIViewController.class]) {
-        
-        if (self.configure.hy_loadStyle == HyCycleViewScrollLoadStyleWillAppear) {
-            
-            if (self.configure.hy_cycleInstances.count) {
-                willAddView = self.configure.hy_cycleInstances[dataIndex];
-            } else if (self.configure.hy_cycleInstance){
-                willAddView = self.configure.hy_cycleInstance(self, dataIndex);
-            } else {
-                willAddView = [self createViewWithIndex:dataIndex];
-            }
-            isfistrLoad = YES;
-            
-        } else {
-            
-            if (isResetContentOffset) {
-                if (self.configure.hy_cycleInstances.count) {
-                    willAddView = self.configure.hy_cycleInstances[dataIndex];
-                } else if (self.configure.hy_cycleInstance){
-                    willAddView = self.configure.hy_cycleInstance(self, dataIndex);
-                } else {
-                    willAddView = [self createViewWithIndex:dataIndex];
-                }
-                isfistrLoad = YES;
-            }
-        }
-        //  [self.addedCycleViews addObject:willAddView];
-    }
-    
-    //    !self.configure.hy_viewWillAppear ?:
-    //    self.configure.hy_viewWillAppear(self, willAddView, dataIndex, isfistrLoad);
-    
-    if ([willAddView isKindOfClass:UIView.class] ||
-        [willAddView isKindOfClass:UIViewController.class]) {
-        
-        [self addingCycleView:willAddView index:dataIndex];
-        
-        if ([willAddView isKindOfClass:UIViewController.class]) {
-            UIViewController *vc = (UIViewController *)willAddView;
-            vc.view.containTo(contentView);
-            [contentView addSubview:vc.view];
-        } else {
-            
-            ((UIView *)willAddView).containTo(contentView);
-            [contentView addSubview:willAddView];
-        }
-        
-        if (self.configure.hy_loadStyle == HyCycleViewScrollLoadStyleWillAppear) {
-            if (!isResetContentOffset) {
-                !self.configure.hy_viewWillAppear ?:
-                self.configure.hy_viewWillAppear(self, willAddView, dataIndex, isfistrLoad);
-            }
-        } else {
-            
-            if (isfistrLoad) {
-                !self.configure.hy_viewWillAppear ?:
-                self.configure.hy_viewWillAppear(self, willAddView, dataIndex, isfistrLoad);
-            } else {
-                if (!isResetContentOffset) {
-                    !self.configure.hy_viewWillAppear ?:
-                    self.configure.hy_viewWillAppear(self, willAddView, dataIndex, isfistrLoad);
-                }
+    [self addViewForCell:cell isWillDisplayCell:YES];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+  didEndDisplayingCell:(HyCycleViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (!(self.isCycle && self.isBoundary(indexPath.row)) && !cell.isTempAddView) {
+        if (cell.contentView.subviews.count) {
+            NSInteger index = self.indexWithIndexPath(indexPath);
+            [self viewProviderWithIndex:index handler:^(HyCycleViewProvider *provider) {
+                !provider.hy_viewDidDisAppear ?: provider.hy_viewDidDisAppear(self, provider.view);
+            }];
+            UIView *view = self.viewAtIndex(index);
+            if (view) {
+                !self.configure.hy_viewDidDisAppearAtIndex ?:
+                self.configure.hy_viewDidDisAppearAtIndex(self, view, index);
             }
         }
     }
+    cell.isTempAddView = NO;
+    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
 }
 
-- (void)removeAllCycleViews {
+- (void)collectionView:(UICollectionView *)collectionView
+didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    [self.scrollView.subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop) {
-        [obj.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    NSInteger index = self.indexWithIndexPath(indexPath);
+    [self viewProviderWithIndex:index handler:^(HyCycleViewProvider *provider) {
+        !provider.hy_viewClickAction ?:
+        provider.hy_viewClickAction(self, self.viewAtIndex(index));
     }];
+    !self.configure.hy_clickActionAtIndex ?:
+    self.configure.hy_clickActionAtIndex(self, self.viewAtIndex(index), index);
 }
 
-- (UIView *)createViewWithIndex:(NSInteger)index {
+#pragma mark - <UIScrollViewDelegate>
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    Class class;
-    if (self.configure.hy_cycleClasses.count) {
-        
-        class =
-        self.configure.hy_cycleClasses.count == 1 ?
-        self.configure.hy_cycleClasses.firstObject :
-        self.configure.hy_cycleClasses[index];
-        
-    } else if (self.configure.hy_cycleClass) {
-        
-        class = self.configure.hy_cycleClass(self, index);
+    if (self.isNoAnimation) {
+        return;
     }
     
-    NSString *classString = NSStringFromClass(class);
-    NSString *nibPath =  [[NSBundle mainBundle] pathForResource:classString ofType:@"nib"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:nibPath]) {
-        return [[[NSBundle mainBundle] loadNibNamed:classString owner:nil options:nil] lastObject];
-    } else {
-        return  [[class alloc] init];
+    CGFloat offset = scrollView.contentOffset.x / scrollView.bounds.size.width;
+    if (self.layout.scrollDirection == UICollectionViewScrollDirectionVertical) {
+        offset = scrollView.contentOffset.y / scrollView.bounds.size.height;
     }
-}
-
-- (void)addingCycleView:(UIView *)view index:(NSInteger)index {
-    if (view && ![self.addedCycleViews containsObject:view]) {
-        [self.addedCycleViews replaceObjectAtIndex:index withObject:view];
+    
+    if (self.isCycle) {
+       if (self.isBoundary(offset)) {
+           NSInteger offsetIndex = - 1;
+           if (offset == 0) {
+               offsetIndex = 0;
+           }
+           [self _scrollToIndex:(self.totalIndexs * ((NSInteger)self.repeatCount / 2)  + offsetIndex) animated:NO];
+       }
     }
-}
-
-- (id)getAddedCycleViewWithIndex:(NSInteger)index {
+            
+    self.roundingIndex = self.indexWithIndex((int)(offset + 0.5) % self.totalIndexs);;
     
-    __block id instance = @1;
-    __block BOOL haveCreate = NO;
-    
-    if (self.addedCycleViews.count) {
-        
-        if (self.configure.hy_cycleInstances.count) {
-            
-            id object = self.configure.hy_cycleInstances[index];
-            [self.addedCycleViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                if (obj == object) {
-                    instance = obj;
-                    haveCreate = YES;
-                    *stop = YES;
-                }
-            }];
-            
-        } else if (self.configure.hy_cycleClasses.count ||
-                   self.configure.hy_cycleClass) {
-            
-            Class class;
-            if (self.configure.hy_cycleClasses.count) {
-                class =
-                self.configure.hy_cycleClasses.count == 1 ?
-                self.configure.hy_cycleClasses.firstObject :
-                self.configure.hy_cycleClasses[index];
+    if (scrollView.isDragging) {
+        if (ceilf(offset) != ceilf(self.lastP) &&
+            floorf(offset) != offset &&
+            floorf(self.lastP) != self.lastP) {
+            BOOL isStepScroll = NO;
+            NSInteger tempIndex = 0;
+            NSInteger fromIndex = 0;
+            NSInteger toIndex = 0;
+            if (offset > self.lastP) {
+                tempIndex = self.indexWithIndex((int)offset % self.totalIndexs);
+                isStepScroll = tempIndex != self.currentIndex;
+                fromIndex = self.currentIndex;
+                toIndex = tempIndex;
                 
-            } else if (self.configure.hy_cycleClass) {
-                class = self.configure.hy_cycleClass(self, index);
+            } else {
+                tempIndex = self.indexWithIndex((int)offset % self.totalIndexs + 1);
+                isStepScroll = tempIndex != self.currentIndex;
+                fromIndex = self.currentIndex;
+                toIndex = tempIndex;
+            }
+            if (isStepScroll) {
+                self.currentIndex = tempIndex;
+                [self updateCurrentCycleIndex];
+                !self.configure.hy_scrollProgress ?:
+                self.configure.hy_scrollProgress(self, fromIndex, toIndex, 1.0);
+            }
+            self.lastScrollProgress = 0.0;
+        }
+    }
+    self.lastP = offset;
+    
+    if (self.configure.hy_scrollProgress) {
+        
+        NSInteger fromIndex = 0;
+        NSInteger toIndex = 0;
+        CGFloat progress = 0.0;
+        CGFloat scrollProgress = offset - self.currentCycleIndex  * self.totalIndexs - self.indexWithIndex(self.currentIndex);
+        int intProgress = (int)scrollProgress;
+        scrollProgress = scrollProgress - intProgress;
+
+        if (scrollProgress < 0) {
+            NSInteger tempIndex = self.isReverse ?  1 :  - 1;
+            NSInteger tempIntProgress = self.isReverse ? - intProgress : intProgress;
+            NSInteger lastIndex = self.currentIndex + tempIndex + tempIntProgress;
+            if (lastIndex < 0) {
+                lastIndex = self.indexWithIndex(self.totalIndexs + lastIndex);
+            }
+            lastIndex = lastIndex % self.totalIndexs;
+            
+            if (scrollProgress <= self.lastScrollProgress) {
+                fromIndex = self.currentIndex;
+                toIndex = lastIndex;
+                progress = - scrollProgress;
+            } else {
+                fromIndex = lastIndex;
+                toIndex = self.currentIndex;
+                progress = 1 + scrollProgress;
             }
             
-            [self.addedCycleViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                
-                if ([obj isMemberOfClass:class]) {
-                    
-                    UIView *view = obj;
-                    if ([obj isKindOfClass:UIViewController.class]) {
-                        view = ((UIViewController *)obj).view;
-                    }
-                    haveCreate = YES;
-                    if (!view.superview) {
-                        instance = obj;
-                        *stop = YES;
-                    }
-                }
-            }];
+        } else if (scrollProgress > 0) {
+            
+            NSInteger tempIndex = self.isReverse ?  - 1 :  1;
+            NSInteger tempIntProgress = self.isReverse ?  - intProgress :  intProgress;
+            NSInteger nexIndex = self.currentIndex + tempIndex + tempIntProgress;
+            if (nexIndex < 0) {
+                nexIndex = self.totalIndexs + nexIndex;
+            }
+            nexIndex = nexIndex % self.totalIndexs;
+            if (scrollProgress >= self.lastScrollProgress) {
+                fromIndex = self.currentIndex;
+                toIndex = nexIndex;
+                progress = scrollProgress;
+            } else {
+                fromIndex = nexIndex;
+                toIndex = self.currentIndex;
+                progress = 1 - scrollProgress;
+            }
+
+        } else {
+            progress = 1;
+            fromIndex = self.lastFromIndex;
+            toIndex = self.lastToIndex;
+            [self updateCurrentIndex];
+            [self updateCurrentCycleIndex];
         }
-    }
-    
-    return @[instance , @(haveCreate)];
-}
 
-- (NSInteger)getCurrentPage {
-    
-    NSInteger currentPage = self.currentCyclePage;
-    if (self.configure.hy_scrollDirection == HyCycleViewScrollRight ||
-        self.configure.hy_scrollDirection == HyCycleViewScrollBottom) {
-        currentPage = self.totalCycleCount - 1 - self.currentCyclePage;
-    }
-    return currentPage;
-}
-
-- (CGFloat)getScrollViewContentOffsetIndex {
-    
-    CGFloat contentOffset = self.scrollView.contentOffset.x;
-    CGFloat contentMargin = self.scrollView.width;
-    if (self.configure.hy_scrollDirection == HyCycleViewScrollTop ||
-        self.configure.hy_scrollDirection == HyCycleViewScrollBottom) {
-        contentOffset = self.scrollView.contentOffset.y;
-        contentMargin = self.scrollView.height;
-    }
-    return contentOffset / contentMargin;
-}
-
-- (NSInteger)handleIndex:(NSInteger)index {
-    
-    NSInteger dataIndex = index;
-    if (self.configure.hy_scrollDirection == HyCycleViewScrollLeft ||
-        self.configure.hy_scrollDirection == HyCycleViewScrollTop) {
-        if (dataIndex > self.totalCycleCount - 1) {
-            dataIndex = 0;
+        if (fromIndex != toIndex) {
+            self.configure.hy_scrollProgress(self, fromIndex, toIndex, progress);
         }
-    } else {
-        dataIndex = self.totalCycleCount - 1 - index;
-        if (dataIndex < 0) {
-            dataIndex = self.totalCycleCount - 1;
-        }
+        self.lastScrollProgress = scrollProgress;
+        self.lastFromIndex = fromIndex;
+        self.lastToIndex = toIndex;
     }
-    return dataIndex;
+    
+    if ([self.configure.hy_scrollDelegate respondsToSelector:@selector(scrollViewDidScroll:cycleView:)]) {
+        [self.configure.hy_scrollDelegate scrollViewDidScroll:scrollView cycleView:self];
+    }
 }
 
-#pragma mark — response methods
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (self.isAutoCycle) {
+        [self stopTimer];
+    }
+    if ([self.configure.hy_scrollDelegate respondsToSelector:@selector(scrollViewWillBeginDragging:cycleView:)]) {
+        [self.configure.hy_scrollDelegate scrollViewWillBeginDragging:scrollView cycleView:self];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (self.isAutoCycle) {
+        [self startTimer];
+    }
+    if (decelerate == 0) {
+        [self DidEndScroll];
+    }
+    if ([self.configure.hy_scrollDelegate respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:cycleView:)]) {
+        [self.configure.hy_scrollDelegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate cycleView:self];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self DidEndScroll];
+    if ([self.configure.hy_scrollDelegate respondsToSelector:@selector(scrollViewDidEndDecelerating:cycleView:)]) {
+        [self.configure.hy_scrollDelegate scrollViewDidEndDecelerating:scrollView cycleView:self];
+    }
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self DidEndScroll];
+    if ([self.configure.hy_scrollDelegate respondsToSelector:@selector(scrollViewDidEndScrollingAnimation:cycleView:)]) {
+        [self.configure.hy_scrollDelegate scrollViewDidEndScrollingAnimation:scrollView cycleView:self];
+    }
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    if ([self.configure.hy_scrollDelegate respondsToSelector:@selector(scrollViewWillBeginDecelerating:cycleView:)]) {
+        [self.configure.hy_scrollDelegate scrollViewWillBeginDecelerating:scrollView cycleView:self];
+    }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    if ([self.configure.hy_scrollDelegate respondsToSelector:@selector(scrollViewWillEndDragging:withVelocity:targetContentOffset:cycleView:)]) {
+        [self.configure.hy_scrollDelegate scrollViewWillEndDragging:scrollView withVelocity:velocity targetContentOffset:targetContentOffset cycleView:self];
+    }
+}
+
+#pragma mark — timer
 - (void)next {
-    [self scrollToNextPageWithAnimated:YES
-                           handleTimer:NO];
+    [self scrollToNextIndexWithAnimated:YES];
 }
 
-- (void)tap:(UITapGestureRecognizer *)ges {
-    
-    NSInteger index = ges.view.tag;
-    if (self.configure.hy_scrollDirection == HyCycleViewScrollRight ||
-        self.configure.hy_scrollDirection == HyCycleViewScrollBottom) {
-        index = self.totalCycleCount - 1 - index;
+- (void)closeAndOpenTimer {
+    if (self.isAutoCycle) {
+        [self stopTimer];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                   (int64_t)(.25 * NSEC_PER_SEC)),
+                     dispatch_get_main_queue(), ^{
+                         [self startTimer];
+                     });
     }
-    !self.configure.hy_clickAction ?: self.configure.hy_clickAction(self, index);
 }
 
 - (void)startTimer {
     [self stopTimer];
-    
     self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
-    
     dispatch_source_set_timer(self.timer,
-                              dispatch_time(DISPATCH_TIME_NOW, self.configure.hy_timeInterval * NSEC_PER_SEC),
-                              self.configure.hy_timeInterval * NSEC_PER_SEC,
+                              dispatch_time(DISPATCH_TIME_NOW, self.interval * NSEC_PER_SEC),
+                              self.interval * NSEC_PER_SEC,
                               0 * NSEC_PER_SEC);
-    
-    __weak typeof(self) weakSelf = self;
+    __weak typeof(self) _self = self;
     dispatch_source_set_event_handler(self.timer,
                                       ^{
                                           @autoreleasepool{
-                                              [weakSelf next];
+                                              __strong typeof(_self) self = _self;
+                                              [self next];
                                           }
                                       });
     dispatch_resume(self.timer);
@@ -1086,246 +813,59 @@ static int const CycleContentViewCount = 3;
     }
 }
 
-#pragma mark - <UIScrollViewDelegate>
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    NSInteger page = 0;
-    CGFloat minDistance = MAXFLOAT;
-    for (int i = 0; i<self.scrollView.subviews.count; i++) {
-        UIView *contentView = self.scrollView.subviews[i];
-        CGFloat distance = 0;
-        switch (self.configure.hy_scrollDirection) {
-            case HyCycleViewScrollLeft: {
-                distance = ABS(contentView.left - scrollView.contentOffset.x);
-            }break;
-            case HyCycleViewScrollRight: {
-                distance = ABS(scrollView.contentOffset.x - contentView.left);
-            }break;
-            case HyCycleViewScrollTop: {
-                distance = ABS(contentView.top - scrollView.contentOffset.y);
-            }break;
-            case HyCycleViewScrollBottom: {
-                distance = ABS(scrollView.contentOffset.y - contentView.top);
-            }break;
-            default:
-                break;
-        }
-        if (distance < minDistance) {
-            minDistance = distance;
-            page = contentView.tag;
-        }
-    }
-    self.roundingCyclePage = page;
-    
-    CGFloat index = [self getScrollViewContentOffsetIndex];
-    if (index != 1) {
-        
-        self.scrollState = YES;
-        
-        if ([self isNotCycleLoop]) {
-            [self addViewWithContentViewIndex:1
-                                    pageIndex:self.scrollView.subviews[1].tag
-                         isResetContentOffset:NO];
-        }
-        if (index < 1) {
-            [self addViewWithContentViewIndex:0
-                                    pageIndex:self.scrollView.subviews.firstObject.tag
-                         isResetContentOffset:NO];
-        } else if (index > 1) {
-            [self addViewWithContentViewIndex:2
-                                    pageIndex:self.scrollView.subviews.lastObject.tag
-                         isResetContentOffset:NO];
-        }
-    }
-    
-    if (self.configure.hy_scrollProgress) {
-        NSInteger fromPage;
-        NSInteger toPage;
-        CGFloat progress;
-        
-        if (index < 1) {
-            
-            NSInteger currentPage = self.currentCyclePage;
-            if ([self isNotCycleLoop]) {
-                currentPage = self.scrollView.subviews[1].tag;
-            }
-            
-            if (index <= self.lastScrollProgress ) {
-                fromPage = currentPage;
-                if ([self isNotCycleLoop]) {
-                    if (self.currentCyclePage == self.totalCycleCount - 1) {
-                        fromPage = self.totalCycleCount - 1;
-                    }
-                }
-                toPage = self.scrollView.subviews.firstObject.tag;
-                progress = 1 - index;
-                
-            } else {
-                if ([self isNotCycleLoop]) {
-                    fromPage = 0;
-                } else {
-                    fromPage = self.scrollView.subviews.firstObject.tag;
-                }
-                toPage = currentPage;
-                progress = index;
-            }
-            
-        } else if (index > 1) {
-            
-            NSInteger currentPage = self.currentCyclePage;
-            if ([self isNotCycleLoop]) {
-                currentPage = self.scrollView.subviews[1].tag;
-            }
-            
-            if (index >= self.lastScrollProgress ) {
-                fromPage = currentPage;
-                if ([self isNotCycleLoop]) {
-                    if (self.currentCyclePage == 0) {
-                        fromPage = 0;
-                    }
-                }
-                toPage = self.scrollView.subviews.lastObject.tag;
-                progress = index - 1;
-            } else {
-                if ([self isNotCycleLoop]) {
-                    fromPage = self.totalCycleCount - 1;
-                } else {
-                    fromPage = self.scrollView.subviews.lastObject.tag;
-                }
-                toPage = currentPage;
-                progress = 2 - index;
-            }
-            
-        } else {
-            
-            progress = 1;
-            fromPage = self.lastFromIndex;
-            toPage = self.lastToIndex;
-        }
-        
-        if (fromPage != toPage) {
-            self.configure.hy_scrollProgress(self, [self handleIndex:fromPage], [self handleIndex:toPage], progress);
-        }
-        
-        self.lastScrollProgress = index;
-        self.lastFromIndex = fromPage;
-        self.lastToIndex = toPage;
-    }
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    self.scrollState = YES;
-    if (self.totalCycleCount > 1 &&
-        self.configure.hy_scrollStyle == HyCycleViewScrollAuto) {
-        [self stopTimer];
-    }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (self.totalCycleCount > 1 &&
-        self.configure.hy_scrollStyle == HyCycleViewScrollAuto) {
-        [self startTimer];
-    }
-    if (decelerate == 0) {
-        self.scrollState = NO;
-        [self updateContentOffsetAndContentView];
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    self.scrollState = NO;
-    [self updateContentOffsetAndContentView];
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    self.scrollState = NO;
-    [self updateContentOffsetAndContentView];
-}
-
 #pragma mark — getters and setters
-- (HyGestureScrollView *)scrollView {
-    if (!_scrollView){
-        _scrollView = [[HyGestureScrollView alloc] initWithFrame:self.bounds];
-        _scrollView.showsHorizontalScrollIndicator = NO;
-        _scrollView.showsVerticalScrollIndicator = NO;
-        _scrollView.pagingEnabled = YES;
-        _scrollView.bounces = NO;
-        _scrollView.delegate = self;
-        if (@available(iOS 11.0, *)) {
-            _scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-        }
-    }
-    return _scrollView;
-}
-
 - (HyCycleViewConfigure *)configure {
     if (!_configure){
-        _configure = [HyCycleViewConfigure defaultConfigure];
+        _configure = [[HyCycleViewConfigure alloc] init];
     }
     return _configure;
 }
 
-- (NSMutableArray *)addedCycleViews {
-    if (!_addedCycleViews){
-        _addedCycleViews = @[].mutableCopy;
-        for (int i = 0; i < self.totalCycleCount; i++) {
-            [_addedCycleViews addObject:@1];
+- (HyGestureColletionView *)collectionView {
+    if (!_collectionView){
+        _collectionView = [[HyGestureColletionView alloc] initWithFrame:self.bounds
+                                                   collectionViewLayout:self.layout];
+        [_collectionView registerClass:[HyCycleViewCell class] forCellWithReuseIdentifier:NSStringFromClass(HyCycleViewCell.class)];
+        _collectionView.showsHorizontalScrollIndicator = NO;
+        _collectionView.showsVerticalScrollIndicator = NO;
+        _collectionView.backgroundColor = UIColor.clearColor;
+        _collectionView.pagingEnabled = YES;
+        _collectionView.dataSource = self;
+        _collectionView.delegate = self;
+        _collectionView.bounces = NO;
+        if (@available(iOS 10.0, *)) {
+            _collectionView.prefetchingEnabled = NO;
+        }
+        if (@available(iOS 11.0, *)) {
+            _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
     }
-    return _addedCycleViews;
+    return _collectionView;
 }
 
-- (void)setTotalCycleCount:(NSInteger)totalCycleCount {
-    _totalCycleCount = totalCycleCount;
-    [self.addedCycleViews removeAllObjects];
-    for (int i = 0; i < self.totalCycleCount; i++) {
-        [_addedCycleViews addObject:@1];
+- (UICollectionViewFlowLayout *)layout {
+    if (!_layout){
+        _layout = [[UICollectionViewFlowLayout alloc] init];
+        _layout.sectionInset = UIEdgeInsetsZero;
+        _layout.itemSize = self.bounds.size;
+        _layout.minimumLineSpacing = 0;
+        _layout.minimumInteritemSpacing = 0;
     }
+    return _layout;
 }
 
-- (void)setCurrentCyclePage:(NSInteger)currentCyclePage {
-    
-    if (currentCyclePage == _currentCyclePage) {
-        return;
+- (NSMutableDictionary<NSNumber *,HyCycleViewProvider<HyCycleView *> *> *)viewProviderDict {
+    if (!_viewProviderDict) {
+        _viewProviderDict = @{}.mutableCopy;
     }
-    
-    _currentCyclePage = currentCyclePage;
-    
-    NSInteger currentPage = currentCyclePage;
-    if (self.configure.hy_scrollDirection == HyCycleViewScrollRight ||
-        self.configure.hy_scrollDirection == HyCycleViewScrollBottom) {
-        currentPage = self.totalCycleCount - 1 - currentCyclePage;
-    }
-    
-    !self.configure.hy_currentPageChange ?:
-    self.configure.hy_currentPageChange(self, self.totalCycleCount, currentPage);
+    return _viewProviderDict;
 }
 
-- (void)setRoundingCyclePage:(NSInteger)roundingCyclePage {
-    
-    if (roundingCyclePage == _roundingCyclePage) {
-        return;
+- (NSMutableIndexSet *)didLoadIndexSet {
+    if (!_didLoadIndexSet) {
+        _didLoadIndexSet = [[NSMutableIndexSet alloc] init];
     }
-    
-    _roundingCyclePage = roundingCyclePage;
-    
-    NSInteger currentPage = roundingCyclePage;
-    if (self.configure.hy_scrollDirection == HyCycleViewScrollRight ||
-        self.configure.hy_scrollDirection == HyCycleViewScrollBottom) {
-        currentPage = self.totalCycleCount - 1 - roundingCyclePage;
-    }
-    !self.configure.hy_roundingPageChange ?:
-    self.configure.hy_roundingPageChange(self, self.totalCycleCount, currentPage);
-}
-
-- (void)setScrollState:(BOOL)scrollState {
-    if (scrollState == _scrollState) {
-        return;
-    }
-    _scrollState = scrollState;
-    
-    !self.configure.hy_scrollState ?:
-    self.configure.hy_scrollState(self, scrollState);
+    return _didLoadIndexSet;
 }
 
 - (dispatch_semaphore_t)semaphore{
@@ -1335,197 +875,47 @@ static int const CycleContentViewCount = 3;
     return _semaphore;
 }
 
-- (void)dealloc {
-    [self stopTimer];
-    [self.configure deallocBlock];
-}
-@end
+- (void)setCurrentIndex:(NSInteger)currentIndex {
+    if (currentIndex == _currentIndex) {
+        return;
+    }
+    _currentIndex = currentIndex;
 
-
-@implementation HyCycleViewConfigure
-
-+ (instancetype)defaultConfigure {
-    HyCycleViewConfigure *configure = [[self alloc] init];
-    configure.timeInterval(2).isCycleLoop(YES).scrollStyle(HyCycleViewScrollAuto);
-    return configure;
+    if (currentIndex >= 0) {
+        !self.configure.hy_currentIndexChange ?:
+        self.configure.hy_currentIndexChange(self, self.totalIndexs, currentIndex);
+    }
 }
 
-- (void)clearConfigure {
-    
-    [self
-     .timeInterval(2)
-     .isCycleLoop(YES)
-     .scrollStyle(HyCycleViewScrollAuto)
-     .totalPage(0)
-     .startPage(0)
-     .cycleInstances(nil)
-     .cycleClasses(nil)
-     .loadStyle(0)
-     .scrollDirection(0)
-     deallocBlock];
+- (void)setRoundingIndex:(NSInteger)roundingIndex {
+    if (_roundingIndex == roundingIndex) {
+        return;
+    }
+    _roundingIndex = roundingIndex;
+    if (roundingIndex >= 0) {
+        !self.configure.hy_roundingIndexChange ?:
+        self.configure.hy_roundingIndexChange(self, self.totalIndexs, roundingIndex);
+    }
 }
 
-- (HyCycleViewConfigure *(^)(BOOL))isCycleLoop {
-    return ^(BOOL cycleLoop) {
-        self.hy_isCycleLoop = cycleLoop;
-        return self;
-    };
+- (NSArray<NSNumber *> *)visibleIndexs {
+    NSMutableArray *array = @[].mutableCopy;
+    for (HyCycleViewCell *cell in self.collectionView.visibleCells) {
+        [array addObject:@(self.indexWithIndexPath(cell.indexPath))];
+    }
+    return array.copy;
 }
 
-- (HyCycleViewConfigure *(^)(NSInteger))totalPage {
-    return ^(NSInteger page) {
-        self.hy_totalPage = page;
-        return self;
-    };
+- (NSArray<UIView *> *)visibleViews {
+    NSMutableArray *array = @[].mutableCopy;
+    for (NSNumber *index in self.visibleIndexs) {
+        [array addObject:self.viewAtIndex(index.integerValue) ?: UIView.new];
+    }
+    return array.copy;
 }
 
-- (HyCycleViewConfigure *(^)(NSInteger))startPage {
-    return ^(NSInteger page) {
-        self.hy_startPage = page;
-        return self;
-    };
-}
-
-- (HyCycleViewConfigure *(^)(NSTimeInterval))timeInterval {
-    return ^(NSTimeInterval timeInt) {
-        self.hy_timeInterval = timeInt;
-        return self;
-    };
-}
-
-- (HyCycleViewConfigure *(^)(HyCycleViewScrollStyle))scrollStyle {
-    return ^(HyCycleViewScrollStyle style) {
-        self.hy_scrollStyle = style;
-        return self;
-    };
-}
-
-- (HyCycleViewConfigure *(^)(HyCycleViewScrollLoadStyle))loadStyle {
-    return ^(HyCycleViewScrollLoadStyle style) {
-        self.hy_loadStyle = style;
-        return self;
-    };
-}
-
-- (HyCycleViewConfigure *(^)(HyCycleViewScrollDirection))scrollDirection {
-    return ^(HyCycleViewScrollDirection direction) {
-        self.hy_scrollDirection = direction;
-        return self;
-    };
-}
-
-- (HyCycleViewConfigure *(^)(NSArray<Class> *))cycleClasses {
-    return ^(NSArray<Class> *array) {
-        self.hy_cycleClasses = array;
-        return self;
-    };
-}
-
-- (HyCycleViewConfigure *(^)(Class (^)(HyCycleView *, NSInteger)))cycleClass {
-    return ^(Class(^blcok)(HyCycleView *, NSInteger)) {
-        self.hy_cycleClass = [blcok copy];
-        return self;
-    };
-}
-
-- (HyCycleViewConfigure *(^)(NSArray *))cycleInstances {
-    return ^(NSArray *array) {
-        self.hy_cycleInstances = array;
-        return self;
-    };
-}
-
-- (HyCycleViewConfigure *(^)(id (^)(HyCycleView *, NSInteger)))cycleInstance {
-    return ^(id (^block)(HyCycleView *, NSInteger)){
-        self.hy_cycleInstance = [block copy];
-        return self;
-    };
-}
-
-- (HyCycleViewConfigure *(^)(void(^)(HyCycleView *, NSInteger)))clickAction {
-    return ^(void(^blcok)(HyCycleView *, NSInteger)) {
-        self.hy_clickAction = [blcok copy];
-        return self;
-    };
-}
-
-- (HyCycleViewConfigure *(^)(void(^)(HyCycleView *,
-                                     id,
-                                     NSInteger,
-                                     BOOL)))viewWillAppear {
-    
-    return ^(void(^blcok)(HyCycleView *,
-                          UIView *,
-                          NSInteger,
-                          BOOL)) {
-        self.hy_viewWillAppear = [blcok copy];
-        return self;
-    };
-}
-
-- (HyCycleViewConfigure *(^)(void(^)(HyCycleView *,
-                                     NSInteger,
-                                     NSInteger)))currentPageChange {
-    
-    return ^(void(^blcok)(HyCycleView *,
-                          NSInteger,
-                          NSInteger)) {
-        self.hy_currentPageChange = [blcok copy];
-        return self;
-    };
-}
-
-- (HyCycleViewConfigure *(^)(void(^)(HyCycleView *,
-                                     NSInteger,
-                                     NSInteger)))roundingPageChange {
-    
-    return ^(void(^blcok)(HyCycleView *,
-                          NSInteger,
-                          NSInteger)) {
-        self.hy_roundingPageChange = [blcok copy];
-        return self;
-    };
-}
-
-- (HyCycleViewConfigure *(^)(void(^)(HyCycleView *,
-                                     NSInteger,
-                                     NSInteger,
-                                     CGFloat)))scrollProgress {
-    
-    return ^(void(^blcok)(HyCycleView *,
-                          NSInteger,
-                          NSInteger,
-                          CGFloat)) {
-        self.hy_scrollProgress = [blcok copy];
-        return self;
-    };
-}
-
-
-- (HyCycleViewConfigure *(^)(void(^)(HyCycleView *,
-                                     BOOL))
-   )scrollState {
-    
-    return ^(void(^blcok)(HyCycleView *,
-                          BOOL)) {
-        self.hy_scrollState = [blcok copy];
-        return self;
-    };
-}
-
-- (NSInteger)currentPage {
-    return [self.cycleView getCurrentPage];
-}
-
-- (void)deallocBlock {
-    self.hy_cycleClass = nil;
-    self.hy_cycleInstance = nil;
-    self.hy_clickAction = nil;
-    self.hy_viewWillAppear = nil;
-    self.hy_currentPageChange = nil;
-    self.hy_roundingPageChange = nil;
-    self.hy_scrollProgress = nil;
-    self.hy_scrollState = nil;
+- (NSIndexSet *)didLoadIndexs {
+    return self.didLoadIndexSet.copy;
 }
 
 @end

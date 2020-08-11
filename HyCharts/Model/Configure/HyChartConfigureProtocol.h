@@ -15,18 +15,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HyChartConfigureProtocol <NSObject>
 
+/// 值柱体宽度 (线条可不设)
 @property (nonatomic, assign) CGFloat width;
+/// 值间距
 @property (nonatomic, assign) CGFloat margin;
+/// 是否自动算margin 正好铺满
 @property (nonatomic, assign) BOOL autoMargin;
+/// 开始边距
 @property (nonatomic, assign) CGFloat edgeInsetStart;
+/// 结束边距
 @property (nonatomic, assign) CGFloat edgeInsetEnd;
+/// 数据展示方向
 @property (nonatomic, assign) HyChartDataDirection dataDirection;
 
-
+/// 偏移量
 @property (nonatomic, assign) CGFloat trans;
-
-
-
 /// 当前缩放值
 @property (nonatomic, assign) CGFloat scale;
 /// 最小缩放值
@@ -40,20 +43,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 最大展示范围(优先级别高于maxScale)
 @property (nonatomic, assign) CGFloat maxDisplayWidth;
 
-
 /// 精度
 @property (nonatomic, assign) NSInteger decimal;
 @property (nonatomic, strong, readonly) NSNumberFormatter *numberFormatter;
-
-
-/*
- 缩放过后的数据
- */
-@property (nonatomic, assign) CGFloat scaleWidth;
-@property (nonatomic, assign) CGFloat scaleMargin;
-@property (nonatomic, assign) CGFloat scaleItemWidth;
-@property (nonatomic, assign) CGFloat scaleEdgeInsetStart;
-@property (nonatomic, assign) CGFloat scaleEdgeInsetEnd;
 
 @end
 

@@ -7,19 +7,19 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "HyChartDataSourceProtocol.h"
+#import "HyChartDataSource.h"
 #import "HyChartLayer.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HyChartAxisLayer : HyChartLayer<id<HyChartDataSourceProtocol>>
+@interface HyChartAxisLayer : HyChartLayer<HyChartDataSource *>
 
 @property (nonatomic, assign) UIEdgeInsets contentEdgeInsets;
 
-+ (instancetype)layerWithDataSource:(id<HyChartDataSourceProtocol>)dataSource
-                         xAxisModel:(id<HyChartXAxisModelProtocol>)xAxisModel
-                         yAxisModel:(id<HyChartYAxisModelProtocol>)yAxisModel;
++ (instancetype)layerWithDataSource:(HyChartDataSource *)dataSource
+                         xAxisModel:(HyChartXAxisModel *)xAxisModel
+                         yAxisModel:(HyChartYAxisModel *)yAxisModel;
 
 @end
 

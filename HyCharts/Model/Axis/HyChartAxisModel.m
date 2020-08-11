@@ -12,7 +12,7 @@
 
 @interface HyChartAxisModel ()
 @property (nonatomic, assign) NSInteger indexs;
-@property (nonatomic, strong) id<HyChartAxisGridLineInfoProtocol> axisGridLineInfo;
+@property (nonatomic, strong) HyChartAxisGridLineInfo *axisGridLineInfo;
 @end
 
 
@@ -35,7 +35,7 @@
     return self;
 }
 
-- (id<HyChartAxisGridLineInfoProtocol>)axisGridLineInfo {
+- (HyChartAxisGridLineInfo *)axisGridLineInfo {
     if (!_axisGridLineInfo){
         _axisGridLineInfo = [[HyChartAxisGridLineInfo alloc] init];
     }

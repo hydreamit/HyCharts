@@ -9,14 +9,15 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "HyChartLayerProtocol.h"
-#import "HyChartDataSourceProtocol.h"
+#import "HyChartDataSource.h"
 #import <UIKit/UIKit.h>
+#import "HyChartModel.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface HyChartLayer<__covariant DataSourceType : id<HyChartDataSourceProtocol>> : CALayer<HyChartLayerProtocol, HyChartValuePositonProviderProtocol>
+@interface HyChartLayer<__covariant DataSourceType : HyChartDataSource *> : CALayer<HyChartLayerProtocol, HyChartValuePositonProviderProtocol>
 
 + (instancetype)layerWithDataSource:(DataSourceType)dataSource;
 

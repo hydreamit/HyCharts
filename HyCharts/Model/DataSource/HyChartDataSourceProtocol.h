@@ -19,12 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// 坐标轴数据
 @property (nonatomic, strong, readonly) id<HyChartAxisDataSourceProtocol> axisDataSource;
 
-/// view配置数据
-- (id<HyChartConfigureDataSourceProtocol>)configreDataSource;
-/// 模型数据
-- (id<HyChartModelDataSourceProtocol>)modelDataSource;
-
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -10,159 +10,108 @@
 #import <UIKit/UIKit.h>
 #import "UIView+HyFrame.h"
 
-/// scroll style
-typedef NS_ENUM(NSUInteger, HyCycleViewScrollStyle) {
-    /// need hand scroll
-    HyCycleViewScrollStatic,
-    /// auto scroll
-    HyCycleViewScrollAuto
+@class HyCycleView;
+
+NS_ASSUME_NONNULL_BEGIN
+
+
+typedef NS_ENUM(NSUInteger, HyCycleViewLoadStyle) {
+    HyCycleViewLoadStyleWillAppear,
+    HyCycleViewLoadStyleDidAppear
 };
 
-/// load style
-typedef NS_ENUM(NSUInteger, HyCycleViewScrollLoadStyle) {
-    /// view/controller view will appear load
-    HyCycleViewScrollLoadStyleWillAppear,
-    ///  view/controller view did appear load
-    HyCycleViewScrollLoadStyleDidAppear
+typedef NS_ENUM(NSUInteger, HyCycleViewDirection) {
+    HyCycleViewDirectionLeft,
+    HyCycleViewDirectionRight,
+    HyCycleViewDirectionTop,
+    HyCycleViewDirectionBottom
 };
-
-///scroll direction
-typedef NS_ENUM(NSUInteger, HyCycleViewScrollDirection) {
-    /// scroll to left
-    HyCycleViewScrollLeft,
-    /// scroll to right
-    HyCycleViewScrollRight,
-    /// scroll to top
-    HyCycleViewScrollTop,
-    /// scroll to bottom
-    HyCycleViewScrollBottom
-};
-
 
 @class HyCycleView;
-@interface HyCycleViewConfigure : NSObject
-
-/// currentPage (当前页面)
-@property (nonatomic,assign,readonly) NSInteger currentPage;
-@property (nonatomic,weak,readonly) HyCycleView *cycleView;
-
-/// cycle loop default yes (是否为无限循环轮播 默认为YES)
-- (HyCycleViewConfigure *(^)(BOOL))isCycleLoop;
-/// total Pages (总页数)
-- (HyCycleViewConfigure *(^)(NSInteger))totalPage;
-/// start page (开始页)
-- (HyCycleViewConfigure *(^)(NSInteger))startPage;
-/// timeInterval default 2.0 s (自动轮播时间间隔 默认2秒)
-- (HyCycleViewConfigure *(^)(NSTimeInterval))timeInterval;
-
-/// auto or static scroll style (轮播方式：自动/手动, 默认是自动)
-- (HyCycleViewConfigure *(^)(HyCycleViewScrollStyle))scrollStyle;
-/// cycle view load style (轮播View/Controller加载方式: 滑动出现立即加载/滑动到整个页面再加载)
-- (HyCycleViewConfigure *(^)(HyCycleViewScrollLoadStyle))loadStyle;
-/// scroll direction (轮播方向:左、右、上、下)
-- (HyCycleViewConfigure *(^)(HyCycleViewScrollDirection))scrollDirection;
-
-/// cycle views or controllers of class (轮播传入的是Class：view class 或者 controller class)
-- (HyCycleViewConfigure *(^)(NSArray<Class> *))cycleClasses;
-- (HyCycleViewConfigure *(^)(Class (^)(HyCycleView *, NSInteger)))cycleClass;
-/// cycle views or controllers (轮播传入的是实例对象：view 或者 controller)
-- (HyCycleViewConfigure *(^)(NSArray *))cycleInstances;
-- (HyCycleViewConfigure *(^)(id (^)(HyCycleView *, NSInteger)))cycleInstance;
-
-/// click cycleView action (点击某个轮播view的回调)
-- (HyCycleViewConfigure *(^)(void(^)(HyCycleView *, NSInteger)))clickAction;
-
-/// one cycle will appear callback (当轮播view/controllerView出现的回调)
-- (HyCycleViewConfigure *(^)(void(^)(HyCycleView *,  // HyCycleView
-                                     id,            // cycleView
-                                     NSInteger,    // currentIndex
-                                     BOOL))       // is first load
-                                     )viewWillAppear;
-
-/// totalPage and currentPage change (总页/当前页发生改变的回调)
-- (HyCycleViewConfigure *(^)(void(^)(HyCycleView *, // HyCycleView
-                                     NSInteger,    // totalPage
-                                     NSInteger))  // currentPage
-                                     )currentPageChange;
-
-/// totalPage and roundingPage change (总页/当前页(四舍五入)发生改变的回调)
-- (HyCycleViewConfigure *(^)(void(^)(HyCycleView *, // HyCycleView
-                                     NSInteger,    // totalPage
-                                     NSInteger))  // roundingPage
-                                     )roundingPageChange;
-
-/// scroll progress (滑动进度的回调)
-- (HyCycleViewConfigure *(^)(void(^)(HyCycleView *, // HyCycleView
-                                     NSInteger,    // fromPage
-                                     NSInteger,   // toPage
-                                     CGFloat))   // progress
-                                     )scrollProgress;
-
-/// scroll state (滑动状态)
-- (HyCycleViewConfigure *(^)(void(^)(HyCycleView *, // HyCycleView
-                                     BOOL))        // state begin or end
-                                     )scrollState;
-
+@protocol HyCycleViewScrollDelegate <NSObject>
+@optional
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView cycleView:(HyCycleView *)cycleView;
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView cycleView:(HyCycleView *)cycleView;
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset cycleView:(HyCycleView *)cycleView;
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate cycleView:(HyCycleView *)cycleView;
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView cycleView:(HyCycleView *)cycleView;
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView cycleView:(HyCycleView *)cycleView;
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView cycleView:(HyCycleView *)cycleView;
 @end
 
 
+@interface HyCycleViewProvider<__covariant CycleViewType> : NSObject
+/// 是否引用数据源对象(已被其他对象引用不用设)
+@property (nonatomic,assign) BOOL retainProvider;
+/// 视图
+- (instancetype)view:(UIView *(^)(CycleViewType cycleView))block;
+/// 视图即将出现回调
+- (instancetype)viewWillAppear:(void(^)(CycleViewType cycleView, id view, BOOL isFirstLoad))block;
+/// 视图消失完成回调
+- (instancetype)viewDidDisAppear:(void(^)(CycleViewType cycleView, id view))block;
+/// 点击事件回调
+- (instancetype)viewClickAction:(void(^)(CycleViewType cycleView, id view))block;
+@end
+@protocol HyCycleViewProviderProtocol <NSObject>
+- (void)configCycleView:(HyCycleViewProvider<HyCycleView *> *)provider index:(NSInteger)index;
+@end
+
+
+@interface HyCycleViewConfigure<__covariant CycleViewType,
+                                __covariant CycleViewProviderProtocolType> : NSObject
+
+/// 是否无限循环 默认NO
+- (instancetype)isCycle:(BOOL)isCycle;
+/// 是否自动轮播 默认NO
+- (instancetype)isAutoCycle:(BOOL)isAutoCycle;
+/// 自动轮播时间间隔
+- (instancetype)interval:(NSTimeInterval)interval;
+/// 数据展示方向
+- (instancetype)direction:(HyCycleViewDirection)direction;
+/// 页面加载时机
+- (instancetype)loadStyle:(HyCycleViewLoadStyle)loadStyle;
+/// 开始页
+- (instancetype)startIndex:(NSInteger (^)(CycleViewType cycleView))block;
+/// 总页数
+- (instancetype)totalIndexs:(NSInteger (^)(CycleViewType cycleView))block;
+/// 视图提供源
+- (instancetype)viewProviderAtIndex:(CycleViewProviderProtocolType(^)(CycleViewType cycleView, NSInteger index))block;
+/// 视图即将出现回调
+- (instancetype)viewWillAppearAtIndex:(void(^)(CycleViewType cycleView, id view, NSInteger index, BOOL isFirstLoad))block;
+/// 视图消失完成回调
+- (instancetype)viewDidDisAppearAtIndex:(void(^)(CycleViewType cycleView, id view, NSInteger index))block;
+/// 点击事件回调
+- (instancetype)clickActionAtIndex:(void(^)(CycleViewType cycleView, id view, NSInteger index))block;
+/// 当前页改变回调
+- (instancetype)currentIndexChange:(void(^)(CycleViewType cycleView, NSInteger indexs, NSInteger index))block;
+/// 四舍五入页改变回调
+- (instancetype)roundingIndexChange:(void(^)(CycleViewType cycleView, NSInteger indexs, NSInteger roundingIndex))block;
+/// 滚动回调
+- (instancetype)scrollProgress:(void(^)(CycleViewType cycleView, NSInteger fromIndex, NSInteger toIndex, CGFloat progress))block;
+// 滚动代理
+- (instancetype)scrollDelegate:(id<HyCycleViewScrollDelegate>)delegate;
+@end
 
 
 
 @interface HyCycleView : UIView
 
-/**
- create cycleView
- 
- @param frame frame
- @param configureBlock config the params
- @return HyCycleView
- */
-+ (instancetype)cycleViewWithFrame:(CGRect)frame
-                    configureBlock:(void (^)(HyCycleViewConfigure *configure))configureBlock;
+@property (nonatomic, strong, readonly) HyCycleViewConfigure<HyCycleView *,
+                                                          id<HyCycleViewProviderProtocol>> *configure;
+
+@property (nonatomic, assign, readonly) NSInteger currentIndex;
+@property (nonatomic, strong, readonly) NSArray<UIView *> *visibleViews;
+@property (nonatomic, strong, readonly) NSArray<NSNumber *> *visibleIndexs;
+@property (nonatomic, strong, readonly) NSIndexSet *didLoadIndexs;
+@property (nonatomic, copy, readonly) UIView *(^viewAtIndex)(NSInteger);
 
 
-/// configure
-@property (nonatomic, strong, readonly) HyCycleViewConfigure *configure;
+- (void)reloadData;
 
-
-
-/**
- scroll to next page
- 
- @param animated animated
- */
-- (void)scrollToNextPageWithAnimated:(BOOL)animated;
-
-
-/**
- scroll to last page
- 
- @param animated animated
- */
-- (void)scrollToLastPageWithAnimated:(BOOL)animated;
-
-
-/**
- scroll to the page
- 
- @param page page
- @param animated animated
- */
-- (void)scrollToPage:(NSInteger)page animated:(BOOL)animated;
-
-
-/**
- reload initialize configure block
- */
-- (void)reloadConfigureBlock;
-
-
-/**
- changed configure with reload
- */
-- (void)reloadConfigureChange;
-
+- (void)scrollToNextIndexWithAnimated:(BOOL)animated;
+- (void)scrollToLastIndexWithAnimated:(BOOL)animated;
+- (void)scrollToIndex:(NSInteger)index animated:(BOOL)animated;
 
 @end
 
+NS_ASSUME_NONNULL_END

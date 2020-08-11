@@ -7,23 +7,20 @@
 //
 
 #import "HyChartLineConfigureDataSource.h"
+#import "HyChartConfigureDataSource.h"
 #import "HyChartLineConfigure.h"
 
 @interface HyChartLineConfigureDataSource ()
-@property (nonatomic, strong) id<HyChartLineConfigureProtocol> configure;
+@property (nonatomic, strong) HyChartLineConfigure *configure;
 @end
 
 
 @implementation HyChartLineConfigureDataSource
+@synthesize configure = _configure;
 
-- (id<HyChartLineConfigureDataSourceProtocol>)configConfigure:(void (^_Nullable)(id<HyChartLineConfigureProtocol> configure))block {
-    !block ?: block(self.configure);
-    return self;
-}
-
-- (id<HyChartLineConfigureProtocol>)configure {
+- (HyChartLineConfigure *)configure {
     if (!_configure){
-        _configure = [HyChartLineConfigure defaultConfigure];
+        _configure = [[HyChartLineConfigure alloc] init];
     }
     return _configure;
 }

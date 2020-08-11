@@ -16,34 +16,34 @@
 
 
 @implementation HyChartKLineConfigure
-@synthesize trendUpColor = _trendUpColor, trendDownColor = _trendDownColor, hatchWidth = _hatchWidth, trendUpKlineType = _trendUpKlineType, trendDownKlineType = _trendDownKlineType, smaDict = _smaDict, bollDict = _bollDict, emaDict = _emaDict, technicalLineWidth = _technicalLineWidth, macdDict = _macdDict, rsiDict = _rsiDict, kdjDict = _kdjDict, minScaleToLine = _minScaleToLine, minScaleLineColor = _minScaleLineColor, minScaleLineWidth = _minScaleLineWidth, timeLineColor = _timeLineColor, timeLineWidth = _timeLineWidth, timeLineShadeColors = _timeLineShadeColors, minScaleLineShadeColors = _minScaleLineShadeColors, priceDecimal = _priceDecimal, volumeDecimal = _volumeDecimal, disPlayNewprice = _disPlayNewprice, newpriceColor = _newpriceColor, newpriceFont = _newpriceFont, disPlayMaxMinPrice = _disPlayMaxMinPrice, maxminPriceColor = _maxminPriceColor, maxminPriceFont = _maxminPriceFont, klineViewDict = _klineViewDict;
+@synthesize trendUpColor = _trendUpColor, trendDownColor = _trendDownColor, trendUpKlineType = _trendUpKlineType, trendDownKlineType = _trendDownKlineType, smaDict = _smaDict, bollDict = _bollDict, emaDict = _emaDict,  macdDict = _macdDict, rsiDict = _rsiDict, kdjDict = _kdjDict, minScaleToLine = _minScaleToLine, minScaleLineColor = _minScaleLineColor, minScaleLineWidth = _minScaleLineWidth, timeLineColor = _timeLineColor, timeLineWidth = _timeLineWidth, timeLineShadeColors = _timeLineShadeColors, minScaleLineShadeColors = _minScaleLineShadeColors, priceDecimal = _priceDecimal, volumeDecimal = _volumeDecimal, disPlayNewprice = _disPlayNewprice, newpriceColor = _newpriceColor, newpriceFont = _newpriceFont, disPlayMaxMinPrice = _disPlayMaxMinPrice, maxminPriceColor = _maxminPriceColor, maxminPriceFont = _maxminPriceFont, klineViewDict = _klineViewDict, lineWidth = _lineWidth;
 
 
-+ (instancetype)defaultConfigure {
-    
-    HyChartKLineConfigure *configure = [super defaultConfigure];
-    configure.trendUpColor = UIColor.redColor;
-    configure.trendDownColor = UIColor.greenColor;
-    configure.hatchWidth = 1.0;
-    configure.technicalLineWidth = 1.0;
-    configure.dataDirection = HyChartDataDirectionReverse;
-    
-//    configure.minScaleToLine = YES;
-    configure.minScaleLineColor = UIColor.orangeColor;
-    configure.minScaleLineWidth = 1;
-    
-    configure.timeLineColor = UIColor.blueColor;
-    configure.timeLineWidth = 1;
-    
-    configure.disPlayNewprice = YES;
-    configure.newpriceColor = UIColor.grayColor;
-    configure.newpriceFont = [UIFont systemFontOfSize:12];
-    
-    configure.disPlayMaxMinPrice = YES;
-    configure.maxminPriceColor = UIColor.grayColor;
-    configure.maxminPriceFont = [UIFont systemFontOfSize:10];
-    
-    return configure;
+- (instancetype)init {
+    if (self = [super init]) {
+        
+        self.trendUpColor = UIColor.redColor;
+        self.trendDownColor = UIColor.greenColor;
+        self.lineWidth = 1.0;
+//        self.lineWidthCanScale=  NO;
+        self.dataDirection = HyChartDataDirectionReverse;
+        
+    //    self.minScaleToLine = YES;
+        self.minScaleLineColor = UIColor.orangeColor;
+        self.minScaleLineWidth = 1;
+        
+        self.timeLineColor = UIColor.blueColor;
+        self.timeLineWidth = 1;
+        
+        self.disPlayNewprice = YES;
+        self.newpriceColor = UIColor.grayColor;
+        self.newpriceFont = [UIFont systemFontOfSize:12];
+        
+        self.disPlayMaxMinPrice = YES;
+        self.maxminPriceColor = UIColor.grayColor;
+        self.maxminPriceFont = [UIFont systemFontOfSize:10];
+    }
+    return self;
 }
 
 - (void)setPriceDecimal:(NSInteger)priceDecimal {

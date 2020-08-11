@@ -24,7 +24,7 @@
 
 - (id<HyChartConfigureProtocol>)configure {
     if (!_configure){
-        _configure = [HyChartConfigure defaultConfigure];
+        _configure = [[HyChartConfigure alloc] init];
     }
     return _configure;
 }

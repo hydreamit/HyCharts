@@ -18,8 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface HyChartLineConfigure : HyChartConfigure<HyChartLineConfigureProtocol>
-
-
+@property (nonatomic, copy, readonly) void(^lineConfigureAtIndexBlock)(NSInteger, id<HyChartLineOneConfigureProtocol>);
 @end
 
 NS_ASSUME_NONNULL_END

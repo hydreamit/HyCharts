@@ -18,43 +18,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)configModelForItemAtIndex:(void (^_Nullable)(id<HyChartKLineModelProtocol> model, NSInteger index))block;
 
-@property (nonatomic, copy, readonly) void (^modelForItemAtIndexBlock)(id<HyChartKLineModelProtocol> model, NSInteger index);
-
-
-
-
-@property (nonatomic, strong) NSMutableArray<id<HyChartKLineModelProtocol>> *models;
-
+/// 模型数组
+@property (nonatomic, strong, readonly) NSMutableArray<id<HyChartKLineModelProtocol>> *models;
 /// 可见跨度的模型数组
-@property (nonatomic, strong) NSArray<id<HyChartKLineModelProtocol>> *visibleModels;
+@property (nonatomic, strong, readonly) NSArray<id<HyChartKLineModelProtocol>> *visibleModels;
 /// 可见跨度的靠近X轴点的模型数组
-@property (nonatomic, strong) NSArray<id<HyChartKLineModelProtocol>> *visibleXAxisModels;
-
+@property (nonatomic, strong, readonly) NSArray<id<HyChartKLineModelProtocol>> *visibleXAxisModels;
 
 /// 可见最大值模型
-@property (nonatomic, strong) id<HyChartKLineModelProtocol> visibleMaxPriceModel;
+@property (nonatomic, strong, readonly) id<HyChartKLineModelProtocol> visibleMaxPriceModel;
 /// 可见最小值模型
-@property (nonatomic, strong) id<HyChartKLineModelProtocol> visibleMinPriceModel;
+@property (nonatomic, strong, readonly) id<HyChartKLineModelProtocol> visibleMinPriceModel;
 /// 可见最大值模型
-@property (nonatomic, strong) id<HyChartKLineModelProtocol> visibleMaxVolumeModel;
+@property (nonatomic, strong, readonly) id<HyChartKLineModelProtocol> visibleMaxVolumeModel;
 /// 可见最小值模型
-@property (nonatomic, strong) id<HyChartKLineModelProtocol> visibleMinVolumeModel;
+@property (nonatomic, strong, readonly) id<HyChartKLineModelProtocol> visibleMinVolumeModel;
 
+@property (nonatomic, assign, readonly) HyChartKLineTechnicalType klineMianTechnicalType;
+@property (nonatomic, assign, readonly) HyChartKLineTechnicalType klineVolumeTechnicalType;
+@property (nonatomic, assign, readonly) HyChartKLineAuxiliaryType auxiliaryType;
+@property (nonatomic, strong, readonly) NSNumberFormatter *priceNunmberFormatter;
+@property (nonatomic, strong, readonly) NSNumberFormatter *volumeNunmberFormatter;
 
-
-@property (nonatomic, strong) NSNumber *maxPrice;
-@property (nonatomic, strong) NSNumber *minPrice;
-@property (nonatomic, strong) NSNumber *maxVolume;
-@property (nonatomic, strong) NSNumber *minVolume;
-@property (nonatomic, strong) NSNumber *maxAuxiliary;
-@property (nonatomic, strong) NSNumber *minAuxiliary;
-@property (nonatomic, strong) NSNumberFormatter *priceNunmberFormatter;
-@property (nonatomic, strong) NSNumberFormatter *volumeNunmberFormatter;
-@property (nonatomic, copy, readonly) NSNumber *(^maxValueWithViewType)(HyChartKLineViewType type);
-@property (nonatomic, copy, readonly) NSNumber *(^minValueWithViewType)(HyChartKLineViewType type);
-@property (nonatomic, assign) HyChartKLineTechnicalType klineMianTechnicalType;
-@property (nonatomic, assign) HyChartKLineTechnicalType klineVolumeTechnicalType;
-@property (nonatomic, assign) HyChartKLineAuxiliaryType auxiliaryType;
 @end
 
 NS_ASSUME_NONNULL_END

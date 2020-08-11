@@ -7,26 +7,24 @@
 //
 
 #import "HyChartKLineDataSource.h"
-#import "HyChartKLineConfigureDataSource.h"
-#import "HyChartKLineModelDataSource.h"
-
 
 @interface HyChartKLineDataSource ()
-@property (nonatomic, strong) id<HyChartKLineModelDataSourceProtocol> modelDataSource;
-@property (nonatomic, strong) id<HyChartKLineConfigureDataSourceProtocol> configreDataSource;
+@property (nonatomic, strong) HyChartKLineModelDataSource *modelDataSource;
+@property (nonatomic, strong) HyChartKLineConfigureDataSource *configreDataSource;
 @end
 
 
 @implementation HyChartKLineDataSource
+@synthesize modelDataSource = _modelDataSource, configreDataSource = _configreDataSource;
 
-- (id<HyChartKLineConfigureDataSourceProtocol>)configreDataSource {
+- (HyChartKLineConfigureDataSource *)configreDataSource {
     if (!_configreDataSource){
         _configreDataSource = [[HyChartKLineConfigureDataSource alloc] init];
     }
     return _configreDataSource;
 }
 
-- (id<HyChartKLineModelDataSourceProtocol>)modelDataSource {
+- (HyChartKLineModelDataSource *)modelDataSource {
     if (!_modelDataSource) {
         _modelDataSource = [[HyChartKLineModelDataSource alloc] init];
     }

@@ -8,11 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "HyChartAxisModelProtocol.h"
+#import "HyChartAxisGridLineInfo.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HyChartAxisModel : NSObject<HyChartAxisModelProtocol>
+
+@property (nonatomic, assign, readonly) NSInteger indexs;
+
+@property (nonatomic, strong, readonly) HyChartAxisGridLineInfo *axisGridLineInfo;
 
 @end
 

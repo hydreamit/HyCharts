@@ -25,7 +25,7 @@
     }
     
     CGFloat height = CGRectGetHeight(self.bounds);
-     CGFloat width = self.dataSource.configreDataSource.configure.scaleWidth;
+    CGFloat width = self.dataSource.configreDataSource.configure.scaleWidth;
     double maxValue = 0;
     double minValue = 0;
     if ([self.superlayer isKindOfClass:NSClassFromString(@"HyChartKLineLayer")]) {
@@ -121,16 +121,18 @@
               RSI(n) = A(n) /(A(n) + B(n)) * 100
               RSI(N) = SMA(MAX(Close-LastClose,0) , N, 1) / SMA( ABS(Close-LastClose), N ,1) * 100
             */
-            NSNumber *rsiParams = configure.rsiDict.allKeys.firstObject;
+            NSArray<NSNumber *> *rsiParams = configure.rsiDict.allKeys;
             __block  CGPoint rsiPoint = CGPointZero;
-           block = ^(id<HyChartKLineModelProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            block = ^(id<HyChartKLineModelProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                x = obj.visiblePosition;
-               rsiPoint = CGPointMake(x, height - (obj.priceRSI([rsiParams integerValue]).doubleValue - minValue) * heightRate);
-               if (idx == 0) {
-                   [paths.firstObject moveToPoint:rsiPoint];
-               } else {
-                   [paths.firstObject addLineToPoint:rsiPoint];
-               }
+               [rsiParams enumerateObjectsUsingBlock:^(NSNumber * _Nonnull rsiObj, NSUInteger rsiIndex, BOOL * _Nonnull stop) {
+                   rsiPoint = CGPointMake(x, height - (obj.priceRSI([rsiObj integerValue]).doubleValue - minValue) * heightRate);
+                   if (idx == 0) {
+                       [paths[rsiIndex] moveToPoint:rsiPoint];
+                   } else {
+                       [paths[rsiIndex] addLineToPoint:rsiPoint];
+                   }
+               }];
             };
         } break;
         default:
@@ -147,7 +149,10 @@
             maxIndex = 3;
         } break;
         case HyChartKLineAuxiliaryTypeRSI: {
-            maxIndex = 1;
+            maxIndex = configure.rsiDict.allKeys.count;
+            if (maxIndex > 3) {
+                maxIndex = 3;
+            }
         } break;
         default:
         break;
@@ -204,7 +209,7 @@
                            TransactionDisableActions(^{
                                layer.path = UIBezierPath.bezierPath.CGPath;
                                layer.strokeColor = colors[index].CGColor;
-                               layer.lineWidth = configure.technicalLineWidth;
+                               layer.lineWidth = configure.lineWidth;
                                if (index == 0 || index == 1) {
                                    layer.fillColor= UIColor.clearColor.CGColor;
                                } else {
@@ -238,7 +243,7 @@
                            TransactionDisableActions(^{
                                layer.strokeColor = color.CGColor;
                                layer.fillColor = UIColor.clearColor.CGColor;
-                               layer.lineWidth = configure.technicalLineWidth;
+                               layer.lineWidth = configure.lineWidth;
                                layer.path = UIBezierPath.bezierPath.CGPath;
                                [self addSublayer:layer];
                            });
@@ -247,15 +252,19 @@
                }
            }break;
            case HyChartKLineAuxiliaryTypeRSI: {
-               if (configure.rsiDict.allKeys.count) {
-                   CAShapeLayer *layer = _layers.firstObject;
-                   TransactionDisableActions(^{
-                       layer.strokeColor = configure.rsiDict.allValues.firstObject.CGColor;
-                       layer.fillColor = UIColor.clearColor.CGColor;
-                       layer.lineWidth = configure.technicalLineWidth;
-                       layer.path = UIBezierPath.bezierPath.CGPath;
-                       [self addSublayer:layer];
-                   });
+               NSArray<NSNumber *> *rsiAllKeys = configure.rsiDict.allKeys;
+               if (rsiAllKeys.count) {
+                   for (NSNumber *number in rsiAllKeys) {
+                       NSInteger index = [rsiAllKeys indexOfObject:number];
+                       CAShapeLayer *layer = _layers[index];
+                       TransactionDisableActions(^{
+                           layer.strokeColor = configure.rsiDict[number].CGColor;
+                           layer.fillColor = UIColor.clearColor.CGColor;
+                           layer.lineWidth = configure.lineWidth;
+                           layer.path = UIBezierPath.bezierPath.CGPath;
+                           [self addSublayer:layer];
+                       });
+                   }
                }
            }break;
            default:

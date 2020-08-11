@@ -32,11 +32,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void(^longGestureAction)(HyChartView *chartView, id<HyChartModelProtocol> model, NSUInteger index, CGPoint point);
 /// 缩放手势事件
 @property (nonatomic, copy) void(^pinchGestureAction)(HyChartView *chartView, id<HyChartModelProtocol> model, NSUInteger index, CGFloat scale, UIGestureRecognizerState state);
-/// 滚动事件
+/// 滚动事件 (分页加载数据)
 @property (nonatomic, copy) void(^scrollAction)(CGFloat contentOffset, CGFloat chartWidth, CGFloat chartContentWidth);
 
 
-/// bounces
+/// 弹性属性
 @property (nonatomic, assign) BOOL bounces;
 /// 内边距
 @property (nonatomic, assign) UIEdgeInsets contentEdgeInsets;
@@ -50,14 +50,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)configChartCursor:(void(^)(id<HyChartCursorConfigureProtocol> configure))block;
 /// 自定义游标
 - (void)resetChartCursor:(id<HyChartCursorProtocol>_Nullable)cursor;
+/// 游标
+@property (nonatomic, strong, readonly, nullable) id<HyChartCursorProtocol> chartCursor;
 /// 游标状态
 @property (nonatomic, copy) void(^chartCursorState)(HyChartCursorState state);
 
 
-/// 渲染
+/// 数据整体渲染
 - (void)setNeedsRendering;
-/// 渲染及完成回调
+/// 数据整体渲染及完成回调
 - (void)setNeedsRenderingWithCompletion:(void(^ _Nullable)(void))completion;
+/// 实时刷新最新价 或 添加/删除最前面数据 
+- (void)refreshChartsView;
 
 
 /// 滚动

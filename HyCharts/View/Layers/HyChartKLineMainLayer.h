@@ -8,16 +8,18 @@
 
 #import "HyChartLayer.h"
 #import "HyChartsTypedef.h"
-#import "HyChartKLineDataSourceProtocol.h"
+#import "HyChartKLineDataSource.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface HyChartKLineMainLayer : HyChartLayer<id<HyChartKLineDataSourceProtocol>>
+@interface HyChartKLineMainLayer : HyChartLayer<HyChartKLineDataSource *>
 
 @property (nonatomic, assign) HyChartKLineTechnicalType technicalType;
 
 @property (nonatomic, assign, getter=isTimeLine) BOOL timeLine;
+
+- (void)renderingNewprice;
 
 @end
 

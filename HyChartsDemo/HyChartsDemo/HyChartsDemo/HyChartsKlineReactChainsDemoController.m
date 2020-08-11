@@ -314,7 +314,8 @@
            
             configure.macdDict = @{@[@12, @26, @9] : @[Hy_ColorWithRGB(246, 164, 84), Hy_ColorWithRGB(165, 83, 127), Hy_ColorWithRGB(225, 82, 71), Hy_ColorWithRGB(79, 184, 126)]};
             configure.kdjDict = @{@[@9, @3, @3] : @[Hy_ColorWithRGB(246, 164, 84), Hy_ColorWithRGB(165, 83, 127), Hy_ColorWithRGB(105, 140, 180)]};
-            configure.rsiDict = @{@6 : UIColor.orangeColor};
+           configure.rsiDict = @{@6 : UIColor.orangeColor};
+//            configure.rsiDict = @{@6 : UIColor.orangeColor, @12 : UIColor.redColor, @24 : UIColor.greenColor};
         }];
 //        _auxiliaryView.tapGestureDisabled = YES;
         [_auxiliaryView resetChartCursor:nil];

@@ -12,21 +12,22 @@
 
 
 @interface HyChartLineDataSource ()
-@property (nonatomic, strong) id<HyChartLineModelDataSourceProtocol> modelDataSource;
-@property (nonatomic, strong) id<HyChartLineConfigureDataSourceProtocol> configreDataSource;
+@property (nonatomic, strong) HyChartLineModelDataSource *modelDataSource;
+@property (nonatomic, strong) HyChartLineConfigureDataSource *configreDataSource;
 @end
 
 
 @implementation HyChartLineDataSource
+@synthesize modelDataSource = _modelDataSource, configreDataSource = _configreDataSource;
 
-- (id<HyChartLineConfigureDataSourceProtocol>)configreDataSource {
+- (HyChartLineConfigureDataSource *)configreDataSource {
     if (!_configreDataSource){
         _configreDataSource = [[HyChartLineConfigureDataSource alloc] init];
     }
     return _configreDataSource;
 }
 
-- (id<HyChartLineModelDataSourceProtocol>)modelDataSource {
+- (HyChartLineModelDataSource *)modelDataSource {
     if (!_modelDataSource) {
         _modelDataSource = [[HyChartLineModelDataSource alloc] init];
     }

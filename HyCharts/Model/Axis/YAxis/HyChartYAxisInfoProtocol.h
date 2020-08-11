@@ -16,8 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// 每个坐标点对应的t内容 (NSString NSAttributedString)
 - (instancetype)configTextAtIndex:(id(^)(NSInteger index, NSNumber *maxValue, NSNumber *minValue))block;
 
-/// NSString NSAttributedString
-@property (nonatomic, copy, readonly) id(^textAtIndexBlock)(NSInteger index, NSNumber *maxValue, NSNumber *minValue);
 
 @end
 

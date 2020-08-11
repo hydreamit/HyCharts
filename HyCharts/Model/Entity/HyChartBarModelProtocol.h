@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// 支持多条柱
 @property (nonatomic, strong) NSArray<NSNumber *> *values;
 
-
 @end
 
 NS_ASSUME_NONNULL_END

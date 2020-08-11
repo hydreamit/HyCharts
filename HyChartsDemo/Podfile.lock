@@ -1,6 +1,6 @@
 PODS:
   - HyCategoriess (1.0.0)
-  - HyCycleView (1.0.2)
+  - HyCycleView (1.0.3)
 
 DEPENDENCIES:
   - HyCategoriess
@@ -13,7 +13,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   HyCategoriess: f5d9ee6b5f58793e950a77a31b7ad9ddb1662928
-  HyCycleView: 8a423e7cd43243b42cda4f8426fa4175394005fb
+  HyCycleView: e4bf8fd283c060ea66cf89fef8e57cece495d2ee
 
 PODFILE CHECKSUM: 0727f516d2044def44d05196b3e204d81faa5a9f
 

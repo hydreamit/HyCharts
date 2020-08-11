@@ -146,7 +146,8 @@
           break;
         }
 
-
+        NSInteger visibleMaxIndex = [visibleModels indexOfObject:self.dataSource.modelDataSource.visibleMaxPriceModel];
+        NSInteger visibleMinIndex = [visibleModels indexOfObject:self.dataSource.modelDataSource.visibleMinPriceModel];
         [visibleModels enumerateObjectsUsingBlock:^(id<HyChartKLineModelProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 
           entityX = obj.visiblePosition;
@@ -177,11 +178,11 @@
           lowHatchPointTop = CGPointMake(entityX + entityWidth / 2, CGRectGetMaxY(entityRect));
           lowHatchPointBottom = CGPointMake(entityX + entityWidth / 2, height - (obj.lowPrice.doubleValue - minValue) * heightRate);
           
-          if (idx == self.dataSource.modelDataSource.visibleMaxPriceModel.visibleIndex) {
+          if (idx == visibleMaxIndex) {
               maxPriceP = highHatchPointTop;
           }
           
-          if (idx == self.dataSource.modelDataSource.visibleMinPriceModel.visibleIndex) {
+          if (idx == visibleMinIndex) {
               minPriceP = lowHatchPointBottom;
           }
           
@@ -236,6 +237,16 @@
               }];
           }
     }];
+        
+//     if (self.dataSource.configreDataSource.configure.lineWidthCanScale) {
+//        CGFloat scale = self.dataSource.configreDataSource.configure.scale;
+//        if (scale > 1) {
+//            scale = 1;
+//        }
+//        CGFloat lineWidth = self.dataSource.configreDataSource.configure.lineWidth * scale;
+//        self.trendUpLayer.lineWidth = lineWidth;
+//        self.trendDownLayer.lineWidth = lineWidth;
+//     }
 
       self.trendUpLayer.path = upPath.CGPath;
       self.trendDownLayer.path = downPath.CGPath;
@@ -314,6 +325,55 @@
     });
 }
 
+
+- (void)renderingNewprice {
+    
+    if (!self.dataSource.configreDataSource.configure.disPlayNewprice) {
+        self.newpriceTextLayer.frame = CGRectZero;
+        self.newpriceTextLayer.string = @"";
+        return;
+    }
+    
+    CGFloat height = CGRectGetHeight(self.bounds);
+    CGFloat left = CGRectGetMinX(self.bounds);
+    
+    double maxValue = 0;
+    double minValue = 0;
+    if ([self.superlayer isKindOfClass:NSClassFromString(@"HyChartKLineLayer")]) {
+        maxValue = self.dataSource.axisDataSource.yAxisModelWityViewType(HyChartKLineViewTypeMain).yAxisMaxValue.doubleValue;
+        minValue = self.dataSource.axisDataSource.yAxisModelWityViewType(HyChartKLineViewTypeMain).yAxisMinValue.doubleValue;
+    } else {
+        maxValue = self.dataSource.axisDataSource.yAxisModel.yAxisMaxValue.doubleValue;
+        minValue = self.dataSource.axisDataSource.yAxisModel.yAxisMinValue.doubleValue;
+    }
+    double heightRate = maxValue != minValue ? height / (maxValue - minValue) : 0;
+
+    CGRect newPriceTextRect = CGRectZero;
+    NSString *newPriceString = @"";
+    UIBezierPath *newPricePath = UIBezierPath.bezierPath;
+    CGFloat changef = self.dataSource.modelDataSource.models.firstObject.closePrice.doubleValue - minValue;
+    if (self.dataSource.modelDataSource.models.firstObject.closePrice.doubleValue < maxValue &&
+        changef > 0) {
+        
+        CGFloat y = height - changef * heightRate;
+        newPriceString = SafetyString([self.dataSource.modelDataSource.priceNunmberFormatter stringFromNumber:self.dataSource.modelDataSource.models.firstObject.closePrice]);
+     
+        CGSize xSize = [newPriceString sizeWithAttributes:@{NSFontAttributeName : self.dataSource.configreDataSource.configure.newpriceFont}];
+        xSize = CGSizeMake(xSize.width + 6, xSize.height);
+        newPriceTextRect =  CGRectMake(left , y - xSize.height / 2 , xSize.width, xSize.height);
+     
+        [newPricePath moveToPoint:CGPointMake(CGRectGetMaxX(newPriceTextRect), y)];
+        [newPricePath addLineToPoint:CGPointMake(CGRectGetMaxX(self.frame), y)];
+    }
+    
+    TransactionDisableActions(^{
+        self.newpriceTextLayer.frame = newPriceTextRect;
+        self.newpriceTextLayer.string = newPriceString;
+        self.newpriceLayer.path = newPricePath.CGPath;
+    });
+}
+
+
 - (void)handleDisPlayLayer {
     
     BOOL flag = YES;
@@ -367,7 +427,7 @@
         [self.dataSource.configreDataSource.configure.smaDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull obj, BOOL * _Nonnull stop) {
             CAShapeLayer *smaLayer = [CAShapeLayer layer];
             smaLayer.strokeColor = obj.CGColor;
-            smaLayer.lineWidth = self.dataSource.configreDataSource.configure.technicalLineWidth;;
+            smaLayer.lineWidth = self.dataSource.configreDataSource.configure.lineWidth;;
             smaLayer.fillColor = UIColor.clearColor.CGColor;
             smaLayer.lineCap = kCALineCapRound;
             smaLayer.lineJoin = kCALineCapRound;
@@ -389,7 +449,7 @@
         [self.dataSource.configreDataSource.configure.emaDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull obj, BOOL * _Nonnull stop) {
             CAShapeLayer *emaLayer = [CAShapeLayer layer];
             emaLayer.strokeColor = obj.CGColor;
-            emaLayer.lineWidth = self.dataSource.configreDataSource.configure.technicalLineWidth;;
+            emaLayer.lineWidth = self.dataSource.configreDataSource.configure.lineWidth;;
             emaLayer.fillColor = UIColor.clearColor.CGColor;
             emaLayer.lineCap = kCALineCapRound;
             emaLayer.lineJoin = kCALineCapRound;
@@ -414,7 +474,7 @@
                 for (UIColor *color in colors) {
                     CAShapeLayer *bollLayer = [CAShapeLayer layer];
                     bollLayer.strokeColor = color.CGColor;
-                    bollLayer.lineWidth = self.dataSource.configreDataSource.configure.technicalLineWidth;;
+                    bollLayer.lineWidth = self.dataSource.configreDataSource.configure.lineWidth;;
                     bollLayer.fillColor = UIColor.clearColor.CGColor;
                     bollLayer.lineCap = kCALineCapRound;
                     bollLayer.lineJoin = kCALineCapRound;
@@ -497,7 +557,7 @@
     id<HyChartKLineConfigureProtocol> configure = self.dataSource.configreDataSource.configure;
     
     CAShapeLayer *layer = [CAShapeLayer layer];
-    layer.lineWidth = configure.hatchWidth;
+    layer.lineWidth = configure.lineWidth;
     
     layer.strokeColor = trend == HyChartKLineTrendUp ?
     configure.trendUpColor.CGColor : configure.trendDownColor.CGColor;

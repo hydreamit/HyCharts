@@ -7,12 +7,12 @@
 //
 
 #import "HyChartYAxisModel.h"
-#import "HyChartYAxisInfo.h"
+
 
 
 @interface HyChartYAxisModel ()
-@property (nonatomic, strong) id<HyChartYAxisInfoProtocol> leftYAxisInfo;
-@property (nonatomic, strong) id<HyChartYAxisInfoProtocol> rightYAxisInfo;
+@property (nonatomic, strong) HyChartYAxisInfo *leftYAxisInfo;
+@property (nonatomic, strong) HyChartYAxisInfo *rightYAxisInfo;
 @property (nonatomic, copy) NSNumber *(^yAxisMinValueBlock)(void);
 @property (nonatomic, copy) NSNumber *(^yAxisMaxValueBlock)(void);
 @end
@@ -20,7 +20,7 @@
 
 @implementation HyChartYAxisModel
 @synthesize leftYAxisDisabled = _leftYAxisDisabled, rightYAaxisDisabled = _rightYAaxisDisabled;
-@synthesize yAxisMinValue = _yAxisMinValue, yAxisMaxValue = _yAxisMaxValue, yAxisMinValueExtraPrecent = _yAxisMinValueExtraPrecent, yAxisMaxValueExtraPrecent = _yAxisMaxValueExtraPrecent;
+@synthesize yAxisMinValueExtraPrecent = _yAxisMinValueExtraPrecent, yAxisMaxValueExtraPrecent = _yAxisMaxValueExtraPrecent;
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -49,7 +49,7 @@
     return self;
 }
 
-- (id<HyChartYAxisInfoProtocol>)leftYAxisInfo {
+- (HyChartYAxisInfo *)leftYAxisInfo {
     if (self.leftYAxisDisabled) {
         return nil;
     }
@@ -59,7 +59,7 @@
     return _leftYAxisInfo;
 }
 
-- (id<HyChartYAxisInfoProtocol>)rightYAxisInfo {
+- (HyChartYAxisInfo *)rightYAxisInfo {
     if (self.rightYAaxisDisabled) {
         return nil;
     }

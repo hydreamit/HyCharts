@@ -18,7 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, readonly) id<HyChartKLineConfigureProtocol> configure;
 
-
 @end
 
 NS_ASSUME_NONNULL_END

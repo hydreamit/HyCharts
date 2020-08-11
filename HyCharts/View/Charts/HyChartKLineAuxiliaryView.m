@@ -18,7 +18,7 @@
 @property (nonatomic, assign) CGFloat chartWidth;
 @property (nonatomic, assign) HyChartKLineAuxiliaryType auxiliaryType;
 @property (nonatomic, strong) HyChartKLineAuxiliaryLayer *chartLayer;
-@property (nonatomic, strong) id<HyChartKLineDataSourceProtocol> dataSource;
+@property (nonatomic, strong) HyChartKLineDataSource *dataSource;
 @end
 
 
@@ -29,19 +29,18 @@
     
     __block double maxValue = - MAXFLOAT;
     __block double minValue = MAXFLOAT;
-    id<HyChartKLineConfigureProtocol> configure =  self.dataSource.configreDataSource.configure;
+    HyChartKLineConfigure * configure =  self.dataSource.configreDataSource.configure;
     HyChartDataDirection dataDirection =  self.dataSource.configreDataSource.configure.dataDirection;
         
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex, endIndex - startIndex + 1)];
     self.dataSource.modelDataSource.visibleModels = [self.dataSource.modelDataSource.models objectsAtIndexes:indexSet];
-    [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(id<HyChartKLineModelProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        obj.visibleIndex = idx;
+    [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(HyChartKLineModel *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSInteger index = [self.dataSource.modelDataSource.models indexOfObject:obj];
         if (dataDirection == HyChartDataDirectionForward) {
-            obj.position = configure.scaleEdgeInsetStart + obj.index * configure.scaleItemWidth ;
+            obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth ;
             obj.visiblePosition = obj.position - configure.trans;
         } else {
-            obj.position = configure.scaleEdgeInsetStart + obj.index * configure.scaleItemWidth + configure.scaleWidth;
+            obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth + configure.scaleWidth;
             obj.visiblePosition = self.chartWidth - (obj.position - configure.trans);
         }
 
@@ -53,58 +52,73 @@
     self.dataSource.modelDataSource.minValue = [NSNumber numberWithDouble:minValue];
 }
 
-- (void)handleTechnicalData {
+- (void)handleTechnicalDataWithRangeIndex:(NSInteger)rangeIndex {
     
-    id<HyChartKLineConfigureProtocol> configure = (id)self.dataSource.configreDataSource.configure;
+    HyChartKLineConfigure * configure = (id)self.dataSource.configreDataSource.configure;
         
     [configure.macdDict enumerateKeysAndObjectsUsingBlock:^(NSArray<NSNumber *> * _Nonnull key, NSArray<UIColor *> * _Nonnull obj, BOOL * _Nonnull stop) {
-        HyChartAlgorithmContext.handleMACD([key.firstObject integerValue], [key[1] integerValue], [key.lastObject integerValue], (id<HyChartKLineModelDataSourceProtocol>)self.dataSource.modelDataSource);
+        HyChartAlgorithmContext.handleMACD([key.firstObject integerValue],
+                                           [key[1] integerValue],
+                                           [key.lastObject integerValue],
+                                           self.dataSource.modelDataSource, rangeIndex);
     }];
     
     [configure.kdjDict enumerateKeysAndObjectsUsingBlock:^(NSArray<NSNumber *> * _Nonnull key, NSArray<UIColor *> * _Nonnull obj, BOOL * _Nonnull stop) {
-        HyChartAlgorithmContext.handleKDJ([key.firstObject integerValue], [key[1] integerValue], [key.lastObject integerValue], (id<HyChartKLineModelDataSourceProtocol>)self.dataSource.modelDataSource);
+        HyChartAlgorithmContext.handleKDJ([key.firstObject integerValue],
+                                          [key[1] integerValue],
+                                          [key.lastObject integerValue],
+                                          self.dataSource.modelDataSource, rangeIndex);
     }];
     
     [configure.rsiDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull obj, BOOL * _Nonnull stop) {
-        HyChartAlgorithmContext.handleRSI([key integerValue], (id<HyChartKLineModelDataSourceProtocol>)self.dataSource.modelDataSource);
+        HyChartAlgorithmContext.handleRSI([key integerValue],
+                                          self.dataSource.modelDataSource,
+                                          rangeIndex);
     }];
 }
 
-- (void)handleMaxMinValue {
+- (void)handleMaxMinValueWithRangeIndex:(NSUInteger)rangeIndex {
     
-    id<HyChartKLineConfigureProtocol> configure = (id)self.dataSource.configreDataSource.configure;
-    [self.dataSource.modelDataSource.models enumerateObjectsUsingBlock:^(id<HyChartKLineModelProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    if (rangeIndex == 0) {
+        rangeIndex = self.dataSource.modelDataSource.models.count;
+    }
     
-        __block double maxValue = - MAXFLOAT;
-        __block double minValue = MAXFLOAT;
-        switch (self.auxiliaryType) {
-            case HyChartKLineAuxiliaryTypeMACD: {
-                NSArray<NSNumber *> *macdParams = configure.macdDict.allKeys.firstObject;
-                double difValue = obj.priceDIF([macdParams.firstObject integerValue], [macdParams[1] integerValue]).doubleValue;
-                double demValue = obj.priceDEM([macdParams.firstObject integerValue], [macdParams[1] integerValue], [macdParams.lastObject integerValue]).doubleValue;
-                double macdValue = obj.priceMACD([macdParams.firstObject integerValue], [macdParams[1] integerValue], [macdParams.lastObject integerValue]).doubleValue;
-                maxValue = MAX(maxValue, MAX(MAX(difValue, demValue), macdValue));
-                minValue = MIN(minValue, MIN(MIN(difValue, demValue), macdValue));
-            } break;
-            case HyChartKLineAuxiliaryTypeKDJ: {
-                NSArray<NSNumber *> *kdjParams = configure.kdjDict.allKeys.firstObject;
-                double kValue = obj.priceK([kdjParams.firstObject integerValue], [kdjParams[1] integerValue]).doubleValue;
-                double dValue = obj.priceD([kdjParams.firstObject integerValue], [kdjParams[1] integerValue], [kdjParams.lastObject integerValue]).doubleValue;
-                double jValue = obj.priceJ([kdjParams.firstObject integerValue], [kdjParams[1] integerValue], [kdjParams.lastObject integerValue]).doubleValue;
-                maxValue = MAX(maxValue, MAX(MAX(kValue, dValue), jValue));
-                minValue = MIN(minValue, MIN(MIN(kValue, dValue), jValue));
-            } break;
-            case HyChartKLineAuxiliaryTypeRSI: {
-                NSNumber *rsiParams = configure.rsiDict.allKeys.firstObject;
-                double rsiValue =  obj.priceRSI([rsiParams integerValue]).doubleValue;
-                maxValue = rsiValue;
-                minValue = rsiValue;
-            } break;
-            default:
-            break;
-        }
-        obj.maxAuxiliary = [NSNumber numberWithDouble:maxValue];
-        obj.minAuxiliary = [NSNumber numberWithDouble:minValue];
+    HyChartKLineConfigure *configure = self.dataSource.configreDataSource.configure;
+    [self.dataSource.modelDataSource.models enumerateObjectsUsingBlock:^(HyChartKLineModel *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if (idx < rangeIndex) {
+            __block double maxValue = - MAXFLOAT;
+            __block double minValue = MAXFLOAT;
+            switch (self.auxiliaryType) {
+                case HyChartKLineAuxiliaryTypeMACD: {
+                    NSArray<NSNumber *> *macdParams = configure.macdDict.allKeys.firstObject;
+                    double difValue = obj.priceDIF([macdParams.firstObject integerValue], [macdParams[1] integerValue]).doubleValue;
+                    double demValue = obj.priceDEM([macdParams.firstObject integerValue], [macdParams[1] integerValue], [macdParams.lastObject integerValue]).doubleValue;
+                    double macdValue = obj.priceMACD([macdParams.firstObject integerValue], [macdParams[1] integerValue], [macdParams.lastObject integerValue]).doubleValue;
+                    maxValue = MAX(maxValue, MAX(MAX(difValue, demValue), macdValue));
+                    minValue = MIN(minValue, MIN(MIN(difValue, demValue), macdValue));
+                } break;
+                case HyChartKLineAuxiliaryTypeKDJ: {
+                    NSArray<NSNumber *> *kdjParams = configure.kdjDict.allKeys.firstObject;
+                    double kValue = obj.priceK([kdjParams.firstObject integerValue], [kdjParams[1] integerValue]).doubleValue;
+                    double dValue = obj.priceD([kdjParams.firstObject integerValue], [kdjParams[1] integerValue], [kdjParams.lastObject integerValue]).doubleValue;
+                    double jValue = obj.priceJ([kdjParams.firstObject integerValue], [kdjParams[1] integerValue], [kdjParams.lastObject integerValue]).doubleValue;
+                    maxValue = MAX(maxValue, MAX(MAX(kValue, dValue), jValue));
+                    minValue = MIN(minValue, MIN(MIN(kValue, dValue), jValue));
+                } break;
+                case HyChartKLineAuxiliaryTypeRSI: {
+                    [configure.rsiDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull color, BOOL * _Nonnull stop) {
+                        double rsiValue =  obj.priceRSI([key integerValue]).doubleValue;
+                        maxValue = MAX(maxValue, rsiValue);
+                        minValue = MIN(minValue, rsiValue);;
+                    }];
+                } break;
+                default:
+                break;
+            }
+            obj.maxAuxiliary = [NSNumber numberWithDouble:maxValue];
+            obj.minAuxiliary = [NSNumber numberWithDouble:minValue];
+        }        
     }];
 }
 
@@ -115,14 +129,14 @@
     return _chartLayer;
 }
 
-- (id<HyChartKLineDataSourceProtocol>)dataSource {
+- (HyChartKLineDataSource *)dataSource {
     if (!_dataSource){
         _dataSource = [[HyChartKLineDataSource alloc] init];
     }
     return _dataSource;
 }
 
-- (id<HyChartKLineModelProtocol>)model {
+- (HyChartKLineModel *)model {
     return HyChartKLineModel.new;
 }
 

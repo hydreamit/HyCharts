@@ -11,24 +11,16 @@
 
 
 @interface HyChartDataSource ()
-@property (nonatomic, strong) id<HyChartAxisDataSourceProtocol> axisDataSource;
+@property (nonatomic, strong) HyChartAxisDataSource *axisDataSource;
 @end
 
 
 @implementation HyChartDataSource
-- (id<HyChartAxisDataSourceProtocol>)axisDataSource {
+- (HyChartAxisDataSource *)axisDataSource {
     if (!_axisDataSource) {
         _axisDataSource = [[HyChartAxisDataSource alloc] init];
     }
     return _axisDataSource;
-}
-
-- (id<HyChartConfigureDataSourceProtocol>)configreDataSource {
-    return nil;
-}
-
-- (id<HyChartModelDataSourceProtocol>)modelDataSource {
-    return nil;
 }
 
 @end

@@ -38,6 +38,8 @@
 }
 @end
 
+
+
 @interface HySegmentViewConfigure ()
 @property (nonatomic,assign) NSInteger currentIndex;
 @property (nonatomic,assign) UIEdgeInsets hy_inset;
@@ -73,6 +75,9 @@
 @property (nonatomic,strong) NSMutableArray<UIView *> *animationViews;
 @property (nonatomic,strong) dispatch_semaphore_t semaphore;
 @property (nonatomic,copy) void(^configureBlock)(HySegmentViewConfigure *configure);
+@property (nonatomic, assign) NSInteger currentProgress;
+@property (nonatomic,assign) BOOL noNeedsLayout;
+@property (nonatomic,strong) NSArray *observers;
 @end
 
 
@@ -82,6 +87,7 @@
                       configureBlock:(void (^)(HySegmentViewConfigure *configure))configureBlock {
     
     HySegmentView *segmentView = [[self alloc] initWithFrame:frame];
+    segmentView.currentProgress = 1;
     segmentView.backgroundColor = UIColor.whiteColor;
     segmentView.configureBlock = [configureBlock copy];
     !configureBlock ?: configureBlock(segmentView.configure);
@@ -91,6 +97,50 @@
     [segmentView addSubview:segmentView.collectionView];
     segmentView.collectionView.hidden = YES;
     return segmentView;
+}
+
+- (void)didMoveToSuperview {
+    [super didMoveToSuperview];
+    
+    if (self.superview) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+           [self handleAnimationViewWithFromIndex:self.currentSelectedIndex
+                                          toIndex:self.currentSelectedIndex
+                                         progress:1];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                          (int64_t)(.05 * NSEC_PER_SEC)),
+            dispatch_get_main_queue(), ^{
+                self.collectionView.hidden = NO;
+            });
+        });
+        id (^observerBlock)(NSNotificationName, void(^usingBlock)(NSNotification *)) =
+        ^(NSNotificationName name, void(^usingBlock)(NSNotification *)){
+            return [[NSNotificationCenter defaultCenter]
+                        addObserverForName:name
+                                    object:nil
+                                     queue:[NSOperationQueue mainQueue]
+                                usingBlock:usingBlock];
+        };
+        
+        __weak typeof(self) _self = self;
+        self.observers =
+        @[observerBlock(UIApplicationDidEnterBackgroundNotification, ^(NSNotification *note){
+            __strong typeof(_self) self = _self;
+            self.noNeedsLayout = YES;
+        }), observerBlock(UIApplicationDidBecomeActiveNotification, ^(NSNotification *note){
+            __strong typeof(_self) self = _self;
+            self.noNeedsLayout = NO;
+        })];
+    }
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if (self.noNeedsLayout) {
+        return;
+    }
+    self.collectionView.containTo(self);
+    [self handleLayout];
 }
 
 - (void)clickItemAtIndex:(NSInteger)index {
@@ -117,24 +167,18 @@
     }
 }
 
-- (void)reloadConfigureBlock {
+- (void)reloadData {
     
     if (self.configureBlock) {
         dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
         [self.configure clearConfigure];
         self.configureBlock(self.configure);
-        [self reloadData];
+        [self _reloadData];
         dispatch_semaphore_signal(self.semaphore);
     }
 }
 
-- (void)reloadConfigureChange {
-    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    [self reloadData];
-    dispatch_semaphore_signal(self.semaphore);
-}
-
-- (void)reloadData {
+- (void)_reloadData {
     
     [self.itemViews removeAllObjects];
     [self.animationViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -144,13 +188,6 @@
     }
     [self handleLayout];
     [self.collectionView reloadData];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
-                                 (int64_t)(.05 * NSEC_PER_SEC)),
-                   dispatch_get_main_queue(), ^{
-                       [self handleAnimationViewWithFromIndex:self.currentSelectedIndex
-                                                      toIndex:self.currentSelectedIndex
-                                                     progress:1];
-                   });
 }
 
 - (void)handleLayout {
@@ -208,39 +245,16 @@
     }
 }
 
-- (void)didMoveToSuperview {
-    [super didMoveToSuperview];
-    
-    if (self.superview) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
-                                     (int64_t)(.05 * NSEC_PER_SEC)),
-                       dispatch_get_main_queue(), ^{
-                           [self handleAnimationViewWithFromIndex:self.currentSelectedIndex
-                                                          toIndex:self.currentSelectedIndex
-                                                         progress:1];
-                           self.collectionView.hidden = NO;
-                       });
-    }
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.collectionView.containTo(self);
-    [self handleLayout];
-}
-
 - (void)handleAnimationViewWithFromIndex:(NSInteger)fromIndex
                                  toIndex:(NSInteger)toIndex
                                 progress:(CGFloat)progress {
     
     if (!self.configure.hy_items) {return;}
-    
     if (progress == 1) {
         self.currentSelectedIndex = toIndex;
-    }
+    }    
     
     if (self.configure.hy_animationViews) {
-        
         NSArray<UIView *> *animationViews =
         self.configure.hy_animationViews(self.animationViews,
                                          [self getCellWithIndex:fromIndex],
@@ -250,13 +264,11 @@
                                          progress);
         
         if (![self checkAnimationViews:animationViews]) {
-            
             [self.collectionView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if (![obj isKindOfClass:UICollectionViewCell.class]) {
                     [obj removeFromSuperview];
                 }
             }];
-            
             for (UIView *view in animationViews) {
                 [self.collectionView insertSubview:view atIndex:0];
             }
@@ -265,7 +277,6 @@
     }
     
     NSTimeInterval delayTime = self.configure.hy_keepingMarginAndInset ? 0.05 : 0.0;
-    
     if (self.configure.hy_viewForItemAtIndex && toIndex != fromIndex) {
         
         HySegmentViewItemPosition position = HySegmentViewItemPositionCenter;
@@ -315,16 +326,21 @@
                                                   index:toIndex
                                                itemView:toItemView];
                        });
-       
     }
     
     if (progress == 1) {
+        if (fromIndex == toIndex) {
+            [self.collectionView reloadData];
+        }
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
                                      (int64_t)(delayTime * NSEC_PER_SEC)),
                        dispatch_get_main_queue(), ^{
+                           
                            [self scrollToCenterWithIndex:toIndex];
                        });
     }
+    
+    self.currentProgress = progress;
 }
 
 - (void)handleItemViewWithCell:(UICollectionViewCell *)cell
@@ -377,7 +393,8 @@
     if (offsetX > self.collectionView.contentSize.width - self.collectionView.width) {
         offsetX = self.collectionView.contentSize.width - self.collectionView.width;
     }
-    [self.collectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+    [self.collectionView setContentOffset:CGPointMake(offsetX, 0)
+                                 animated:!self.collectionView.hidden];
 }
 
 - (UIView *)getItemViewWithIndex:(NSInteger)index {
@@ -455,6 +472,15 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    if (self.currentProgress != 1) { return;}
+    
+    [collectionView reloadData];
+    collectionView.userInteractionEnabled = NO;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(.3 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+        collectionView.userInteractionEnabled = YES;
+    });
     NSInteger fromIndex = self.currentSelectedIndex;
     
     BOOL needHandle =
@@ -462,14 +488,10 @@
     self.configure.hy_clickItemAtIndex(indexPath.row, indexPath.row == self.currentSelectedIndex);
     
     if (needHandle) {
-        self.userInteractionEnabled = NO;
         [HySegmentViewAnimate.new animateWithDuration:.25 animations:^(CGFloat progress) {
             [self handleAnimationViewWithFromIndex:fromIndex
                                            toIndex:indexPath.row
                                           progress:progress];
-            if (progress == 1) {
-                self.userInteractionEnabled = YES;
-            }
         }];
     }
 }
@@ -495,9 +517,9 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section {
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
                         layout:(UICollectionViewLayout*)collectionViewLayout
         insetForSectionAtIndex:(NSInteger)section {
-    
     return self.configure.hy_inset;
 }
+
 
 #pragma mark — getters and setters
 - (HySegmentViewConfigure *)configure {
@@ -563,6 +585,9 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section {
 }
 
 - (void)dealloc {
+    [self.observers enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [[NSNotificationCenter defaultCenter] removeObserver:obj];
+    }];
     [self.configure deallocBlock];
 }
 

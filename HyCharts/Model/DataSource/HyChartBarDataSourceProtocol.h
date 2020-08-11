@@ -19,7 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// 模型数据
 @property (nonatomic, strong, readonly) id<HyChartBarModelDataSourceProtocol> modelDataSource;
 
-
 @end
 
 NS_ASSUME_NONNULL_END

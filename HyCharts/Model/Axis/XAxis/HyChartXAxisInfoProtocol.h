@@ -15,13 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HyChartXAxisInfoProtocol <HyChartAxisInfoProtocol>
 
-
 /// 每个坐标点对应的内容 (NSString NSAttributedString)
 - (instancetype)configTextAtIndex:(id(^)(NSInteger index, id<HyChartModelProtocol> model))block;
-
-/// NSString NSAttributedString
-@property (nonatomic, copy, readonly) id(^textAtIndexBlock)(NSInteger, id<HyChartModelProtocol>);
-
 
 @end
 

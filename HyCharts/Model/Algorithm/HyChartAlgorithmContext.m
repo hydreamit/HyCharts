@@ -31,39 +31,39 @@
     return [[self context] algorithm];
 }
 
-+ (void (^)(NSInteger number,id<HyChartKLineModelDataSourceProtocol> modelDataSource))handleSMA {
-    return ^(NSInteger number,id<HyChartKLineModelDataSourceProtocol> modelDataSource){
-        return self.chartAlgorithm.handleSMA(number, modelDataSource);
++ (void (^)(NSInteger number,HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleSMA {
+    return ^(NSInteger number,HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex){
+        return self.chartAlgorithm.handleSMA(number, modelDataSource, rangeIndex);
     };
 }
 
-+ (void (^)(NSInteger number,id<HyChartKLineModelDataSourceProtocol> modelDataSource))handleEMA {
-    return ^(NSInteger number,id<HyChartKLineModelDataSourceProtocol> modelDataSource){
-        return self.chartAlgorithm.handleEMA(number, modelDataSource);
++ (void (^)(NSInteger number,HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleEMA {
+    return ^(NSInteger number,HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex){
+        return self.chartAlgorithm.handleEMA(number, modelDataSource, rangeIndex);
     };
 }
 
-+ (void (^)(NSInteger number,id<HyChartKLineModelDataSourceProtocol> modelDataSource))handleBOLL {
-    return ^(NSInteger number,id<HyChartKLineModelDataSourceProtocol> modelDataSource){
-        return self.chartAlgorithm.handleBOLL(number, modelDataSource);
++ (void (^)(NSInteger number,HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleBOLL {
+    return ^(NSInteger number,HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex){
+        return self.chartAlgorithm.handleBOLL(number, modelDataSource, rangeIndex);
     };
 }
 
-+ (void (^)(NSInteger number1, NSInteger number2, NSInteger number3, id<HyChartKLineModelDataSourceProtocol> modelDataSource))handleMACD {
-    return ^(NSInteger number1, NSInteger number2, NSInteger number3, id<HyChartKLineModelDataSourceProtocol> modelDataSource){
-        return self.chartAlgorithm.handleMACD(number1, number2, number3, modelDataSource);
++ (void (^)(NSInteger number1, NSInteger number2, NSInteger number3, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleMACD {
+    return ^(NSInteger number1, NSInteger number2, NSInteger number3, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex){
+        return self.chartAlgorithm.handleMACD(number1, number2, number3, modelDataSource, rangeIndex);
     };
 }
 
-+ (void (^)(NSInteger number1, NSInteger number2, NSInteger number3, id<HyChartKLineModelDataSourceProtocol> modelDataSource))handleKDJ {
-    return ^(NSInteger number1, NSInteger number2, NSInteger number3, id<HyChartKLineModelDataSourceProtocol> modelDataSource){
-        return self.chartAlgorithm.handleKDJ(number1, number2, number3, modelDataSource);
++ (void (^)(NSInteger number1, NSInteger number2, NSInteger number3, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleKDJ {
+    return ^(NSInteger number1, NSInteger number2, NSInteger number3, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex){
+        return self.chartAlgorithm.handleKDJ(number1, number2, number3, modelDataSource, rangeIndex);
     };
 }
 
-+ (void (^)(NSInteger number, id<HyChartKLineModelDataSourceProtocol> modelDataSource))handleRSI {
-    return ^(NSInteger number, id<HyChartKLineModelDataSourceProtocol> modelDataSource){
-        return self.chartAlgorithm.handleRSI(number, modelDataSource);
++ (void (^)(NSInteger number, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleRSI {
+    return ^(NSInteger number, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex){
+        return self.chartAlgorithm.handleRSI(number, modelDataSource, rangeIndex);
     };
 }
 

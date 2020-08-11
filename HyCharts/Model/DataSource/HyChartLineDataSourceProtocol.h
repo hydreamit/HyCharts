@@ -17,10 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// view配置数据
 @property (nonatomic, strong, readonly) id<HyChartLineConfigureDataSourceProtocol> configreDataSource;
-
 /// 模型数据
 @property (nonatomic, strong, readonly) id<HyChartLineModelDataSourceProtocol> modelDataSource;
-
 
 @end
 

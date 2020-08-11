@@ -13,7 +13,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HyChartConfigure : NSObject<HyChartConfigureProtocol>
 
-+ (instancetype)defaultConfigure;
+/*
+ 缩放过后的数据
+ */
+@property (nonatomic, assign) CGFloat scaleWidth;
+@property (nonatomic, assign) CGFloat scaleMargin;
+@property (nonatomic, assign) CGFloat scaleItemWidth;
+@property (nonatomic, assign) CGFloat scaleEdgeInsetStart;
+@property (nonatomic, assign) CGFloat scaleEdgeInsetEnd;
 
 @end
 

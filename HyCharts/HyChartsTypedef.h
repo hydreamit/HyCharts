@@ -68,7 +68,6 @@ typedef NS_ENUM (NSUInteger, HyChartCursorState) {
 };
 
 
-
 /// K线图种类
 typedef NS_ENUM (NSUInteger, HyChartKLineViewType) {
     /// 主图

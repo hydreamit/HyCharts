@@ -7,12 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HyChartConfigureDataSource.h"
 #import "HyChartLineConfigureDataSourceProtocol.h"
-
+#import "HyChartLineConfigure.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HyChartLineConfigureDataSource : NSObject<HyChartLineConfigureDataSourceProtocol>
+@interface HyChartLineConfigureDataSource : HyChartConfigureDataSource<HyChartLineConfigureDataSourceProtocol>
+
+@property (nonatomic, strong, readonly) HyChartLineConfigure *configure;
 
 @end
 

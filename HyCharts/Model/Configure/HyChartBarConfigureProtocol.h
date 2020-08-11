@@ -31,8 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)configBarConfigureAtIndex:(void(^)(NSInteger index, id<HyChartBarOneConfigureProtocol> oneConfigure))block;
 
-@property (nonatomic, copy, readonly) void(^barConfigureAtIndexBlock)(NSInteger, id<HyChartBarOneConfigureProtocol>);
-
 @end
 
 NS_ASSUME_NONNULL_END

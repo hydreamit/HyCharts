@@ -7,13 +7,10 @@
 //
 
 #import "HyChartAxisDataSource.h"
-#import "HyChartXAxisModel.h"
-#import "HyChartYAxisModel.h"
-
 
 @interface HyChartAxisDataSource ()
-@property (nonatomic, strong) id<HyChartXAxisModelProtocol> xAxisModel;
-@property (nonatomic, strong) id<HyChartYAxisModelProtocol> yAxisModel;
+@property (nonatomic, strong) HyChartXAxisModel *xAxisModel;
+@property (nonatomic, strong) HyChartYAxisModel * yAxisModel;
 @property (nonatomic, strong) NSDictionary<NSNumber *, id<HyChartXAxisModelProtocol>> *xAxisModelDict;
 @property (nonatomic, strong) NSDictionary<NSNumber *, id<HyChartYAxisModelProtocol>> *yAxisModelDict;
 @end
@@ -40,28 +37,28 @@
     return self;
 }
 
-- (id<HyChartXAxisModelProtocol>)xAxisModel {
+- (HyChartXAxisModel *)xAxisModel {
     if (!_xAxisModel) {
         _xAxisModel = [[HyChartXAxisModel alloc] init];
     }
     return _xAxisModel;
 }
 
-- (id<HyChartYAxisModelProtocol>)yAxisModel {
+- (HyChartYAxisModel *)yAxisModel {
     if (!_yAxisModel) {
         _yAxisModel = [[HyChartYAxisModel alloc] init];
     }
     return _yAxisModel;
 }
 
-- (id<HyChartYAxisModelProtocol>  _Nonnull (^)(HyChartKLineViewType))yAxisModelWityViewType {
-    return ^id<HyChartYAxisModelProtocol> (HyChartKLineViewType type){
+- (HyChartYAxisModel * _Nonnull (^)(HyChartKLineViewType))yAxisModelWityViewType {
+    return ^HyChartYAxisModel *  (HyChartKLineViewType type){
         return self.yAxisModelDict[@(type)];
     };
 }
 
-- (id<HyChartXAxisModelProtocol>  _Nonnull (^)(HyChartKLineViewType))xAxisModelWityViewType {
-    return ^id<HyChartXAxisModelProtocol> (HyChartKLineViewType type){
+- (HyChartXAxisModel * _Nonnull (^)(HyChartKLineViewType))xAxisModelWityViewType {
+    return ^HyChartXAxisModel *  (HyChartKLineViewType type){
         return self.xAxisModelDict[@(type)];
     };
 }

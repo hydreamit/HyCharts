@@ -9,11 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "HyChartXAxisModelProtocol.h"
 #import "HyChartAxisModel.h"
+#import "HyChartXAxisInfo.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// X 轴数据
 @interface HyChartXAxisModel : HyChartAxisModel<HyChartXAxisModelProtocol>
+
+@property (nonatomic, strong, readonly) HyChartXAxisInfo *topXAxisInfo;
+
+@property (nonatomic, strong, readonly) HyChartXAxisInfo *bottomXAxisInfo;
 
 @end
 

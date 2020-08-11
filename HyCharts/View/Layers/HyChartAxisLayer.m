@@ -11,8 +11,8 @@
 
 
 @interface HyChartAxisLayer ()
-@property (nonatomic, strong) id<HyChartXAxisModelProtocol> xAxisModel;
-@property (nonatomic, strong) id<HyChartYAxisModelProtocol> yAxisModel;
+@property (nonatomic, strong) HyChartXAxisModel *xAxisModel;
+@property (nonatomic, strong) HyChartYAxisModel *yAxisModel;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, CAShapeLayer *> *axisLines;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, CAShapeLayer *> *axisGridLines;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSArray<CATextLayer *> *> *axisTexts;
@@ -22,16 +22,16 @@
 
 @implementation HyChartAxisLayer
 
-+ (instancetype)layerWithDataSource:(id<HyChartDataSourceProtocol>)dataSource {
++ (instancetype)layerWithDataSource:(HyChartDataSource *)dataSource {
     HyChartAxisLayer *layer = [super layerWithDataSource:dataSource];
     layer.xAxisModel = dataSource.axisDataSource.xAxisModel;
     layer.yAxisModel = dataSource.axisDataSource.yAxisModel;
     return layer;
 }
 
-+ (instancetype)layerWithDataSource:(id<HyChartDataSourceProtocol>)dataSource
-                         xAxisModel:(id<HyChartXAxisModelProtocol>)xAxisModel
-                         yAxisModel:(id<HyChartYAxisModelProtocol>)yAxisModel {
++ (instancetype)layerWithDataSource:(HyChartDataSource *)dataSource
+                         xAxisModel:(HyChartXAxisModel *)xAxisModel
+                         yAxisModel:(HyChartYAxisModel *)yAxisModel {
     HyChartAxisLayer *layer = [super layerWithDataSource:dataSource];
     layer.xAxisModel = xAxisModel;
     layer.yAxisModel = yAxisModel;
@@ -153,7 +153,7 @@
         return;
     }
 
-    id<HyChartAxisInfoProtocol> baseInfo = self.axisBaseInfo(position);
+    HyChartAxisInfo *baseInfo = self.axisBaseInfo(position);
     if (baseInfo.axisLineType == HyChartAxisLineTypeNone) {
         return;
     }
@@ -204,7 +204,7 @@
 
 - (void)createAxisGridLineWithAxisType:(NSString *)axisType {
         
-    id<HyChartAxisModelProtocol> axisModel = self.axisModel(axisType);
+    HyChartAxisModel *axisModel = self.axisModel(axisType);
     if (axisModel.axisGridLineInfo.axisGridLineType == HyChartAxisLineTypeNone || !axisModel.indexs) {
         return;
     }
@@ -252,13 +252,13 @@
 
 - (void)createAxisTextWithAxisLinePosition:(NSString *)position {
     
-    id<HyChartAxisModelProtocol> axisModel = self.axisModel(position);
+    HyChartAxisModel *axisModel = self.axisModel(position);
     if (!axisModel.indexs) {
         return;
     }
     
     if ([axisModel conformsToProtocol:@protocol(HyChartXAxisModelProtocol)]) {
-        id<HyChartXAxisModelProtocol> xAxisModel = (id)axisModel;
+        HyChartXAxisModel *xAxisModel = (id)axisModel;
         if ([position isEqualToString:@"top"] && xAxisModel.topXaxisDisabled) {
             return;
         }
@@ -269,7 +269,7 @@
     }
     
     if ([axisModel conformsToProtocol:@protocol(HyChartYAxisModelProtocol)]) {
-        id<HyChartYAxisModelProtocol> yAxisModel = (id)axisModel;
+        HyChartYAxisModel *yAxisModel = (id)axisModel;
         if ([position isEqualToString:@"left"] && yAxisModel.leftYAxisDisabled) {
             return;
         }
@@ -278,14 +278,14 @@
         }
     }
     
-    id<HyChartAxisInfoProtocol> axisBaseInfo = self.axisBaseInfo(position);
+    HyChartAxisInfo *axisBaseInfo = self.axisBaseInfo(position);
     if ([axisBaseInfo conformsToProtocol:@protocol(HyChartXAxisInfoProtocol)]) {
-        if (!((id<HyChartXAxisInfoProtocol>)axisBaseInfo).textAtIndexBlock) {
+        if (!((HyChartXAxisInfo *)axisBaseInfo).textAtIndexBlock) {
             return;
         }
     }
     if ([axisBaseInfo conformsToProtocol:@protocol(HyChartYAxisInfoProtocol)]) {
-        if (!((id<HyChartYAxisInfoProtocol>)axisBaseInfo).textAtIndexBlock) {
+        if (!((HyChartYAxisInfo *)axisBaseInfo).textAtIndexBlock) {
             return;
         }
     }
@@ -380,12 +380,12 @@
                 currentIndex = axisModel.indexs - currentIndex;
             }
             if (currentIndex < self.dataSource.modelDataSource.visibleXAxisModels.count) {
-                text = ((id<HyChartXAxisInfoProtocol>)axisBaseInfo).textAtIndexBlock(currentIndex, self.dataSource.modelDataSource.visibleXAxisModels[currentIndex]);
+                text = ((HyChartXAxisInfo *)axisBaseInfo).textAtIndexBlock(currentIndex, self.dataSource.modelDataSource.visibleXAxisModels[currentIndex]);
             }
         }
         if ([axisBaseInfo conformsToProtocol:@protocol(HyChartYAxisInfoProtocol)]) {
             text =
-            ((id<HyChartYAxisInfoProtocol>)axisBaseInfo).textAtIndexBlock(i, self.yAxisModel.yAxisMaxValue, self.yAxisModel.yAxisMinValue);
+            ((HyChartYAxisInfo *)axisBaseInfo).textAtIndexBlock(i, self.yAxisModel.yAxisMaxValue, self.yAxisModel.yAxisMinValue);
         }
         textlayer.string = text;
         
@@ -514,8 +514,8 @@
     return self.yAxisModel.indexs;
 }
 
-- (id<HyChartAxisInfoProtocol>(^)(NSString *position))axisBaseInfo {
-    return ^id<HyChartAxisInfoProtocol> (NSString *position){
+- (HyChartAxisInfo *(^)(NSString *position))axisBaseInfo {
+    return ^HyChartAxisInfo *(NSString *position){
         if ([position isEqualToString:@"top"]) {
             return self.xAxisModel.topXAxisInfo;
         } else if ([position isEqualToString:@"left"]) {
@@ -533,8 +533,8 @@
     return [self.superlayer isKindOfClass:NSClassFromString(@"HyChartKLineAxisLayer")];
 }
 
-- (id<HyChartAxisModelProtocol>(^)(NSString *axisType))axisModel {
-    return ^id<HyChartAxisModelProtocol>(NSString *axisType){
+- (HyChartAxisModel *(^)(NSString *axisType))axisModel {
+    return ^HyChartAxisModel *(NSString *axisType){
         if ([axisType isEqualToString:@"x"] ||
             [axisType isEqualToString:@"top"] ||
             [axisType isEqualToString:@"bottom"]) {
@@ -549,7 +549,7 @@
 }
 
 - (BOOL)axisLineDisabledWithPosition:(NSString *)position {
-    id<HyChartAxisModelProtocol> axisModel = self.axisModel(position);
+    HyChartAxisModel *axisModel = self.axisModel(position);
     if ([position isEqualToString:@"top"]) {
         return ((id<HyChartXAxisModelProtocol>)axisModel).topXaxisDisabled;
     } else if ([position isEqualToString:@"left"]) {

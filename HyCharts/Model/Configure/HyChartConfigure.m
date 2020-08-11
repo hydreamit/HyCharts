@@ -14,25 +14,22 @@
 @end
 
 @implementation HyChartConfigure
-@synthesize width = _width, margin = _margin, edgeInsetStart = _edgeInsetStart, edgeInsetEnd = _edgeInsetEnd, trans = _trans, scale = _scale, maxScale = _maxScale, minScale = _minScale, scaleWidth = _scaleWidth, scaleMargin = _scaleMargin, scaleItemWidth = _scaleItemWidth, scaleEdgeInsetStart = _scaleEdgeInsetStart, scaleEdgeInsetEnd = _scaleEdgeInsetEnd, autoMargin = _autoMargin, dataDirection = _dataDirection, decimal = _decimal, minDisplayWidth = _minDisplayWidth, maxDisplayWidth = _maxDisplayWidth, displayWidth = _displayWidth;
+@synthesize width = _width, margin = _margin, edgeInsetStart = _edgeInsetStart, edgeInsetEnd = _edgeInsetEnd, trans = _trans, scale = _scale, maxScale = _maxScale, minScale = _minScale, autoMargin = _autoMargin, dataDirection = _dataDirection, decimal = _decimal, minDisplayWidth = _minDisplayWidth, maxDisplayWidth = _maxDisplayWidth, displayWidth = _displayWidth;
 
+- (instancetype)init {
+    if (self = [super init]) {
+        
+        self.margin = 5;
+        self.width = 10;
+        self.edgeInsetStart = 5;
+        self.edgeInsetEnd = 5;
 
-+ (instancetype)defaultConfigure {
-    
-    HyChartConfigure *configure = [[self alloc] init];
-    
-    
-    configure.margin = 5;
-    configure.width = 10;
-    configure.edgeInsetStart = 5;
-    configure.edgeInsetEnd = 5;
-
-    configure.trans = 0;
-    configure.scale = 1;
-    configure.maxScale = 5;
-    configure.minScale = .3;
-    
-    return configure;
+        self.trans = 0;
+        self.scale = 1;
+        self.maxScale = 5;
+        self.minScale = .3;
+    }
+    return self;
 }
 
 - (void)setDecimal:(NSInteger)decimal {

@@ -42,11 +42,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// 换手率
 @property (nonatomic, strong) NSNumber *turnoverrate;
 
-
 /// 涨/跌
 @property (nonatomic, assign, readonly) HyChartKLineTrend trend;
 
 
+@property (nonatomic, strong, readonly) NSNumberFormatter *priceNunmberFormatter;
+@property (nonatomic, strong, readonly) NSNumberFormatter *volumeNunmberFormatter;
 
 /// SMA
 @property (nonatomic, copy, readonly) NSNumber *(^priceSMA)(NSInteger number);
@@ -93,16 +94,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSString *, NSNumber *> *priceDDict;
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSString *, NSNumber *> *priceJDict;
 
-
-@property (nonatomic, strong) NSNumber *maxPrice;
-@property (nonatomic, strong) NSNumber *minPrice;
-@property (nonatomic, strong) NSNumber *maxVolume;
-@property (nonatomic, strong) NSNumber *minVolume;
-@property (nonatomic, strong) NSNumber *maxAuxiliary;
-@property (nonatomic, strong) NSNumber *minAuxiliary;
-
-@property (nonatomic, strong) NSNumberFormatter *priceNunmberFormatter;
-@property (nonatomic, strong) NSNumberFormatter *volumeNunmberFormatter;
 
 @end
 

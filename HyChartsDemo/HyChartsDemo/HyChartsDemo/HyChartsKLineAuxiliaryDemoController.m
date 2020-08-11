@@ -122,7 +122,8 @@
            
             configure.macdDict = @{@[@12, @26, @9] : @[UIColor.orangeColor, UIColor.blueColor, [UIColor hy_colorWithHexString:@"#E97C5E"], [UIColor hy_colorWithHexString:@"#1ABD93"]]};
             configure.kdjDict = @{@[@9, @3, @3] : @[UIColor.orangeColor, UIColor.blueColor, UIColor.redColor]};
-            configure.rsiDict = @{@6 : UIColor.orangeColor};
+//            configure.rsiDict = @{@6 : UIColor.orangeColor};
+           configure.rsiDict = @{@6 : UIColor.orangeColor, @12 : UIColor.redColor, @24 : UIColor.greenColor};
         }];
     }
     return _auxiliaryView;

@@ -11,20 +11,16 @@
 
 
 @interface HyChartBarConfigureDataSource ()
-@property (nonatomic, strong) id<HyChartBarConfigureProtocol> configure;
+@property (nonatomic, strong) HyChartBarConfigure *configure;
 @end
 
 
 @implementation HyChartBarConfigureDataSource
+@synthesize configure = _configure;
 
-- (id<HyChartBarConfigureDataSourceProtocol>)configConfigure:(void (^_Nullable)(id<HyChartBarConfigureProtocol> configure))block {
-    !block ?: block(self.configure);
-    return self;
-}
-
-- (id<HyChartBarConfigureProtocol>)configure {
+- (HyChartBarConfigure *)configure {
     if (!_configure){
-        _configure = [HyChartBarConfigure defaultConfigure];
+        _configure = [[HyChartBarConfigure alloc] init];
     }
     return _configure;
 }

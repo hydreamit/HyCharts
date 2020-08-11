@@ -7,12 +7,12 @@
 //
 
 #import "HyChartXAxisModel.h"
-#import "HyChartXAxisInfo.h"
+
 
 
 @interface HyChartXAxisModel ()
-@property (nonatomic, strong) id<HyChartXAxisInfoProtocol> topXAxisInfo;
-@property (nonatomic, strong) id<HyChartXAxisInfoProtocol> bottomXAxisInfo;
+@property (nonatomic, strong) HyChartXAxisInfo *topXAxisInfo;
+@property (nonatomic, strong) HyChartXAxisInfo *bottomXAxisInfo;
 @end
 
 
@@ -37,7 +37,7 @@
     return self;
 }
 
-- (id<HyChartXAxisInfoProtocol>)topXAxisInfo {
+- (HyChartXAxisInfo *)topXAxisInfo {
     if (self.topXaxisDisabled) {
         return nil;
     }
@@ -47,7 +47,7 @@
     return _topXAxisInfo;
 }
 
-- (id<HyChartXAxisInfoProtocol>)bottomXAxisInfo {
+- (HyChartXAxisInfo *)bottomXAxisInfo {
     if (self.bottomXaxisDisabled) {
         return nil;
     }

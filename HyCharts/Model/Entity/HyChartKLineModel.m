@@ -29,8 +29,7 @@
 
 
 @implementation HyChartKLineModel
-@synthesize highPrice = _highPrice, lowPrice = _lowPrice, openPrice = _openPrice, closePrice = _closePrice, volume = _volume, amount = _amount, trend = _trend, trendPercent = _trendPercent, trendChanging = _trendChanging, turnoverrate = _turnoverrate, maxPrice = _maxPrice, minPrice = _minPrice, maxVolume = _maxVolume, minVolume = _minVolume,priceNunmberFormatter = _priceNunmberFormatter, volumeNunmberFormatter = _volumeNunmberFormatter, maxAuxiliary = _maxAuxiliary, minAuxiliary = _minAuxiliary, time = _time;
-
+@synthesize highPrice = _highPrice, lowPrice = _lowPrice, openPrice = _openPrice, closePrice = _closePrice, volume = _volume, amount = _amount, trend = _trend, trendPercent = _trendPercent, trendChanging = _trendChanging, turnoverrate = _turnoverrate, time = _time;
 
 - (void)setHighPrice:(NSNumber *)highPrice {
     _highPrice = SafetyNumber([NSDecimalNumber decimalNumberWithString:[self.priceNunmberFormatter stringFromNumber:highPrice]]);

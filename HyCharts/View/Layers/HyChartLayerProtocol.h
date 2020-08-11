@@ -12,8 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HyChartLayerProtocol <NSObject>
 
-//- (void)setNeedsRendering:(BOOL)force;
-
 - (void)setNeedsRendering;
 
 @end

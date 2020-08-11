@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HyChartBarDataSourceProtocol.h"
+#import "HyChartBarDataSource.h"
 #import "HyChartLayer.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HyChartBarLayer : HyChartLayer<id<HyChartBarDataSourceProtocol>>
+@interface HyChartBarLayer : HyChartLayer<HyChartBarDataSource *>
 
 
 @end

@@ -11,18 +11,27 @@
 
 @interface HyChartModelDataSource ()
 @property (nonatomic, copy) NSInteger(^numberOfItemsBlock)(void);
+@property (nonatomic, copy) void (^modelForItemAtIndexBlock)(HyChartModel *model, NSInteger index);
 @end
 
 
 @implementation HyChartModelDataSource
-@synthesize maxValue = _maxValue, minValue = _minValue;
-@synthesize  visibleModels = _visibleModels, visibleXAxisModels = _visibleXAxisModels, models = _models, numberFormatter = _numberFormatter;
 
 - (instancetype)configNumberOfItems:(NSInteger(^)(void))block {
-    
     self.numberOfItemsBlock = [block copy];
     return self;
 }
 
+- (instancetype)configModelForItemAtIndex:(void (^_Nullable)(id<HyChartModelProtocol> model, NSInteger index))block {
+    self.modelForItemAtIndexBlock = [block copy];
+    return self;
+}
+
+- (NSArray<HyChartModel *> *)models {
+    if (!_models){
+        _models = @[].mutableCopy;
+    }
+    return _models;
+}
 
 @end

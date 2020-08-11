@@ -11,9 +11,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol HyChartValuePositonProviderProtocol <NSObject>
+@property (nonatomic,copy, readonly) CGFloat (^valuePositon)(NSNumber *value);
+@property (nonatomic,copy, readonly) CGFloat (^valueHeight)(NSNumber *value);
+@end
 
 @interface HyChartModel : NSObject<HyChartModelProtocol>
 
+@property (nonatomic, assign) CGFloat position;
+@property (nonatomic, assign) CGFloat visiblePosition;
+@property (nonatomic, strong) NSNumberFormatter *numberFormatter;
+
+- (void)setValuePositonProvider:(id<HyChartValuePositonProviderProtocol>)provider;
 
 @end
 

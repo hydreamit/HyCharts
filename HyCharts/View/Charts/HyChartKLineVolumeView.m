@@ -18,7 +18,7 @@
 @property (nonatomic, assign) CGFloat chartWidth;
 @property (nonatomic, strong) HyChartKLineVolumeLayer *chartLayer;
 @property (nonatomic, assign) HyChartKLineTechnicalType technicalType;
-@property (nonatomic, strong) id<HyChartKLineDataSourceProtocol> dataSource;
+@property (nonatomic, strong) HyChartKLineDataSource *dataSource;
 @end
 
 
@@ -29,21 +29,21 @@
     
     __block double maxValue = 0;
     __block double minValue = 0;
-    __block id<HyChartKLineModelProtocol> maxModel = nil;
-    __block id<HyChartKLineModelProtocol> minModel = nil;
-    id<HyChartKLineConfigureProtocol> configure = self.dataSource.configreDataSource.configure;
+    __block HyChartKLineModel *maxModel = nil;
+    __block HyChartKLineModel *minModel = nil;
+    HyChartKLineConfigure *configure = self.dataSource.configreDataSource.configure;
     HyChartDataDirection dataDirection =  self.dataSource.configreDataSource.configure.dataDirection;
     
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex, endIndex - startIndex + 1)];
      self.dataSource.modelDataSource.visibleModels = [self.dataSource.modelDataSource.models objectsAtIndexes:indexSet];
-    [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(id<HyChartKLineModelProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(HyChartKLineModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (obj) {
-            obj.visibleIndex = idx;
+            NSInteger index = [self.dataSource.modelDataSource.models indexOfObject:obj];
             if (dataDirection == HyChartDataDirectionForward) {
-                obj.position = configure.scaleEdgeInsetStart + obj.index * configure.scaleItemWidth ;
+                obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth ;
                 obj.visiblePosition = obj.position - configure.trans;
             } else {
-                obj.position = configure.scaleEdgeInsetStart + obj.index * configure.scaleItemWidth + configure.scaleWidth;
+                obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth + configure.scaleWidth;
                 obj.visiblePosition = self.chartWidth - (obj.position - configure.trans);
             }
             
@@ -71,55 +71,61 @@
     self.dataSource.modelDataSource.visibleMinVolumeModel = minModel;
 }
 
-- (void)handleTechnicalData {
+- (void)handleTechnicalDataWithRangeIndex:(NSInteger)rangeIndex {
     
-     id<HyChartKLineConfigureProtocol> configure = self.dataSource.configreDataSource.configure;
+     HyChartKLineConfigure *configure = self.dataSource.configreDataSource.configure;
     
     [configure.smaDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull obj, BOOL * _Nonnull stop) {
-        HyChartAlgorithmContext.handleSMA([key integerValue], (id<HyChartKLineModelDataSourceProtocol>)self.dataSource.modelDataSource);
+        HyChartAlgorithmContext.handleSMA([key integerValue], self.dataSource.modelDataSource, rangeIndex);
     }];
     
     [configure.emaDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull obj, BOOL * _Nonnull stop) {
-        HyChartAlgorithmContext.handleEMA([key integerValue], (id<HyChartKLineModelDataSourceProtocol>)self.dataSource.modelDataSource);
+        HyChartAlgorithmContext.handleEMA([key integerValue], self.dataSource.modelDataSource, rangeIndex);
     }];
     
     [configure.bollDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSArray<UIColor *> * _Nonnull obj, BOOL * _Nonnull stop) {
-        HyChartAlgorithmContext.handleBOLL([key integerValue], (id<HyChartKLineModelDataSourceProtocol>)self.dataSource.modelDataSource);
+        HyChartAlgorithmContext.handleBOLL([key integerValue], self.dataSource.modelDataSource, rangeIndex);
     }];
 }
 
-- (void)handleMaxMinValue {
+- (void)handleMaxMinValueWithRangeIndex:(NSUInteger)rangeIndex {
     
-    id<HyChartKLineConfigureProtocol> klineConfigure = self.dataSource.configreDataSource.configure;
-    [self.dataSource.modelDataSource.models enumerateObjectsUsingBlock:^(id<HyChartKLineModelProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    if (rangeIndex == 0) {
+        rangeIndex = self.dataSource.modelDataSource.models.count;
+    }
+    
+    HyChartKLineConfigure *klineConfigure = self.dataSource.configreDataSource.configure;
+    [self.dataSource.modelDataSource.models enumerateObjectsUsingBlock:^(HyChartKLineModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        __block double maxVolume = obj.volume.doubleValue;
-        __block double minVolume = 0;
-        
-        switch (self.technicalType) {
-            case HyChartKLineTechnicalTypeSMA: {
-                [klineConfigure.smaDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull color, BOOL * _Nonnull stop) {
-                    maxVolume = MAX(obj.volumeSMA([key integerValue]).doubleValue, maxVolume);
-                    minVolume = MIN(obj.volumeSMA([key integerValue]).doubleValue, minVolume);
-                }];
-            } break;
-            case HyChartKLineTechnicalTypeEMA: {
-                [klineConfigure.emaDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull color, BOOL * _Nonnull stop) {
-                    maxVolume = MAX(obj.volumeEMA([key integerValue]).doubleValue, maxVolume);
-                    minVolume = MIN(obj.volumeEMA([key integerValue]).doubleValue, minVolume);
-                }];
-            } break;
-            case HyChartKLineTechnicalTypeBOLL: {
-                [klineConfigure.bollDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSArray<UIColor *> * _Nonnull colors, BOOL * _Nonnull stop) {
-                    maxVolume = MAX(obj.volumeBoll([key integerValue], @"up").doubleValue, maxVolume);
-                    minVolume = MIN(obj.volumeBoll([key integerValue], @"dn").doubleValue, minVolume);
-                }];
-            } break;
-            default:
-            break;
+        if (idx < rangeIndex) {
+            __block double maxVolume = obj.volume.doubleValue;
+            __block double minVolume = 0;
+            
+            switch (self.technicalType) {
+                case HyChartKLineTechnicalTypeSMA: {
+                    [klineConfigure.smaDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull color, BOOL * _Nonnull stop) {
+                        maxVolume = MAX(obj.volumeSMA([key integerValue]).doubleValue, maxVolume);
+                        minVolume = MIN(obj.volumeSMA([key integerValue]).doubleValue, minVolume);
+                    }];
+                } break;
+                case HyChartKLineTechnicalTypeEMA: {
+                    [klineConfigure.emaDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull color, BOOL * _Nonnull stop) {
+                        maxVolume = MAX(obj.volumeEMA([key integerValue]).doubleValue, maxVolume);
+                        minVolume = MIN(obj.volumeEMA([key integerValue]).doubleValue, minVolume);
+                    }];
+                } break;
+                case HyChartKLineTechnicalTypeBOLL: {
+                    [klineConfigure.bollDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSArray<UIColor *> * _Nonnull colors, BOOL * _Nonnull stop) {
+                        maxVolume = MAX(obj.volumeBoll([key integerValue], @"up").doubleValue, maxVolume);
+                        minVolume = MIN(obj.volumeBoll([key integerValue], @"dn").doubleValue, minVolume);
+                    }];
+                } break;
+                default:
+                break;
+            }
+            obj.maxVolume = [NSNumber numberWithDouble:maxVolume];
+            obj.minVolume = [NSNumber numberWithDouble:minVolume];
         }
-        obj.maxVolume = [NSNumber numberWithDouble:maxVolume];
-        obj.minVolume = [NSNumber numberWithDouble:minVolume];
     }];
 }
 
@@ -130,14 +136,14 @@
     return _chartLayer;
 }
 
-- (id<HyChartKLineDataSourceProtocol>)dataSource {
+- (HyChartKLineDataSource *)dataSource {
     if (!_dataSource){
         _dataSource = [[HyChartKLineDataSource alloc] init];
     }
     return _dataSource;
 }
 
-- (id<HyChartKLineModelProtocol>)model {
+- (HyChartKLineModel *)model {
     return HyChartKLineModel.new;
 }
 

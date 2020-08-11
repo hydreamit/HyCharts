@@ -17,20 +17,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)configModelForItemAtIndex:(void (^_Nullable)(id<HyChartBarModelProtocol> model, NSInteger index))block;
 
-@property (nonatomic, copy, readonly) void (^modelForItemAtIndexBlock)(id<HyChartBarModelProtocol> model, NSInteger index);
-
-
-
-@property (nonatomic, strong) NSMutableArray<id<HyChartBarModelProtocol>> *models;
-
+/// 模型数组
+@property (nonatomic, strong,readonly) NSMutableArray<id<HyChartBarModelProtocol>> *models;
 /// 可见跨度的模型数组
-@property (nonatomic, strong) NSArray<id<HyChartBarModelProtocol>> *visibleModels;
+@property (nonatomic, strong,readonly) NSArray<id<HyChartBarModelProtocol>> *visibleModels;
 /// 可见跨度的靠近X轴点的模型数组
-@property (nonatomic, strong) NSArray<id<HyChartBarModelProtocol>> *visibleXAxisModels;
+@property (nonatomic, strong,readonly) NSArray<id<HyChartBarModelProtocol>> *visibleXAxisModels;
 /// 可见最大值模型
-@property (nonatomic, strong) id<HyChartBarModelProtocol> visibleMaxModel;
+@property (nonatomic, strong,readonly) id<HyChartBarModelProtocol> visibleMaxModel;
 /// 可见最小值模型
-@property (nonatomic, strong) id<HyChartBarModelProtocol> visibleMinModel;
+@property (nonatomic, strong,readonly) id<HyChartBarModelProtocol> visibleMinModel;
+
+@property (nonatomic, strong, readonly) NSNumberFormatter *numberFormatter;
 
 @end
 

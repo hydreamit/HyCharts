@@ -7,23 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HyChartKLineModelDataSourceProtocol.h"
+#import "HyChartKLineModelDataSource.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol HyChartAlgorithmProtocol <NSObject>
 
-- (void (^)(NSInteger number, id<HyChartKLineModelDataSourceProtocol> modelDataSource))handleSMA;
+- (void (^)(NSInteger number, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleSMA;
 
-- (void (^)(NSInteger number, id<HyChartKLineModelDataSourceProtocol> modelDataSource))handleEMA;
+- (void (^)(NSInteger number, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleEMA;
 
-- (void (^)(NSInteger number, id<HyChartKLineModelDataSourceProtocol> modelDataSource))handleBOLL;
+- (void (^)(NSInteger number, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleBOLL;
 
-- (void (^)(NSInteger number1, NSInteger number2, NSInteger number3, id<HyChartKLineModelDataSourceProtocol> modelDataSource))handleMACD;
+- (void (^)(NSInteger number1, NSInteger number2, NSInteger number3, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleMACD;
 
-- (void (^)(NSInteger number1, NSInteger number2, NSInteger number3, id<HyChartKLineModelDataSourceProtocol> modelDataSource))handleKDJ;
+- (void (^)(NSInteger number1, NSInteger number2, NSInteger number3, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleKDJ;
 
-- (void (^)(NSInteger number, id<HyChartKLineModelDataSourceProtocol> modelDataSource))handleRSI;
+- (void (^)(NSInteger number, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleRSI;
 
 @end
 

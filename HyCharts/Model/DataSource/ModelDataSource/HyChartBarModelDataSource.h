@@ -8,10 +8,11 @@
 
 #import "HyChartModelDataSource.h"
 #import "HyChartBarModelDataSourceProtocol.h"
+#import "HyChartBarModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HyChartBarModelDataSource : HyChartModelDataSource<HyChartBarModelDataSourceProtocol>
+@interface HyChartBarModelDataSource : HyChartModelDataSource<HyChartBarModel *><HyChartBarModelDataSourceProtocol>
 
 @end
 

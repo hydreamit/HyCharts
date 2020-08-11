@@ -42,7 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)configLineConfigureAtIndex:(void(^)(NSInteger index, id<HyChartLineOneConfigureProtocol> oneConfigure))block;
 
-@property (nonatomic, copy, readonly) void(^lineConfigureAtIndexBlock)(NSInteger, id<HyChartLineOneConfigureProtocol>);
 
 @end
 

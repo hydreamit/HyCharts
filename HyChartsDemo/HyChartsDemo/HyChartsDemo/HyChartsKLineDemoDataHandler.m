@@ -231,7 +231,7 @@
 
     id<HyChartKLineConfigureProtocol> configure = dataSorce.configreDataSource.configure;
     HyChartKLineAuxiliaryType type = dataSorce.modelDataSource.auxiliaryType;
-    NSString *string;
+    __block NSString *string = @"";
     switch (type) {
        case HyChartKLineAuxiliaryTypeMACD:{
            NSArray<NSNumber *> *numbers = configure.macdDict.allKeys.firstObject;
@@ -242,8 +242,11 @@
             string = [NSString stringWithFormat:@"KJD(%@,%@,%@)", numbers.firstObject, numbers[1], numbers.lastObject];
         }break;
         case HyChartKLineAuxiliaryTypeRSI:{
-            NSNumber *number = configure.rsiDict.allKeys.firstObject;
-            string = [NSString stringWithFormat:@"RSI(%@): %@", number, [dataSorce.modelDataSource.priceNunmberFormatter stringFromNumber:dataSorce.modelDataSource.models.firstObject.priceRSI([number integerValue])]];
+            
+            [configure.rsiDict.allKeys enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSString *str = [NSString stringWithFormat:@"RSI(%@): %@", obj, [dataSorce.modelDataSource.priceNunmberFormatter stringFromNumber:dataSorce.modelDataSource.models.firstObject.priceRSI([obj integerValue])]];
+               string = [NSString stringWithFormat:@"%@   %@",string , str];
+            }];
         }break;
         default:
         break;

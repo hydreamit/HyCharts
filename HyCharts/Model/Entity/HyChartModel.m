@@ -15,7 +15,7 @@
 
 
 @implementation HyChartModel
-@synthesize text = _text, value = _value, index = _index, visibleIndex = _visibleIndex, position = _position, visiblePosition = _visiblePosition, exData = _exData, numberFormatter = _numberFormatter;
+@synthesize text = _text, value = _value, exData = _exData, numberFormatter = _numberFormatter;
 
 - (CGFloat (^)(NSNumber * _Nonnull))valuePositon {
     return self.provider.valuePositon;
