@@ -47,6 +47,7 @@
 @property (nonatomic, strong) NSNumberFormatter *yAxisNunmberFormatter;
 @property (nonatomic, strong) dispatch_semaphore_t semaphore;
 @property (nonatomic, assign) BOOL hasResetChartCursor;
+@property (nonatomic, copy) NSMutableArray<void(^)(void)> *renderingCompletions;
 @end
 
 
@@ -204,9 +205,12 @@
 - (void)setNeedsRenderingWithCompletion:(void(^ _Nullable)(void))completion {
     
     if (!self._dataSource) { return; }
-
+    
     if (!self.chartWidth) {
         self.prepareStage = 1;
+        if (completion) {
+            [self.renderingCompletions addObject:completion];
+        }
         return;
     }
     
@@ -237,7 +241,6 @@
         
     HyChartConfigure *configure = self._dataSource.configreDataSource.configure;
     if (configure.autoMargin) {
-//        self._dataSource.axisDataSource.xAxisModel
         CGFloat xMargin = self.chartWidth / self._dataSource.axisDataSource.xAxisModel.indexs;
         configure.margin =  xMargin - configure.width;
         configure.edgeInsetStart = xMargin - configure.width / 2;
@@ -258,18 +261,24 @@
         [self handleVisibleModels];
         long signalValue = dispatch_semaphore_signal(self.semaphore);
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSInteger lastPrepareStage = self.prepareStage;
             if (signalValue == 0) {
                 self.prepareStage = 2;
                 [self.layer setNeedsDisplay];
             }
-            !completion ?: completion();
+            if (lastPrepareStage == 1) {
+                for (void(^block)(void) in self.renderingCompletions) {
+                    block();
+                }
+                [self.renderingCompletions removeAllObjects];
+            } else {
+               !completion ?: completion();
+            }
         });
     });
 }
 
 - (void)refreshChartsView {
-    
-
     
     NSInteger itemsCount =
     self._dataSource.modelDataSource.numberOfItemsBlock ?
@@ -910,6 +919,13 @@
         _configure = self._dataSource.configreDataSource.configure;
     }
     return _configure;
+}
+
+- (NSMutableArray<void (^)(void)> *)renderingCompletions {
+    if (!_renderingCompletions) {
+        _renderingCompletions = @[].mutableCopy;
+    }
+    return _renderingCompletions;
 }
 
 - (NSMutableArray<NSValue *> *)reactChains {
