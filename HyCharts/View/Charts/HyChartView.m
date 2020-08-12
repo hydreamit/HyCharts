@@ -18,6 +18,11 @@
 #import "HyChartKLineMainLayer.h"
 #import "HyChartXAxisModel.h"
 
+#define LookModels(...) \
+dispatch_semaphore_wait(self.arraySemaphore, DISPATCH_TIME_FOREVER); \
+__VA_ARGS__; \
+dispatch_semaphore_signal(self.arraySemaphore);
+
 
 @interface HyChartView ()<UIScrollViewDelegate>
 /// 轴图层
@@ -46,6 +51,7 @@
 @property (nonatomic, assign) NSInteger prepareStage;
 @property (nonatomic, strong) NSNumberFormatter *yAxisNunmberFormatter;
 @property (nonatomic, strong) dispatch_semaphore_t semaphore;
+@property (nonatomic, strong) dispatch_semaphore_t arraySemaphore;
 @property (nonatomic, assign) BOOL hasResetChartCursor;
 @property (nonatomic, copy) NSMutableArray<void(^)(void)> *renderingCompletions;
 @end
@@ -343,9 +349,9 @@
                  self._dataSource.modelDataSource.modelForItemAtIndexBlock(model, i);
                 [array addObject:model];
             }
-             [self._dataSource.modelDataSource.models insertObjects:array
-                                                         atIndexes:[NSIndexSet indexSetWithIndex:0]];
             
+            LookModels([self._dataSource.modelDataSource.models insertObjects:array
+                                                                    atIndexes:[NSIndexSet indexSetWithIndex:0]])
             if (isKline) {
                 [self handleTechnicalDataWithRangeIndex:indexCount];
                 [self handleMaxMinValueWithRangeIndex:indexCount];
@@ -376,7 +382,9 @@
         
         [self handleContentSize];        
         [self asyncHandler:^{
-           [self._dataSource.modelDataSource.models removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, indexs)]];
+            
+            LookModels([self._dataSource.modelDataSource.models removeObjectsAtIndexes:[NSIndexSet  indexSetWithIndexesInRange:NSMakeRange(0, indexs)]];)
+           
             if (needsHandle) {
                [self handleVisibleModels];
             }
@@ -399,8 +407,8 @@
     } else {
         self._dataSource.modelDataSource.numberFormatter = self.configure.numberFormatter;
     }
- 
-    [self._dataSource.modelDataSource.models removeAllObjects];
+    
+    NSMutableArray *array = @[].mutableCopy;
     NSInteger itemsCount = self._dataSource.modelDataSource.numberOfItemsBlock();
     for (NSInteger i = 0; i < itemsCount; i++) {
         HyChartModel *model = self.model;
@@ -414,9 +422,10 @@
         }
         [model setValuePositonProvider:(id)self.chartLayer];
         self._dataSource.modelDataSource.modelForItemAtIndexBlock(model, i);
-        [self._dataSource.modelDataSource.models addObject:model];
+        [array addObject:model];
     }
-
+    LookModels([self._dataSource.modelDataSource.models removeAllObjects];
+               [self._dataSource.modelDataSource.models addObjectsFromArray:array];)
     [self handleTechnicalDataWithRangeIndex:0];
     [self handleMaxMinValueWithRangeIndex:0];
     [self handleOther];
@@ -503,10 +512,13 @@
     CGFloat totalTrans = trans + self.chartWidth;
     NSInteger endIndex  = (totalTrans - configure.scaleEdgeInsetStart)  / configure.scaleItemWidth;
     endIndex = endIndex > (itemsCount - 1) ? (itemsCount - 1) : endIndex;
-
-    [self handleVisibleModelsWithStartIndex:startIndex endIndex:endIndex];
-    [self handleXAxis];
-    [self handleYAxis];
+    
+    LookModels(if ((startIndex >= 0 && startIndex < self._dataSource.modelDataSource.models.count) &&
+                   endIndex >= 0 && endIndex < self._dataSource.modelDataSource.models.count) {
+        [self handleVisibleModelsWithStartIndex:startIndex endIndex:endIndex];
+        [self handleXAxis];
+        [self handleYAxis];
+    })
 }
 
 - (void)handleVisibleModelsWithStartIndex:(NSInteger)startIndex endIndex:(NSInteger)endIndex {}
@@ -942,6 +954,13 @@
         _semaphore = dispatch_semaphore_create(1);
     }
     return _semaphore;
+}
+
+- (dispatch_semaphore_t)arraySemaphore{
+    if (!_arraySemaphore) {
+        _arraySemaphore = dispatch_semaphore_create(1);
+    }
+    return _arraySemaphore;
 }
 
 - (void)setTechnicalType:(HyChartKLineTechnicalType)technicalType {
