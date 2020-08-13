@@ -140,7 +140,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
 /**
  DIF(偏离值线) = 快的指数移动平均线EMA(12) - 慢的指数移动平均线 EMA(26)
  DEM(讯号线) =  DIF的N日指数移动平均值 EMA(9 DIF)
- MACD(柱) = DIF - DEM
+ MACD(柱) = 2 * (DIF - DEM)
  */
 - (void (^)(NSInteger number1, NSInteger number2, NSInteger number3, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleMACD {
     return ^(NSInteger number1, NSInteger number2, NSInteger number3, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex) {
@@ -177,7 +177,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
         }
         
         // DEM(讯号线) =  DIF的N日指数移动平均值 EMA(9 DIF)
-        // MACD(柱) = DIF - DEM
+        // MACD(柱) = 2 * (DIF - DEM)
         NSString *demdKey = [NSString stringWithFormat:@"%ld+%ld+%ld", (long)number1, (long)number2, (long)number3];
         BOOL updateMACD = YES;
         if (rangeIndex == 0) {
@@ -202,7 +202,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
                       [model.priceDEMDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:difEMA]]])
                                              forKey:demdKey];
                       
-                      [model.priceMACDDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:dif - difEMA]]])
+                      [model.priceMACDDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:2 * (dif - difEMA)]]])
                                              forKey:demdKey];
                   }
             }
