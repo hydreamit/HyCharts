@@ -295,17 +295,20 @@
     CGFloat ySpaceMargin = 0;
     CGPoint anchor = CGPointZero;
     CGPoint offset = CGPointZero;
+     CGFloat baseOffset = 3;
         
     if ([position isEqualToString:@"top"]) {
         
         xSpaceMargin = self.contentRect.size.width / axisModel.indexs;
         if (axisBaseInfo.axisTextPosition == HyChartAxisTextPositionPlus) {
             anchor = CGPointMake(0, 0);
-            offset = axisBaseInfo.axisTextOffset;
+            offset = CGPointMake(axisBaseInfo.axisTextOffset.x + baseOffset,
+                                 axisBaseInfo.axisTextOffset.y + baseOffset);
             xy = CGRectGetMinY(self.contentRect);
         } else {
             anchor = CGPointMake(0.5, 1);
-            offset = CGPointMake(0, -axisBaseInfo.axisTextOffset.y);
+            offset = CGPointMake(axisBaseInfo.axisTextOffset.x,
+                                 axisBaseInfo.axisTextOffset.y - baseOffset);
             xy = CGRectGetMinY(self.contentRect);
         }
         
@@ -314,11 +317,13 @@
         ySpaceMargin = self.contentRect.size.height / axisModel.indexs;
         if (axisBaseInfo.axisTextPosition == HyChartAxisTextPositionPlus) {
             anchor = CGPointMake(0, 0);
-            offset = axisBaseInfo.axisTextOffset;
+            offset = CGPointMake(axisBaseInfo.axisTextOffset.x + baseOffset,
+                                 axisBaseInfo.axisTextOffset.y + baseOffset);
             xy = CGRectGetMinX(self.contentRect);
         } else {
             anchor = CGPointMake(1, .5);
-            offset = CGPointMake(- axisBaseInfo.axisTextOffset.x, 0);
+            offset = CGPointMake(axisBaseInfo.axisTextOffset.x - baseOffset,
+                                 axisBaseInfo.axisTextOffset.y);
             xy = CGRectGetMinX(self.contentRect);
         }
         
@@ -327,11 +332,13 @@
         xSpaceMargin = self.contentRect.size.width / axisModel.indexs;
         if (axisBaseInfo.axisTextPosition == HyChartAxisTextPositionPlus) {
             anchor = CGPointMake(0.5, 0);
-            offset = CGPointMake(0, axisBaseInfo.axisTextOffset.y);
+            offset = CGPointMake(axisBaseInfo.axisTextOffset.x,
+                                 axisBaseInfo.axisTextOffset.y + baseOffset);
             xy = CGRectGetMaxY(self.contentRect);
         } else {
             anchor = CGPointMake(0, 1);
-            offset = CGPointMake(axisBaseInfo.axisTextOffset.x, -axisBaseInfo.axisTextOffset.y);
+            offset = CGPointMake(axisBaseInfo.axisTextOffset.x + baseOffset,
+                                 axisBaseInfo.axisTextOffset.y - baseOffset);
             xy = CGRectGetMaxY(self.contentRect);
         }
         
@@ -340,11 +347,13 @@
         ySpaceMargin = self.contentRect.size.height / axisModel.indexs;
         if (axisBaseInfo.axisTextPosition == HyChartAxisTextPositionPlus) {
             anchor = CGPointMake(0, 0.5);
-            offset = CGPointMake(axisBaseInfo.axisTextOffset.x, 0);
+            offset = CGPointMake(axisBaseInfo.axisTextOffset.x + baseOffset,
+                                 axisBaseInfo.axisTextOffset.y);
             xy = CGRectGetMaxX(self.contentRect);
         } else {
             anchor = CGPointMake(1, 0);
-            offset = CGPointMake(-axisBaseInfo.axisTextOffset.x, axisBaseInfo.axisTextOffset.y);
+            offset = CGPointMake(axisBaseInfo.axisTextOffset.x - baseOffset,
+                                 axisBaseInfo.axisTextOffset.y + baseOffset);
             xy = CGRectGetMaxX(self.contentRect);
         }
     }
