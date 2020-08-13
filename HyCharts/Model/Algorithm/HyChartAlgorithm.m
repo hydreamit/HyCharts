@@ -243,8 +243,8 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
                 NSInteger startIndex = index - number1;
                 if (startIndex < 0) { startIndex = 0; }
                 for (NSInteger i = startIndex; i <= index; i++) {
-                    maxValue = MAX(maxValue, model.highPrice.doubleValue);
-                    minValue = MIN(minValue, model.lowPrice.doubleValue);
+                    maxValue = MAX(maxValue, models[i].highPrice.doubleValue);
+                    minValue = MIN(minValue, models[i].lowPrice.doubleValue);
                 }
                 
                 if (maxValue - minValue != 0) {
