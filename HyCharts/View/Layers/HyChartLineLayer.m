@@ -27,7 +27,8 @@
     
     CGFloat height = CGRectGetHeight(self.bounds);
     double maxValue = self.dataSource.axisDataSource.yAxisModel.yAxisMaxValue.doubleValue;
-    double heightRate = maxValue != 0 ? height / maxValue : 0;
+    double minValue = self.dataSource.axisDataSource.yAxisModel.yAxisMinValue.doubleValue;
+    double heightRate = maxValue != minValue ? height / (maxValue - minValue) : 0;
     CGFloat width = self.dataSource.configreDataSource.configure.scaleWidth;
     
     NSMutableArray<UIBezierPath *> *paths = @[].mutableCopy;
@@ -48,14 +49,14 @@
                 
         for (NSInteger j = 0; j < valueCount; j ++) {
            
-           CGPoint startPoint = CGPointMake(startModel.visiblePosition + width / 2, height - (startModel.values[j].doubleValue * heightRate));
+           CGPoint startPoint = CGPointMake(startModel.visiblePosition + width / 2, height - ((startModel.values[j].doubleValue - minValue) * heightRate));
            [self convertPoint:startPoint toLayer:self.layers[j]];
            if (i == 1) {
               [paths[j] moveToPoint:startPoint];
               [startPs addObject:[NSValue valueWithCGPoint:startPoint]];
            }
            
-           CGPoint endPoint = CGPointMake(endModel.visiblePosition + width / 2, height - (endModel.values[j].doubleValue * heightRate));
+           CGPoint endPoint = CGPointMake(endModel.visiblePosition + width / 2, height - ((endModel.values[j].doubleValue - minValue) * heightRate));
            if (i == count - 1) {
               [endPs addObject:[NSValue valueWithCGPoint:endPoint]];
            }
@@ -186,7 +187,9 @@
 - (CGFloat (^)(NSNumber * _Nonnull))valueHeight {
     return ^(NSNumber *value) {
         double maxValue = self.dataSource.axisDataSource.yAxisModel.yAxisMaxValue.doubleValue;
-        double heightRate = maxValue != 0 ? CGRectGetHeight(self.bounds) / maxValue : 0;
+        double minValue = self.dataSource.axisDataSource.yAxisModel.yAxisMinValue.doubleValue;
+
+        double heightRate = maxValue != minValue ? CGRectGetHeight(self.bounds) / (maxValue - minValue) : 0;
         return value.doubleValue * heightRate;
     };
 }
