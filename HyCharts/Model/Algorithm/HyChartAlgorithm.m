@@ -318,7 +318,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
         double priceValue = 0.0;
         double volumeValue = 0.0;
         NSInteger totalNumber = 0;
-        NSInteger minIndex = index + 1  - number;
+        NSInteger minIndex = index - number;
         if (minIndex < 0) { minIndex = -1; }
         
         for (NSInteger i = index; i > minIndex; i--) {
@@ -355,7 +355,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
         double priceMd = 0;
         double volumeMd = 0;
         NSInteger totalNumber = 0;
-        NSInteger minIndex = idx + 1  - number;
+        NSInteger minIndex = idx - number;
         if (minIndex < 0) { minIndex = -1; }
 
         for (NSInteger i = idx; i > minIndex; i--) {
