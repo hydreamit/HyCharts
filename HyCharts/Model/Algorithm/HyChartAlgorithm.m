@@ -240,7 +240,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
             if (index >= rangeIndex) {
                 double maxValue =  -MAXFLOAT;
                 double minValue = MAXFLOAT;
-                NSInteger startIndex = index - number1;
+                NSInteger startIndex = index - number1 + 1;
                 if (startIndex < 0) { startIndex = 0; }
                 for (NSInteger i = startIndex; i <= index; i++) {
                     maxValue = MAX(maxValue, models[i].highPrice.doubleValue);
