@@ -262,7 +262,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
                    jValue = 50;
                 }
                 
-                [model.priceRSIDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:rsvValue]]])
+                [model.priceRSVDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:rsvValue]]])
                                        forKey:@(number1)];
                 [model.priceKDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:kValue]]])
                                      forKey:[NSString stringWithFormat:@"%ld+%ld", (long)number1, (long)number2]];
