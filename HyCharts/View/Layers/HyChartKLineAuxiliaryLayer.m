@@ -290,7 +290,8 @@
            minValue = self.dataSource.axisDataSource.yAxisModel.yAxisMinValue.doubleValue;
         }
         double heightRate = maxValue != minValue ? CGRectGetHeight(self.bounds) / (maxValue - minValue) : 0;
-        return (value.doubleValue - minValue) * heightRate;
+        CGFloat valueHeight = (value.doubleValue - minValue) * heightRate;
+        return valueHeight;
     };
 }
 

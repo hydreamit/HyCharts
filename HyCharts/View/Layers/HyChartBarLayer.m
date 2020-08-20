@@ -76,7 +76,8 @@
     return ^(NSNumber *value) {
         double maxValue = self.dataSource.axisDataSource.yAxisModel.yAxisMaxValue.doubleValue;
         double heightRate = maxValue != 0 ? CGRectGetHeight(self.bounds) / maxValue : 0;
-        return value.doubleValue * heightRate;
+        CGFloat valueHeight = value.doubleValue * heightRate;
+        return valueHeight;
     };
 }
 
