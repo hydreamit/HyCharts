@@ -32,13 +32,15 @@
 
 - (CGFloat (^)(NSNumber * _Nonnull))valuePositon {
     return ^(NSNumber *value){
-        return .0;
+        CGFloat valuePositon = .0;
+        return valuePositon;
     };
 }
 
 - (CGFloat (^)(NSNumber * _Nonnull))valueHeight {
     return ^(NSNumber *value){
-        return .0;
+        CGFloat valueHeight = .0;
+        return valueHeight;
     };
 }
 
