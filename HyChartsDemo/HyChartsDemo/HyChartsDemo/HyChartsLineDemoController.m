@@ -74,13 +74,15 @@
             xAxisInfo.axisLineColor = UIColor.groupTableViewBackgroundColor;
         }];
     }] configYAxisWithModel:^(id<HyChartYAxisModelProtocol>  _Nonnull yAxisModel) {
-        [[[yAxisModel configNumberOfIndexs:5] configYAxisMaxValue:^NSNumber * _Nonnull{
+        [[[[yAxisModel configNumberOfIndexs:5] configYAxisMaxValue:^NSNumber * _Nonnull{
             return @10000;
         }] configLeftYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
             yAxisInfo.axisTextFont = [UIFont systemFontOfSize:10];
             yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
             yAxisInfo.axisLineType = HyChartAxisLineTypeNone;
             yAxisInfo.displayAxisZeroText = NO;
+        }] configYAxisMinValue:^NSNumber * _Nonnull{
+            return @(0);
         }];
     }];
     
@@ -205,7 +207,7 @@
         }];
     }] configYAxisWithModel:^(id<HyChartYAxisModelProtocol>  _Nonnull yAxisModel) {
         
-        [[[[yAxisModel configNumberOfIndexs:5] configYAxisMaxValue:^NSNumber * _Nonnull{
+        [[[[[yAxisModel configNumberOfIndexs:5] configYAxisMaxValue:^NSNumber * _Nonnull{
             return @10000;
         }] configAxisGridLineInfo:^(id<HyChartAxisGridLineInfoProtocol>  _Nonnull axisGridLineInfo) {
             axisGridLineInfo.axisGridLineColor = UIColor.groupTableViewBackgroundColor;
@@ -216,6 +218,8 @@
             yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
             yAxisInfo.axisLineType = HyChartAxisLineTypeNone;
             yAxisInfo.displayAxisZeroText = NO;
+        }] configYAxisMinValue:^NSNumber * _Nonnull{
+            return @(0);
         }];
     }];
     
@@ -334,12 +338,14 @@
     }] configYAxisWithModel:^(id<HyChartYAxisModelProtocol>  _Nonnull yAxisModel) {
         yAxisModel.rightYAaxisDisabled = NO;
         yAxisModel.yAxisMaxValueExtraPrecent = @(.1);
-        [[[yAxisModel configNumberOfIndexs:5] configLeftYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
+        [[[[yAxisModel configNumberOfIndexs:5] configLeftYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
             yAxisInfo.axisTextFont = [UIFont systemFontOfSize:10];
             yAxisInfo.axisTextPosition = HyChartAxisTextPositionBinus;
             yAxisInfo.displayAxisZeroText = NO;
         }] configRightYAxisInfo:^(id<HyChartYAxisInfoProtocol>  _Nonnull yAxisInfo) {
             yAxisInfo.autoSetText = NO;
+        }] configYAxisMinValue:^NSNumber * _Nonnull{
+            return @(0);
         }];
     }];
     

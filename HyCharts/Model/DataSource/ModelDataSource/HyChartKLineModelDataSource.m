@@ -51,4 +51,8 @@
     };
 }
 
+- (NSNumberFormatter *)numberFormatter {
+    return self.priceNunmberFormatter;
+}
+
 @end

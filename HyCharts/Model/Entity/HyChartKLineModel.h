@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSNumberFormatter *priceNunmberFormatter;
 @property (nonatomic, strong) NSNumberFormatter *volumeNunmberFormatter;
 
+@property (nonatomic,copy,readonly) void (^timeLineValuesBlock)(HyChartKLineModel *model);
+
 @end
 
 NS_ASSUME_NONNULL_END

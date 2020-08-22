@@ -29,9 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSNumber *yAxisMaxValueExtraPrecent;
 
 
-/// 设置固定最大值
+/// 设置固定最大值, yAxisMinValueExtraPrecent 失效
 - (id<HyChartYAxisModelProtocol>)configYAxisMinValue:(NSNumber *(^)(void))block;
-/// 设置固定最小值
+/// 设置固定最小值 yAxisMaxValueExtraPrecent 失效
 - (id<HyChartYAxisModelProtocol>)configYAxisMaxValue:(NSNumber *(^)(void))block;
 
 

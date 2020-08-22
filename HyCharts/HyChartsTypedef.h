@@ -49,13 +49,24 @@ typedef NS_ENUM (NSUInteger, HyChartLinePointType) {
     HyChartLinePointTypeRing
 };
 
-/// 数据展示方向
-typedef NS_ENUM (NSUInteger, HyChartDataDirection) {
-    /// x轴正向展示
-    HyChartDataDirectionForward,
-    /// x轴逆向展示
-    HyChartDataDirectionReverse
+
+/// 数据渲染方向
+typedef NS_ENUM (NSUInteger, HyChartRenderingDirection) {
+    /// x轴正向渲染 —— 第一条数据在最左边 往右渲染
+    HyChartRenderingDirectionForward,
+    /// x轴逆向展示—— 第一条数据在最右边 往左渲染
+    HyChartRenderingDirectionReverse
 };
+
+
+/// 数据不够 / 放大缩小 不能完全铺满时，靠哪一边
+typedef NS_ENUM (NSUInteger, HyChartNotEnoughSide) {
+    /// 靠左边
+    HyChartNotEnoughSideLeft,
+    /// 靠右边
+    HyChartNotEnoughSideRight
+};
+
 
 /// 游标状态
 typedef NS_ENUM (NSUInteger, HyChartCursorState) {

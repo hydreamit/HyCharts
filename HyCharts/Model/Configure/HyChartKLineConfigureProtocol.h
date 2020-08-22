@@ -6,10 +6,10 @@
 //  Copyright © 2018 Hy. All rights reserved.
 //
 
+#import "HyChartLineConfigureProtocol.h"
 #import <Foundation/Foundation.h>
 #import "HyChartConfigureProtocol.h"
 #import "HyChartsTypedef.h"
-
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -31,12 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) HyChartKLineType trendDownKlineType;
 
 
-/// 实时价格线颜色
-@property (nonatomic, strong) UIColor *timeLineColor;
-/// 实时价格线宽度
-@property (nonatomic, assign) CGFloat timeLineWidth;
-/// 阴影渐变颜色数组 >= 3
-@property (nonatomic, strong) NSArray<UIColor *> *timeLineShadeColors;
+/// 分时线时 技术指标数据需不需要处理 默认NO
+@property (nonatomic,assign) BOOL timeLineHandleTechnicalData;
+/// 每条线的配置
+- (instancetype)configLineConfigureAtIndex:(void(^)(NSInteger index, id<HyChartLineOneConfigureProtocol> oneConfigure))block;
 
 
 /// 缩放到最小值变折线图(默认为YES)

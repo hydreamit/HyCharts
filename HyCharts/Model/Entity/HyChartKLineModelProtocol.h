@@ -46,6 +46,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) HyChartKLineTrend trend;
 
 
+/*
+ 分时图线条设置 默认是一条线 ---->  @[收盘价]
+ */
+/// 自定义 方式一  直接赋值
+@property (nonatomic, strong) NSArray<NSNumber *> *values;
+/// 分时线断点设置, 默认为NO  —— @(YES) \ @(NO)
+@property (nonatomic, strong) NSArray<NSNumber *> *breakpoints;
+/// 自定义 方式 二  根据K线处理后数据设置
+- (void)configTimeLineValues:(void (^)(id<HyChartKLineModelProtocol> _model))block;
+
+
+
 @property (nonatomic, strong, readonly) NSNumberFormatter *priceNunmberFormatter;
 @property (nonatomic, strong, readonly) NSNumberFormatter *volumeNunmberFormatter;
 
@@ -93,7 +105,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSString *, NSNumber *> *priceKDict;
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSString *, NSNumber *> *priceDDict;
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSString *, NSNumber *> *priceJDict;
-
 
 @end
 

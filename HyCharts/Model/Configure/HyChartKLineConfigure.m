@@ -12,11 +12,12 @@
 @interface HyChartKLineConfigure ()
 @property (nonatomic, strong) NSNumberFormatter *priceNunmberFormatter;
 @property (nonatomic, strong) NSNumberFormatter *volumeNunmberFormatter;
+@property (nonatomic, copy) void(^lineConfigureAtIndexBlock)(NSInteger, id<HyChartLineOneConfigureProtocol>);
 @end
 
 
 @implementation HyChartKLineConfigure
-@synthesize trendUpColor = _trendUpColor, trendDownColor = _trendDownColor, trendUpKlineType = _trendUpKlineType, trendDownKlineType = _trendDownKlineType, smaDict = _smaDict, bollDict = _bollDict, emaDict = _emaDict,  macdDict = _macdDict, rsiDict = _rsiDict, kdjDict = _kdjDict, minScaleToLine = _minScaleToLine, minScaleLineColor = _minScaleLineColor, minScaleLineWidth = _minScaleLineWidth, timeLineColor = _timeLineColor, timeLineWidth = _timeLineWidth, timeLineShadeColors = _timeLineShadeColors, minScaleLineShadeColors = _minScaleLineShadeColors, priceDecimal = _priceDecimal, volumeDecimal = _volumeDecimal, disPlayNewprice = _disPlayNewprice, newpriceColor = _newpriceColor, newpriceFont = _newpriceFont, disPlayMaxMinPrice = _disPlayMaxMinPrice, maxminPriceColor = _maxminPriceColor, maxminPriceFont = _maxminPriceFont, klineViewDict = _klineViewDict, lineWidth = _lineWidth;
+@synthesize trendUpColor = _trendUpColor, trendDownColor = _trendDownColor, trendUpKlineType = _trendUpKlineType, trendDownKlineType = _trendDownKlineType, smaDict = _smaDict, bollDict = _bollDict, emaDict = _emaDict,  macdDict = _macdDict, rsiDict = _rsiDict, kdjDict = _kdjDict, minScaleToLine = _minScaleToLine, minScaleLineColor = _minScaleLineColor, minScaleLineWidth = _minScaleLineWidth, minScaleLineShadeColors = _minScaleLineShadeColors, priceDecimal = _priceDecimal, volumeDecimal = _volumeDecimal, disPlayNewprice = _disPlayNewprice, newpriceColor = _newpriceColor, newpriceFont = _newpriceFont, disPlayMaxMinPrice = _disPlayMaxMinPrice, maxminPriceColor = _maxminPriceColor, maxminPriceFont = _maxminPriceFont, klineViewDict = _klineViewDict, lineWidth = _lineWidth, timeLineHandleTechnicalData = _timeLineHandleTechnicalData;
 
 
 - (instancetype)init {
@@ -26,14 +27,11 @@
         self.trendDownColor = UIColor.greenColor;
         self.lineWidth = 1.0;
 //        self.lineWidthCanScale=  NO;
-        self.dataDirection = HyChartDataDirectionReverse;
+        self.renderingDirection = HyChartRenderingDirectionReverse;
         
     //    self.minScaleToLine = YES;
         self.minScaleLineColor = UIColor.orangeColor;
         self.minScaleLineWidth = 1;
-        
-        self.timeLineColor = UIColor.blueColor;
-        self.timeLineWidth = 1;
         
         self.disPlayNewprice = YES;
         self.newpriceColor = UIColor.grayColor;
@@ -43,6 +41,11 @@
         self.maxminPriceColor = UIColor.grayColor;
         self.maxminPriceFont = [UIFont systemFontOfSize:10];
     }
+    return self;
+}
+
+- (instancetype)configLineConfigureAtIndex:(void(^)(NSInteger, id<HyChartLineOneConfigureProtocol>))block {
+    self.lineConfigureAtIndexBlock = [block copy];
     return self;
 }
 

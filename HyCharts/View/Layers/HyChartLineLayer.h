@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HyChartLineLayer : HyChartLayer<HyChartLineDataSource *>
 
+- (void)resetLayers;
 
 @end
 

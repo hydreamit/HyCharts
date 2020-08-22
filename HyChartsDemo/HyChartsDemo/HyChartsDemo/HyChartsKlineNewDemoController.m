@@ -158,12 +158,14 @@
                                            Hy_ColorWithRGBA(46, 127, 208, .1),
                                            Hy_ColorWithRGBA(46, 127, 208, .05)];
 
-            configure.timeLineColor =
+            // 配置分时线
+            configure.timeLineHandleTechnicalData = YES;
+            [configure configLineConfigureAtIndex:^(NSInteger index, id<HyChartLineOneConfigureProtocol>  _Nonnull oneConfigure) {
+                oneConfigure.lineColor = lineColor;
+                oneConfigure.shadeColors = colors;
+            }];
             configure.minScaleLineColor = lineColor;
-
-            configure.timeLineShadeColors =
             configure.minScaleLineShadeColors = colors;
-
 
             configure.smaDict = @{@(5)  : UIColor.yellowColor,
                                   @(10) : UIColor.orangeColor,

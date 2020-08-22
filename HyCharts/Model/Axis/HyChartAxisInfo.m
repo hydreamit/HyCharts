@@ -17,12 +17,10 @@
         _axisTextFont = [UIFont systemFontOfSize:12];
         _axisTextColor = [UIColor grayColor];
         _axisTextOffset = CGPointZero;
-//        _axisTextOffset = CGPointMake(3, 3);
         _axisLineColor = [UIColor grayColor];
         _axisLineWidth = .5;
         _axisLineDashPhase = 0;
         _axisLineDashPattern = @[@10, @5];
-        
         _autoSetText = YES;
         _displayAxisZeroText = YES;
     }return self;

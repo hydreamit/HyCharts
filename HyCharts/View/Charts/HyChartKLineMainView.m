@@ -12,10 +12,10 @@
 #import "HyChartKLineModel.h"
 #import "HyChartAlgorithmContext.h"
 #import "HyChartsMethods.h"
+#import <objc/message.h>
 
 
 @interface HyChartKLineMainView ()
-@property (nonatomic, assign) CGFloat chartWidth;
 @property (nonatomic, strong) HyChartKLineMainLayer *chartLayer;
 @property (nonatomic, assign) HyChartKLineTechnicalType technicalType;
 @property (nonatomic, strong) HyChartKLineDataSource *dataSource;
@@ -26,26 +26,23 @@
 @dynamic technicalType;
 
 - (void)handleVisibleModelsWithStartIndex:(NSInteger)startIndex endIndex:(NSInteger)endIndex {
+    
+    if (self.timeLine) {
+        [self handleTimeLineVisibleModelsWithStartIndex:startIndex endIndex:endIndex];
+        return;
+    }
 
     __block double maxValue = 0;
     __block double minValue = 0;
     __block HyChartKLineModel * maxModel = nil;
     __block HyChartKLineModel * minModel = nil;
-    HyChartKLineConfigure * configure =  self.dataSource.configreDataSource.configure;
-    HyChartDataDirection dataDirection =  self.dataSource.configreDataSource.configure.dataDirection;
     
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex, endIndex - startIndex + 1)];
     self.dataSource.modelDataSource.visibleModels = [self.dataSource.modelDataSource.models objectsAtIndexes:indexSet];
     [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(HyChartKLineModel *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSInteger index = [self.dataSource.modelDataSource.models indexOfObject:obj];
-        if (dataDirection == HyChartDataDirectionForward) {
-            obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth ;
-            obj.visiblePosition = obj.position - configure.trans;
-        } else {
-            obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth + configure.scaleWidth;
-            obj.visiblePosition = self.chartWidth - (obj.position - configure.trans);
-        }
         
+        ((void(*)(id, SEL, HyChartModel *, NSUInteger))objc_msgSend)(self, sel_registerName("handlePositionWithModel:idx:"), obj, idx);
+                
          if (!maxModel || !minModel) {
              maxModel = obj;
              minModel = obj;
@@ -69,9 +66,41 @@
     self.dataSource.modelDataSource.visibleMinPriceModel = minModel;
 }
 
+- (void)handleTimeLineVisibleModelsWithStartIndex:(NSInteger)startIndex endIndex:(NSInteger)endIndex {
+    
+    __block HyChartKLineModel * maxModel = nil;
+    __block HyChartKLineModel * minModel = nil;
+
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex, endIndex - startIndex + 1)];
+    self.dataSource.modelDataSource.visibleModels = [self.dataSource.modelDataSource.models objectsAtIndexes:indexSet];
+    [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(HyChartKLineModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        ((void(*)(id, SEL, HyChartModel *, NSUInteger))objc_msgSend)(self, sel_registerName("handlePositionWithModel:idx:"), obj, idx);
+        
+        if (!maxModel) {
+           maxModel = obj;
+           minModel = obj;
+        } else {
+           if (obj.maxValue.doubleValue > maxModel.maxValue.doubleValue) {
+               maxModel = obj;
+           }
+           if (obj.minValue.doubleValue < minModel.minValue.doubleValue) {
+               minModel = obj;
+           }
+        }
+   }];
+       
+   self.dataSource.modelDataSource.minValue = minModel.minValue;
+   self.dataSource.modelDataSource.maxValue = maxModel.maxValue;
+   self.dataSource.modelDataSource.visibleMaxModel = maxModel;
+   self.dataSource.modelDataSource.visibleMinModel = minModel;
+}
+
 - (void)handleTechnicalDataWithRangeIndex:(NSInteger)rangeIndex {
     
-     HyChartKLineConfigure * configure = (id)self.dataSource.configreDataSource.configure;
+    if (self.timeLine && !self.dataSource.configreDataSource.configure.timeLineHandleTechnicalData) { return;}
+    
+    HyChartKLineConfigure * configure = (id)self.dataSource.configreDataSource.configure;
     
     [configure.smaDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIColor * _Nonnull obj, BOOL * _Nonnull stop) {
         HyChartAlgorithmContext.handleSMA([key integerValue], self.dataSource.modelDataSource, rangeIndex);
@@ -87,6 +116,8 @@
 }
 
 - (void)handleMaxMinValueWithRangeIndex:(NSUInteger)rangeIndex {
+    
+    if (self.timeLine) { return;}
     
     if (rangeIndex == 0) {
         rangeIndex = self.dataSource.modelDataSource.models.count;

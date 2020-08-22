@@ -202,7 +202,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
                       [model.priceDEMDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:difEMA]]])
                                              forKey:demdKey];
                       
-                      [model.priceMACDDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:dif - difEMA]]])
+                      [model.priceMACDDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:(dif - difEMA) * 2]]])
                                              forKey:demdKey];
                   }
             }
@@ -318,7 +318,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
         double priceValue = 0.0;
         double volumeValue = 0.0;
         NSInteger totalNumber = 0;
-        NSInteger minIndex = index + 1  - number;
+        NSInteger minIndex = index - number;
         if (minIndex < 0) { minIndex = -1; }
         
         for (NSInteger i = index; i > minIndex; i--) {

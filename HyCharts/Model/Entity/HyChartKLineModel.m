@@ -25,15 +25,44 @@
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *priceKDict;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *priceDDict;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *priceJDict;
+@property (nonatomic, copy) void (^timeLineValuesBlock)(HyChartKLineModel *model);
 @end
 
 
 @implementation HyChartKLineModel
-@synthesize highPrice = _highPrice, lowPrice = _lowPrice, openPrice = _openPrice, closePrice = _closePrice, volume = _volume, amount = _amount, trend = _trend, trendPercent = _trendPercent, trendChanging = _trendChanging, turnoverrate = _turnoverrate, time = _time;
+@synthesize highPrice = _highPrice, lowPrice = _lowPrice, openPrice = _openPrice, closePrice = _closePrice, volume = _volume, amount = _amount, trend = _trend, trendPercent = _trendPercent, trendChanging = _trendChanging, turnoverrate = _turnoverrate, time = _time,values = _values, breakpoints = _breakpoints;;
 
 - (void)setHighPrice:(NSNumber *)highPrice {
     _highPrice = SafetyNumber([NSDecimalNumber decimalNumberWithString:[self.priceNunmberFormatter stringFromNumber:highPrice]]);
     _maxPrice = _highPrice;
+}
+
+- (void)configTimeLineValues:(void (^)(id<HyChartKLineModelProtocol> _Nonnull))block {
+    self.timeLineValuesBlock = [block copy];
+}
+
+- (void)handleModel {
+    if (!self.timeLineValuesBlock) {
+        self.values = @[self.closePrice ?: @0];
+    }
+}
+
+- (void)setValues:(NSArray<NSNumber *> *)values {
+    
+    __block NSNumber *maxVaule = nil;
+    __block NSNumber *minVaule = nil;
+    NSMutableArray<NSNumber *> *mArray = @[].mutableCopy;
+    [values enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *numberString = [self.priceNunmberFormatter stringFromNumber:obj];
+        NSNumber *deNumber = SafetyNumber([NSDecimalNumber decimalNumberWithString:numberString]);
+        [mArray addObject:deNumber];
+        maxVaule = maxVaule ? MaxNumber(maxVaule, deNumber) : deNumber;
+        minVaule = minVaule ? MinNumber(minVaule, deNumber) : deNumber;
+    }];
+    
+    _values = mArray.copy;
+    self.maxValue = maxVaule;
+    self.minValue = minVaule;
 }
 
 - (void)setLowPrice:(NSNumber *)lowPrice {
@@ -260,8 +289,19 @@
     }
 }
 
-- (NSNumber *)value {
-    return self.highPrice;
+- (NSArray<NSNumber *> *)breakpoints {
+    if (_breakpoints.count != self.values.count) {
+        NSMutableArray<NSNumber *> *array = @[].mutableCopy;
+        for (NSInteger i = 0; i < self.values.count; i++) {
+            [array addObject:@(NO)];
+        }
+        _breakpoints = array.copy;
+    }
+    return _breakpoints;
 }
+
+//- (NSNumber *)value {
+//    return self.highPrice;
+//}
 
 @end

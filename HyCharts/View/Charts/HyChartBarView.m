@@ -15,7 +15,6 @@
 
 
 @interface HyChartBarView ()
-@property (nonatomic, assign) CGFloat chartWidth;
 @property (nonatomic, strong) HyChartBarLayer *chartLayer;
 @property (nonatomic, strong) HyChartBarDataSource *dataSource;
 @property (nonatomic, strong) NSNumberFormatter *yAxisNunmberFormatter;
@@ -28,38 +27,28 @@
     
     __block HyChartBarModel *maxModel = nil;
     __block HyChartBarModel *minModel = nil;
-    HyChartBarConfigure *configure =  self.dataSource.configreDataSource.configure;
     
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex, endIndex - startIndex + 1)];
-    self.dataSource.modelDataSource.visibleModels = [self.dataSource.modelDataSource.models objectsAtIndexes:indexSet];
-    
-    HyChartDataDirection dataDirection =  self.dataSource.configreDataSource.configure.dataDirection;
-    
+    self.dataSource.modelDataSource.visibleModels = [self.dataSource.modelDataSource.models objectsAtIndexes:indexSet];    
     [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(HyChartBarModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSInteger index = [self.dataSource.modelDataSource.models indexOfObject:obj];
-        if (dataDirection == HyChartDataDirectionForward) {
-            obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth ;
-            obj.visiblePosition = obj.position - configure.trans;
-        } else {
-            obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth + configure.scaleWidth;
-            obj.visiblePosition = self.chartWidth - (obj.position - configure.trans);
-        }
+
+        ((void(*)(id, SEL, HyChartModel *, NSUInteger))objc_msgSend)(self, sel_registerName("handlePositionWithModel:idx:"), obj, idx);
 
         if (!maxModel) {
             maxModel = obj;
             minModel = obj;
         } else {
-           if (obj.value.doubleValue > maxModel.value.doubleValue) {
+           if (obj.maxValue.doubleValue > maxModel.maxValue.doubleValue) {
                maxModel = obj;
-           } else
-           if (obj.value.doubleValue < minModel.value.doubleValue) {
+           }
+           if (obj.minValue.doubleValue < minModel.minValue.doubleValue) {
                minModel = obj;
            }
         }
     }];
     
-    self.dataSource.modelDataSource.minValue = @(0);
-    self.dataSource.modelDataSource.maxValue = maxModel.value;
+    self.dataSource.modelDataSource.minValue = minModel.minValue;
+    self.dataSource.modelDataSource.maxValue = maxModel.maxValue;
     self.dataSource.modelDataSource.visibleMaxModel = maxModel;
     self.dataSource.modelDataSource.visibleMinModel = minModel;
 }

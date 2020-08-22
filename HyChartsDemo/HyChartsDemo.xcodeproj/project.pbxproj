@@ -432,10 +432,10 @@
 			children = (
 				5123D29A244D90440052CB53 /* HyChartDataSource.h */,
 				5123D28E244D90440052CB53 /* HyChartDataSource.m */,
-				5123D2B6244D90440052CB53 /* HyChartLineDataSource.h */,
-				5123D297244D90440052CB53 /* HyChartLineDataSource.m */,
 				5123D2B7244D90440052CB53 /* HyChartBarDataSource.h */,
 				5123D296244D90440052CB53 /* HyChartBarDataSource.m */,
+				5123D2B6244D90440052CB53 /* HyChartLineDataSource.h */,
+				5123D297244D90440052CB53 /* HyChartLineDataSource.m */,
 				5123D293244D90440052CB53 /* HyChartKLineDataSource.h */,
 				5123D29B244D90440052CB53 /* HyChartKLineDataSource.m */,
 				5123D299244D90440052CB53 /* HyChartDataSourceProtocol.h */,
@@ -1091,7 +1091,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = hydreamit.HyChartsDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = hydreamit.HyChartsDemoT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1110,7 +1110,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = hydreamit.HyChartsDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = hydreamit.HyChartsDemoT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

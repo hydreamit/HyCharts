@@ -12,10 +12,10 @@
 #import "HyChartKLineAuxiliaryLayer.h"
 #import "HyChartAlgorithmContext.h"
 #import "HyChartsMethods.h"
+#import <objc/message.h>
 
 
 @interface HyChartKLineAuxiliaryView ()
-@property (nonatomic, assign) CGFloat chartWidth;
 @property (nonatomic, assign) HyChartKLineAuxiliaryType auxiliaryType;
 @property (nonatomic, strong) HyChartKLineAuxiliaryLayer *chartLayer;
 @property (nonatomic, strong) HyChartKLineDataSource *dataSource;
@@ -29,20 +29,12 @@
     
     __block double maxValue = - MAXFLOAT;
     __block double minValue = MAXFLOAT;
-    HyChartKLineConfigure * configure =  self.dataSource.configreDataSource.configure;
-    HyChartDataDirection dataDirection =  self.dataSource.configreDataSource.configure.dataDirection;
-        
+
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex, endIndex - startIndex + 1)];
     self.dataSource.modelDataSource.visibleModels = [self.dataSource.modelDataSource.models objectsAtIndexes:indexSet];
     [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(HyChartKLineModel *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSInteger index = [self.dataSource.modelDataSource.models indexOfObject:obj];
-        if (dataDirection == HyChartDataDirectionForward) {
-            obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth ;
-            obj.visiblePosition = obj.position - configure.trans;
-        } else {
-            obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth + configure.scaleWidth;
-            obj.visiblePosition = self.chartWidth - (obj.position - configure.trans);
-        }
+        
+        ((void(*)(id, SEL, HyChartModel *, NSUInteger))objc_msgSend)(self, sel_registerName("handlePositionWithModel:idx:"), obj, idx);
 
         maxValue = MAX(maxValue, obj.maxAuxiliary.doubleValue);
         minValue = MIN(minValue, obj.minAuxiliary.doubleValue);

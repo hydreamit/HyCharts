@@ -35,6 +35,24 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) HyChartLinePointType linePointType;
 /// 阴影渐变颜色数组 >= 3
 @property (nonatomic, strong) NSArray<UIColor *> *shadeColors;
+
+
+/// 是否展示最新数据 默认YES
+@property (nonatomic, assign) BOOL disPlayNewvalue;
+/// 最新数据文字颜色 默认灰色
+@property (nonatomic, strong) UIColor *newvalueColor;
+/// 最新数据文字字体 默认12
+@property (nonatomic, strong) UIFont *newvalueFont;
+
+
+/// 是否展示最大最小数据 默认YES
+@property (nonatomic, assign) BOOL disPlayMaxMinValue;
+/// 最大最小数据文字颜色 默认灰色
+@property (nonatomic, strong) UIColor *maxminValueColor;
+/// 最大最小数据文字字体。默认10
+@property (nonatomic, strong) UIFont *maxminValueFont;
+
+
 @end
 
 

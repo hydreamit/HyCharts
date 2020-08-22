@@ -21,8 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat position;
 @property (nonatomic, assign) CGFloat visiblePosition;
 @property (nonatomic, strong) NSNumberFormatter *numberFormatter;
+@property (nonatomic, strong) NSNumber *maxValue;
+@property (nonatomic, strong) NSNumber *minValue;
 
 - (void)setValuePositonProvider:(id<HyChartValuePositonProviderProtocol>)provider;
+
+- (void)handleModel;
 
 @end
 

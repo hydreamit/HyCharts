@@ -41,6 +41,16 @@
         model.text = string;
         
         model.time = [NSString stringWithFormat:@"%02d-%@", cTime->tm_year + 1900, string];
+        
+//        if (index == 10 || index == 20) {
+//            model.breakpoints = @[@YES];
+//        }
+        
+        // 分时图线值 默认是@[model.closePrice]
+//        model.values = @[model.closePrice, model.openPrice];
+//        [model configTimeLineValues:^(id<HyChartKLineModelProtocol>  _Nonnull _model) {
+//            _model.values = @[_model.closePrice, _model.openPrice];
+//        }];
     }];
 }
 

@@ -102,9 +102,13 @@
         if (!self) {return;}
         if (!error) {
             NSDictionary *successObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            [HyChartsKLineDemoDataHandler handleWithArray:successObject[@"Data"] dataSorce:self.klineMainView.dataSource];
-            [HyChartsKLineDemoDataHandler handleWithArray:successObject[@"Data"] dataSorce:self.volumeView.dataSource];
-            [HyChartsKLineDemoDataHandler handleWithArray:successObject[@"Data"] dataSorce:self.auxiliaryView.dataSource];
+            
+            NSArray *array = successObject[@"Data"];
+//            array = [array objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 50)]];
+            
+            [HyChartsKLineDemoDataHandler handleWithArray:array dataSorce:self.klineMainView.dataSource];
+            [HyChartsKLineDemoDataHandler handleWithArray:array dataSorce:self.volumeView.dataSource];
+            [HyChartsKLineDemoDataHandler handleWithArray:array dataSorce:self.auxiliaryView.dataSource];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [indicatorView stopAnimating];
@@ -182,10 +186,26 @@
                                            Hy_ColorWithRGBA(46, 127, 208, .1),
                                            Hy_ColorWithRGBA(46, 127, 208, .05)];
             
-            configure.timeLineColor =
-            configure.minScaleLineColor = lineColor;
+            // 配置分时线
+            configure.timeLineHandleTechnicalData = YES;
+            [configure configLineConfigureAtIndex:^(NSInteger index, id<HyChartLineOneConfigureProtocol>  _Nonnull oneConfigure) {
+                
+                oneConfigure.lineColor = lineColor;
+                oneConfigure.shadeColors = colors;
+                
+//                if (index == 0) {
+//                    oneConfigure.lineColor = lineColor;
+//                    oneConfigure.shadeColors = colors;
+//                } else {
+//                    oneConfigure.lineColor = UIColor.orangeColor;
+//                    oneConfigure.disPlayNewvalue = NO;
+//                    oneConfigure.disPlayMaxMinValue = NO;
+////                    oneConfigure.shadeColors = colors;
+//                }
+               
+            }];
             
-            configure.timeLineShadeColors =
+            configure.minScaleLineColor = lineColor;
             configure.minScaleLineShadeColors = colors;
             
             configure.smaDict = @{@(5)  : Hy_ColorWithRGB(246, 164, 84),
@@ -336,11 +356,16 @@
     configure.edgeInsetEnd = 2;
     configure.trendUpColor = Hy_ColorWithRGB(225, 82, 71);
     configure.trendDownColor = Hy_ColorWithRGB(79, 184, 126);
+    configure.trendDownKlineType =
+    configure.trendUpKlineType = HyChartKLineTypeFill;
     configure.priceDecimal = 2;
     configure.volumeDecimal = 4;
     configure.minScale = .5;
+//    configure.renderingDirection = HyChartRenderingDirectionReverse;
+//    configure.notEnoughSide = HyChartNotEnoughSideRight;
+//    configure.lineWidth = .5;
+//    configure.minScaleLineWidth = .5;
 }
-
 
 - (HySegmentView *)segmentView {
     if (!_segmentView){

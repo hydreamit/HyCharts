@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSNumber *minVolume;
 @property (nonatomic, strong) NSNumber *maxAuxiliary;
 @property (nonatomic, strong) NSNumber *minAuxiliary;
+@property (nonatomic, strong) NSArray<NSMutableArray<NSNumber *> *> *valuesArray;
 @property (nonatomic, strong) NSNumberFormatter *priceNunmberFormatter;
 @property (nonatomic, strong) NSNumberFormatter *volumeNunmberFormatter;
 @property (nonatomic, copy, readonly) NSNumber *(^maxValueWithViewType)(HyChartKLineViewType type);

@@ -17,8 +17,11 @@
 #import "HyChartsMethods.h"
 #import "HyChartKLineMainLayer.h"
 #import "HyChartXAxisModel.h"
+#import "HyChartBarLayer.h"
+#import "HyChartLineModel.h"
+#import "HyChartLineModelDataSource.h"
 
-#define LookModels(...) \
+#define LockModels(...) \
 dispatch_semaphore_wait(self.arraySemaphore, DISPATCH_TIME_FOREVER); \
 __VA_ARGS__; \
 dispatch_semaphore_signal(self.arraySemaphore);
@@ -41,6 +44,7 @@ dispatch_semaphore_signal(self.arraySemaphore);
 @property (nonatomic, assign) CGFloat chartWidth;
 @property (nonatomic, assign) CGFloat chartHeight;
 @property (nonatomic, assign) CGFloat chartContentWidth;
+@property (nonatomic, assign) CGFloat notEnoughWidth;
 @property (nonatomic, strong) HyChartConfigure * configure;
 @property (nonatomic, assign) HyChartKLineTechnicalType technicalType;
 @property (nonatomic, assign) HyChartKLineAuxiliaryType auxiliaryType;
@@ -138,10 +142,11 @@ dispatch_semaphore_signal(self.arraySemaphore);
             if (changeOffset > contentOffset) {changeOffset = contentOffset;}
             
             configure.trans = changeOffset;
-            if (self.configure.dataDirection == HyChartDataDirectionForward) {
+            if (self.configure.renderingDirection == HyChartRenderingDirectionForward) {
                 [self.scrollView setContentOffset:CGPointMake(changeOffset, 0) animated:NO];
             } else {
-                [self.scrollView setContentOffset:CGPointMake(contentOffset - changeOffset, 0) animated:NO];
+                [self.scrollView setContentOffset:CGPointMake(contentOffset - changeOffset, 0)
+                                         animated:NO];
             }
         }
                 
@@ -257,7 +262,7 @@ dispatch_semaphore_signal(self.arraySemaphore);
     if (self.configure.trans > self.chartContentWidth - self.chartWidth) {
         self.configure.trans = self.chartContentWidth - self.chartWidth;
     }
-    CGFloat currentTrans = self.configure.dataDirection == HyChartDataDirectionForward ? self.configure.trans : (self.chartContentWidth - self.chartWidth - self.configure.trans);
+    CGFloat currentTrans = self.configure.renderingDirection == HyChartRenderingDirectionForward ? self.configure.trans : (self.chartContentWidth - self.chartWidth - self.configure.trans);
     [self.scrollView setContentOffset:CGPointMake(currentTrans, 0)
                              animated:NO];
     self.reverseScrolling = NO;
@@ -270,6 +275,10 @@ dispatch_semaphore_signal(self.arraySemaphore);
             NSInteger lastPrepareStage = self.prepareStage;
             if (signalValue == 0) {
                 self.prepareStage = 2;
+                if ([self.chartLayer isKindOfClass:NSClassFromString(@"HyChartBarLayer")] ||
+                    [self.chartLayer isKindOfClass:NSClassFromString(@"HyChartLineLayer")]) {
+                    [((HyChartBarLayer *)self.chartLayer) resetLayers];
+                }
                 [self.layer setNeedsDisplay];
             }
             if (lastPrepareStage == 1) {
@@ -299,17 +308,31 @@ dispatch_semaphore_signal(self.arraySemaphore);
     }
     
     BOOL isKline = [self.model conformsToProtocol:@protocol(HyChartKLineModelProtocol)];
-    HyChartModel *model = self._dataSource.modelDataSource.models.firstObject;
-    BOOL contain = [self._dataSource.modelDataSource.visibleModels containsObject:model];
+    HyChartModel *firstModel = self._dataSource.modelDataSource.models.firstObject;
+    BOOL contain = [self._dataSource.modelDataSource.visibleModels containsObject:firstModel];
     
     if (itemsCount == modelsCount) {
         
         [self asyncHandler:^{
             
             if (isKline) {
-                self._dataSource.modelDataSource.modelForItemAtIndexBlock(model, 0);
+                self._dataSource.modelDataSource.modelForItemAtIndexBlock(firstModel, 0);
+                [firstModel handleModel];
                 [self handleTechnicalDataWithRangeIndex:1];
                 [self handleMaxMinValueWithRangeIndex:1];
+            }
+            if (self.needsHandleModelLineValues) {
+                if ([firstModel isKindOfClass:HyChartKLineModel.class]) {
+                    if (((HyChartKLineModel *)firstModel).timeLineValuesBlock) {
+                        ((HyChartKLineModel *)firstModel).timeLineValuesBlock((id)firstModel);
+                    }
+                }
+               NSArray<NSMutableArray *> *array = ((HyChartLineModelDataSource *)self._dataSource.modelDataSource).valuesArray;
+               if (array.count == ((HyChartKLineModel *)firstModel).values.count) {
+                   [((HyChartKLineModel *)firstModel).values enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                       [array[idx] replaceObjectAtIndex:0 withObject:obj];
+                   }];
+               }
             }
             if (contain) {
                [self handleVisibleModels];
@@ -335,6 +358,7 @@ dispatch_semaphore_signal(self.arraySemaphore);
         [self asyncHandler:^{
             
             NSMutableArray *array = @[].mutableCopy;
+            
             for (NSInteger i = 0; i < indexCount; i++) {
                 HyChartModel *model = self.model;
                 if ([model conformsToProtocol:@protocol(HyChartKLineModelProtocol)]) {
@@ -347,15 +371,40 @@ dispatch_semaphore_signal(self.arraySemaphore);
                 }
                 [model setValuePositonProvider:(id)self.chartLayer];
                  self._dataSource.modelDataSource.modelForItemAtIndexBlock(model, i);
+                [model handleModel];
                 [array addObject:model];
             }
             
-            LookModels([self._dataSource.modelDataSource.models insertObjects:array
+            LockModels([self._dataSource.modelDataSource.models insertObjects:array
                                                                     atIndexes:[NSIndexSet indexSetWithIndex:0]])
             if (isKline) {
                 [self handleTechnicalDataWithRangeIndex:indexCount];
                 [self handleMaxMinValueWithRangeIndex:indexCount];
             }
+            
+            if (self.needsHandleModelLineValues) {
+                NSMutableArray<NSMutableArray *> *valuesArray = @[].mutableCopy;
+                NSArray<NSMutableArray *> *array = ((HyChartLineModelDataSource *)self._dataSource.modelDataSource).valuesArray;
+                if (array.count == ((HyChartKLineModel *)firstModel).values.count) {
+                    for (HyChartKLineModel *model in array) {
+                        if ([model isKindOfClass:HyChartKLineModel.class]) {
+                           !model.timeLineValuesBlock ?: model.timeLineValuesBlock(model);
+                        }
+                        [model.values enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                            if (valuesArray.count != model.values.count) {
+                               [valuesArray addObject:@[obj].mutableCopy];
+                            } else {
+                               [valuesArray[idx] addObject:obj];
+                           }
+                        }];
+                    }
+                }
+                
+                LockModels([array enumerateObjectsUsingBlock:^(NSMutableArray * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                            [obj addObjectsFromArray:valuesArray[idx]];
+                          }];)
+            }
+            
             if (needsHandle) {
                [self handleVisibleModels];
             }
@@ -382,9 +431,17 @@ dispatch_semaphore_signal(self.arraySemaphore);
         
         [self handleContentSize];        
         [self asyncHandler:^{
-            
-            LookModels([self._dataSource.modelDataSource.models removeObjectsAtIndexes:[NSIndexSet  indexSetWithIndexesInRange:NSMakeRange(0, indexs)]];)
-           
+            LockModels(
+                       [self._dataSource.modelDataSource.models removeObjectsAtIndexes:[NSIndexSet  indexSetWithIndexesInRange:NSMakeRange(0, indexs)]];
+                       if (self.needsHandleModelLineValues) {
+                           NSArray<NSMutableArray *> *array = ((HyChartLineModelDataSource *)self._dataSource.modelDataSource).valuesArray;
+                           if (array.count == ((HyChartKLineModel *)firstModel).values.count) {
+                               [array enumerateObjectsUsingBlock:^(NSMutableArray * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                                   [obj removeObjectsAtIndexes:[NSIndexSet  indexSetWithIndexesInRange:NSMakeRange(0, indexs)]];
+                               }];
+                           }
+                       }
+                       )
             if (needsHandle) {
                [self handleVisibleModels];
             }
@@ -407,9 +464,12 @@ dispatch_semaphore_signal(self.arraySemaphore);
     } else {
         self._dataSource.modelDataSource.numberFormatter = self.configure.numberFormatter;
     }
+
+    BOOL needsHandleModelValues = self.needsHandleModelLineValues;
     
     NSMutableArray *array = @[].mutableCopy;
     NSInteger itemsCount = self._dataSource.modelDataSource.numberOfItemsBlock();
+    NSMutableArray<NSMutableArray*> *valuesArray = @[].mutableCopy;
     for (NSInteger i = 0; i < itemsCount; i++) {
         HyChartModel *model = self.model;
         if ([model conformsToProtocol:@protocol(HyChartKLineModelProtocol)]) {
@@ -422,20 +482,88 @@ dispatch_semaphore_signal(self.arraySemaphore);
         }
         [model setValuePositonProvider:(id)self.chartLayer];
         self._dataSource.modelDataSource.modelForItemAtIndexBlock(model, i);
+        [model handleModel];
         [array addObject:model];
+        if (needsHandleModelValues) {
+            [((HyChartLineModel *)model).values enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if (valuesArray.count != ((HyChartLineModel *)model).values.count) {
+                    [valuesArray addObject:@[obj].mutableCopy];
+                } else {
+                    [valuesArray[idx] addObject:obj];
+                }
+            }];
+        }
     }
-    LookModels([self._dataSource.modelDataSource.models removeAllObjects];
-               [self._dataSource.modelDataSource.models addObjectsFromArray:array];)
+    
+    LockModels([self._dataSource.modelDataSource.models removeAllObjects];
+               [self._dataSource.modelDataSource.models addObjectsFromArray:array];
+               if (needsHandleModelValues) {
+        ((HyChartLineModelDataSource *)self._dataSource.modelDataSource).valuesArray = valuesArray.copy;
+    })
     [self handleTechnicalDataWithRangeIndex:0];
     [self handleMaxMinValueWithRangeIndex:0];
+    [self handleLineValues];
     [self handleOther];
 }
 
-- (void)handleOther {};
+- (BOOL)needsHandleModelLineValues {
+    return
+    ([self isKindOfClass:NSClassFromString(@"HyChartLineView")] ||
+     (self.isTimeLine &&
+      ([self isKindOfClass:NSClassFromString(@"HyChartKLineMainView")] ||
+       [self isKindOfClass:NSClassFromString(@"HyChartKLineView")])
+      )
+    );
+}
+
+- (void)handleLineValues {
+    
+    BOOL handleModelValues = self.needsHandleModelLineValues;
+    
+    if (!handleModelValues ||
+        ((HyChartKLineModelDataSource *)self._dataSource.modelDataSource).valuesArray.count) { return;}
+    
+    if (handleModelValues) {
+        NSMutableArray<NSMutableArray*> *valuesArray = @[].mutableCopy;
+        for (HyChartKLineModel *obj in self._dataSource.modelDataSource.models) {
+            if (obj.timeLineValuesBlock) {
+                obj.timeLineValuesBlock(obj);
+                [obj.values enumerateObjectsUsingBlock:^(NSNumber * _Nonnull numberObj, NSUInteger numberIndex, BOOL * _Nonnull stop) {
+                    if (valuesArray.count != obj.values.count) {
+                        [valuesArray addObject:@[numberObj].mutableCopy];
+                    } else {
+                        [valuesArray[numberIndex] addObject:numberObj];
+                    }
+                }];
+            }
+        }
+        LockModels(((HyChartKLineModelDataSource *)self._dataSource.modelDataSource).valuesArray = valuesArray.copy);
+    }
+}
+
+- (void)handleOther {}
 - (void)handleTechnicalDataWithRangeIndex:(NSInteger)rangeIndex {}
 - (void)handleMaxMinValueWithRangeIndex:(NSInteger)rangeIndex {}
 - (void)handleContentSize {
+    
     CGFloat contentWidth = self.contentWidth;
+    if (contentWidth < self.chartWidth) {
+        
+        if (self._dataSource.configreDataSource.configure.renderingDirection == HyChartRenderingDirectionForward &&
+            self._dataSource.configreDataSource.configure.notEnoughSide == HyChartNotEnoughSideRight) {
+            self.notEnoughWidth =  self.chartWidth - contentWidth;
+        } else if (self._dataSource.configreDataSource.configure.renderingDirection == HyChartRenderingDirectionReverse &&
+            self._dataSource.configreDataSource.configure.notEnoughSide == HyChartNotEnoughSideLeft) {
+            self.notEnoughWidth =  contentWidth - self.chartWidth;
+        } else {
+            self.notEnoughWidth = 0;
+        }
+        self._dataSource.configreDataSource.configure.notEnough = YES;
+        contentWidth = self.chartWidth;
+    } else {
+        self._dataSource.configreDataSource.configure.notEnough = NO;
+        self.notEnoughWidth = 0;
+    }
     self.scrollView.contentSize = CGSizeMake(contentWidth, 0);
     self.chartContentWidth = contentWidth;
 }
@@ -450,7 +578,8 @@ dispatch_semaphore_signal(self.arraySemaphore);
 
 - (CGFloat)contentWidth {
     
-    CGFloat contentWidth = self.chartWidth;
+//    CGFloat contentWidth = self.chartWidth;
+    CGFloat contentWidth = 0.0;
     NSInteger itemsCount =
     self._dataSource.modelDataSource.numberOfItemsBlock ?
     self._dataSource.modelDataSource.numberOfItemsBlock() : 0;
@@ -473,9 +602,7 @@ dispatch_semaphore_signal(self.arraySemaphore);
             configure.displayWidth = 0;
         }
         width = width * configure.scale;
-        if (width > contentWidth) {
-            contentWidth = width;
-        }
+        contentWidth = width;
     }
     return contentWidth;
 }
@@ -505,16 +632,16 @@ dispatch_semaphore_signal(self.arraySemaphore);
 
     NSInteger startIndex = (NSInteger)(statrTrans  / configure.scaleItemWidth);
     CGFloat startOffset = statrTrans -  (startIndex * configure.scaleItemWidth);
-    if (startOffset > configure.scaleWidth) {
-        startIndex += 1;
-    }
+    if (startOffset > configure.scaleWidth) { startIndex += 1; }
     
     CGFloat totalTrans = trans + self.chartWidth;
     NSInteger endIndex  = (totalTrans - configure.scaleEdgeInsetStart)  / configure.scaleItemWidth;
     endIndex = endIndex > (itemsCount - 1) ? (itemsCount - 1) : endIndex;
     
-    LookModels(if ((startIndex >= 0 && startIndex < self._dataSource.modelDataSource.models.count) &&
+    LockModels(if ((startIndex >= 0 && startIndex < self._dataSource.modelDataSource.models.count) &&
                    endIndex >= 0 && endIndex < self._dataSource.modelDataSource.models.count) {
+        self._dataSource.modelDataSource.visibleFromIndex = startIndex;
+        self._dataSource.modelDataSource.visibleToIndex = endIndex;
         [self handleVisibleModelsWithStartIndex:startIndex endIndex:endIndex];
         [self handleXAxis];
         [self handleYAxis];
@@ -522,6 +649,20 @@ dispatch_semaphore_signal(self.arraySemaphore);
 }
 
 - (void)handleVisibleModelsWithStartIndex:(NSInteger)startIndex endIndex:(NSInteger)endIndex {}
+- (void)handlePositionWithModel:(HyChartModel *)model idx:(NSInteger)idx {
+    
+    HyChartConfigure *configure = self._dataSource.configreDataSource.configure;
+    NSInteger index = [self._dataSource.modelDataSource.models indexOfObject:model];
+    if (configure.renderingDirection == HyChartRenderingDirectionForward) {
+       model.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth;
+       model.visiblePosition = model.position - configure.trans;
+    } else {
+       model.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth + configure.scaleWidth;
+       model.visiblePosition = self.chartWidth - (model.position - configure.trans);
+    }
+    model.visiblePosition += self.notEnoughWidth;
+}
+
 - (void)handleXAxis {
     
     HyChartXAxisModel *xAxisModel = self._dataSource.axisDataSource.xAxisModel;
@@ -530,14 +671,28 @@ dispatch_semaphore_signal(self.arraySemaphore);
         NSArray *models = self._dataSource.modelDataSource.models;
         CGFloat xAxisWidth = self.chartWidth / xAxisModel.indexs;
         NSMutableArray<HyChartModel *> *xAxisModels = @[].mutableCopy;
-        for (NSInteger ind = 0; ind < xAxisModel.indexs + 1; ind ++) {
+        for (NSInteger ind = 0; ind < xAxisModel.indexs + 1; ind++) {
+            
             CGFloat absolutePosition = self.configure.trans + xAxisWidth * ind;
-            NSInteger absoluteIndex = [self absoluteIndexWithPosition:absolutePosition];
-            if (absoluteIndex < models.count) {
-                [xAxisModels addObject:models[absoluteIndex]];
+            
+            if (self.notEnoughWidth != 0) {
+                if (self._dataSource.configreDataSource.configure.renderingDirection == HyChartRenderingDirectionForward &&
+                    self._dataSource.configreDataSource.configure.notEnoughSide == HyChartNotEnoughSideRight) {
+                    absolutePosition = self.chartWidth - self.notEnoughWidth - absolutePosition;
+                } else if (self._dataSource.configreDataSource.configure.renderingDirection == HyChartRenderingDirectionReverse &&
+                    self._dataSource.configreDataSource.configure.notEnoughSide == HyChartNotEnoughSideLeft) {
+                    absolutePosition = self.chartWidth + self.notEnoughWidth - absolutePosition;
+                }
+            }
+     
+            if (absolutePosition >= - self.configure.margin) {
+                NSInteger absoluteIndex = [self absoluteIndexWithPosition:absolutePosition];
+                if (absoluteIndex < models.count) {
+                    [xAxisModels addObject:models[absoluteIndex]];
+                }
             }
         }
-        
+  
         self._dataSource.modelDataSource.visibleXAxisModels = xAxisModels.copy;
         typeof(id(^)(NSInteger, HyChartModel *))(^textBlock)(BOOL) =
         ^(BOOL displayAxisZeroText){
@@ -634,13 +789,28 @@ dispatch_semaphore_signal(self.arraySemaphore);
                 }
             }];
             CGFloat positionX = [gesture locationInView:gesture.view].x;
-            if (self.configure.dataDirection == HyChartDataDirectionReverse) {
-                positionX = self.chartContentWidth - positionX;
+            
+//            if (self.configure.renderingDirection == HyChartRenderingDirectionReverse &&
+//                (self.configure.notEnoughSide != HyChartNotEnoughSideLeft && self.notEnoughWidth != 0)) {
+//                positionX = self.chartContentWidth - positionX;
+//            }
+            
+            if (self.configure.renderingDirection == HyChartRenderingDirectionReverse) {
+                 positionX = self.chartContentWidth - positionX;
+                 positionX += self.notEnoughWidth;
+            } else {
+                positionX -= self.notEnoughWidth;
             }
             
-            index = [self absoluteIndexWithPosition:positionX];
-            CGFloat totalOffset = configure.edgeInsetStart + configure.scaleItemWidth * index + configure.scaleWidth / 2;
-             margin = totalOffset - configure.trans;
+            if (positionX < 0 && positionX >= - self.configure.margin / 2) {
+                positionX = 0;
+            }
+
+            if (positionX >= 0) {
+                index = [self absoluteIndexWithPosition:positionX];
+                CGFloat totalOffset = configure.edgeInsetStart + configure.scaleItemWidth * index + configure.scaleWidth / 2;
+                 margin = totalOffset - configure.trans;
+            }
             
         }break;
             
@@ -748,9 +918,18 @@ dispatch_semaphore_signal(self.arraySemaphore);
                                         NSString *xText,NSString *yText))completion {
  
     CGFloat positionX = point.x;
-    if (self.configure.dataDirection == HyChartDataDirectionReverse) {
+    if (self.configure.renderingDirection == HyChartRenderingDirectionReverse) {
         positionX = self.chartContentWidth - positionX;
+        positionX += self.notEnoughWidth;
+    } else {
+        positionX -= self.notEnoughWidth;
     }
+    
+    if (positionX < 0 && positionX >= - self.configure.margin / 2) {
+        positionX = 0;
+    }
+    
+//    if (positionX < self.configure.scaleEdgeInsetStart) { return;}
     
     NSInteger index = [self absoluteIndexWithPosition:positionX];
     if (index < self._dataSource.modelDataSource.models.count) {
@@ -829,7 +1008,7 @@ dispatch_semaphore_signal(self.arraySemaphore);
         }];
     }
     
-    if (self.configure.dataDirection == HyChartDataDirectionReverse) {
+    if (self.configure.renderingDirection == HyChartRenderingDirectionReverse) {
         self.configure.trans = (self.chartContentWidth - self.chartWidth) - scrollView.contentOffset.x;
         if (self.configure.trans < 0) { self.configure.trans = 0; }
     } else {

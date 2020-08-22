@@ -15,20 +15,19 @@
 - (void)setValues:(NSArray<NSNumber *> *)values {
     
     __block NSNumber *maxVaule = nil;
+    __block NSNumber *minVaule = nil;
     NSMutableArray<NSNumber *> *mArray = @[].mutableCopy;
     [values enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSString *numberString = [self.numberFormatter stringFromNumber:obj];
         NSNumber *deNumber = SafetyNumber([NSDecimalNumber decimalNumberWithString:numberString]);
         [mArray addObject:deNumber];
-        if (!maxVaule) {
-            maxVaule = deNumber;
-        } else {
-            maxVaule = MaxNumber(maxVaule, deNumber);
-        }
+        maxVaule = maxVaule ? MaxNumber(maxVaule, deNumber) : deNumber;
+        minVaule = minVaule ? MinNumber(minVaule, deNumber) : deNumber;
     }];
     
     _values = mArray.copy;
-    self.value = maxVaule;
+    self.maxValue = maxVaule;
+    self.minValue = minVaule;
 }
 
 @end

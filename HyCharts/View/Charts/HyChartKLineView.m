@@ -67,9 +67,7 @@
 
 
 
-
 @interface HyChartKLineView ()
-@property (nonatomic, assign) CGFloat chartWidth;
 @property (nonatomic, strong) HyChartKLineLayer *chartLayer;
 @property (nonatomic, strong) HyChartKLineAxisLayer *axisLayer;
 @property (nonatomic, assign) HyChartKLineTechnicalType technicalType;
@@ -126,43 +124,53 @@
     BOOL klineVolume = [self containKLineViewWithType:HyChartKLineViewTypeVolume];
     BOOL klineAuxiliary = [self containKLineViewWithType:HyChartKLineViewTypeAuxiliary];
     
-    HyChartKLineConfigure *configure =  self.dataSource.configreDataSource.configure;
-    HyChartDataDirection dataDirection =  self.dataSource.configreDataSource.configure.dataDirection;
-    
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex, endIndex - startIndex + 1)];
     self.dataSource.modelDataSource.visibleModels = [self.dataSource.modelDataSource.models objectsAtIndexes:indexSet];
     [self.dataSource.modelDataSource.visibleModels enumerateObjectsUsingBlock:^(HyChartKLineModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSInteger index = [self.dataSource.modelDataSource.models indexOfObject:obj];
-        if (dataDirection == HyChartDataDirectionForward) {
-            obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth ;
-            obj.visiblePosition = obj.position - configure.trans;
-        } else {
-            obj.position = configure.scaleEdgeInsetStart + index * configure.scaleItemWidth + configure.scaleWidth;
-            obj.visiblePosition = self.chartWidth - (obj.position - configure.trans);
-        }
+        
+        ((void(*)(id, SEL, HyChartModel *, NSUInteger))objc_msgSend)(self, sel_registerName("handlePositionWithModel:idx:"), obj, idx);
         
          if (!maxPriceModel || !minPriceModel) {
              if (klineMain) {
                 maxPriceModel = obj;
                 minPriceModel = obj;
-                maxPrice = obj.maxPrice.doubleValue;
-                minPrice = obj.minPrice.doubleValue;
+                 if (!self.isTimeLine) {
+                     maxPrice = obj.maxPrice.doubleValue;
+                     minPrice = obj.minPrice.doubleValue;
+                 } else {
+                     maxPrice = obj.maxValue.doubleValue;
+                     minPrice = obj.minValue.doubleValue;
+                 }
              }
-             if (klineMain) {
+             if (klineVolume) {
                 maxVolumeModel = obj;
                 minVolumeModel = obj;
                 maxVolume = obj.maxVolume.doubleValue;
              }
          } else {
              if (klineMain) {
-                 if (obj.highPrice.doubleValue > maxPriceModel.highPrice.doubleValue) {
-                     maxPriceModel = obj;
+                 if (self.isTimeLine) {
+                     
+                     if (obj.maxValue.doubleValue > maxPriceModel.maxValue.doubleValue) {
+                         maxPriceModel = obj;
+                     }
+                     if (obj.minValue.doubleValue < minPriceModel.minValue.doubleValue) {
+                         minPriceModel = obj;
+                     }
+                     maxPrice = MAX(maxPrice, obj.maxValue.doubleValue);
+                     minPrice = MIN(minPrice, obj.minValue.doubleValue);
+                     
+                 } else {
+                     if (obj.highPrice.doubleValue > maxPriceModel.highPrice.doubleValue) {
+                         maxPriceModel = obj;
+                     }
+                     if (obj.lowPrice.doubleValue < minPriceModel.lowPrice.doubleValue) {
+                         minPriceModel = obj;
+                     }
+                     maxPrice = MAX(maxPrice, obj.maxPrice.doubleValue);
+                     minPrice = MIN(minPrice, obj.minPrice.doubleValue);
                  }
-                 if (obj.lowPrice.doubleValue < minPriceModel.lowPrice.doubleValue) {
-                     minPriceModel = obj;
-                 }
-                 maxPrice = MAX(maxPrice, obj.maxPrice.doubleValue);
-                 minPrice = MIN(minPrice, obj.minPrice.doubleValue);
+
              }
              if (klineVolume) {
                  if (obj.volume.doubleValue > maxVolumeModel.volume.doubleValue) {
@@ -186,6 +194,12 @@
         self.dataSource.modelDataSource.minPrice = [NSNumber numberWithDouble:minPrice];
         self.dataSource.modelDataSource.visibleMaxPriceModel = maxPriceModel;
         self.dataSource.modelDataSource.visibleMinPriceModel = minPriceModel;
+        if (self.timeLine) {
+            self.dataSource.modelDataSource.minValue = [NSNumber numberWithDouble:maxPrice];
+            self.dataSource.modelDataSource.maxValue = [NSNumber numberWithDouble:minPrice];
+            self.dataSource.modelDataSource.visibleMaxModel = maxPriceModel;
+            self.dataSource.modelDataSource.visibleMinModel = maxPriceModel;
+        }
     }
     
     if (klineVolume) {
@@ -259,6 +273,8 @@
 }
 
 - (void)handleMaxMinValueWithRangeIndex:(NSUInteger)rangeIndex {
+    
+//    if (self.timeLine) { return;}
     
     if (rangeIndex == 0) {
         rangeIndex = self.dataSource.modelDataSource.models.count;
@@ -439,7 +455,7 @@
     NSInteger indexs = self.dataSource.axisDataSource.xAxisModelWityViewType([klineViewDict.allKeys.firstObject integerValue]).indexs;
     if (indexs) {
         NSArray *models = self.dataSource.modelDataSource.models;
-        CGFloat xAxisWidth = self.chartWidth / indexs;
+        CGFloat xAxisWidth = self.chartLayer.bounds.size.width / indexs;
         NSMutableArray<id<HyChartModelProtocol>> *xAxisModels = @[].mutableCopy;
         for (NSInteger ind = 0; ind < indexs + 1; ind ++) {
             CGFloat absolutePosition = self.dataSource.configreDataSource.configure.trans + xAxisWidth * ind;

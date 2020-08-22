@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HyChartBarModelDataSource : HyChartModelDataSource<HyChartBarModel *><HyChartBarModelDataSourceProtocol>
 
+@property (nonatomic, strong) NSArray<NSNumber *> *visibleVaxVlaues;
+@property (nonatomic, strong) NSArray<NSNumber *> *visibleMinVlaues;
+
 @end
 
 NS_ASSUME_NONNULL_END

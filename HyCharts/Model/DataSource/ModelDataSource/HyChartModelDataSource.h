@@ -22,7 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray<ModelType> *visibleXAxisModels;
 @property (nonatomic, strong) ModelType visibleMaxModel;
 @property (nonatomic, strong) ModelType visibleMinModel;
-
+@property (nonatomic, assign) NSInteger visibleFromIndex;
+@property (nonatomic, assign) NSInteger visibleToIndex;
 @property (nonatomic, strong) NSNumber *maxValue;
 @property (nonatomic, strong) NSNumber *minValue;
 @property (nonatomic, strong) NSNumberFormatter *numberFormatter;

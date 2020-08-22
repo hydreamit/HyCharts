@@ -9,6 +9,7 @@
 #import "HyChartKLineMainLayer.h"
 #import <CoreText/CoreText.h>
 #import "HyChartsMethods.h"
+#import "HyChartLineLayer.h"
 
 
 @interface HyChartKLineMainLayer ()
@@ -18,8 +19,7 @@
 @property (nonatomic, strong) CATextLayer *minPriceTextLayer;
 @property (nonatomic, strong) CAShapeLayer *trendUpLayer;
 @property (nonatomic, strong) CAShapeLayer *trendDownLayer;
-@property (nonatomic, strong) CAShapeLayer *timeLineLayer;
-@property (nonatomic, strong) CAGradientLayer *timeLineShadeLayer;
+@property (nonatomic,strong) HyChartLineLayer *timeLineLayer;
 @property (nonatomic, strong) CAShapeLayer *minScaleLineLayer;
 @property (nonatomic, strong) CAGradientLayer *minScaleLineShadeLayer;
 @property (nonatomic, strong) NSDictionary<NSNumber *, CAShapeLayer *> *smaLayerDict;
@@ -36,7 +36,14 @@
     if (!self.dataSource.modelDataSource.visibleModels.count) {
         return;
     }
+
+    [self handleDisPlayLayer];
     
+    if (self.timeLine) {
+        [self.timeLineLayer setNeedsRendering];
+        return;
+    }
+        
     CGFloat height = CGRectGetHeight(self.bounds);
     CGFloat width = CGRectGetWidth(self.bounds);
     CGFloat left = CGRectGetMinX(self.bounds);
@@ -53,8 +60,7 @@
     }
     double heightRate = maxValue != minValue ? height / (maxValue - minValue) : 0;
     NSArray<id<HyChartKLineModelProtocol>> *visibleModels = self.dataSource.modelDataSource.visibleModels;
-
-    [self handleDisPlayLayer];
+    
 
     __block CGPoint maxPriceP = CGPointZero;
     __block CGPoint minPriceP = CGPointZero;
@@ -62,8 +68,8 @@
     BOOL minScaleToLine =
     self.dataSource.configreDataSource.configure.minScaleToLine &&
     self.dataSource.configreDataSource.configure.scale < self.dataSource.configreDataSource.configure.minScale + 0.1;
-      
-    if (self.timeLine || minScaleToLine) {
+    
+   if (minScaleToLine) {
       
         __block CGFloat maxV = -MAXFLOAT;
         __block CGFloat minV = MAXFLOAT;
@@ -93,10 +99,10 @@
             [path addLineToPoint:point];
         }];
       
-        CAShapeLayer *currentLayer = self.timeLine ? self.timeLineLayer : self.minScaleLineLayer;
+        CAShapeLayer *currentLayer =  self.minScaleLineLayer;
         currentLayer.path = path.CGPath;
 
-        CAGradientLayer *currentShadeLayer = self.timeLine ? self.timeLineShadeLayer : self.minScaleLineShadeLayer;
+        CAGradientLayer *currentShadeLayer = self.minScaleLineShadeLayer;
         if (currentShadeLayer) {
           UIBezierPath *shadePath = [UIBezierPath bezierPathWithCGPath:path.CGPath];
           [shadePath addLineToPoint:CGPointMake(shadeEndP.x, bottom)];
@@ -295,7 +301,7 @@
         
         id<HyChartKLineModelProtocol> maxPriceModel = self.dataSource.modelDataSource.visibleMaxPriceModel;
         NSString *highPrice = [self.dataSource.modelDataSource.priceNunmberFormatter stringFromNumber:maxPriceModel.highPrice];
-         maxString = [NSString stringWithFormat:@"↙ %@", highPrice];
+         maxString = [NSString stringWithFormat:@"↙ %@", SafetyString(highPrice)];
         CGSize maxSize = [maxString sizeWithAttributes:@{NSFontAttributeName : self.dataSource.configreDataSource.configure.maxminPriceFont}];
         maxRect = CGRectMake(maxPriceP.x, maxPriceP.y - maxSize.height , maxSize.width, maxSize.height);
         if (CGRectGetMaxX(maxRect) > width) {
@@ -305,7 +311,7 @@
         
         id<HyChartKLineModelProtocol> minPriceModel = self.dataSource.modelDataSource.visibleMinPriceModel;
          NSString *lowPrice = [self.dataSource.modelDataSource.priceNunmberFormatter stringFromNumber:minPriceModel.lowPrice];
-         mixString = [NSString stringWithFormat:@"↖ %@", lowPrice];
+         mixString = [NSString stringWithFormat:@"↖ %@", SafetyString(lowPrice)];
          CGSize minSize = [mixString sizeWithAttributes:@{NSFontAttributeName : self.dataSource.configreDataSource.configure.maxminPriceFont}];
          minRect = CGRectMake(minPriceP.x, minPriceP.y , minSize.width, minSize.height);
          if (CGRectGetMaxX(minRect) > width) {
@@ -324,7 +330,6 @@
         self.minPriceTextLayer.frame = minRect;
     });
 }
-
 
 - (void)renderingNewprice {
     
@@ -378,18 +383,26 @@
     
     BOOL flag = YES;
     if (self.timeLine) {
-        self.timeLineLayer.hidden =
-        self.timeLineShadeLayer.hidden = NO;
+        
+        self.timeLineLayer.hidden = NO;
         self.minScaleLineLayer.hidden = YES;
         self.minScaleLineShadeLayer.hidden = YES;
+        self.newpriceTextLayer.hidden = YES;
+        self.minPriceTextLayer.hidden = YES;
+        self.maxPriceTextLayer.hidden = YES;
+        self.newpriceLayer.hidden = YES;
+        
     } else {
-        self.timeLineLayer.hidden =
-        self.timeLineShadeLayer.hidden = YES;
+        self.timeLineLayer.hidden = YES;
         flag =
         self.dataSource.configreDataSource.configure.minScaleToLine &&
         self.dataSource.configreDataSource.configure.scale < self.dataSource.configreDataSource.configure.minScale + 0.1;
         self.minScaleLineLayer.hidden =
         self.minScaleLineShadeLayer.hidden = !flag;
+        self.newpriceTextLayer.hidden = NO;
+        self.minPriceTextLayer.hidden = NO;
+        self.maxPriceTextLayer.hidden = NO;
+        self.newpriceLayer.hidden = NO;
     }
     
     self.trendUpLayer.hidden =
@@ -626,28 +639,6 @@
     return _minScaleLineLayer;
 }
 
-- (CAShapeLayer *)timeLineLayer {
-    if (!_timeLineLayer){
-        _timeLineLayer = [CAShapeLayer layer];
-        _timeLineLayer.lineWidth = self.dataSource.configreDataSource.configure.timeLineWidth;
-        _timeLineLayer.strokeColor =  self.dataSource.configreDataSource.configure.timeLineColor.CGColor;
-        _timeLineLayer.fillColor = UIColor.clearColor.CGColor;
-        _timeLineLayer.lineCap = kCALineCapRound;
-        _timeLineLayer.lineJoin = kCALineCapRound;
-        _timeLineLayer.masksToBounds = YES;
-        _timeLineLayer.frame = self.bounds;
-        [self addSublayer:_timeLineLayer];
-    }
-    return _timeLineLayer;
-}
-
-- (CAGradientLayer *)timeLineShadeLayer {
-    if (!_timeLineShadeLayer){
-        _timeLineShadeLayer = [self shadeLayerWithColors:self.dataSource.configreDataSource.configure.timeLineShadeColors];
-    }
-    return _timeLineShadeLayer;
-}
-
 - (CAGradientLayer *)minScaleLineShadeLayer {
     if (!_minScaleLineShadeLayer){
         _minScaleLineShadeLayer = [self shadeLayerWithColors:self.dataSource.configreDataSource.configure.minScaleLineShadeColors];
@@ -697,5 +688,20 @@
         return (value.doubleValue - minValue) * heightRate;
     };
 }
+
+- (HyChartLineLayer *)timeLineLayer {
+    if (!_timeLineLayer) {
+        _timeLineLayer = [HyChartLineLayer layerWithDataSource:(id)self.dataSource];
+        _timeLineLayer.frame = self.bounds;
+        [self addSublayer:_timeLineLayer];
+    }
+    return _timeLineLayer;
+}
+
+//- (void)setTimeLine:(BOOL)timeLine {
+//    _timeLine = timeLine;
+//    [self.timeLineLayer removeFromSuperlayer];
+//    self.timeLineLayer = nil;
+//}
 
 @end

@@ -51,18 +51,20 @@
 
 - (NSArray<CAShapeLayer *> *)layers {
     if (!_layers){
+        [self.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
         NSMutableArray<CAShapeLayer *> *mArray = @[].mutableCopy;
         NSInteger count = self.dataSource.modelDataSource.models.firstObject.values.count;
         for (NSInteger i = 0; i < count; i++) {
             CAShapeLayer *layer = [CAShapeLayer layer];
             layer.frame = self.bounds;
-            if (self.dataSource.configreDataSource.configure.barConfigureAtIndexBlock) {
+//            if (self.dataSource.configreDataSource.configure.barConfigureAtIndexBlock) {
                 HyChartBarOneConfigure *configure = HyChartBarOneConfigure.defaultConfigure;
+                !self.dataSource.configreDataSource.configure.barConfigureAtIndexBlock ?:
                 self.dataSource.configreDataSource.configure.barConfigureAtIndexBlock(i, configure);
                 layer.fillColor = configure.fillColor.CGColor;
                 layer.strokeColor = configure.strokeColor.CGColor;
                 layer.lineWidth = configure.lineWidth;
-            }
+//            }
             layer.masksToBounds = YES;
             [self addSublayer:layer];
             [mArray addObject:layer];
@@ -84,6 +86,10 @@
     return ^(NSNumber *value){
         return CGRectGetHeight(self.bounds) - self.valueHeight(value);
     };
+}
+
+- (void)resetLayers {
+    self.layers = nil;
 }
 
 @end

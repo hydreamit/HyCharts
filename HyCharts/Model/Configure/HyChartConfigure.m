@@ -14,7 +14,7 @@
 @end
 
 @implementation HyChartConfigure
-@synthesize width = _width, margin = _margin, edgeInsetStart = _edgeInsetStart, edgeInsetEnd = _edgeInsetEnd, trans = _trans, scale = _scale, maxScale = _maxScale, minScale = _minScale, autoMargin = _autoMargin, dataDirection = _dataDirection, decimal = _decimal, minDisplayWidth = _minDisplayWidth, maxDisplayWidth = _maxDisplayWidth, displayWidth = _displayWidth;
+@synthesize width = _width, margin = _margin, edgeInsetStart = _edgeInsetStart, edgeInsetEnd = _edgeInsetEnd, trans = _trans, scale = _scale, maxScale = _maxScale, minScale = _minScale, autoMargin = _autoMargin, renderingDirection = _renderingDirection, decimal = _decimal, minDisplayWidth = _minDisplayWidth, maxDisplayWidth = _maxDisplayWidth, displayWidth = _displayWidth, notEnoughSide = _notEnoughSide;
 
 - (instancetype)init {
     if (self = [super init]) {

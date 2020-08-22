@@ -385,9 +385,19 @@
         if ([axisBaseInfo conformsToProtocol:@protocol(HyChartXAxisInfoProtocol)]) {
             
             NSInteger currentIndex = i;
-            if (self.dataSource.configreDataSource.configure.dataDirection == HyChartDataDirectionReverse) {
-                currentIndex = axisModel.indexs - currentIndex;
+            
+            if (self.dataSource.configreDataSource.configure.renderingDirection == HyChartRenderingDirectionReverse) {
+                if (!(self.dataSource.configreDataSource.configure.notEnoughSide == HyChartNotEnoughSideLeft && self.dataSource.configreDataSource.configure.notEnough)) {
+                    currentIndex = axisModel.indexs - currentIndex;
+                }
+            } else
+            
+            if (self.dataSource.configreDataSource.configure.renderingDirection == HyChartRenderingDirectionForward) {
+                if ((self.dataSource.configreDataSource.configure.notEnoughSide == HyChartNotEnoughSideRight && self.dataSource.configreDataSource.configure.notEnough)) {
+                    currentIndex = axisModel.indexs - currentIndex;
+                }
             }
+          
             if (currentIndex < self.dataSource.modelDataSource.visibleXAxisModels.count) {
                 text = ((HyChartXAxisInfo *)axisBaseInfo).textAtIndexBlock(currentIndex, self.dataSource.modelDataSource.visibleXAxisModels[currentIndex]);
             }

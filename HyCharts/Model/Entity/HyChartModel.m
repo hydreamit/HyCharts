@@ -15,7 +15,7 @@
 
 
 @implementation HyChartModel
-@synthesize text = _text, value = _value, exData = _exData, numberFormatter = _numberFormatter;
+@synthesize text = _text, exData = _exData, numberFormatter = _numberFormatter, breakingPoint = _breakingPoint, ignorePoint = _ignorePoint;
 
 - (CGFloat (^)(NSNumber * _Nonnull))valuePositon {
     return self.provider.valuePositon;
@@ -28,5 +28,7 @@
 - (void)setValuePositonProvider:(id<HyChartValuePositonProviderProtocol>)provider {
     self.provider = provider;
 }
+
+- (void)handleModel {}
 
 @end

@@ -15,6 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// 支持多条线
 @property (nonatomic, strong) NSArray<NSNumber *> *values;
 
+/// 每条线的断点设置, 默认为NO  —— @(YES) \ @(NO)
+@property (nonatomic, strong) NSArray<NSNumber *> *breakpoints;
+
+
 @end
 
 NS_ASSUME_NONNULL_END
