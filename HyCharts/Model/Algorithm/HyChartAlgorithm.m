@@ -140,7 +140,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
 /**
  DIF(偏离值线) = 快的指数移动平均线EMA(12) - 慢的指数移动平均线 EMA(26)
  DEM(讯号线) =  DIF的N日指数移动平均值 EMA(9 DIF)
- MACD(柱) = DIF - DEM
+ MACD(柱) = 2 * (DIF - DEM)
  */
 - (void (^)(NSInteger number1, NSInteger number2, NSInteger number3, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex))handleMACD {
     return ^(NSInteger number1, NSInteger number2, NSInteger number3, HyChartKLineModelDataSource *modelDataSource, NSInteger rangeIndex) {
@@ -177,7 +177,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
         }
         
         // DEM(讯号线) =  DIF的N日指数移动平均值 EMA(9 DIF)
-        // MACD(柱) = DIF - DEM
+        // MACD(柱) = 2 * (DIF - DEM)
         NSString *demdKey = [NSString stringWithFormat:@"%ld+%ld+%ld", (long)number1, (long)number2, (long)number3];
         BOOL updateMACD = YES;
         if (rangeIndex == 0) {
@@ -240,11 +240,11 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
             if (index >= rangeIndex) {
                 double maxValue =  -MAXFLOAT;
                 double minValue = MAXFLOAT;
-                NSInteger startIndex = index - number1;
+                NSInteger startIndex = index - number1 + 1;
                 if (startIndex < 0) { startIndex = 0; }
                 for (NSInteger i = startIndex; i <= index; i++) {
-                    maxValue = MAX(maxValue, model.highPrice.doubleValue);
-                    minValue = MIN(minValue, model.lowPrice.doubleValue);
+                    maxValue = MAX(maxValue, models[i].highPrice.doubleValue);
+                    minValue = MIN(minValue, models[i].lowPrice.doubleValue);
                 }
                 
                 if (maxValue - minValue != 0) {
@@ -262,7 +262,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
                    jValue = 50;
                 }
                 
-                [model.priceRSIDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:rsvValue]]])
+                [model.priceRSVDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:rsvValue]]])
                                        forKey:@(number1)];
                 [model.priceKDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:kValue]]])
                                      forKey:[NSString stringWithFormat:@"%ld+%ld", (long)number1, (long)number2]];
@@ -355,7 +355,7 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
         double priceMd = 0;
         double volumeMd = 0;
         NSInteger totalNumber = 0;
-        NSInteger minIndex = idx + 1  - number;
+        NSInteger minIndex = idx - number;
         if (minIndex < 0) { minIndex = -1; }
 
         for (NSInteger i = idx; i > minIndex; i--) {

@@ -907,7 +907,7 @@ dispatch_semaphore_signal(self.arraySemaphore);
                 !self.chartCursorState ?: self.chartCursorState(HyChartCursorStateScrollShowing);
             }
             !self.chartCursor.show ?: self.chartCursor.show(self, model, xText, yText, centerPoint);
-            !self.longGestureAction ?: self.longGestureAction(self, model, index, centerPoint);
+            !self.longGestureAction ?: self.longGestureAction(self, model, index, centerPoint, gesture.state);
         }];
     }
 }

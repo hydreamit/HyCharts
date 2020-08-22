@@ -44,10 +44,10 @@
              maxValue = obj.maxVolume.doubleValue;
              minValue = MIN(0, obj.minVolume.doubleValue);
          } else {
-             if (obj.volume.doubleValue > maxModel.volume.doubleValue) {
+            if (obj.volume.doubleValue > maxModel.volume.doubleValue) {
                  maxModel = obj;
              } else
-             if (obj.volume.doubleValue < maxModel.volume.doubleValue) {
+             if (obj.volume.doubleValue < minModel.volume.doubleValue) {
                  minModel = obj;
              }
              maxValue = MAX(maxValue, obj.maxVolume.doubleValue);

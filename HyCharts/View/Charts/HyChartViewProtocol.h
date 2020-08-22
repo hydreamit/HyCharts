@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 点击手势事件
 @property (nonatomic, copy) void(^tapGestureAction)(HyChartView *chartView, id<HyChartModelProtocol> model, NSUInteger index, CGPoint point);
 /// 长按手势事件
-@property (nonatomic, copy) void(^longGestureAction)(HyChartView *chartView, id<HyChartModelProtocol> model, NSUInteger index, CGPoint point);
+@property (nonatomic, copy) void(^longGestureAction)(HyChartView *chartView, id<HyChartModelProtocol> model, NSUInteger index, CGPoint point, UIGestureRecognizerState state);
 /// 缩放手势事件
 @property (nonatomic, copy) void(^pinchGestureAction)(HyChartView *chartView, id<HyChartModelProtocol> model, NSUInteger index, CGFloat scale, UIGestureRecognizerState state);
 /// 滚动事件 (分页加载数据)
