@@ -22,7 +22,7 @@ CG_INLINE void
 TransactionDisableActions(void (^block)(void)) {
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
-    !block ?: block();
+    if (block) { block(); }
     [CATransaction commit];
 }
 
