@@ -333,6 +333,11 @@
 
 - (void)renderingNewprice {
     
+    if (self.timeLine) {
+       [self.timeLineLayer setNeedsRendering];
+        return;
+    }
+    
     if (!self.dataSource.configreDataSource.configure.disPlayNewprice) {
         self.newpriceTextLayer.frame = CGRectZero;
         self.newpriceTextLayer.string = @"";

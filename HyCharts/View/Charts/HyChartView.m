@@ -344,7 +344,7 @@ dispatch_semaphore_signal(self.arraySemaphore);
             } else {
                 if (isKline &&
                     ((HyChartKLineConfigure *)self._dataSource.configreDataSource.configure).disPlayNewprice) {
-                    [((HyChartKLineMainLayer *)self.chartLayer) renderingNewprice];
+                    [self renderingNewprice];
                 }
             }
         }];
@@ -415,7 +415,7 @@ dispatch_semaphore_signal(self.arraySemaphore);
             } else {
                 if (isKline &&
                     ((HyChartKLineConfigure *)self._dataSource.configreDataSource.configure).disPlayNewprice) {
-                    [((HyChartKLineMainLayer *)self.chartLayer) renderingNewprice];
+                    [self renderingNewprice];
                 }
             }
         }];
@@ -452,6 +452,8 @@ dispatch_semaphore_signal(self.arraySemaphore);
         }];
     }
 }
+
+- (void)renderingNewprice {}
 
 #pragma mark — private methods
 - (void)handleModels {

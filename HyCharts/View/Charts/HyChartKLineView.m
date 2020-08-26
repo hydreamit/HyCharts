@@ -656,4 +656,11 @@
     return self.dataSource.configreDataSource.configure.priceNunmberFormatter;
 }
 
+- (void)renderingNewprice {
+    HyChartKLineMainLayer *klineLayer = (id)[self.chartLayer.layersDict objectForKey:@(HyChartKLineViewTypeMain)];
+    if (klineLayer) {
+        [klineLayer renderingNewprice];
+    }
+}
+
 @end

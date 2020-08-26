@@ -192,4 +192,8 @@
     return self.dataSource.configreDataSource.configure.priceNunmberFormatter;
 }
 
+- (void)renderingNewprice {
+    [self.chartLayer renderingNewprice];
+}
+
 @end
