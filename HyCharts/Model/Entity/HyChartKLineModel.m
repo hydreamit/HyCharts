@@ -21,6 +21,8 @@
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *priceDEMDict;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *priceMACDDict;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSNumber *> *priceRSIDict;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSNumber *> *priceRSIADict;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSNumber *> *priceRSIBDict;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSNumber *> *priceRSVDict;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *priceKDict;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *priceDDict;
@@ -146,6 +148,17 @@
     };
 }
 
+- (NSNumber * (^)(NSInteger))priceRSIA {
+    return ^NSNumber * (NSInteger number) {
+        return self.priceRSIADict[[NSNumber numberWithInteger:number]];
+    };
+}
+
+- (NSNumber * (^)(NSInteger))priceRSIB {
+    return ^NSNumber * (NSInteger number) {
+        return self.priceRSIBDict[[NSNumber numberWithInteger:number]];
+    };
+}
 
 - (NSNumber * (^)(NSInteger))priceRSV {
     return ^NSNumber * (NSInteger number) {
@@ -242,6 +255,20 @@
         _priceRSIDict = @{}.mutableCopy;
     }
     return _priceRSIDict;
+}
+
+- (NSMutableDictionary<NSNumber *,NSNumber *> *)priceRSIADict {
+    if (!_priceRSIADict){
+        _priceRSIADict = @{}.mutableCopy;
+    }
+    return _priceRSIADict;
+}
+
+- (NSMutableDictionary<NSNumber *,NSNumber *> *)priceRSIBDict {
+    if (!_priceRSIBDict){
+        _priceRSIBDict = @{}.mutableCopy;
+    }
+    return _priceRSIBDict;
 }
 
 - (NSMutableDictionary<NSNumber *,NSNumber *> *)priceRSVDict {

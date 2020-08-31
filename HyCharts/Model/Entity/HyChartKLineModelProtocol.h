@@ -93,7 +93,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// RSI
 @property (nonatomic, copy, readonly) NSNumber *(^priceRSI)(NSInteger number);
+@property (nonatomic, copy, readonly) NSNumber *(^priceRSIA)(NSInteger number);
+@property (nonatomic, copy, readonly) NSNumber *(^priceRSIB)(NSInteger number);
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, NSNumber *> *priceRSIDict;
+@property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, NSNumber *> *priceRSIADict;
+@property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, NSNumber *> *priceRSIBDict;
 
 
 /// KDJ

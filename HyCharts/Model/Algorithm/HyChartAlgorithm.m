@@ -32,18 +32,20 @@
             }
         }
         
-        if (rangeIndex != 0) {
-            rangeIndex = count - rangeIndex;
-        }
-        [models enumerateObjectsUsingBlock:^(HyChartKLineModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (idx >= rangeIndex) {
-                NSArray<NSNumber *> *array = self.samAtIndex(number, idx, models);
-                [obj.priceSMADict setObject:array.firstObject
-                                     forKey:@(number)];
-                [obj.volumeSMADict setObject:array.lastObject
-                                      forKey:@(number)];
+        if (rangeIndex == 0) {
+            [models enumerateObjectsUsingBlock:^(HyChartKLineModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                 NSArray<NSNumber *> *array = self.samAtIndex(number, idx, models);
+                 [obj.priceSMADict setObject:array.firstObject forKey:@(number)];
+                 [obj.volumeSMADict setObject:array.lastObject forKey:@(number)];
+            }];
+        } else {
+            for (NSInteger index = count - rangeIndex; index < count; index++) {
+                HyChartKLineModel *obj = [models objectAtIndex:index];
+                NSArray<NSNumber *> *array = self.samAtIndex(number, index, models);
+                [obj.priceSMADict setObject:array.firstObject  forKey:@(number)];
+                [obj.volumeSMADict setObject:array.lastObject forKey:@(number)];
             }
-        }];
+        }
     };
 }
 
@@ -66,33 +68,35 @@
             }
         }
         
-        if (rangeIndex != 0) {
-            rangeIndex = count - rangeIndex;
-        }
-        
         double emaPrice = 0;
         double emaVolume = 0;
-        for (HyChartKLineModel *model in models) {
-            
-            NSInteger index = [models indexOfObject:model];
-            
-            if (index >= rangeIndex) {
-                // EMA（N）=2/（N+1）*（C-昨日EMA）+昨日EMA；
-                double ratio = 2.0 / (number + 1);
-                if (index) {
-                     emaPrice = ratio * (model.closePrice.doubleValue - emaPrice) +  emaPrice;
-                     emaVolume = ratio * (model.volume.doubleValue - emaVolume) +  emaVolume;
-                } else {
-                    emaPrice = model.closePrice.doubleValue;
-                    emaVolume = model.volume.doubleValue;
-                }
+        NSInteger startIndex = rangeIndex;
+        if (startIndex != 0) {
+            startIndex = count - startIndex;
+            emaPrice = models[startIndex - 1].priceEMA(number).doubleValue;
+            emaVolume = models[startIndex - 1].volumeEMA(number).doubleValue;
+        }
         
-               [model.priceEMADict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:emaPrice]]])
-                                      forKey:@(number)];
-                
-               [model.volumeEMADict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.volumeNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:emaVolume]]])
-                                               forKey:@(number)];
+        for (NSInteger index = startIndex; index < models.count; index++) {
+            
+            HyChartKLineModel *model = [models objectAtIndex:index];
+            
+            // EMA（N）=2/（N+1）*（C-昨日EMA）+昨日EMA；
+            double ratio = 2.0 / (number + 1);
+            if (index) {
+                emaPrice = ratio * (model.closePrice.doubleValue - emaPrice) +  emaPrice;
+                emaVolume = ratio * (model.volume.doubleValue - emaVolume) +  emaVolume;
+            } else {
+                emaPrice = model.closePrice.doubleValue;
+                emaVolume = model.volume.doubleValue;
             }
+    
+           [model.priceEMADict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:emaPrice]]])
+                                  forKey:@(number)];
+            
+           [model.volumeEMADict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.volumeNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:emaVolume]]])
+                                   forKey:@(number)];
+            
         }
     };
 }
@@ -121,19 +125,20 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
             }
         }
         
-        if (rangeIndex != 0) {
-            rangeIndex = count - rangeIndex;
-        }
-
-        [models enumerateObjectsUsingBlock:^(HyChartKLineModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (idx >= rangeIndex) {
+        if (rangeIndex == 0) {
+            [models enumerateObjectsUsingBlock:^(HyChartKLineModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 NSArray *bollArray = self.bollAtIndex(number, idx, models);
-                [obj.priceBollDict setObject:bollArray.firstObject
-                                      forKey:@(number)];
-                [obj.volumeBollDict setObject:bollArray.lastObject
-                                      forKey:@(number)];
+                [obj.priceBollDict setObject:bollArray.firstObject forKey:@(number)];
+                [obj.volumeBollDict setObject:bollArray.lastObject forKey:@(number)];
+            }];
+        } else {
+            for (NSInteger index = count - rangeIndex; index < count; index++) {
+                HyChartKLineModel *obj = [models objectAtIndex:index];
+                NSArray *bollArray = self.bollAtIndex(number, index, models);
+                [obj.priceBollDict setObject:bollArray.firstObject forKey:@(number)];
+                [obj.volumeBollDict setObject:bollArray.lastObject forKey:@(number)];
             }
-        }];
+        }
     };
 }
 
@@ -156,24 +161,27 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
         self.handleEMA(number1, modelDataSource, rangeIndex);
         self.handleEMA(number2, modelDataSource, rangeIndex);
         
-        
-        if (rangeIndex != 0) {
-            rangeIndex = count - rangeIndex;
-        }
-        
         // DIF(偏离值线) = 快的指数移动平均线EMA(12) - 慢的指数移动平均线 EMA(26)
         NSString *difKey = [NSString stringWithFormat:@"%ld+%ld", (long)number1, (long)number2];
         BOOL updateDif = YES;
         if (rangeIndex == 0) {
             updateDif = ![models.lastObject.priceDIFDict objectForKey:difKey];
         }
+        
+        
         if (updateDif) {
-            [models enumerateObjectsUsingBlock:^(HyChartKLineModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if (idx >= rangeIndex) {
-                    [obj.priceDIFDict setObject:[NSNumber numberWithDouble:obj.priceEMA(number1).doubleValue - obj.priceEMA(number2).doubleValue]
-                    forKey:difKey];
+            if (rangeIndex == 0) {
+                [models enumerateObjectsUsingBlock:^(HyChartKLineModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                     [obj.priceDIFDict setObject:[NSNumber numberWithDouble:obj.priceEMA(number1).doubleValue - obj.priceEMA(number2).doubleValue]
+                                           forKey:difKey];
+                }];
+            } else {
+                for (NSInteger index = count - rangeIndex; index < count; index++) {
+                    HyChartKLineModel *obj = [models objectAtIndex:index];
+                     [obj.priceDIFDict setObject:[NSNumber numberWithDouble:obj.priceEMA(number1).doubleValue - obj.priceEMA(number2).doubleValue]
+                                                              forKey:difKey];
                 }
-            }];
+            }
         }
         
         // DEM(讯号线) =  DIF的N日指数移动平均值 EMA(9 DIF)
@@ -183,28 +191,35 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
         if (rangeIndex == 0) {
             updateMACD = ![models.lastObject.priceMACDDict objectForKey:demdKey];
         }
+        
         if (updateMACD) {
             
-              double difEMA = 0;
-              for (HyChartKLineModel *model in models) {
-                  NSInteger index = [models indexOfObject:model];
-                  if (index >= rangeIndex) {
-                      double dif = model.priceDIF(number1, number2).doubleValue;
+            double difEMA = 0;
+            NSInteger startIndex = rangeIndex;
+            if (startIndex != 0) {
+                startIndex = count - startIndex;
+                difEMA = models[startIndex - 1].priceDEM(number1, number2, number3).doubleValue;
+            }
 
-                      // EMA（N）=2/（N+1）*（gif-昨日EMA）+昨日EMA；
-                      double ratio = 2.0 / (number3 + 1);
-                      if (index) {
-                         difEMA = ratio * (dif - difEMA) +  difEMA;
-                      } else {
-                         difEMA = dif;
-                      }
-                      
-                      [model.priceDEMDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:difEMA]]])
-                                             forKey:demdKey];
-                      
-                      [model.priceMACDDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:(dif - difEMA) * 2]]])
-                                             forKey:demdKey];
-                  }
+            for (NSInteger index = startIndex; index < models.count; index++) {
+
+                HyChartKLineModel *model = [models objectAtIndex:index];
+
+                double dif = model.priceDIF(number1, number2).doubleValue;
+                // EMA（N）=2/（N+1）*（gif-昨日EMA）+昨日EMA；
+                double ratio = 2.0 / (number3 + 1);
+                if (index) {
+                   difEMA = ratio * (dif - difEMA) +  difEMA;
+                } else {
+                   difEMA = dif;
+                }
+                
+                [model.priceDEMDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:difEMA]]])
+                                       forKey:demdKey];
+                
+                [model.priceMACDDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:(dif - difEMA) * 2]]])
+                                       forKey:demdKey];
+
             }
         }
     };
@@ -228,49 +243,51 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
         NSArray<HyChartKLineModel *> *models = modelDataSource.models;
         models = [[models reverseObjectEnumerator] allObjects];
         
-        if (rangeIndex != 0) {
-            rangeIndex = count - rangeIndex;
+        NSInteger startIndex = rangeIndex;
+        double rsvValue  = 0, kValue = 0, dValue = 0, jValue = 0;
+        if (startIndex != 0) {
+            startIndex = count - startIndex;
+            rsvValue = models[startIndex - 1].priceRSV(number1).doubleValue;
+            kValue = models[startIndex - 1].priceK(number1, number2).doubleValue;
+            dValue = models[startIndex - 1].priceD(number1, number2, number3).doubleValue;
+            jValue = models[startIndex - 1].priceJ(number1, number2, number3).doubleValue;
         }
         
-        double rsvValue  = 0, kValue = 0, dValue = 0, jValue = 0;
-        for (HyChartKLineModel *model in models) {
+        for (NSInteger index = startIndex; index < models.count; index++) {
+            HyChartKLineModel *model = [models objectAtIndex:index];
             
-            NSInteger index = [models indexOfObject:model];
-            
-            if (index >= rangeIndex) {
-                double maxValue =  -MAXFLOAT;
-                double minValue = MAXFLOAT;
-                NSInteger startIndex = index - number1 + 1;
-                if (startIndex < 0) { startIndex = 0; }
-                for (NSInteger i = startIndex; i <= index; i++) {
-                    maxValue = MAX(maxValue, models[i].highPrice.doubleValue);
-                    minValue = MIN(minValue, models[i].lowPrice.doubleValue);
-                }
-                
-                if (maxValue - minValue != 0) {
-                    rsvValue = 100.0 * (model.closePrice.doubleValue - minValue) / (maxValue - minValue);
-                } else {
-                    rsvValue = 0;
-                }
-                if (index > 0) {
-                    kValue = (rsvValue + 2 * kValue) / number2;
-                    dValue = (kValue + 2 * dValue) / number3;
-                    jValue = 3 * kValue - 2 * dValue;
-                } else {
-                   kValue = 50;
-                   dValue = 50;
-                   jValue = 50;
-                }
-                
-                [model.priceRSVDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:rsvValue]]])
-                                       forKey:@(number1)];
-                [model.priceKDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:kValue]]])
-                                     forKey:[NSString stringWithFormat:@"%ld+%ld", (long)number1, (long)number2]];
-                [model.priceDDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:dValue]]])
-                                     forKey:[NSString stringWithFormat:@"%ld+%ld+%ld", (long)number1, (long)number2, (long)number3]];
-                [model.priceJDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:jValue]]])
-                                     forKey:[NSString stringWithFormat:@"%ld+%ld+%ld", (long)number1, (long)number2, (long)number3]];
+            double maxValue =  -MAXFLOAT;
+            double minValue = MAXFLOAT;
+            NSInteger startIndex = index - number1 + 1;
+            if (startIndex < 0) { startIndex = 0; }
+            for (NSInteger i = startIndex; i <= index; i++) {
+                maxValue = MAX(maxValue, models[i].highPrice.doubleValue);
+                minValue = MIN(minValue, models[i].lowPrice.doubleValue);
             }
+            
+            if (maxValue - minValue != 0) {
+                rsvValue = 100.0 * (model.closePrice.doubleValue - minValue) / (maxValue - minValue);
+            } else {
+                rsvValue = 0;
+            }
+            if (index > 0) {
+                kValue = (rsvValue + 2 * kValue) / number2;
+                dValue = (kValue + 2 * dValue) / number3;
+                jValue = 3 * kValue - 2 * dValue;
+            } else {
+               kValue = 50;
+               dValue = 50;
+               jValue = 50;
+            }
+            
+            [model.priceRSVDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:rsvValue]]])
+                                   forKey:@(number1)];
+            [model.priceKDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:kValue]]])
+                                 forKey:[NSString stringWithFormat:@"%ld+%ld", (long)number1, (long)number2]];
+            [model.priceDDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:dValue]]])
+                                 forKey:[NSString stringWithFormat:@"%ld+%ld+%ld", (long)number1, (long)number2, (long)number3]];
+            [model.priceJDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:jValue]]])
+                                 forKey:[NSString stringWithFormat:@"%ld+%ld+%ld", (long)number1, (long)number2, (long)number3]];
         }
     };
 }
@@ -292,22 +309,29 @@ md 标准差 =  平方根( ((N）日的（C－SMA）的两次方之和) / N )
         NSArray<HyChartKLineModel *> *models = modelDataSource.models;
         models = [[models reverseObjectEnumerator] allObjects];
         
+        NSInteger startIndex = 1;
+        double aValue = 0 , bValue = 0, rsiValue = 0;
         if (rangeIndex != 0) {
-            rangeIndex = count - rangeIndex - 1;
+            startIndex = count - rangeIndex;
+            aValue = models[startIndex - 1].priceRSIA(number).doubleValue;
+            bValue = models[startIndex - 1].priceRSIB(number).doubleValue;
         }
         
-        double aValue = 0 , bValue = 0, rsiValue = 0;
-        for (HyChartKLineModel *model in models) {
-            NSInteger index = [models indexOfObject:model];
-            if (index > rangeIndex) {
-                double a = MAX(0, model.closePrice.doubleValue - models[index - 1].closePrice.doubleValue);
-                double b = ABS((model.closePrice.doubleValue - models[index - 1].closePrice.doubleValue));
-                aValue = (a + (number - 1) * aValue) / number;
-                bValue = (b + (number - 1) * bValue) / number;
-                rsiValue = (aValue / bValue) * 100;
-                [model.priceRSIDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:rsiValue]]])
-                                       forKey:@(number)];
-            }
+        for (NSInteger index = startIndex; index < models.count; index++) {
+            
+            HyChartKLineModel *model = [models objectAtIndex:index];
+            double a = MAX(0, model.closePrice.doubleValue - models[index - 1].closePrice.doubleValue);
+            double b = ABS((model.closePrice.doubleValue - models[index - 1].closePrice.doubleValue));
+            aValue = (a + (number - 1) * aValue) / number;
+            bValue = (b + (number - 1) * bValue) / number;
+            rsiValue = (aValue / bValue) * 100;
+            
+            [model.priceRSIADict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:aValue]]])
+                                    forKey:@(number)];
+            [model.priceRSIBDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:bValue]]])
+                                    forKey:@(number)];
+            [model.priceRSIDict setObject:SafetyNumber([NSDecimalNumber decimalNumberWithString:[model.priceNunmberFormatter stringFromNumber:[NSNumber numberWithDouble:rsiValue]]])
+                                   forKey:@(number)];
         }
     };
 }
