@@ -388,8 +388,9 @@
     if (needsHandle) {
         if (_layerDict) {
             [self.layerDict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSArray * _Nonnull obj, BOOL * _Nonnull stop) {
-                [obj makeObjectsPerformSelector:@selector(setFrame:)
-                                     withObject:[NSValue valueWithCGRect:self.bounds]];
+                [obj enumerateObjectsUsingBlock:^(CALayer * _Nonnull layer, NSUInteger idx, BOOL * _Nonnull stop) {
+                    layer.frame = self.bounds;
+                }];
             }];
             [self setNeedsRendering];
         }
