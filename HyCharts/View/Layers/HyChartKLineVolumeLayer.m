@@ -324,4 +324,36 @@
     };
 }
 
+- (void)setFrame:(CGRect)frame {
+    BOOL needsHandle = !CGRectEqualToRect(self.frame, frame);
+    [super setFrame:frame];
+    if (needsHandle) {
+        
+        self.trendUpLayer.frame =
+        self.trendDownLayer.frame = self.bounds;
+        
+        if (_smaLayerDict) {
+            [self.smaLayerDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, CAShapeLayer * _Nonnull obj, BOOL * _Nonnull stop) {
+                obj.frame = self.bounds;
+            }];
+        }
+        
+        if (_emaLayerDict) {
+            [self.emaLayerDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, CAShapeLayer * _Nonnull obj, BOOL * _Nonnull stop) {
+                obj.frame = self.bounds;
+            }];
+        }
+        
+        if (_bollLayerDict) {
+            [self.bollLayerDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSArray<CAShapeLayer *> * _Nonnull obj, BOOL * _Nonnull stop) {
+                [obj enumerateObjectsUsingBlock:^(CAShapeLayer * _Nonnull layer, NSUInteger idx, BOOL * _Nonnull stop) {
+                    layer.frame = self.bounds;
+                }];
+            }];
+        }
+
+        [self setNeedsRendering];
+    }
+}
+
 @end

@@ -93,4 +93,17 @@
     self.layers = nil;
 }
 
+- (void)setFrame:(CGRect)frame {
+    BOOL needsHandle = !CGRectEqualToRect(self.frame, frame);
+    [super setFrame:frame];
+    if (needsHandle) {
+        if (_layers) {
+            [self.layers enumerateObjectsUsingBlock:^(CAShapeLayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                obj.frame = self.bounds;
+            }];
+            [self setNeedsRendering];
+        }
+    }
+}
+
 @end

@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat edgeInsetStart;
 /// 结束边距
 @property (nonatomic, assign) CGFloat edgeInsetEnd;
-/// 数据展示方向
+/// 数据渲染方向
 @property (nonatomic, assign) HyChartRenderingDirection renderingDirection;
 /// 数据不够 / 放大缩小 不能完全铺满时，靠哪一边 (默认靠左)
 @property (nonatomic, assign) HyChartNotEnoughSide notEnoughSide;

@@ -62,7 +62,7 @@ dispatch_semaphore_signal(self.arraySemaphore);
 
 
 @implementation HyChartView
-@synthesize contentEdgeInsets = _contentEdgeInsets, pinchGestureDisabled = _pinchGestureDisabled, tapGestureDisabled = _tapGestureDisabled, longPressGestureDisabled = _longPressGestureDisabled, longGestureAction = _longGestureAction, tapGestureAction = _tapGestureAction, pinchGestureAction = _pinchGestureAction, scrollAction = _scrollAction, bounces = _bounces, chartCursorState = _chartCursorState;
+@synthesize contentEdgeInsets = _contentEdgeInsets, pinchGestureDisabled = _pinchGestureDisabled, tapGestureDisabled = _tapGestureDisabled, longPressGestureDisabled = _longPressGestureDisabled, longGestureAction = _longGestureAction, tapGestureAction = _tapGestureAction, pinchGestureAction = _pinchGestureAction, scrollAction = _scrollAction, bounces = _bounces, chartCursorState = _chartCursorState, pinchValidPosition = _pinchValidPosition;
 
 #pragma mark — lief cycle
 - (void)didMoveToSuperview {
@@ -817,7 +817,10 @@ dispatch_semaphore_signal(self.arraySemaphore);
         }break;
             
         case UIGestureRecognizerStateChanged: {
-            if (index < self._dataSource.modelDataSource.models.count) {
+            BOOL canPinch =
+            self.pinchValidPosition == HyChartPinchValidPositionAll ||
+            index < self._dataSource.modelDataSource.models.count;
+            if (canPinch) {
                 self.pinch(index, margin, gesture.scale);
                 if (gesture == self.pinchGesture) {
                     [self.reactChains enumerateObjectsUsingBlock:^(NSValue * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

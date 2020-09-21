@@ -210,6 +210,7 @@
                                layer.path = UIBezierPath.bezierPath.CGPath;
                                layer.strokeColor = colors[index].CGColor;
                                layer.lineWidth = configure.lineWidth;
+                               layer.frame = self.bounds;
                                if (index == 0 || index == 1) {
                                    layer.fillColor= UIColor.clearColor.CGColor;
                                } else {
@@ -245,6 +246,7 @@
                                layer.fillColor = UIColor.clearColor.CGColor;
                                layer.lineWidth = configure.lineWidth;
                                layer.path = UIBezierPath.bezierPath.CGPath;
+                               layer.frame = self.bounds;
                                [self addSublayer:layer];
                            });
                        }
@@ -262,6 +264,7 @@
                            layer.fillColor = UIColor.clearColor.CGColor;
                            layer.lineWidth = configure.lineWidth;
                            layer.path = UIBezierPath.bezierPath.CGPath;
+                           layer.frame = self.bounds;
                            [self addSublayer:layer];
                        });
                    }
@@ -293,6 +296,15 @@
         CGFloat valueHeight = (value.doubleValue - minValue) * heightRate;
         return valueHeight;
     };
+}
+
+- (void)setFrame:(CGRect)frame {
+    BOOL needsHandle = !CGRectEqualToRect(self.frame, frame);
+    [super setFrame:frame];
+    if (needsHandle) {
+        [self setAuxiliaryLayers];
+        [self setNeedsRendering];
+    }
 }
 
 @end

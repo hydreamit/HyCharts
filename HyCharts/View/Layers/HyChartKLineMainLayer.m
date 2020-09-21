@@ -19,7 +19,7 @@
 @property (nonatomic, strong) CATextLayer *minPriceTextLayer;
 @property (nonatomic, strong) CAShapeLayer *trendUpLayer;
 @property (nonatomic, strong) CAShapeLayer *trendDownLayer;
-@property (nonatomic,strong) HyChartLineLayer *timeLineLayer;
+@property (nonatomic, strong) HyChartLineLayer *timeLineLayer;
 @property (nonatomic, strong) CAShapeLayer *minScaleLineLayer;
 @property (nonatomic, strong) CAGradientLayer *minScaleLineShadeLayer;
 @property (nonatomic, strong) NSDictionary<NSNumber *, CAShapeLayer *> *smaLayerDict;
@@ -709,5 +709,41 @@
 //    [self.timeLineLayer removeFromSuperlayer];
 //    self.timeLineLayer = nil;
 //}
+
+- (void)setFrame:(CGRect)frame {
+    BOOL needsHandle = !CGRectEqualToRect(self.frame, frame);
+    [super setFrame:frame];
+    if (needsHandle) {
+        
+        self.newpriceLayer.frame =
+        self.trendUpLayer.frame =
+        self.trendDownLayer.frame =
+        self.timeLineLayer.frame =
+        self.minScaleLineLayer.frame =
+        self.minScaleLineShadeLayer.frame = self.bounds;
+
+        if (_smaLayerDict) {
+            [self.smaLayerDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, CAShapeLayer * _Nonnull obj, BOOL * _Nonnull stop) {
+                obj.frame = self.bounds;
+            }];
+        }
+
+        if (_emaLayerDict) {
+            [self.emaLayerDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, CAShapeLayer * _Nonnull obj, BOOL * _Nonnull stop) {
+                obj.frame = self.bounds;
+            }];
+        }
+
+        if (_bollLayerDict) {
+            [self.bollLayerDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSArray<CAShapeLayer *> * _Nonnull obj, BOOL * _Nonnull stop) {
+                [obj enumerateObjectsUsingBlock:^(CAShapeLayer * _Nonnull layer, NSUInteger idx, BOOL * _Nonnull stop) {
+                    layer.frame = self.bounds;
+                }];
+            }];
+        }
+        
+        [self setNeedsRendering];
+    }
+}
 
 @end

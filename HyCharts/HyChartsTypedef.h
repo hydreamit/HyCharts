@@ -68,6 +68,15 @@ typedef NS_ENUM (NSUInteger, HyChartNotEnoughSide) {
 };
 
 
+/// 缩放手势有效范围
+typedef NS_ENUM (NSUInteger, HyChartPinchValidPosition) {
+    /// 缩放手势中心点有内容才能进行缩放
+    HyChartPinchValidPositionVisible,
+    /// 所有位置
+    HyChartPinchValidPositionAll
+};
+
+
 /// 游标状态
 typedef NS_ENUM (NSUInteger, HyChartCursorState) {
     /// 将要展示

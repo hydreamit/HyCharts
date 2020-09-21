@@ -44,6 +44,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) CGFloat chartWidth;
 /// 图表内容宽度
 @property (nonatomic, assign, readonly) CGFloat chartContentWidth;
+/// 缩放手势生效位置，默认手势点有内容才能缩放
+@property (nonatomic,assign) HyChartPinchValidPosition pinchValidPosition;
+
 
 
 /// 配置默认游标参数

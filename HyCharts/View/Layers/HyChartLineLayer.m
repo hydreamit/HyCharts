@@ -382,4 +382,18 @@
     self.layerDict = nil;
 }
 
+- (void)setFrame:(CGRect)frame {
+    BOOL needsHandle = !CGRectEqualToRect(self.frame, frame);
+    [super setFrame:frame];
+    if (needsHandle) {
+        if (_layerDict) {
+            [self.layerDict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSArray * _Nonnull obj, BOOL * _Nonnull stop) {
+                [obj makeObjectsPerformSelector:@selector(setFrame:)
+                                     withObject:[NSValue valueWithCGRect:self.bounds]];
+            }];
+            [self setNeedsRendering];
+        }
+    }
+}
+
 @end

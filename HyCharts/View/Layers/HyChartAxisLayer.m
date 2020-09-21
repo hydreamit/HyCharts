@@ -585,4 +585,21 @@
     return CGRectMake(self.contentEdgeInsets.left, self.contentEdgeInsets.top, self.bounds.size.width - (self.contentEdgeInsets.left + self.contentEdgeInsets.right), self.bounds.size.height - (self.contentEdgeInsets.top + self.contentEdgeInsets.bottom));
 }
 
+- (void)setFrame:(CGRect)frame {
+    BOOL needsHandle = !CGRectEqualToRect(self.frame, frame);
+    [super setFrame:frame];
+    if (needsHandle) {
+        if (self.axisLines.count || self.axisGridLines.count) {
+            
+            [self.axisLines.allValues makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+            [self.axisLines removeAllObjects];
+            
+            [self.axisGridLines.allValues makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+            [self.axisGridLines removeAllObjects];
+            
+            [self setNeedsRendering];
+        }
+    }
+}
+
 @end
