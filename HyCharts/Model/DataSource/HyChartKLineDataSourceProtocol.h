@@ -15,9 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HyChartKLineDataSourceProtocol <HyChartDataSourceProtocol>
 
-/// view配置数据
+/// 图表配置数据
 @property (nonatomic, strong, readonly) id<HyChartKLineConfigureDataSourceProtocol> configreDataSource;
-/// 模型数据
+/// 图表模型数据
 @property (nonatomic, strong, readonly) id<HyChartKLineModelDataSourceProtocol> modelDataSource;
 
 

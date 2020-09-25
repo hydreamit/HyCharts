@@ -16,10 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// K线主图
 @interface HyChartKLineMainView : HyChartView<id<HyChartKLineDataSourceProtocol>>
 
-
-- (void)switchKLineTechnicalType:(HyChartKLineTechnicalType)type;
-
+/// 是否是分时线
 @property (nonatomic, assign, getter=isTimeLine) BOOL timeLine;
+
+/// 切换K线主图技术指标
+- (void)switchKLineTechnicalType:(HyChartKLineTechnicalType)type;
 
 
 @end

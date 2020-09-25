@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// K线辅助图
 @interface HyChartKLineAuxiliaryView : HyChartView<id<HyChartKLineDataSourceProtocol>>
 
-
+/// 切换技术指标
 - (void)switchKLineAuxiliaryType:(HyChartKLineAuxiliaryType)type;
 
 

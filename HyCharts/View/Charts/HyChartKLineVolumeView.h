@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// K线交易量图
 @interface HyChartKLineVolumeView : HyChartView<id<HyChartKLineDataSourceProtocol>>
 
-
+/// 切换技术指标
 - (void)switchKLineTechnicalType:(HyChartKLineTechnicalType)type;
 
 

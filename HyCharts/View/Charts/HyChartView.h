@@ -17,7 +17,15 @@ NS_ASSUME_NONNULL_BEGIN
 /// 抽象类 请使用子类视图
 @interface HyChartView<__covariant DataSourceType : id<HyChartDataSourceProtocol>> : UIView<HyChartViewProtocol>
 
+/*
+ 数据源:
+ 1. 配置坐标轴
+ 2. 配置图表信息
+ 3. 配置图表数据
+ */
 - (DataSourceType)dataSource;
+
+
 
 @end
 

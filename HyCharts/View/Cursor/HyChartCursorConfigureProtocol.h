@@ -15,16 +15,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HyChartCursorConfigureProtocol <NSObject>
 
+/// 线宽
 @property (nonatomic, assign) CGFloat cursorLineWidth;
-
-@property (nonatomic, assign) CGSize cursorPointSize;
-
-@property (nonatomic, strong) UIColor *cursorPointColor;
-
+/// 线条颜色
 @property (nonatomic, strong) UIColor *cursorLineColor;
-
+/// 游标中心圆点大小
+@property (nonatomic, assign) CGSize cursorPointSize;
+/// 游标中心圆点颜色
+@property (nonatomic, strong) UIColor *cursorPointColor;
+/// 游标文字颜色
 @property (nonatomic, strong) UIColor *cursorTextColor;
-
+/// 游标文字字体
 @property (nonatomic, strong) UIFont *cursorTextFont;
 
 @end
