@@ -13,6 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HyChartsKLineDemoDataHandler : NSObject
 
++ (void)requestDataWithType:(NSString *)type
+                 dataSource:(id<HyChartKLineDataSourceProtocol>)dataSource
+                 completion:(void(^_Nullable)(void))completion;
+
 + (void)handleWithArray:(NSArray *)array
               dataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce;
 

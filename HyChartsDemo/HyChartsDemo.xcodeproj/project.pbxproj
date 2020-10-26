@@ -78,6 +78,14 @@
 		51B6BE0D244FDF120029D199 /* HyChartsKlineReactChainsDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51B6BE0C244FDF120029D199 /* HyChartsKlineReactChainsDemoController.m */; };
 		51B6BE102450168C0029D199 /* HyChartsAnyReactChainsDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51B6BE0F2450168C0029D199 /* HyChartsAnyReactChainsDemoController.m */; };
 		51B6BE13245033FC0029D199 /* HyChartsKLineDemoCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 51B6BE12245033FC0029D199 /* HyChartsKLineDemoCursor.m */; };
+		B5FB9E0E2546805000727250 /* M15.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FB9E062546805000727250 /* M15.json */; };
+		B5FB9E0F2546805000727250 /* H1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FB9E072546805000727250 /* H1.json */; };
+		B5FB9E102546805000727250 /* W1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FB9E082546805000727250 /* W1.json */; };
+		B5FB9E112546805000727250 /* Time.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FB9E092546805000727250 /* Time.json */; };
+		B5FB9E122546805000727250 /* M30.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FB9E0A2546805000727250 /* M30.json */; };
+		B5FB9E132546805000727250 /* D1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FB9E0B2546805000727250 /* D1.json */; };
+		B5FB9E142546805000727250 /* MN.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FB9E0C2546805000727250 /* MN.json */; };
+		B5FB9E152546805000727250 /* M5.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FB9E0D2546805000727250 /* M5.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -276,6 +284,14 @@
 		51B6BE11245033FC0029D199 /* HyChartsKLineDemoCursor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HyChartsKLineDemoCursor.h; sourceTree = "<group>"; };
 		51B6BE12245033FC0029D199 /* HyChartsKLineDemoCursor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HyChartsKLineDemoCursor.m; sourceTree = "<group>"; };
 		B5A06FEE24CE824400C5C4B8 /* HyChartsMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyChartsMethods.h; sourceTree = "<group>"; };
+		B5FB9E062546805000727250 /* M15.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = M15.json; sourceTree = "<group>"; };
+		B5FB9E072546805000727250 /* H1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = H1.json; sourceTree = "<group>"; };
+		B5FB9E082546805000727250 /* W1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = W1.json; sourceTree = "<group>"; };
+		B5FB9E092546805000727250 /* Time.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Time.json; sourceTree = "<group>"; };
+		B5FB9E0A2546805000727250 /* M30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = M30.json; sourceTree = "<group>"; };
+		B5FB9E0B2546805000727250 /* D1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = D1.json; sourceTree = "<group>"; };
+		B5FB9E0C2546805000727250 /* MN.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MN.json; sourceTree = "<group>"; };
+		B5FB9E0D2546805000727250 /* M5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = M5.json; sourceTree = "<group>"; };
 		B8CC2BBFE1DE80E67F19542C /* Pods-HyChartsDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HyChartsDemo.debug.xcconfig"; path = "Target Support Files/Pods-HyChartsDemo/Pods-HyChartsDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -398,6 +414,7 @@
 				51B6BE12245033FC0029D199 /* HyChartsKLineDemoCursor.m */,
 				5123D34A244E8D430052CB53 /* HyChartsKLineDemoDataHandler.h */,
 				5123D34B244E8D430052CB53 /* HyChartsKLineDemoDataHandler.m */,
+				B5FB9E052546805000727250 /* JsonData */,
 			);
 			path = HyChartsDemo;
 			sourceTree = "<group>";
@@ -666,6 +683,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B5FB9E052546805000727250 /* JsonData */ = {
+			isa = PBXGroup;
+			children = (
+				B5FB9E062546805000727250 /* M15.json */,
+				B5FB9E072546805000727250 /* H1.json */,
+				B5FB9E082546805000727250 /* W1.json */,
+				B5FB9E092546805000727250 /* Time.json */,
+				B5FB9E0A2546805000727250 /* M30.json */,
+				B5FB9E0B2546805000727250 /* D1.json */,
+				B5FB9E0C2546805000727250 /* MN.json */,
+				B5FB9E0D2546805000727250 /* M5.json */,
+			);
+			path = JsonData;
+			sourceTree = "<group>";
+		};
 		C7548338951D9D54A1101754 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -780,9 +812,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5FB9E152546805000727250 /* M5.json in Resources */,
+				B5FB9E142546805000727250 /* MN.json in Resources */,
+				B5FB9E122546805000727250 /* M30.json in Resources */,
+				B5FB9E112546805000727250 /* Time.json in Resources */,
 				5123D07124455C4B0052CB53 /* LaunchScreen.storyboard in Resources */,
+				B5FB9E132546805000727250 /* D1.json in Resources */,
 				5123D06E24455C4B0052CB53 /* Assets.xcassets in Resources */,
 				5123D06C24455C4B0052CB53 /* Main.storyboard in Resources */,
+				B5FB9E102546805000727250 /* W1.json in Resources */,
+				B5FB9E0F2546805000727250 /* H1.json in Resources */,
+				B5FB9E0E2546805000727250 /* M15.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

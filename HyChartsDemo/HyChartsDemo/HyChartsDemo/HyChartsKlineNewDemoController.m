@@ -48,53 +48,36 @@
     [scrollView addSubview:self.klineView];
     scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(self.klineView.frame) + 50);
 
-    [self requestDataWithType:@"201"];
+    [self requestDataWithType:@"H1"];
 }
 
 - (void)requestDataWithType:(NSString *)type {
     
-    __weak typeof(self) _self = self;
-    
-    NSString *string = [NSString stringWithFormat:@"https://api.idcs.io:8323/api/LineData/GetLineData?TradingConfigId=_DSQ3BmslE-cS-HP3POlnA&LineType=%@&PageIndex=1&PageSize=400&ClientType=2&LanguageCode=zh-CN", type];
-    
-    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    indicatorView.center = CGPointMake(self.klineView.width / 2, self.klineView.height / 2);
-    [self.klineView addSubview:indicatorView];
-    [indicatorView startAnimating];
-    
-    NSURLSession *session =
-    [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration];
-    [[session dataTaskWithURL:[NSURL URLWithString:string] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-
-        if (!error) {
+    [HyChartsKLineDemoDataHandler requestDataWithType:type
+                                           dataSource:self.klineView.dataSource
+                                           completion:^{
+            
+        __weak typeof(self) _self = self;
+        self.klineView.timeLine = [type isEqualToString:@"Time"];
+        [self.klineView setNeedsRenderingWithCompletion:^{
             __strong typeof(_self) self = _self;
-            NSDictionary *successObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            [HyChartsKLineDemoDataHandler handleWithArray:successObject[@"Data"] dataSorce:self.klineView.dataSource];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [indicatorView stopAnimating];
-                [indicatorView removeFromSuperview];
-                self.klineView.timeLine = [type isEqualToString:@"101"];
-                [self.klineView setNeedsRendering];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self.klineMainlTechnicalayer removeFromSuperlayer];
-                    self.klineMainlTechnicalayer = [HyChartsKLineDemoDataHandler technicalLayerWithDataSorce:self.klineView.dataSource];
-                    [self.klineView.layer addSublayer:self.klineMainlTechnicalayer];
-                    
-                    [self.klineVolumTechnicalayer removeFromSuperlayer];
-                    self.klineVolumTechnicalayer = [HyChartsKLineDemoDataHandler volumTechnicalLayerWithDataSorce:self.klineView.dataSource];
-                    [self.klineView.layer addSublayer:self.klineVolumTechnicalayer];
-                    self.klineVolumTechnicalayer.frame = CGRectMake(CGRectGetMinX(self.klineVolumTechnicalayer.frame), self.klineView.height * .58, CGRectGetWidth(self.klineVolumTechnicalayer.frame), CGRectGetHeight(self.klineVolumTechnicalayer.frame));
-                    
-                    [self.klineAuxiliarylayer removeFromSuperlayer];
-                    self.klineAuxiliarylayer = [HyChartsKLineDemoDataHandler auxiliaryLayerWithDataSorce:self.klineView.dataSource];
-                    [self.klineView.layer addSublayer:self.klineAuxiliarylayer];
-                    self.klineAuxiliarylayer.frame = CGRectMake(CGRectGetMinX(self.klineAuxiliarylayer.frame), self.klineView.height * .78, CGRectGetWidth(self.klineAuxiliarylayer.frame), CGRectGetHeight(self.klineAuxiliarylayer.frame));
-                });
-            });
-        }
-    }] resume];
+            
+            [self.klineMainlTechnicalayer removeFromSuperlayer];
+            self.klineMainlTechnicalayer = [HyChartsKLineDemoDataHandler technicalLayerWithDataSorce:self.klineView.dataSource];
+            [self.klineView.layer addSublayer:self.klineMainlTechnicalayer];
+            
+            [self.klineVolumTechnicalayer removeFromSuperlayer];
+            self.klineVolumTechnicalayer = [HyChartsKLineDemoDataHandler volumTechnicalLayerWithDataSorce:self.klineView.dataSource];
+            [self.klineView.layer addSublayer:self.klineVolumTechnicalayer];
+            self.klineVolumTechnicalayer.frame = CGRectMake(CGRectGetMinX(self.klineVolumTechnicalayer.frame), self.klineView.height * .58, CGRectGetWidth(self.klineVolumTechnicalayer.frame), CGRectGetHeight(self.klineVolumTechnicalayer.frame));
+            
+            [self.klineAuxiliarylayer removeFromSuperlayer];
+            self.klineAuxiliarylayer = [HyChartsKLineDemoDataHandler auxiliaryLayerWithDataSorce:self.klineView.dataSource];
+            [self.klineView.layer addSublayer:self.klineAuxiliarylayer];
+            self.klineAuxiliarylayer.frame = CGRectMake(CGRectGetMinX(self.klineAuxiliarylayer.frame), self.klineView.height * .78, CGRectGetWidth(self.klineAuxiliarylayer.frame), CGRectGetHeight(self.klineAuxiliarylayer.frame));
+        }];
+    }];
 }
-
 
 - (HyChartKLineView *)klineView {
     if (!_klineView) {
@@ -138,8 +121,8 @@
         
         [_klineView.dataSource.configreDataSource configConfigure:^(id<HyChartKLineConfigureProtocol>  _Nonnull configure) {
             
-            configure.width = 6;
-            configure.margin = 3;
+            configure.width = 4;
+            configure.margin = 4;
             configure.edgeInsetStart = 3;
             configure.edgeInsetEnd = 3;
             configure.trendUpColor = [UIColor hy_colorWithHexString:@"#E97C5E"];
@@ -149,7 +132,7 @@
             configure.volumeDecimal = 4;
             configure.newpriceColor = UIColor.whiteColor;
             configure.maxminPriceColor = UIColor.whiteColor;
-            configure.trendUpKlineType = HyChartKLineTypeStroke;
+            configure.trendUpKlineType = HyChartKLineTypeFill;
 //            configure.disPlayNewprice = NO;
 //            configure.disPlayMaxMinPrice = NO;
         
@@ -199,14 +182,13 @@
     if (!_segmentView){
 
         NSArray<NSString *> *titleArray = @[@"Time", @"M5", @"M15", @"M30", @"H1", @"D1", @"W1", @"MN"];
-        NSArray<NSString *> *typeArray = @[@"101", @"102", @"103", @"104", @"201", @"301", @"310", @"401"];
         __weak typeof(self) _self = self;
         _segmentView =
         [self segmentViewWithFrame:CGRectMake(0, 0, self.view.width, 40)
                         titleArray:titleArray
                        clickAction:^(NSInteger currentIndex) {
              __weak typeof(_self) self = _self;
-            [self requestDataWithType:typeArray[currentIndex]];
+            [self requestDataWithType:titleArray[currentIndex]];
         }];
     }
     return _segmentView;

@@ -16,6 +16,22 @@
 
 @implementation HyChartsKLineDemoDataHandler
 
++ (void)requestDataWithType:(NSString *)type
+                 dataSource:(id<HyChartKLineDataSourceProtocol>)dataSource
+                 completion:(void(^_Nullable)(void))completion {
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSError *error;
+        NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:type ofType:@"json"]];
+        NSDictionary *successObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        if (error == NULL) {
+            [self handleWithArray:successObject[@"Data"] dataSorce:dataSource];
+        }
+        dispatch_async(dispatch_get_main_queue(), completion);
+    });
+    
+}
+
 + (void)handleWithArray:(NSArray *)array
               dataSorce:(id<HyChartKLineDataSourceProtocol>)dataSorce {
     

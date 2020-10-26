@@ -79,63 +79,50 @@
     self.klineAuxiliaryView.top = self.volumeView.bottom;
     [klineContentView addSubview:self.klineAuxiliaryView];
     
-    [self requestDataWithType:@"201"];
+    [self requestDataWithType:@"H1"];
 }
 
 - (void)requestDataWithType:(NSString *)type {
     
-    __weak typeof(self) _self = self;
-    
-    NSString *string = [NSString stringWithFormat:@"https://api.idcs.io:8323/api/LineData/GetLineData?TradingConfigId=_DSQ3BmslE-cS-HP3POlnA&LineType=%@&PageIndex=1&PageSize=400&ClientType=2&LanguageCode=zh-CN", type];
-    
-    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    indicatorView.color = UIColor.orangeColor;
-    indicatorView.center = CGPointMake(self.klineContentView.width / 2, self.klineContentView.height / 2);
-    [self.klineContentView addSubview:indicatorView];
-    [indicatorView startAnimating];
-    
-    NSURLSession *session =
-    [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration];
-    [[session dataTaskWithURL:[NSURL URLWithString:string] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        __strong typeof(_self) self = _self;
-        if (!self) {return;}
-        if (!error) {
-            NSDictionary *successObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSError *error;
+        NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:type ofType:@"json"]];
+        NSDictionary *successObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        if (error == NULL) {
             NSArray *array = successObject[@"Data"];
-//            array = [array objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 50)]];
-            
             [HyChartsKLineDemoDataHandler handleWithArray:array dataSorce:self.klineMainView.dataSource];
             [HyChartsKLineDemoDataHandler handleWithArray:array dataSorce:self.volumeView.dataSource];
             [HyChartsKLineDemoDataHandler handleWithArray:array dataSorce:self.auxiliaryView.dataSource];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [indicatorView stopAnimating];
-            [indicatorView removeFromSuperview];
-            if (error) { return; }
-            
-            self.klineMainView.timeLine = [type isEqualToString:@"101"];
-            [self.klineMainView setNeedsRendering];
-            [self.volumeView setNeedsRendering];
-            [self.auxiliaryView setNeedsRendering];
-           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-               
-               [self.klineMainlTechnicView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-               [self.klineVolumTechnicView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-               [self.klineAuxiliaryView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-               
+            __weak typeof(self) _self = self;
+
+            self.klineMainView.timeLine = [type isEqualToString:@"Time"];
+            [self.klineMainView setNeedsRenderingWithCompletion:^{
+                __strong typeof(_self) self = _self;
+                
+                [self.klineMainlTechnicView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
                 CALayer *klineMainlTechnicalayer = [HyChartsKLineDemoDataHandler technicalLayerWithDataSorce:self.klineMainView.dataSource];
                 [self.klineMainlTechnicView.layer addSublayer:klineMainlTechnicalayer];
+            }];
+            
+            [self.volumeView setNeedsRenderingWithCompletion:^{
+                __strong typeof(_self) self = _self;
 
+                [self.klineVolumTechnicView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
                 CALayer *klineVolumTechnicalayer = [HyChartsKLineDemoDataHandler volumTechnicalLayerWithDataSorce:self.volumeView.dataSource];
                 [self.klineVolumTechnicView.layer addSublayer:klineVolumTechnicalayer];
+            }];
+            
+            [self.auxiliaryView setNeedsRenderingWithCompletion:^{
+                __strong typeof(_self) self = _self;
 
-               CALayer *klineAuxiliarylayer = [HyChartsKLineDemoDataHandler auxiliaryLayerWithDataSorce:self.auxiliaryView.dataSource];
-               [self.klineAuxiliaryView.layer addSublayer:klineAuxiliarylayer];
-            });
+                [self.klineAuxiliaryView.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+                CALayer *klineAuxiliarylayer = [HyChartsKLineDemoDataHandler auxiliaryLayerWithDataSorce:self.auxiliaryView.dataSource];
+                [self.klineAuxiliaryView.layer addSublayer:klineAuxiliarylayer];
+            }];
         });
-    }] resume];
+    });
 }
 
 - (HyChartKLineMainView *)klineMainView {
@@ -351,7 +338,7 @@
 
 - (void)configConfigure:(id<HyChartKLineConfigureProtocol>)configure {
     configure.width = 4;
-    configure.margin = 2;
+    configure.margin = 3;
     configure.edgeInsetStart = 2;
     configure.edgeInsetEnd = 2;
     configure.trendUpColor = Hy_ColorWithRGB(225, 82, 71);
@@ -371,14 +358,13 @@
     if (!_segmentView){
 
         NSArray<NSString *> *titleArray = @[@"Time", @"M5", @"M15", @"M30", @"H1", @"D1", @"W1", @"MN"];
-        NSArray<NSString *> *typeArray = @[@"101", @"102", @"103", @"104", @"201", @"301", @"310", @"401"];
         __weak typeof(self) _self = self;
         _segmentView =
         [self segmentViewWithFrame:CGRectMake(0, 0, self.view.width, 35)
                         titleArray:titleArray
                        clickAction:^(NSInteger currentIndex) {
              __weak typeof(_self) self = _self;
-            [self requestDataWithType:typeArray[currentIndex]];
+            [self requestDataWithType:titleArray[currentIndex]];
         }];
         
         UIView *line = UIView.new;

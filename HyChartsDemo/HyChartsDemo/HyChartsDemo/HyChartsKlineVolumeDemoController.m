@@ -40,38 +40,16 @@
     [scrollView addSubview:self.technicalSegmentView];
     [scrollView addSubview:self.volumeView];
     scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(self.volumeView.frame) + 50);
-    [self requestDataWithType:@"201"];
+    [self requestDataWithType:@"H1"];
 }
 
 - (void)requestDataWithType:(NSString *)type {
     
-    __weak typeof(self) _self = self;
-    
-    NSString *string = [NSString stringWithFormat:@"https://api.idcs.io:8323/api/LineData/GetLineData?TradingConfigId=_DSQ3BmslE-cS-HP3POlnA&LineType=%@&PageIndex=1&PageSize=400&ClientType=2&LanguageCode=zh-CN", type];
-    
-    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    indicatorView.center = CGPointMake(self.volumeView.width / 2, self.volumeView.height / 2);
-    [self.volumeView addSubview:indicatorView];
-    [indicatorView startAnimating];
-    
-    NSURLSession *session =
-    [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration];
-    [[session dataTaskWithURL:[NSURL URLWithString:string] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-
-        __strong typeof(_self) self = _self;
-        if (!self) {return;}
-        if (!error) {
-            NSDictionary *successObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            [HyChartsKLineDemoDataHandler handleWithArray:successObject[@"Data"] dataSorce:self.volumeView.dataSource];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [indicatorView stopAnimating];
-            [indicatorView removeFromSuperview];
-            if (!error) {
-               [self.volumeView setNeedsRendering];
-            }
-        });
-    }] resume];
+    [HyChartsKLineDemoDataHandler requestDataWithType:type
+                                           dataSource:self.volumeView.dataSource
+                                           completion:^{
+        [self.volumeView setNeedsRendering];
+    }];
 }
 
 - (HyChartKLineVolumeView *)volumeView {
@@ -142,14 +120,13 @@
     if (!_segmentView){
 
         NSArray<NSString *> *titleArray = @[@"Time", @"M5", @"M15", @"M30", @"H1", @"D1", @"W1", @"MN"];
-        NSArray<NSString *> *typeArray = @[@"101", @"102", @"103", @"104", @"201", @"301", @"310", @"401"];
         __weak typeof(self) _self = self;
         _segmentView =
         [self segmentViewWithFrame:CGRectMake(0, 0, self.view.width, 40)
                         titleArray:titleArray
                        clickAction:^(NSInteger currentIndex) {
              __weak typeof(_self) self = _self;
-            [self requestDataWithType:typeArray[currentIndex]];
+            [self requestDataWithType:titleArray[currentIndex]];
         }];
     }
     return _segmentView;
