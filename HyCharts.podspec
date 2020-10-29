@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name         = 'HyCharts'
-s.version      = '1.0.2'
+s.version      = '1.0.3'
 s.summary      = 'HyLineChartView HyBarChartView HyKLineChartView'
 s.homepage     = 'https://github.com/hydreamit/HyCharts'
 s.license      = 'MIT'
