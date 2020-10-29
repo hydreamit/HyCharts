@@ -86,6 +86,7 @@
         _klineView.backgroundColor = [UIColor colorWithRed:14.0 / 255 green:33.0 / 255 blue:60.0 / 255 alpha:1];
         _klineView.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 20, 0);
         
+        // 配置坐标轴
         NSArray<NSNumber *> *yaxisIndexs = @[@4, @1, @1];
         [[_klineView.dataSource.axisDataSource configXAxisWithModel:^(id<HyChartXAxisModelProtocol>  _Nonnull xAxisModel) {
             xAxisModel.topXaxisDisabled = NO;
@@ -119,10 +120,11 @@
             }];
         }];
         
+        // 配置图表信息
         [_klineView.dataSource.configreDataSource configConfigure:^(id<HyChartKLineConfigureProtocol>  _Nonnull configure) {
             
             configure.width = 4;
-            configure.margin = 4;
+            configure.margin = 3;
             configure.edgeInsetStart = 3;
             configure.edgeInsetEnd = 3;
             configure.trendUpColor = [UIColor hy_colorWithHexString:@"#E97C5E"];
@@ -133,6 +135,7 @@
             configure.newpriceColor = UIColor.whiteColor;
             configure.maxminPriceColor = UIColor.whiteColor;
             configure.trendUpKlineType = HyChartKLineTypeFill;
+            configure.canScaleSpace = NO;
 //            configure.disPlayNewprice = NO;
 //            configure.disPlayMaxMinPrice = NO;
         

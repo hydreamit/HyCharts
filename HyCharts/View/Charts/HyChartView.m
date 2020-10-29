@@ -28,17 +28,12 @@ dispatch_semaphore_signal(self.arraySemaphore);
 
 
 @interface HyChartView ()<UIScrollViewDelegate>
-/// 轴图层
-@property (nonatomic, strong) HyChartAxisLayer *axisLayer;
-/// 滚动偏移量
+
 @property (nonatomic, strong) UIScrollView *scrollView;
-/// 点击手势
+@property (nonatomic, strong) HyChartAxisLayer *axisLayer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
-/// 缩放手势
 @property (nonatomic, strong) UIPinchGestureRecognizer *pinchGesture;
-/// 长按手势
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGesture;
-/// 默认游标
 @property (nonatomic, strong) id<HyChartCursorProtocol> chartCursor;
 
 @property (nonatomic, assign) CGFloat chartWidth;
@@ -136,7 +131,12 @@ dispatch_semaphore_signal(self.arraySemaphore);
         CGFloat changeOffset = 0;
         CGFloat contentOffset = self.chartContentWidth - self.chartWidth;
         if (contentOffset > 0) {
-            CGFloat totalOffset = (configure.edgeInsetStart  + (configure.width + configure.margin) * index + configure.width / 2) * configure.scale;
+            CGFloat totalOffset = 0;
+            if (configure.canScaleSpace) {
+                totalOffset = (configure.edgeInsetStart  + (configure.width + configure.margin) * index + configure.width / 2) * configure.scale;
+            } else {
+                totalOffset = configure.edgeInsetStart + (configure.width  * index + configure.width / 2) * configure.scale + configure.margin * index;
+            }
             changeOffset = totalOffset - margin;
             if (changeOffset < 0) { changeOffset = 0;}
             if (changeOffset > contentOffset) {changeOffset = contentOffset;}
@@ -586,6 +586,7 @@ dispatch_semaphore_signal(self.arraySemaphore);
     self._dataSource.modelDataSource.numberOfItemsBlock ?
     self._dataSource.modelDataSource.numberOfItemsBlock() : 0;
     if (itemsCount > 0) {
+        
         HyChartConfigure *configure = self._dataSource.configreDataSource.configure;
         CGFloat width = configure.edgeInsetStart + configure.edgeInsetEnd + itemsCount * (configure.width + configure.margin) - configure.margin;
         if (configure.minDisplayWidth > 0 &&
@@ -603,7 +604,12 @@ dispatch_semaphore_signal(self.arraySemaphore);
             configure.scale = configure.displayWidth / width;
             configure.displayWidth = 0;
         }
-        width = width * configure.scale;
+        
+        if (configure.canScaleSpace) {
+            width = width * configure.scale;
+        } else {
+            width = configure.edgeInsetStart + configure.edgeInsetEnd + itemsCount * configure.width * configure.scale + (itemsCount - 1) * configure.margin;
+        }
         contentWidth = width;
     }
     return contentWidth;
@@ -624,10 +630,15 @@ dispatch_semaphore_signal(self.arraySemaphore);
     CGFloat scale = configure.scale;
     
     configure.scaleWidth = configure.width * scale;
-    configure.scaleMargin = configure.margin * scale;
+    configure.scaleMargin =  configure.margin;
+    configure.scaleEdgeInsetStart = configure.edgeInsetStart;
+    configure.scaleEdgeInsetEnd = configure.edgeInsetEnd;
+    if (configure.canScaleSpace) {
+        configure.scaleMargin =  configure.margin * scale;
+        configure.scaleEdgeInsetStart = configure.edgeInsetStart * scale;
+        configure.scaleEdgeInsetEnd = configure.edgeInsetEnd * scale;
+    }
     configure.scaleItemWidth = configure.scaleWidth + configure.scaleMargin;
-    configure.scaleEdgeInsetStart = configure.edgeInsetStart * scale;
-    configure.scaleEdgeInsetEnd = configure.edgeInsetEnd * scale;
 
     CGFloat statrTrans = trans - configure.scaleEdgeInsetStart;
     if (statrTrans < 0) { statrTrans = 0; }
@@ -790,12 +801,8 @@ dispatch_semaphore_signal(self.arraySemaphore);
                     [chartView startPinch];
                 }
             }];
-            CGFloat positionX = [gesture locationInView:gesture.view].x;
             
-//            if (self.configure.renderingDirection == HyChartRenderingDirectionReverse &&
-//                (self.configure.notEnoughSide != HyChartNotEnoughSideLeft && self.notEnoughWidth != 0)) {
-//                positionX = self.chartContentWidth - positionX;
-//            }
+            CGFloat positionX = [gesture locationInView:gesture.view].x;
             
             if (self.configure.renderingDirection == HyChartRenderingDirectionReverse) {
                  positionX = self.chartContentWidth - positionX;
@@ -810,7 +817,7 @@ dispatch_semaphore_signal(self.arraySemaphore);
 
             if (positionX >= 0) {
                 index = [self absoluteIndexWithPosition:positionX];
-                CGFloat totalOffset = configure.edgeInsetStart + configure.scaleItemWidth * index + configure.scaleWidth / 2;
+                CGFloat totalOffset = configure.scaleEdgeInsetStart + configure.scaleItemWidth * index + configure.scaleWidth / 2;
                  margin = totalOffset - configure.trans;
             }
             

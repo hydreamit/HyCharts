@@ -22,9 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat scaleEdgeInsetStart;
 @property (nonatomic, assign) CGFloat scaleEdgeInsetEnd;
 
-
 @property (nonatomic,assign) BOOL notEnough;
-
 
 @end
 

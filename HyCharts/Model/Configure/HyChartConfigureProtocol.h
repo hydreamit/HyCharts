@@ -39,6 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat minScale;
 /// 最大缩放值
 @property (nonatomic, assign) CGFloat maxScale;
+/// 间隙(edgeInset、 margin)是否跟着缩放 默认为YES
+@property (nonatomic, assign) BOOL canScaleSpace;
 /// 当前展示范围
 @property (nonatomic, assign) CGFloat displayWidth;
 /// 最小展示范围(优先级别高于minScale)
