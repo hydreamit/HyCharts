@@ -663,9 +663,9 @@
         [shadesColors addObject:(__bridge id)color.CGColor];
     }
     shadeLayer.colors = shadesColors;
-    shadeLayer.locations = @[@0.0,@0.2,@1.0];
-    shadeLayer.startPoint = CGPointMake(0.5,0.5);
-    shadeLayer.endPoint = CGPointMake(0.5,1);
+//    shadeLayer.locations = @[@0.0,@0.2,@1.0];
+//    shadeLayer.startPoint = CGPointMake(0.5,0.5);
+//    shadeLayer.endPoint = CGPointMake(0.5,1);
     shadeLayer.mask = [CAShapeLayer layer];
     shadeLayer.frame = self.bounds;
     [self addSublayer:shadeLayer];

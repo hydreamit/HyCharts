@@ -290,12 +290,20 @@
         }
     }
     
+    CALayer *textSuperLayer = self.superlayer;
+    if ([self.superlayer isKindOfClass:NSClassFromString(@"HyChartKLineAxisLayer")]) {
+        textSuperLayer = self.superlayer.superlayer;
+    }
+    
+    CGRect converRect = self.frame;
+    converRect = CGRectMake(CGRectGetMinX(converRect) + self.contentEdgeInsets.left, CGRectGetMinY(converRect) + self.contentEdgeInsets.top, self.bounds.size.width - (self.contentEdgeInsets.left + self.contentEdgeInsets.right), self.bounds.size.height - (self.contentEdgeInsets.top + self.contentEdgeInsets.bottom));
+    
     CGFloat xy = 0;
     CGFloat xSpaceMargin = 0;
     CGFloat ySpaceMargin = 0;
     CGPoint anchor = CGPointZero;
     CGPoint offset = CGPointZero;
-     CGFloat baseOffset = 3;
+    CGFloat baseOffset = 3;
         
     if ([position isEqualToString:@"top"]) {
         
@@ -304,12 +312,12 @@
             anchor = CGPointMake(0, 0);
             offset = CGPointMake(axisBaseInfo.axisTextOffset.x + baseOffset,
                                  axisBaseInfo.axisTextOffset.y + baseOffset);
-            xy = CGRectGetMinY(self.contentRect);
+            xy = CGRectGetMinY(converRect);
         } else {
             anchor = CGPointMake(0.5, 1);
             offset = CGPointMake(axisBaseInfo.axisTextOffset.x,
                                  axisBaseInfo.axisTextOffset.y - baseOffset);
-            xy = CGRectGetMinY(self.contentRect);
+            xy = CGRectGetMinY(converRect);
         }
         
     } else if ([position isEqualToString:@"left"]) {
@@ -319,12 +327,12 @@
             anchor = CGPointMake(0, 0);
             offset = CGPointMake(axisBaseInfo.axisTextOffset.x + baseOffset,
                                  axisBaseInfo.axisTextOffset.y + baseOffset);
-            xy = CGRectGetMinX(self.contentRect);
+            xy = CGRectGetMinX(converRect);
         } else {
             anchor = CGPointMake(1, .5);
             offset = CGPointMake(axisBaseInfo.axisTextOffset.x - baseOffset,
                                  axisBaseInfo.axisTextOffset.y);
-            xy = CGRectGetMinX(self.contentRect);
+            xy = CGRectGetMinX(converRect);
         }
         
     } else if ([position isEqualToString:@"bottom"]) {
@@ -334,12 +342,12 @@
             anchor = CGPointMake(0.5, 0);
             offset = CGPointMake(axisBaseInfo.axisTextOffset.x,
                                  axisBaseInfo.axisTextOffset.y + baseOffset);
-            xy = CGRectGetMaxY(self.contentRect);
+            xy = CGRectGetMaxY(converRect);
         } else {
             anchor = CGPointMake(0, 1);
             offset = CGPointMake(axisBaseInfo.axisTextOffset.x + baseOffset,
                                  axisBaseInfo.axisTextOffset.y - baseOffset);
-            xy = CGRectGetMaxY(self.contentRect);
+            xy = CGRectGetMaxY(converRect);
         }
         
     } else if ([position isEqualToString:@"right"]) {
@@ -349,18 +357,19 @@
             anchor = CGPointMake(0, 0.5);
             offset = CGPointMake(axisBaseInfo.axisTextOffset.x + baseOffset,
                                  axisBaseInfo.axisTextOffset.y);
-            xy = CGRectGetMaxX(self.contentRect);
+            xy = CGRectGetMaxX(converRect);
         } else {
             anchor = CGPointMake(1, 0);
             offset = CGPointMake(axisBaseInfo.axisTextOffset.x - baseOffset,
                                  axisBaseInfo.axisTextOffset.y + baseOffset);
-            xy = CGRectGetMaxX(self.contentRect);
+            xy = CGRectGetMaxX(converRect);
         }
     }
     
     BOOL changeFirst =
     ([position isEqualToString:@"left"] && axisBaseInfo.axisTextPosition == HyChartAxisTextPositionPlus) ||
     ([position isEqualToString:@"right"] && axisBaseInfo.axisTextPosition == HyChartAxisTextPositionBinus);
+    
     
     NSMutableArray<CATextLayer *> *mArray = @[].mutableCopy;
     for (int i = 0; i < axisModel.indexs + 1; i++) {
@@ -374,7 +383,7 @@
             textlayer.contentsScale = UIScreen.mainScreen.scale;
             textlayer.alignmentMode = kCAAlignmentCenter;
             textlayer.zPosition = 9999;
-            [self addSublayer:textlayer];
+            [textSuperLayer addSublayer:textlayer];
             [mArray addObject:textlayer];
         } else {
             textlayer = [self.axisTexts[position] objectAtIndex:i];
@@ -484,9 +493,9 @@
       
         CGPoint point = CGPointZero;
         if (xSpaceMargin) {
-            point = CGPointMake(xSpaceMargin * i + CGRectGetMinX(self.contentRect) , xy);
+            point = CGPointMake(xSpaceMargin * i + CGRectGetMinX(converRect) , xy);
         } else {
-            point = CGPointMake(xy ,CGRectGetMaxY(self.contentRect) - ySpaceMargin * i);
+            point = CGPointMake(xy ,CGRectGetMaxY(converRect) - ySpaceMargin * i);
         }
         point.x -= (textSize.width * anchor.x - offset.x + angleOffsetX);
         point.y -= (textSize.height * anchor.y - offset.y + angleOffsetY);
